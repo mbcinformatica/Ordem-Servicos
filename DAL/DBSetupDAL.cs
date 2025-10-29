@@ -3,7 +3,7 @@ using System;
 using System.Configuration;
 using System.Windows.Forms;
 
-namespace Ordem-Servicos.DAL
+namespace OrdemServicos.DAL
 {
     public class DBSetupDAL
     {
@@ -25,14 +25,14 @@ namespace Ordem-Servicos.DAL
                     connection.Open();
 
                     // Verifica se o banco de dados existe
-                    var checkDbQuery = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'DBOrdem-Servicos'";
+                    var checkDbQuery = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'DBOrdemServicos'";
                     using (var checkDbCommand = new MySqlCommand(checkDbQuery, connection))
                     {
                         var dbExists = checkDbCommand.ExecuteScalar() != null;
                         if (!dbExists)
                         {
                             // Cria o banco de dados
-                            var createDbQuery = "CREATE DATABASE DBOrdem-Servicos;";
+                            var createDbQuery = "CREATE DATABASE DBOrdemServicos;";
                             using (var createDbCommand = new MySqlCommand(createDbQuery, connection))
                             {
                                 createDbCommand.ExecuteNonQuery();
@@ -41,7 +41,7 @@ namespace Ordem-Servicos.DAL
                     }
 
                     // Usa o banco de dados
-                    var useDbQuery = "USE DBOrdem-Servicos;";
+                    var useDbQuery = "USE DBOrdemServicos;";
                     using (var useDbCommand = new MySqlCommand(useDbQuery, connection))
                     {
                         useDbCommand.ExecuteNonQuery();
@@ -227,7 +227,7 @@ namespace Ordem-Servicos.DAL
         private void VerifyAndCreateTable(MySqlConnection connection, string tableName, string[] columns)
         {
             // Verifica se a tabela existe
-            var checkTableQuery = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'DBOrdem-Servicos' AND TABLE_NAME = '{tableName}'";
+            var checkTableQuery = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'DBOrdemServicos' AND TABLE_NAME = '{tableName}'";
             using (var checkTableCommand = new MySqlCommand(checkTableQuery, connection))
             {
                 var tableExists = Convert.ToInt32(checkTableCommand.ExecuteScalar()) > 0;
@@ -252,7 +252,7 @@ namespace Ordem-Servicos.DAL
                         }
 
                         var columnName = column.Split(' ')[0];
-                        var checkColumnQuery = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'DBOrdem-Servicos' AND TABLE_NAME = '{tableName}' AND COLUMN_NAME = '{columnName}'";
+                        var checkColumnQuery = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'DBOrdemServicos' AND TABLE_NAME = '{tableName}' AND COLUMN_NAME = '{columnName}'";
                         using (var checkColumnCommand = new MySqlCommand(checkColumnQuery, connection))
                         {
                             var columnExists = Convert.ToInt32(checkColumnCommand.ExecuteScalar()) > 0;

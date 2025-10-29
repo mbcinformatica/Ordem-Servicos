@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Ordem-Servicos.Cadastros
+namespace OrdemServicos.Cadastros
 {
     public partial class Form2 : Form
     {

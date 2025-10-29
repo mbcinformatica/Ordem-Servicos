@@ -1,4 +1,4 @@
-﻿namespace Ordem-Servicos.Cadastros
+﻿namespace OrdemServicos.Cadastros
 {
 	partial class Form3
 	{

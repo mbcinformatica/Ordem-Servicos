@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Linq;
 
-namespace Ordem-Servicos.Forms
+namespace OrdemServicos.Forms
 {
 	public partial class BaseForm : Form, BaseFormFuncoes
     {

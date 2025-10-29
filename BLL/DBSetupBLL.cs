@@ -1,6 +1,6 @@
-﻿using Ordem-Servicos.DAL;
+﻿using OrdemServicos.DAL;
 
-namespace Ordem-Servicos.BLL
+namespace OrdemServicos.BLL
 {
     public class DBSetupBLL
     {

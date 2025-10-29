@@ -60,7 +60,7 @@
     <ProjectGuid>{CE5D20A6-6268-411E-932E-8B22B626AE30}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Ordem-Servicos</RootNamespace>
-    <AssemblyName>Ordem-Servicos</AssemblyName>
+    <AssemblyName>OrdemServicos</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -614,8 +614,12 @@
     <None Include="Resources\Sair24x24.png" />
     <None Include="Resources\Salvar24x24.png" />
     <None Include="Resources\PapelParede.png" />
-    <None Include="Resources\CadeadoAberto.png" />
-    <None Include="Resources\CadeadoFechado.png" />
+    <None Include="Resources\CadeadoAberto.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\CadeadoFechado.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Resources\icone.ico" />
     <None Include="Resources\Cancelar24X24.png" />
     <Content Include="Resources\TOOLS.ICO">

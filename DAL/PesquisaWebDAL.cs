@@ -2,9 +2,9 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static Ordem-Servicos.Model.PesquisaWebInfo;
+using static OrdemServicos.Model.PesquisaWebInfo;
 
-namespace Ordem-Servicos.DAL
+namespace OrdemServicos.DAL
 {
     public class PesquisaWebDAL
     {

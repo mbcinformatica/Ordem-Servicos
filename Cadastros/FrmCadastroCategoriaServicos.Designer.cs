@@ -1,4 +1,4 @@
-﻿namespace Ordem-Servicos
+﻿namespace OrdemServicos
 {
     partial class frmCategoriaServicos
     {

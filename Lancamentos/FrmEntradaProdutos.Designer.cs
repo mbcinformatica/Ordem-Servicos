@@ -1,4 +1,4 @@
-﻿namespace Ordem-Servicos.Lancamentos
+﻿namespace OrdemServicos.Lancamentos
 {
     partial class FrmEntradaProdutos
     {

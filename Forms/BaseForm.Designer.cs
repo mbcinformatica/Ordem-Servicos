@@ -1,4 +1,4 @@
-﻿namespace Ordem-Servicos.Forms
+﻿namespace OrdemServicos.Forms
 {
     partial class BaseForm
     {

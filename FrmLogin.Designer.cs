@@ -1,4 +1,19 @@
-﻿namespace Ordem-Servicos
+﻿using Newtonsoft.Json.Linq;
+using OrdemServicos.BLL;
+using OrdemServicos.Forms;
+using OrdemServicos.Model;
+using OrdemServicos.Utils;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Windows.Forms;
+
+
+namespace OrdemServicos
 {
     partial class frmLogin
     {
@@ -34,15 +49,15 @@
             this.txtSenha = new System.Windows.Forms.TextBox();
             this.txtLogin = new System.Windows.Forms.TextBox();
             this.txtSenhaHash = new System.Windows.Forms.TextBox();
-            this.btnSair = new System.Windows.Forms.Button();
-            this.btnLogin = new System.Windows.Forms.Button();
             this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.imgImagemUsuario = new System.Windows.Forms.PictureBox();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.lblSenha = new System.Windows.Forms.Label();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.btnSair = new System.Windows.Forms.Button();
+            this.imgImagemUsuario = new System.Windows.Forms.PictureBox();
             this.imgCadeadoAberto = new System.Windows.Forms.PictureBox();
             this.imgCadeadoFechado = new System.Windows.Forms.PictureBox();
-            this.lblTitulo = new System.Windows.Forms.Label();
+            this.btnLogin = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgImagemUsuario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgCadeadoAberto)).BeginInit();
@@ -78,57 +93,9 @@
             this.tlpDicas.SetToolTip(this.txtSenhaHash, "Informe o Login");
             this.txtSenhaHash.Visible = false;
             // 
-            // btnSair
-            // 
-            this.btnSair.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSair.Image = ((System.Drawing.Image)(resources.GetObject("btnSair.Image")));
-            this.btnSair.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSair.Location = new System.Drawing.Point(471, 166);
-            this.btnSair.Name = "btnSair";
-            this.btnSair.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnSair.Size = new System.Drawing.Size(112, 40);
-            this.btnSair.TabIndex = 3;
-            this.btnSair.Text = "    Sair";
-            this.tlpDicas.SetToolTip(this.btnSair, "Botão Sair do Sistema");
-            this.btnSair.UseVisualStyleBackColor = false;
-            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
-            // 
-            // btnLogin
-            // 
-            this.btnLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.erpProvider.SetIconAlignment(this.btnLogin, System.Windows.Forms.ErrorIconAlignment.MiddleLeft);
-            this.btnLogin.Image = ((System.Drawing.Image)(resources.GetObject("btnLogin.Image")));
-            this.btnLogin.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLogin.Location = new System.Drawing.Point(351, 166);
-            this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnLogin.Size = new System.Drawing.Size(113, 40);
-            this.btnLogin.TabIndex = 2;
-            this.btnLogin.Text = "       Login";
-            this.tlpDicas.SetToolTip(this.btnLogin, "Botão para Entrar no Sistema");
-            this.btnLogin.UseVisualStyleBackColor = false;
-            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
-            // 
             // erpProvider
             // 
             this.erpProvider.ContainerControl = this;
-            // 
-            // imgImagemUsuario
-            // 
-            this.imgImagemUsuario.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.imgImagemUsuario.BackColor = System.Drawing.Color.Transparent;
-            this.imgImagemUsuario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.erpProvider.SetIconAlignment(this.imgImagemUsuario, System.Windows.Forms.ErrorIconAlignment.TopRight);
-            this.imgImagemUsuario.Location = new System.Drawing.Point(27, 86);
-            this.imgImagemUsuario.Name = "imgImagemUsuario";
-            this.imgImagemUsuario.Size = new System.Drawing.Size(106, 120);
-            this.imgImagemUsuario.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.imgImagemUsuario.TabIndex = 92;
-            this.imgImagemUsuario.TabStop = false;
             // 
             // lblUsuario
             // 
@@ -153,29 +120,6 @@
             this.lblSenha.Tag = "";
             this.lblSenha.Text = "Senha";
             // 
-            // imgCadeadoAberto
-            // 
-            this.imgCadeadoAberto.Enabled = false;
-            this.imgCadeadoAberto.Image = global::Ordem-Servicos.Properties.Resources.CadeadoAberto1;
-            this.imgCadeadoAberto.Location = new System.Drawing.Point(162, 86);
-            this.imgCadeadoAberto.Name = "imgCadeadoAberto";
-            this.imgCadeadoAberto.Size = new System.Drawing.Size(112, 120);
-            this.imgCadeadoAberto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.imgCadeadoAberto.TabIndex = 11;
-            this.imgCadeadoAberto.TabStop = false;
-            this.imgCadeadoAberto.Visible = false;
-            // 
-            // imgCadeadoFechado
-            // 
-            this.imgCadeadoFechado.Enabled = false;
-            this.imgCadeadoFechado.Image = global::Ordem-Servicos.Properties.Resources.CadeadoFechado1;
-            this.imgCadeadoFechado.Location = new System.Drawing.Point(162, 86);
-            this.imgCadeadoFechado.Name = "imgCadeadoFechado";
-            this.imgCadeadoFechado.Size = new System.Drawing.Size(112, 120);
-            this.imgCadeadoFechado.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.imgCadeadoFechado.TabIndex = 9;
-            this.imgCadeadoFechado.TabStop = false;
-            // 
             // lblTitulo
             // 
             this.lblTitulo.BackColor = System.Drawing.Color.Transparent;
@@ -191,12 +135,83 @@
             this.lblTitulo.Text = "Login";
             this.lblTitulo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnSair
+            // 
+            this.btnSair.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSair.Image = ((System.Drawing.Image)(resources.GetObject("btnSair.Image")));
+            this.btnSair.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSair.Location = new System.Drawing.Point(471, 166);
+            this.btnSair.Name = "btnSair";
+            this.btnSair.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnSair.Size = new System.Drawing.Size(112, 40);
+            this.btnSair.TabIndex = 3;
+            this.btnSair.Text = "    Sair";
+            this.tlpDicas.SetToolTip(this.btnSair, "Botão Sair do Sistema");
+            this.btnSair.UseVisualStyleBackColor = false;
+            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
+            // 
+            // imgImagemUsuario
+            // 
+            this.imgImagemUsuario.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.imgImagemUsuario.BackColor = System.Drawing.Color.Transparent;
+            this.imgImagemUsuario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.erpProvider.SetIconAlignment(this.imgImagemUsuario, System.Windows.Forms.ErrorIconAlignment.TopRight);
+            this.imgImagemUsuario.Location = new System.Drawing.Point(27, 86);
+            this.imgImagemUsuario.Name = "imgImagemUsuario";
+            this.imgImagemUsuario.Size = new System.Drawing.Size(106, 120);
+            this.imgImagemUsuario.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgImagemUsuario.TabIndex = 92;
+            this.imgImagemUsuario.TabStop = false;
+            // 
+            // imgCadeadoAberto
+            // 
+            this.imgCadeadoAberto.Enabled = false;
+            this.imgCadeadoAberto.Image = ((System.Drawing.Image)(resources.GetObject("imgCadeadoAberto.Image")));
+            this.imgCadeadoAberto.Location = new System.Drawing.Point(162, 86);
+            this.imgCadeadoAberto.Name = "imgCadeadoAberto";
+            this.imgCadeadoAberto.Size = new System.Drawing.Size(112, 120);
+            this.imgCadeadoAberto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgCadeadoAberto.TabIndex = 11;
+            this.imgCadeadoAberto.TabStop = false;
+            this.imgCadeadoAberto.Visible = false;
+            // 
+            // imgCadeadoFechado
+            // 
+            this.imgCadeadoFechado.Enabled = false;
+            this.imgCadeadoFechado.Image = global::Properties.Resources.CadeadoFechado;
+            this.imgCadeadoFechado.Location = new System.Drawing.Point(162, 86);
+            this.imgCadeadoFechado.Name = "imgCadeadoFechado";
+            this.imgCadeadoFechado.Size = new System.Drawing.Size(112, 120);
+            this.imgCadeadoFechado.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgCadeadoFechado.TabIndex = 9;
+            this.imgCadeadoFechado.TabStop = false;
+            // 
+            // btnLogin
+            // 
+            this.btnLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.erpProvider.SetIconAlignment(this.btnLogin, System.Windows.Forms.ErrorIconAlignment.MiddleLeft);
+            this.btnLogin.Image = ((System.Drawing.Image)(resources.GetObject("btnLogin.Image")));
+            this.btnLogin.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLogin.Location = new System.Drawing.Point(351, 166);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnLogin.Size = new System.Drawing.Size(113, 40);
+            this.btnLogin.TabIndex = 2;
+            this.btnLogin.Text = "       Login";
+            this.tlpDicas.SetToolTip(this.btnLogin, "Botão para Entrar no Sistema");
+            this.btnLogin.UseVisualStyleBackColor = false;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            // 
             // frmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnSair;
-            this.ClientSize = new System.Drawing.Size(599, 239);
+            this.ClientSize = new System.Drawing.Size(591, 231);
             this.ControlBox = false;
             this.Controls.Add(this.lblTitulo);
             this.Controls.Add(this.imgImagemUsuario);

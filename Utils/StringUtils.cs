@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Ordem-Servicos.Utils
+namespace OrdemServicos.Utils
 {
     public static class StringUtils
     {

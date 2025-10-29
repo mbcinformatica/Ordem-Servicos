@@ -1,12 +1,12 @@
-﻿using Ordem-Servicos.BLL;
-using Ordem-Servicos.Forms;
+﻿using OrdemServicos.BLL;
+using OrdemServicos.Forms;
 using System;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Ordem-Servicos
+namespace OrdemServicos
 {
     public partial class frmTelaPrincipal : BaseForm
     {

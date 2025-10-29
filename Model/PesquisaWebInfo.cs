@@ -1,7 +1,7 @@
 ﻿using System.Dynamic;
 using System.Net;
 
-namespace Ordem-Servicos.Model
+namespace OrdemServicos.Model
 {
     public class PesquisaWebInfo
     {

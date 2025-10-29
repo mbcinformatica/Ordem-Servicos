@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ordem-Servicos.Model
+namespace OrdemServicos.Model
 {
     public class UsuarioInfo
     {

@@ -1,4 +1,4 @@
-﻿namespace Ordem-Servicos.BLL
+﻿namespace OrdemServicos.BLL
 {
     public class PesquisaWebDAL
     {

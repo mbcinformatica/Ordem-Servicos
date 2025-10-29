@@ -1,6 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
-using Ordem-Servicos.Forms;
-using Ordem-Servicos.Utils;
+using OrdemServicos.Forms;
+using OrdemServicos.Utils;
 using System.Configuration;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Drawing;
 
-namespace Ordem-Servicos
+namespace OrdemServicos
 {
     public partial class frmLogin : BaseForm
     {

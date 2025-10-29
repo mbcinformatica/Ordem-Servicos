@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associadas a um assembly.
 [assembly: AssemblyTitle("Ordem-Servicos")]
-[assembly: AssemblyDescription("Sistema de Controle de Orden de Serviços")]
+[assembly: AssemblyDescription("Sistema de Controle de Ordem de Serviços")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MBC Informática")]
 [assembly: AssemblyProduct("Ordem-Servicos")]

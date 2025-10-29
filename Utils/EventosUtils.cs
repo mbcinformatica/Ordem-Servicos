@@ -1,11 +1,11 @@
-﻿using Ordem-Servicos.Forms;
-using Ordem-Servicos.Model;
+﻿using OrdemServicos.Forms;
+using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Ordem-Servicos.Utils
+namespace OrdemServicos.Utils
 {
 
     public static class EventosUtils

@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
-using Ordem-Servicos.BLL;
-using Ordem-Servicos.Forms;
-using Ordem-Servicos.Model;
-using Ordem-Servicos.Utils;
+using OrdemServicos.BLL;
+using OrdemServicos.Forms;
+using OrdemServicos.Model;
+using OrdemServicos.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,10 +11,10 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Windows.Forms;
-using static Ordem-Servicos.DAL.PesquisaWebDAL;
-using static Ordem-Servicos.Model.PesquisaWebInfo;
+using static OrdemServicos.DAL.PesquisaWebDAL;
+using static OrdemServicos.Model.PesquisaWebInfo;
 
-namespace Ordem-Servicos
+namespace OrdemServicos
 {
     public partial class frmClientes : BaseForm
     {
@@ -828,7 +828,7 @@ namespace Ordem-Servicos
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
 
-                openFileDialog.InitialDirectory = "E:\\ProjetosCSharp\\Ordem-Servicos\\Documentos";
+                openFileDialog.InitialDirectory = "E:\\ProjetosCSharp\\OrdemServicos\\Documentos";
                 openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 1;
                 openFileDialog.RestoreDirectory = true;
@@ -900,7 +900,7 @@ namespace Ordem-Servicos
 
 							if (info != null)
 							{
-								string filePath = "E:\\ProjetosCSharp\\Ordem-Servicos\\Documentos\\CnpjInfo.txt";
+								string filePath = "E:\\ProjetosCSharp\\OrdemServicos\\Documentos\\CnpjInfo.txt";
 								using (StreamWriter writer = new StreamWriter(filePath, true))
 								{
 									writer.WriteLine($"\"{info.Cpf_Cnpj}\",\"{info.Nome_RazaoSocial}\",\"{info.Endereco}\",\"{info.Numero}\",\"{info.Bairro}\",\"{info.Municipio}\",\"{info.UF}\",\"{info.Cep}\",\"{info.Contato}\",\"{info.Fone_1}\",\"{info.Fone_2}\",\"{info.Email}\",\"{info.DataCadastro:dd/MM/yyyy HH:mm:ss}\"");
