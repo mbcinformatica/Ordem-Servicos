@@ -1,18 +1,18 @@
 ﻿using Newtonsoft.Json.Linq;
-using Ordem-Servicos.BLL;
-using Ordem-Servicos.Forms;
-using Ordem-Servicos.Model;
-using Ordem-Servicos.Utils;
+using OrdemServicos.BLL;
+using OrdemServicos.Forms;
+using OrdemServicos.Model;
+using OrdemServicos.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using static Ordem-Servicos.DAL.PesquisaWebDAL;
-using static Ordem-Servicos.Model.PesquisaWebInfo;
+using static OrdemServicos.DAL.PesquisaWebDAL;
+using static OrdemServicos.Model.PesquisaWebInfo;
 
-namespace Ordem-Servicos
+namespace OrdemServicos
 {
     public partial class frmFornecedores : BaseForm
     {

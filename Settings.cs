@@ -1,4 +1,4 @@
-﻿namespace Ordem-Servicos.Properties {
+﻿namespace OrdemServicos.Properties {
     
     
     // Esta classe permite que você trate eventos específicos na classe de configurações:

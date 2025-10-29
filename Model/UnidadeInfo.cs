@@ -1,4 +1,4 @@
-﻿namespace Ordem-Servicos.Model
+﻿namespace OrdemServicos.Model
 {
     public class UnidadeInfo
     {

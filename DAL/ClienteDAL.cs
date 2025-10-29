@@ -1,10 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
-using Ordem-Servicos.Model;
+using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 
-namespace Ordem-Servicos.DAL
+namespace OrdemServicos.DAL
 {
     public class ClienteDAL
     {

@@ -1,4 +1,4 @@
-﻿using Ordem-Servicos.Forms;
+﻿using OrdemServicos.Forms;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
-namespace Ordem-Servicos
+namespace OrdemServicos
 {
     public partial class frmConfigFormulario : BaseForm
     {

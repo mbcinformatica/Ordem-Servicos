@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-using Ordem-Servicos.BLL;
-using Ordem-Servicos.Forms;
-using Ordem-Servicos.Model;
-using Ordem-Servicos.Utils;
+﻿using Microsoft.Reporting.Map.WebForms.BingMaps;
+using Newtonsoft.Json.Linq;
+using OrdemServicos.BLL;
+using OrdemServicos.Forms;
+using OrdemServicos.Model;
+using OrdemServicos.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,11 +11,12 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Ordem-Servicos.DAL.PesquisaWebDAL;
-using static Ordem-Servicos.Model.PesquisaWebInfo;
+using static OrdemServicos.DAL.PesquisaWebDAL;
+using static OrdemServicos.Model.PesquisaWebInfo;
 
-namespace Ordem-Servicos
+namespace OrdemServicos
 {
     public partial class frmClientes : BaseForm
     {
@@ -22,6 +24,10 @@ namespace Ordem-Servicos
         private bool sortAscending = true;
         private Color defaultHeaderBackColor = Color.DarkTurquoise;
         private Color clickedHeaderBackColor = Color.CadetBlue;
+        private bool leituraAutomaticaAtiva = false;
+        private List<string> listaCNPJs = new List<string>();
+        private int indiceAtualCNPJ = 0;
+        private string caminhoArquivoDestino = string.Empty;
 
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
@@ -285,6 +291,7 @@ namespace Ordem-Servicos
                 btnCancelar,
                 btnNovo,
                 btnPesquisaCep,
+                btnCarregaArquivoCnpj,
                 btnPesquisarCnpj
             });
 
@@ -425,18 +432,9 @@ namespace Ordem-Servicos
             bNovo = true;
             HabilitarCamposDoFormulario("Novo");
         }
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
-
             ClienteBLL clienteBLL = new ClienteBLL();
-            /*
-                        // Verificar se algum campo obrigatório está vazio
-                        if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
-                        {
-                            MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                            return;
-                        }
-            */
             bool isAtualizacao = false;
 
             if (!string.IsNullOrEmpty(txtIDCliente.Text))
@@ -447,27 +445,16 @@ namespace Ordem-Servicos
 
             if (!isAtualizacao)
             {
-
                 string cpfcnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text);
                 DBSetupBLL dbSetupBLL = new DBSetupBLL();
-                /* Verifica se o CPF/CNPJ já está cadastrado
-                if (dbSetupBLL.VerificarSeCadastrado(cpfcnpj, "DBClientes", "Cpf_Cnpj"))
-                {
-                    MessageBox.Show("Cliente já cadastrado. Favor verificar!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    txtCpfCnpj.Clear();
-                    txtCpfCnpj.Focus();
-                    return;
-                }
-                */
-                DialogResult result = DialogResult.Yes; // MessageBox.Show("Tem Certeza que Deseja Incluir Esse Cliente?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                DialogResult result = DialogResult.Yes; // Pode substituir por MessageBox se quiser confirmação
                 if (result == DialogResult.Yes)
                 {
-
                     ClienteInfo cliente = new ClienteInfo
                     {
-
-                        TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA", // Define o valor do RadioButton
-                        Cpf_Cnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text),
+                        TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA",
+                        Cpf_Cnpj = cpfcnpj,
                         Nome_RazaoSocial = txtNomeRazaoSocial.Text,
                         Endereco = txtEndereco.Text,
                         Numero = txtNumero.Text,
@@ -480,21 +467,20 @@ namespace Ordem-Servicos
                         Fone_2 = StringUtils.SemFormatacao(txtFone_2.Text),
                         Email = txtEmail.Text,
                         DataCadastro = DateTime.Now
-
                     };
+
                     InserirCliente(cliente);
                 }
             }
             else
             {
-                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Salvar as Alterações Ralizadas?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
+                DialogResult result = MessageBox.Show("Tem certeza que deseja salvar as alterações realizadas?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     ClienteInfo cliente = new ClienteInfo
                     {
                         IDCliente = int.Parse(txtIDCliente.Text),
-                        TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA", // Define o valor do RadioButton
+                        TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA",
                         Cpf_Cnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text),
                         Nome_RazaoSocial = txtNomeRazaoSocial.Text,
                         Endereco = txtEndereco.Text,
@@ -506,14 +492,20 @@ namespace Ordem-Servicos
                         Contato = txtContato.Text,
                         Fone_1 = StringUtils.SemFormatacao(txtFone_1.Text),
                         Fone_2 = StringUtils.SemFormatacao(txtFone_2.Text),
-                        Email = txtEmail.Text,
+                        Email = txtEmail.Text
                     };
+
                     AtualizarCliente(cliente);
                 }
             }
 
             CarregarRegistros();
             LimparCampos();
+            if (leituraAutomaticaAtiva)
+            {
+                indiceAtualCNPJ++;
+                await ProcessarCNPJAtual();
+            }
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
@@ -541,12 +533,19 @@ namespace Ordem-Servicos
         }
         private void btnFechar_Click(object sender, EventArgs e)
         {
+            indiceAtualCNPJ = 1000000;
+            ProcessarCNPJAtual();
             this.Close();
         }
-        private void btnCancelar_Click(object sender, EventArgs e)
+        private async void btnCancelar_Click(object sender, EventArgs e)
         {
             CarregarRegistros();
             LimparCampos();
+            if (leituraAutomaticaAtiva)
+            {
+                indiceAtualCNPJ++;
+                await ProcessarCNPJAtual();
+            }
         }
         public override void ExecutaFuncaoEvento(Control control)
         {
@@ -691,8 +690,8 @@ namespace Ordem-Servicos
             txtEmail.Clear();
             txtDataCadastro.Clear();
             txtPesquisaListView.Clear();
-            rdbCpf.Checked = true;
-            rdbCnpj.Checked = false;
+            rdbCpf.Checked = false;
+            rdbCnpj.Checked = true;
             escPressed = false;
         }
         static void InserirCliente(ClienteInfo Cliente)
@@ -827,29 +826,42 @@ namespace Ordem-Servicos
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-
-                openFileDialog.InitialDirectory = "E:\\ProjetosCSharp\\Ordem-Servicos\\Documentos";
+                string downloadsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+                openFileDialog.InitialDirectory = downloadsPath;
                 openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 1;
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // Obtenha o caminho completo do arquivo selecionado
                     string filePath = openFileDialog.FileName;
+                    caminhoArquivoDestino = Path.Combine(downloadsPath, "CnpjInfo.txt");
 
                     try
                     {
-                        // Ler todas as linhas do arquivo
-                        string[] lines = System.IO.File.ReadAllLines(filePath);
+                        listaCNPJs = File.ReadAllLines(filePath)
+                                         .Where(l => !string.IsNullOrWhiteSpace(l))
+                                         .Select(l => l.Trim())
+                                         .ToList();
 
-                        foreach (string line in lines)
+                        indiceAtualCNPJ = 0;
+                        leituraAutomaticaAtiva = true;
+
+                        // 🔄 Configura barra e rótulo
+                        progressBarCNPJs.Minimum = 0;
+                        progressBarCNPJs.Maximum = listaCNPJs.Count;
+                        progressBarCNPJs.Value = 0;
+                        lblProgressoCNPJs.Text = $"0% concluído";
+
+                        if (listaCNPJs.Count > 0)
                         {
-                            string txtCNPJ = line.Trim();
-                            if (!string.IsNullOrEmpty(txtCNPJ))
-                            {
-                                ExecutaCarregaArquivo(txtCNPJ);
-                            }
+                            progressBarCNPJs.Visible = true;
+                            lblProgressoCNPJs.Visible = true;
+                            await ProcessarCNPJAtual();
+                        }
+                        else
+                        {
+                            MessageBox.Show("O arquivo está vazio ou inválido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                     catch (Exception ex)
@@ -859,63 +871,203 @@ namespace Ordem-Servicos
                 }
             }
         }
-        private async void ExecutaCarregaArquivo(string txtCNPJ)
+        private async Task ExecutaCarregaArquivo(string txtCNPJ, string destinoArquivo)
         {
-            if (!ValidaCnpj(txtCNPJ))
+            try
             {
-                return;
-            }
-            else
-            {
-                var request = new HttpRequestMessage(HttpMethod.Get, "https://receitaws.com.br/v1/cnpj/" + txtCNPJ);
+                if (!ValidaCnpj(txtCNPJ))
+                {
+  //                  MessageBox.Show("CNPJ inválido. Pulando para o próximo...", "Validação", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    indiceAtualCNPJ++;
+                    await ProcessarCNPJAtual();
+                    return;
+                }
+
+                string cpfcnpj = StringUtils.SemFormatacao(txtCNPJ);
+                DBSetupBLL dbSetupBLL = new DBSetupBLL();
+
+                try
+                {
+                    if (dbSetupBLL.VerificarSeCadastrado(cpfcnpj, "DBClientes", "Cpf_Cnpj"))
+                    {
+    //                    MessageBox.Show("Cliente já cadastrado. Pulando para o próximo...", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        indiceAtualCNPJ++;
+                        await ProcessarCNPJAtual();
+                        return;
+                    }
+                }
+                catch
+                {
+//                    MessageBox.Show("Erro ao verificar duplicidade: " + exDb.Message, "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    indiceAtualCNPJ++;
+                    await ProcessarCNPJAtual();
+                    return;
+                }
+
+                var request = new HttpRequestMessage(HttpMethod.Get, $"https://receitaws.com.br/v1/cnpj/{txtCNPJ}");
                 var response = new GenericoResponse<CnpjInfo>();
 
                 using (var cliente = new HttpClient())
-				{
-					HttpResponseMessage httpResponseMessage = await cliente.SendAsync(request);
-					using (var resposta = httpResponseMessage)
-					{
-						var ConteudoResposta = await resposta.Content.ReadAsStringAsync();
+                using (HttpResponseMessage httpResponseMessage = await cliente.SendAsync(request))
+                {
+                    string conteudoResposta = await httpResponseMessage.Content.ReadAsStringAsync();
 
-						if (resposta.IsSuccessStatusCode)
-						{
-							JObject json = JObject.Parse(ConteudoResposta);
-							CnpjInfo info = new CnpjInfo
-							{
-								Cpf_Cnpj = json["cnpj"].ToString(),
-								Nome_RazaoSocial = json["nome"].ToString(),
-								Endereco = json["logradouro"].ToString(),
-								Numero = json["numero"].ToString(),
-								Bairro = json["bairro"].ToString(),
-								Municipio = json["municipio"].ToString(),
-								UF = json["uf"].ToString(),
-								Cep = json["cep"].ToString(),
-								Contato = json["telefone"].ToString(),
-								Fone_1 = json["telefone"].ToString(),
-								Fone_2 = json["telefone"].ToString(),
-								Email = json["email"].ToString(),
-								DataCadastro = json["ultima_atualizacao"].ToString(),
-							};
-							response.DadosRetorno = info; // Adicione esta linha
+                    if (httpResponseMessage.IsSuccessStatusCode)
+                    {
+                        JObject json = JObject.Parse(conteudoResposta);
 
-							if (info != null)
-							{
-								string filePath = "E:\\ProjetosCSharp\\Ordem-Servicos\\Documentos\\CnpjInfo.txt";
-								using (StreamWriter writer = new StreamWriter(filePath, true))
-								{
-									writer.WriteLine($"\"{info.Cpf_Cnpj}\",\"{info.Nome_RazaoSocial}\",\"{info.Endereco}\",\"{info.Numero}\",\"{info.Bairro}\",\"{info.Municipio}\",\"{info.UF}\",\"{info.Cep}\",\"{info.Contato}\",\"{info.Fone_1}\",\"{info.Fone_2}\",\"{info.Email}\",\"{info.DataCadastro:dd/MM/yyyy HH:mm:ss}\"");
-								}
-							}
-						}
-						else
-						{
-							// Tratar a resposta de erro
-							Console.WriteLine($"Erro: {resposta.ReasonPhrase}");
-						}
-					}
-				}
-			}
+                        CnpjInfo info = new CnpjInfo
+                        {
+                            Cpf_Cnpj = json["cnpj"]?.ToString(),
+                            Nome_RazaoSocial = json["nome"]?.ToString(),
+                            Endereco = json["logradouro"]?.ToString(),
+                            Numero = json["numero"]?.ToString(),
+                            Bairro = json["bairro"]?.ToString(),
+                            Municipio = json["municipio"]?.ToString(),
+                            UF = json["uf"]?.ToString(),
+                            Cep = json["cep"]?.ToString(),
+                            Contato = json["telefone"]?.ToString(),
+                            Fone_1 = json["telefone"]?.ToString()?.Length >= 14 ? json["telefone"].ToString().Substring(0, 14) : json["telefone"]?.ToString(),
+                            Fone_2 = json["telefone"]?.ToString()?.Length >= 14 ? json["telefone"].ToString().Substring(0, 14) : json["telefone"]?.ToString(),
+                            Email = json["email"]?.ToString(),
+                            DataCadastro = json["ultima_atualizacao"]?.ToString()
+                        };
+
+                        response.DadosRetorno = info;
+
+                        if (info != null)
+                        {
+                            btnNovo_Click(null, null); // garante que o formulário esteja pronto
+                            rdbCnpj.Checked = true;
+                            PreencherCamposDoFormulario(info);
+                            btnSalvar_Click(null, null);
+                            /*
+                            try
+                            {
+                                using (StreamWriter writer = new StreamWriter(destinoArquivo, true))
+                                {
+                                    string dataFormatada = DateTime.TryParse(info.DataCadastro, out DateTime data)
+                                        ? data.ToString("dd/MM/yyyy HH:mm:ss")
+                                        : info.DataCadastro;
+
+                                    writer.WriteLine($"\"{info.Cpf_Cnpj}\",\"{info.Nome_RazaoSocial}\",\"{info.Endereco}\",\"{info.Numero}\",\"{info.Bairro}\",\"{info.Municipio}\",\"{info.UF}\",\"{info.Cep}\",\"{info.Contato}\",\"{info.Fone_1}\",\"{info.Fone_2}\",\"{info.Email}\",\"{dataFormatada}\"");
+                                }
+                            }
+                            catch (Exception exWrite)
+                            {
+                                MessageBox.Show("Erro ao gravar no arquivo: " + exWrite.Message, "Erro de Escrita", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            */
+                        }
+                    }
+                    else
+                    {
+                        string erroHttp = $"Erro HTTP ({txtCNPJ}): {httpResponseMessage.ReasonPhrase}";
+  //                      MessageBox.Show(erroHttp, "Erro HTTP", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        RegistrarErroLog(erroHttp);
+                        indiceAtualCNPJ++;
+                        await ProcessarCNPJAtual();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                string erroGeral = $"Erro inesperado ({txtCNPJ}): {ex.Message}";
+//                MessageBox.Show(erroGeral, "Erro Geral", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                RegistrarErroLog(erroGeral);
+                indiceAtualCNPJ++;
+                await ProcessarCNPJAtual();
+            }
         }
+        private void PreencherCamposDoFormulario( CnpjInfo info )
+        {
+            txtCpfCnpj.Text = info.Cpf_Cnpj;
+            txtNomeRazaoSocial.Text = info.Nome_RazaoSocial;
+            txtEndereco.Text = info.Endereco;
+            txtNumero.Text = info.Numero;
+            txtBairro.Text = info.Bairro;
+            txtMunicipio.Text = info.Municipio;
+            txtUF.Text = info.UF;
+            txtCep.Text = info.Cep;
+            txtContato.Text = info.Contato;
+            txtFone_1.Text = info.Fone_1;
+            txtFone_2.Text = info.Fone_2;
+            txtEmail.Text = info.Email;
 
+            txtDataCadastro.Text = DateTime.TryParse(info.DataCadastro, out DateTime data)
+                ? data.ToString("dd/MM/yyyy HH:mm:ss")
+                : info.DataCadastro;
+        }
+        private async Task ProcessarCNPJAtual()
+        {
+            if (indiceAtualCNPJ < listaCNPJs.Count)
+            {
+                btnCarregaArquivoCnpj.Enabled = false;
+                listViewClientes.Enabled = false;
+                txtPesquisaListView.Enabled = false;
+                btnNovo.Enabled = false;
+                string txtCNPJ = listaCNPJs[indiceAtualCNPJ];
+
+                // Atualiza barra de progresso
+                progressBarCNPJs.Value = Math.Min(indiceAtualCNPJ + 1, progressBarCNPJs.Maximum);
+
+                // Atualiza rótulo com porcentagem e CNPJ atual
+                int porcentagem = (int)((progressBarCNPJs.Value / (double)progressBarCNPJs.Maximum) * 100);
+                lblProgressoCNPJs.Text = $"Processando {txtCNPJ}... ({porcentagem}%)";
+
+                await Task.Delay(2000); // Evita excesso de requisições
+                await ExecutaCarregaArquivo(txtCNPJ, caminhoArquivoDestino);
+
+            }
+            else
+            {
+                if (indiceAtualCNPJ == 1000000)
+                {
+                    // Processo foi cancelado
+                    leituraAutomaticaAtiva = false;
+                    progressBarCNPJs.Value = 0;
+                    lblProgressoCNPJs.Text = "Processamento cancelado.";
+                    progressBarCNPJs.Visible = false;
+                    lblProgressoCNPJs.Visible = false;
+                    btnCarregaArquivoCnpj.Enabled = true;
+                    listViewClientes.Enabled = true;
+                    txtPesquisaListView.Enabled = true;
+                    btnNovo.Enabled = true;
+                    return;
+                }
+                else
+                {
+                    // Processo concluído normalmente
+                    leituraAutomaticaAtiva = false;
+                    progressBarCNPJs.Value = progressBarCNPJs.Maximum;
+                    lblProgressoCNPJs.Text = "Processamento concluído!";
+                    MessageBox.Show("Todos os CNPJs foram processados.", "Concluído", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    indiceAtualCNPJ = listaCNPJs.Count;
+                    progressBarCNPJs.Visible= false;
+                    lblProgressoCNPJs.Visible= false;
+                    btnCarregaArquivoCnpj.Enabled = true;
+                    listViewClientes.Enabled = true;
+                    txtPesquisaListView.Enabled = true;
+                    btnNovo.Enabled = true;
+                }
+            }
+        }
+        private void RegistrarErroLog(string mensagem)
+        {
+            try
+            {
+                string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "CnpjErros.txt");
+                using (StreamWriter logWriter = new StreamWriter(logPath, true))
+                {
+                    string logEntry = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss} - {mensagem}";
+                    logWriter.WriteLine(logEntry);
+                }
+            }
+            catch
+            {
+                // Se falhar ao registrar o log, não interrompe o fluxo
+            }
+        }
     }
 }

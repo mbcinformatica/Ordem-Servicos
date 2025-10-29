@@ -2,9 +2,9 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static Ordem-Servicos.Model.PesquisaWebInfo;
+using static OrdemServicos.Model.PesquisaWebInfo;
 
-namespace Ordem-Servicos.DAL
+namespace OrdemServicos.DAL
 {
     public class PesquisaWebDAL
     {
@@ -35,8 +35,8 @@ namespace Ordem-Servicos.DAL
                         UF = json["uf"].ToString(),
                         Cep = json["cep"].ToString(),
                         Contato = json["telefone"].ToString(),
-                        Fone_1 = json["telefone"].ToString(),
-                        Fone_2 = json["telefone"].ToString(), // Supondo que o telefone pode ser repetido aqui
+                        Fone_1 = json["telefone"]?.ToString()?.Length >= 14 ? json["telefone"].ToString().Substring(0, 14) : json["telefone"]?.ToString(),
+                        Fone_2 = json["telefone"]?.ToString()?.Length >= 14 ? json["telefone"].ToString().Substring(0, 14) : json["telefone"]?.ToString(),
                         Email = json["email"].ToString(),
                         DataCadastro = json["ultima_atualizacao"].ToString(),
                     };

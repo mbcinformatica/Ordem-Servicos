@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Ordem-Servicos
+namespace OrdemServicos
 {
     internal static class Program
     {

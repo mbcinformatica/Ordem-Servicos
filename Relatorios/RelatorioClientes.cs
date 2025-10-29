@@ -1,13 +1,13 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
-using Ordem-Servicos.BLL;
-using Ordem-Servicos.Model;
+using OrdemServicos.BLL;
+using OrdemServicos.Model;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Ordem-Servicos
+namespace OrdemServicos
 {
     public class RelatorioClientes
     {

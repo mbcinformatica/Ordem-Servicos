@@ -1,13 +1,13 @@
-﻿using Ordem-Servicos.BLL;
-using Ordem-Servicos.Forms;
-using Ordem-Servicos.Model;
+﻿using OrdemServicos.BLL;
+using OrdemServicos.Forms;
+using OrdemServicos.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-namespace Ordem-Servicos
+namespace OrdemServicos
 {
     public partial class frmModelos : BaseForm
     {

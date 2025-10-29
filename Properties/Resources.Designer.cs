@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Ordem-Servicos.Properties {
+namespace Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Ordem-Servicos.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ordem-Servicos.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -73,29 +73,9 @@ namespace Ordem-Servicos.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CadeadoAberto1 {
-            get {
-                object obj = ResourceManager.GetObject("CadeadoAberto1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap CadeadoFechado {
             get {
                 object obj = ResourceManager.GetObject("CadeadoFechado", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap CadeadoFechado1 {
-            get {
-                object obj = ResourceManager.GetObject("CadeadoFechado1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -127,6 +107,16 @@ namespace Ordem-Servicos.Properties {
             get {
                 object obj = ResourceManager.GetObject("Excluir24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
+        /// </summary>
+        internal static System.Drawing.Icon icone {
+            get {
+                object obj = ResourceManager.GetObject("icone", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -217,6 +207,16 @@ namespace Ordem-Servicos.Properties {
             get {
                 object obj = ResourceManager.GetObject("Salvar24x24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Icon semelhante a (Ícone).
+        /// </summary>
+        internal static System.Drawing.Icon TOOLS {
+            get {
+                object obj = ResourceManager.GetObject("TOOLS", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

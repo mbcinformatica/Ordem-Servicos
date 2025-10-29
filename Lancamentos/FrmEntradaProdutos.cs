@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Ordem-Servicos.Lancamentos
+namespace OrdemServicos.Lancamentos
 {
     public partial class FrmEntradaProdutos : Form
     {

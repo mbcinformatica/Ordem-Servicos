@@ -1,11 +1,11 @@
-﻿using Ordem-Servicos.Forms;
-using Ordem-Servicos.Model;
+﻿using OrdemServicos.Forms;
+using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Ordem-Servicos.Utils
+namespace OrdemServicos.Utils
 {
 
     public static class EventosUtils
@@ -394,7 +394,6 @@ namespace Ordem-Servicos.Utils
                 }
             }
             else if (acaoBotao == "HabilitarBotaoSalvar")
-
             {
                 if (btnSalvar != null) btnSalvar.Enabled = true;
                 if (btnAlterar != null) btnAlterar.Enabled = false;
@@ -406,7 +405,6 @@ namespace Ordem-Servicos.Utils
                 if (btnCancelar != null) btnCancelar.Enabled = true;
             }
             else if (acaoBotao == "HabilitarBotoesAlterarExcluir")
-
             {
                 if (btnSalvar != null) btnSalvar.Enabled = false;
                 if (btnAlterar != null) btnAlterar.Enabled = true;

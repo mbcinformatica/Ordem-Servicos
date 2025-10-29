@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace Ordem-Servicos.Model
+namespace OrdemServicos.Model
 {
     public class ControlToolTipPair
     {

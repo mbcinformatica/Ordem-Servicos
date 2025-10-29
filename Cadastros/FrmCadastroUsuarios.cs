@@ -1,10 +1,10 @@
 ﻿using AForge.Video;
 using AForge.Video.DirectShow;
 using Newtonsoft.Json.Linq;
-using Ordem-Servicos.BLL;
-using Ordem-Servicos.Forms;
-using Ordem-Servicos.Model;
-using Ordem-Servicos.Utils;
+using OrdemServicos.BLL;
+using OrdemServicos.Forms;
+using OrdemServicos.Model;
+using OrdemServicos.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Ordem-Servicos
+namespace OrdemServicos
 {
     public partial class frmUsuarios : BaseForm
     {

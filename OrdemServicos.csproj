@@ -60,7 +60,7 @@
     <ProjectGuid>{CE5D20A6-6268-411E-932E-8B22B626AE30}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Ordem-Servicos</RootNamespace>
-    <AssemblyName>Ordem-Servicos</AssemblyName>
+    <AssemblyName>OrdemServicos</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -551,7 +551,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include=".editorconfig" />
@@ -601,8 +600,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\CadeadoAberto.png" />
+    <None Include="Resources\CadeadoFechado.png" />
+    <None Include="Resources\Cancelar24X24.png" />
     <None Include="Resources\Editar24x24.png" />
     <None Include="Resources\Excluir24x24.png" />
+    <None Include="Resources\icone.ico" />
     <None Include="Resources\IconePesquisar.png" />
     <None Include="Resources\imagem24x24.png" />
     <None Include="Resources\Impressora24x24.png" />
@@ -611,16 +614,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\Novo24x24.png" />
+    <None Include="Resources\PapelParede.png" />
     <None Include="Resources\Sair24x24.png" />
     <None Include="Resources\Salvar24x24.png" />
-    <None Include="Resources\PapelParede.png" />
-    <None Include="Resources\CadeadoAberto.png" />
-    <None Include="Resources\CadeadoFechado.png" />
-    <Content Include="Resources\icone.ico" />
-    <None Include="Resources\Cancelar24X24.png" />
-    <Content Include="Resources\TOOLS.ICO">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Include="Resources\TOOLS.ICO" />
     <Content Include="TOOLS.ICO" />
     <Content Include="TOOLS1.ICO" />
     <Content Include="XML\config.xml">

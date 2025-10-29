@@ -1,8 +1,8 @@
-﻿using Ordem-Servicos.DAL;
-using Ordem-Servicos.Model;
+﻿using OrdemServicos.DAL;
+using OrdemServicos.Model;
 using System.Collections.Generic;
 
-namespace Ordem-Servicos.BLL
+namespace OrdemServicos.BLL
 {
     public class FornecedorBLL
     {

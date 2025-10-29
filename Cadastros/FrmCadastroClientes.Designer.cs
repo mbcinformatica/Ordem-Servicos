@@ -1,4 +1,4 @@
-﻿namespace Ordem-Servicos
+﻿namespace OrdemServicos
 {
     partial class frmClientes
     {
@@ -43,7 +43,9 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.tabControlClientes = new System.Windows.Forms.TabControl();
             this.tabDadosClientes = new System.Windows.Forms.TabPage();
-            this.btnCarregaArquivo = new System.Windows.Forms.Button();
+            this.lblProgressoCNPJs = new System.Windows.Forms.Label();
+            this.progressBarCNPJs = new System.Windows.Forms.ProgressBar();
+            this.btnCarregaArquivoCnpj = new System.Windows.Forms.Button();
             this.lblEmail = new System.Windows.Forms.Label();
             this.txtPesquisaListView = new System.Windows.Forms.TextBox();
             this.lbContato = new System.Windows.Forms.Label();
@@ -250,7 +252,7 @@
             // tabDadosClientes
             // 
             this.tabDadosClientes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tabDadosClientes.Controls.Add(this.btnCarregaArquivo);
+            this.tabDadosClientes.Controls.Add(this.btnCarregaArquivoCnpj);
             this.tabDadosClientes.Controls.Add(this.lblEmail);
             this.tabDadosClientes.Controls.Add(this.txtIDCliente);
             this.tabDadosClientes.Controls.Add(this.txtPesquisaListView);
@@ -293,20 +295,39 @@
             this.tabDadosClientes.TabIndex = 0;
             this.tabDadosClientes.Text = "   Dados do Cliente   ";
             // 
-            // btnCarregaArquivo
+            // lblProgressoCNPJs
             // 
-            this.btnCarregaArquivo.AutoSize = true;
-            this.btnCarregaArquivo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCarregaArquivo.Enabled = false;
-            this.btnCarregaArquivo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCarregaArquivo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCarregaArquivo.Location = new System.Drawing.Point(451, 150);
-            this.btnCarregaArquivo.Name = "btnCarregaArquivo";
-            this.btnCarregaArquivo.Size = new System.Drawing.Size(130, 40);
-            this.btnCarregaArquivo.TabIndex = 121;
-            this.btnCarregaArquivo.Text = "Carrega Arquivo";
-            this.btnCarregaArquivo.UseVisualStyleBackColor = false;
-            this.btnCarregaArquivo.Click += new System.EventHandler(this.btnCarregaArquivo_Click);
+            this.lblProgressoCNPJs.BackColor = System.Drawing.Color.Transparent;
+            this.lblProgressoCNPJs.ForeColor = System.Drawing.Color.Black;
+            this.lblProgressoCNPJs.Location = new System.Drawing.Point(398, 282);
+            this.lblProgressoCNPJs.Name = "lblProgressoCNPJs";
+            this.lblProgressoCNPJs.Size = new System.Drawing.Size(340, 29);
+            this.lblProgressoCNPJs.TabIndex = 123;
+            this.lblProgressoCNPJs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblProgressoCNPJs.Visible = false;
+            // 
+            // progressBarCNPJs
+            // 
+            this.progressBarCNPJs.Location = new System.Drawing.Point(353, 266);
+            this.progressBarCNPJs.Name = "progressBarCNPJs";
+            this.progressBarCNPJs.Size = new System.Drawing.Size(430, 61);
+            this.progressBarCNPJs.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBarCNPJs.TabIndex = 122;
+            this.progressBarCNPJs.Visible = false;
+            // 
+            // btnCarregaArquivoCnpj
+            // 
+            this.btnCarregaArquivoCnpj.AutoSize = true;
+            this.btnCarregaArquivoCnpj.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCarregaArquivoCnpj.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCarregaArquivoCnpj.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCarregaArquivoCnpj.Location = new System.Drawing.Point(385, 150);
+            this.btnCarregaArquivoCnpj.Name = "btnCarregaArquivoCnpj";
+            this.btnCarregaArquivoCnpj.Size = new System.Drawing.Size(196, 32);
+            this.btnCarregaArquivoCnpj.TabIndex = 121;
+            this.btnCarregaArquivoCnpj.Text = "Carregar Arquivo CNPJ";
+            this.btnCarregaArquivoCnpj.UseVisualStyleBackColor = false;
+            this.btnCarregaArquivoCnpj.Click += new System.EventHandler(this.btnCarregaArquivo_Click);
             // 
             // lblEmail
             // 
@@ -684,7 +705,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1136, 505);
             this.ControlBox = false;
+            this.Controls.Add(this.lblProgressoCNPJs);
             this.Controls.Add(this.tabControlClientes);
+            this.Controls.Add(this.progressBarCNPJs);
             this.Controls.Add(this.pnlBotoes);
             this.Controls.Add(this.listViewClientes);
             this.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -751,6 +774,8 @@
 		private System.Windows.Forms.Button btnNovo;
 		private System.Windows.Forms.Button btnFechar;
 		private System.Windows.Forms.Button btnCancelar;
-		private System.Windows.Forms.Button btnCarregaArquivo;
+		private System.Windows.Forms.Button btnCarregaArquivoCnpj;
+		private System.Windows.Forms.ProgressBar progressBarCNPJs;
+		private System.Windows.Forms.Label lblProgressoCNPJs;
 	}
 }
