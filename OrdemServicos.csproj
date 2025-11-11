@@ -424,7 +424,9 @@
     <Compile Include="DAL\ServicoDAL.cs" />
     <Compile Include="DAL\UnidadeDAL.cs" />
     <Compile Include="DAL\UsuarioDAL.cs" />
-    <Compile Include="DAL\PesquisaWebDAL.cs" />
+    <Compile Include="DAL\PesquisaWebDAL.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DAL\FornecedorDAL .cs" />
     <Compile Include="DAL\ClienteDAL.cs" />
     <Compile Include="Forms\BaseFormFuncoes.cs" />
