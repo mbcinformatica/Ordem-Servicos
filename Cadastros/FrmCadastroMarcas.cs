@@ -23,7 +23,8 @@ namespace OrdemServicos
 		private List<Control> controlesLeave = new List<Control>();
 		private List<Control> controlesEnter = new List<Control>();
 		private List<Control> controlesMouseDown = new List<Control>();
-		private List<Control> controlesBotoes = new List<Control>();
+        private List<Control> controlesMouseMove = new List<Control>();
+        private List<Control> controlesBotoes = new List<Control>();
 		private List<Control> controlesKeyDown = new List<Control>();
 
 		public frmMarcas()
@@ -190,7 +191,11 @@ namespace OrdemServicos
 
 			controlesMouseDown.AddRange(new Control[] { });
 
-			controlesKeyDown.AddRange(new Control[] {
+            controlesMouseMove.AddRange(new Control[] {
+                 listViewMarcas
+            });
+
+            controlesKeyDown.AddRange(new Control[] {
 				txtDescricao,
 				txtPesquisaListView,
 				listViewMarcas
@@ -215,10 +220,10 @@ namespace OrdemServicos
 			var tabControl = Controls.Find("tabControlMarcas", true).FirstOrDefault() as TabControl;
 			var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
 
-			// Inicializar eventos para os controles
-			EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+            // Inicializar eventos para os controles
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
-			listViewMarcas.Click += ListViewMarcas_Click;
+            listViewMarcas.Click += ListViewMarcas_Click;
 			// Focar no btnNovo ao iniciar
 			txtPesquisaListView.Focus();
 		}
@@ -293,8 +298,9 @@ namespace OrdemServicos
 			{
 				MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-		}
-		private void ListViewMarcas_Click( object sender, EventArgs e )
+            LimparCampos();
+        }
+        private void ListViewMarcas_Click( object sender, EventArgs e )
 		{
 			escPressed = false;
 			if (listViewMarcas.SelectedItems.Count > 0)

@@ -26,6 +26,7 @@ namespace OrdemServicos
         private List<Control> controlesLeave = new List<Control>();
         private List<Control> controlesEnter = new List<Control>();
         private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesMouseMove = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
 
@@ -205,9 +206,10 @@ namespace OrdemServicos
         {
             // Adicionar controles às listas específicas com base no tipo de evento
             controlesKeyPress.AddRange(new Control[] {
-                txtIDOrdenServico,
-                txtValorTotalServico,
-                txtValorTotalMaterial
+                cmbCliente,
+                cmbMarca,
+                cmbProduto,
+                txtIDOrdenServico
             });
 
             controlesLeave.AddRange(new Control[] {
@@ -235,6 +237,10 @@ namespace OrdemServicos
 
             controlesMouseDown.AddRange(new Control[] {
                 txtIDOrdenServico
+            });
+
+            controlesMouseMove.AddRange(new Control[] {
+                 listViewLancamentoServicos
             });
 
             controlesKeyDown.AddRange(new Control[] {
@@ -276,8 +282,7 @@ namespace OrdemServicos
             var tabPage = tabControl?.TabPages["tabDadosCliente"];
 
             // Inicializar eventos para os controles
-            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter,
-                                            controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
             // Associar eventos SelectedIndexChanged e Click
             cmbProduto.SelectedIndexChanged += cmbProduto_SelectedIndexChanged;
@@ -379,16 +384,20 @@ namespace OrdemServicos
                 ajustaLarguraCabecalho(listViewLancamentoServicos);
                 tabControlOrdenServico.SelectedTab = tabDadosOrdenServico;
 
-                // Carregar clientes no ComboBox
+                // Carregar clientes no ComboBox em ordem alfabética crescente
                 ClienteBLL clienteBLL = new ClienteBLL();
-                List<ClienteInfo> clientes = clienteBLL.Listar();
+                List<ClienteInfo> clientes = clienteBLL.Listar()
+                    .OrderBy(c => c.Nome_RazaoSocial?.ToUpperInvariant())
+                    .ToList();
                 cmbCliente.DataSource = clientes;
                 cmbCliente.DisplayMember = "Nome_RazaoSocial";
                 cmbCliente.ValueMember = "IDCliente";
 
                 // Carregar marcas no ComboBox
                 MarcaBLL marcaBLL = new MarcaBLL();
-                List<MarcaInfo> marcas = marcaBLL.Listar();
+                List<MarcaInfo> marcas = marcaBLL.Listar()
+                    .OrderBy(m => m.Descricao?.ToUpperInvariant())
+                    .ToList();
                 cmbMarca.DataSource = marcas;
                 cmbMarca.DisplayMember = "Descricao";
                 cmbMarca.ValueMember = "IDMarca";
@@ -397,6 +406,7 @@ namespace OrdemServicos
             {
                 MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            LimparCampos();
         }
         private void ListViewLancamentoServicos_Click(object sender, EventArgs e)
         {
@@ -637,7 +647,10 @@ namespace OrdemServicos
         private void CarregarProdutosPorMarca(int idMarca)
         {
             ProdutoBLL produtoBLL = new ProdutoBLL();
-            List<ProdutoInfo> produtos = produtoBLL.ListarPorMarca(idMarca);
+            List<ProdutoInfo> produtos = produtoBLL.ListarPorMarca(idMarca)
+                .OrderBy(p => p.Descricao?.ToUpperInvariant())
+                .ToList();
+
             if (produtos.Count > 0)
             {
                 cmbProduto.DataSource = produtos;
@@ -819,10 +832,8 @@ namespace OrdemServicos
             cmbProduto.SelectedIndex = -1;
             txtNumeroSerie.Clear();
             txtDescricaoDefeito.Clear();
-            txtValorTotalServico.Text = "0";
-            txtValorTotalMaterial.Text = "0";
-            txtValorTotalServico.Text = StringUtils.FormatValorMoeda(txtValorTotalServico.Text.ToString());
-            txtValorTotalMaterial.Text = StringUtils.FormatValorMoeda(txtValorTotalMaterial.Text.ToString());
+            txtValorTotalServico.Text = StringUtils.FormatValorMoeda("0"); ;
+            txtValorTotalMaterial.Text = StringUtils.FormatValorMoeda("0");
             imgImagemProduto.Image = null;
             txtPesquisaListView.Clear();
             bNovo = false;
@@ -866,5 +877,5 @@ namespace OrdemServicos
                 MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-    }
+	}
 }

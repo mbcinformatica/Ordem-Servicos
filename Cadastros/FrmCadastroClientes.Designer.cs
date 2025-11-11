@@ -44,8 +44,8 @@
             this.tabControlClientes = new System.Windows.Forms.TabControl();
             this.tabDadosClientes = new System.Windows.Forms.TabPage();
             this.progressBarCNPJs = new System.Windows.Forms.ProgressBar();
-            this.lblEmail = new System.Windows.Forms.Label();
             this.lblProgressoCNPJs = new System.Windows.Forms.Label();
+            this.lblEmail = new System.Windows.Forms.Label();
             this.txtPesquisaListView = new System.Windows.Forms.TextBox();
             this.lbContato = new System.Windows.Forms.Label();
             this.txtUF = new System.Windows.Forms.TextBox();
@@ -79,6 +79,7 @@
             this.btnCarregaArquivoCpf = new System.Windows.Forms.Button();
             this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
+            this.tlpListViewCelula = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.tabControlClientes.SuspendLayout();
@@ -261,8 +262,8 @@
             // 
             this.tabDadosClientes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tabDadosClientes.Controls.Add(this.progressBarCNPJs);
-            this.tabDadosClientes.Controls.Add(this.lblEmail);
             this.tabDadosClientes.Controls.Add(this.lblProgressoCNPJs);
+            this.tabDadosClientes.Controls.Add(this.lblEmail);
             this.tabDadosClientes.Controls.Add(this.txtIDCliente);
             this.tabDadosClientes.Controls.Add(this.txtPesquisaListView);
             this.tabDadosClientes.Controls.Add(this.lbContato);
@@ -318,17 +319,6 @@
             this.progressBarCNPJs.Tag = "naoAplicar";
             this.progressBarCNPJs.Visible = false;
             // 
-            // lblEmail
-            // 
-            this.lblEmail.AutoSize = true;
-            this.lblEmail.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmail.Location = new System.Drawing.Point(782, 132);
-            this.lblEmail.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(69, 19);
-            this.lblEmail.TabIndex = 118;
-            this.lblEmail.Text = "E-Mail..:";
-            // 
             // lblProgressoCNPJs
             // 
             this.lblProgressoCNPJs.BackColor = System.Drawing.Color.Azure;
@@ -343,6 +333,17 @@
             this.lblProgressoCNPJs.Tag = "";
             this.lblProgressoCNPJs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblProgressoCNPJs.Visible = false;
+            // 
+            // lblEmail
+            // 
+            this.lblEmail.AutoSize = true;
+            this.lblEmail.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEmail.Location = new System.Drawing.Point(782, 132);
+            this.lblEmail.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(69, 19);
+            this.lblEmail.TabIndex = 118;
+            this.lblEmail.Text = "E-Mail..:";
             // 
             // txtPesquisaListView
             // 
@@ -685,6 +686,7 @@
             // 
             this.btnCarregaArquivoCnpj.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCarregaArquivoCnpj.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCarregaArquivoCnpj.Image = ((System.Drawing.Image)(resources.GetObject("btnCarregaArquivoCnpj.Image")));
             this.btnCarregaArquivoCnpj.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCarregaArquivoCnpj.Location = new System.Drawing.Point(477, 198);
             this.btnCarregaArquivoCnpj.Margin = new System.Windows.Forms.Padding(4);
@@ -700,6 +702,7 @@
             this.btnCarregaArquivoCpf.AutoSize = true;
             this.btnCarregaArquivoCpf.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCarregaArquivoCpf.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCarregaArquivoCpf.Image = ((System.Drawing.Image)(resources.GetObject("btnCarregaArquivoCpf.Image")));
             this.btnCarregaArquivoCpf.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCarregaArquivoCpf.Location = new System.Drawing.Point(753, 198);
             this.btnCarregaArquivoCpf.Margin = new System.Windows.Forms.Padding(4);
@@ -798,5 +801,6 @@
 		private System.Windows.Forms.ProgressBar progressBarCNPJs;
 		private System.Windows.Forms.Label lblProgressoCNPJs;
 		private System.Windows.Forms.Button btnCarregaArquivoCpf;
+		private System.Windows.Forms.ToolTip tlpListViewCelula;
 	}
 }

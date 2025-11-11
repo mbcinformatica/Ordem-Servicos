@@ -33,6 +33,7 @@ namespace OrdemServicos
         private List<Control> controlesLeave = new List<Control>();
         private List<Control> controlesEnter = new List<Control>();
         private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesMouseMove = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
         private readonly EventArgs e = new EventArgs();
@@ -260,7 +261,12 @@ namespace OrdemServicos
                 listViewClientes
             });
 
+
             controlesMouseDown.AddRange(new Control[] { });
+
+            controlesMouseMove.AddRange(new Control[] {
+                 listViewClientes
+            });
 
             controlesKeyDown.AddRange(new Control[] {
                 txtCpfCnpj,
@@ -304,9 +310,7 @@ namespace OrdemServicos
             var tabControl = Controls.Find("tabControlClientes", true).FirstOrDefault() as TabControl;
             var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
 
-            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave,
-                                            controlesEnter, controlesMouseDown, controlesKeyDown,
-                                            controlesBotoes, this, tabControl, tabPage);
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
             listViewClientes.Click += ListViewClientes_Click;
             txtPesquisaListView.Focus();
@@ -397,6 +401,7 @@ namespace OrdemServicos
             {
                 MessageBox.Show("Erro ao carregar registros: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            LimparCampos();
         }
         private void ListViewClientes_Click(object sender, EventArgs e)
         {

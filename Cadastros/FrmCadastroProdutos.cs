@@ -536,48 +536,51 @@ namespace OrdemServicos
             listViewProdutos.Items.Clear();
             listViewProdutos.Columns.Clear();
             InitializeListView();
+
             try
             {
                 ProdutoBLL produtoBLL = new ProdutoBLL();
                 List<ProdutoInfo> produtos = produtoBLL.Listar();
+
                 foreach (ProdutoInfo produto in produtos)
                 {
                     ListViewItem item = new ListViewItem(produto.IDProduto.ToString());
                     item.SubItems.Add(produto.IDProdutoInterno);
                     item.SubItems.Add(produto.IDProdutoFabricante);
                     item.SubItems.Add(produto.Descricao);
-                    item.SubItems.Add(produto.Fornecedor); // Usar o nome do fornecedor
-                    item.SubItems.Add(produto.Marca); // Usar o nome da marca
-                    item.SubItems.Add(produto.Modelo); // Usar o nome do modelo
-                    item.SubItems.Add(produto.Unidade); // Usar o nome da unidade
+                    item.SubItems.Add(produto.Fornecedor);
+                    item.SubItems.Add(produto.Marca);
+                    item.SubItems.Add(produto.Modelo);
+                    item.SubItems.Add(produto.Unidade);
                     item.SubItems.Add(StringUtils.FormatValorMoeda(produto.PrecoCompra.ToString()));
                     item.SubItems.Add(StringUtils.FormatValorMoeda(produto.PrecoVenda.ToString()));
                     item.SubItems.Add(StringUtils.FormatValorUnidade(produto.EstoqueAtual.ToString()));
                     item.SubItems.Add(StringUtils.FormatValorUnidade(produto.EstoqueMinimo.ToString()));
                     item.SubItems.Add(produto.DataUltimaCompra.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(produto.Garantia);
-                    // Carregar a imagem (sem exibir na ListView)
+
                     if (produto.Imagem != null && produto.Imagem.Length > 0)
                     {
                         using (MemoryStream ms = new MemoryStream(produto.Imagem))
                         {
                             Image imgImagemProduto = Image.FromStream(ms);
-                            // A imagem é carregada, mas não exibida na ListView
                         }
                     }
+
                     listViewProdutos.Items.Add(item);
                 }
-                // Ajustar automaticamente o tamanho das colunas ao conteúdo, mas não menor que o cabeçalho
+
                 foreach (ColumnHeader column in listViewProdutos.Columns)
                 {
-                    column.AutoResize(ColumnHeaderAutoResizeStyle.HeaderSize); // Ajusta a largura ao cabeçalho primeiro
-                    int headerWidth = TextRenderer.MeasureText(column.Text, listViewProdutos.Font).Width + 20; // Adiciona uma margem
-                    column.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent); // Ajusta a largura ao conteúdo
+                    column.AutoResize(ColumnHeaderAutoResizeStyle.HeaderSize);
+                    int headerWidth = TextRenderer.MeasureText(column.Text, listViewProdutos.Font).Width + 20;
+                    column.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
                     if (column.Width < headerWidth)
                     {
-                        column.Width = headerWidth; // Garantir que a largura não fique menor que o cabeçalho
+                        column.Width = headerWidth;
                     }
                 }
+
                 listaOriginalItens = listViewProdutos.Items.Cast<ListViewItem>().ToList();
                 lbTotalRegistros.Text = "Total de Registros: " + listViewProdutos.Items.Count;
                 sortColumn = 3;
@@ -585,24 +588,34 @@ namespace OrdemServicos
                 listViewProdutos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
                 listViewProdutos.Sort();
                 listViewProdutos.Columns[sortColumn].Width = listViewProdutos.Columns[sortColumn].Width;
-                // Carregar fornecedores no ComboBox
+
+                // 🔠 Carregar fornecedores ordenados
                 FornecedorBLL fornecedorBLL = new FornecedorBLL();
-                List<FornecedorInfo> fornecedores = fornecedorBLL.Listar();
+                List<FornecedorInfo> fornecedores = fornecedorBLL.Listar()
+                    .OrderBy(f => f.Nome_RazaoSocial?.ToUpperInvariant())
+                    .ToList();
                 cmbFornecedor.DataSource = fornecedores;
                 cmbFornecedor.DisplayMember = "Nome_RazaoSocial";
                 cmbFornecedor.ValueMember = "IDFornecedor";
-                // Carregar marcas no ComboBox
+
+                // 🔠 Carregar marcas ordenadas
                 MarcaBLL marcaBLL = new MarcaBLL();
-                List<MarcaInfo> marcas = marcaBLL.Listar();
+                List<MarcaInfo> marcas = marcaBLL.Listar()
+                    .OrderBy(m => m.Descricao?.ToUpperInvariant())
+                    .ToList();
                 cmbMarca.DataSource = marcas;
                 cmbMarca.DisplayMember = "Descricao";
                 cmbMarca.ValueMember = "IDMarca";
-                // Carregar unidades no ComboBox
+
+                // 🔠 Carregar unidades ordenadas
                 UnidadeBLL unidadeBLL = new UnidadeBLL();
-                List<UnidadeInfo> unidades = unidadeBLL.Listar();
+                List<UnidadeInfo> unidades = unidadeBLL.Listar()
+                    .OrderBy(u => u.Descricao?.ToUpperInvariant())
+                    .ToList();
                 cmbUnidade.DataSource = unidades;
                 cmbUnidade.DisplayMember = "Descricao";
                 cmbUnidade.ValueMember = "IDUnidade";
+
                 tabControlProdutos.SelectedTab = tabDadosProduto;
             }
             catch (Exception ex)
@@ -660,7 +673,10 @@ namespace OrdemServicos
         private void CarregarModelosPorMarca(int idMarca)
         {
             ModeloBLL modeloBLL = new ModeloBLL();
-            List<ModeloInfo> modelos = modeloBLL.ListarPorMarca(idMarca);
+            List<ModeloInfo> modelos = modeloBLL.ListarPorMarca(idMarca)
+                .OrderBy(mo => mo.Descricao?.ToUpperInvariant())
+                .ToList();
+
             if (modelos.Count > 0)
             {
                 cmbModelo.DataSource = modelos;

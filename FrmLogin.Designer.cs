@@ -58,6 +58,7 @@ namespace OrdemServicos
             this.lblTitulo = new System.Windows.Forms.Label();
             this.imgCadeadoFechado = new System.Windows.Forms.PictureBox();
             this.imgCadeadoAberto = new System.Windows.Forms.PictureBox();
+            this.tlpListViewCelula = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgImagemUsuario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgCadeadoFechado)).BeginInit();
@@ -210,7 +211,7 @@ namespace OrdemServicos
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnSair;
-            this.ClientSize = new System.Drawing.Size(602, 223);
+            this.ClientSize = new System.Drawing.Size(598, 219);
             this.ControlBox = false;
             this.Controls.Add(this.imgCadeadoFechado);
             this.Controls.Add(this.imgCadeadoAberto);
@@ -255,6 +256,7 @@ namespace OrdemServicos
 		private System.Windows.Forms.Label lblTitulo;
 		private PictureBox imgCadeadoAberto;
 		private PictureBox imgCadeadoFechado;
+		private ToolTip tlpListViewCelula;
 	}
 }
 

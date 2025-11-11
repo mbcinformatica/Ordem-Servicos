@@ -10,13 +10,16 @@ using System.Linq;
 
 namespace OrdemServicos.Forms
 {
-	public partial class BaseForm : Form, BaseFormFuncoes
+    public partial class BaseForm : Form, BaseFormFuncoes
     {
+        // 🎨 Estilo visual - Gradientes e cores
         protected Color gradientStartColor { get; set; }
         protected Color gradientEndColor { get; set; }
         protected Color menuStripBackgroundColor { get; set; }
         protected Color gradientMenuEndColor { get; set; }
         protected Color menuStripFontColor { get; set; }
+
+        // 📝 TextBox
         protected Color textBoxBackgroundColor { get; set; }
         protected Color textBoxFontColor { get; set; }
         protected BorderStyle textBoxBorderStyle { get; set; }
@@ -27,6 +30,8 @@ namespace OrdemServicos.Forms
         protected int textBoxMarginTop { get; set; }
         protected int textBoxMarginRight { get; set; }
         protected int textBoxMarginBottom { get; set; }
+
+        // 🔘 Button
         public Color buttonBackgroundColor { get; set; }
         public Color buttonFontColor { get; set; }
         protected bool buttonAutoSize { get; set; }
@@ -36,6 +41,8 @@ namespace OrdemServicos.Forms
         protected string buttonFontFamily { get; set; }
         protected float buttonFontSize { get; set; }
         protected FontStyle buttonFontStyle { get; set; }
+
+        // 🏷️ Label
         protected Color labelBackgroundColor { get; set; }
         protected Color labelFontColor { get; set; }
         protected bool labelAutoSize { get; set; }
@@ -46,27 +53,34 @@ namespace OrdemServicos.Forms
         protected int labelMarginTop { get; set; }
         protected int labelMarginRight { get; set; }
         protected int labelMarginBottom { get; set; }
-        protected Color panelBackgroundColor { get; set; }
-        //
-        // Faz parte dos Formularios, EventosUtils, BaseFormFuncoes
-        // Inicio
 
+        // 📦 Panel
+        protected Color panelBackgroundColor { get; set; }
+
+        // ⚙️ Estado e controle de formulário
         public DateTime dataEmissaoControl { get; set; }
         public bool escPressed { get; set; }
         public bool bNovo { get; set; }
-        public bool CampoObrigatorio { get; set; }  
+        public bool CampoObrigatorio { get; set; }
         public Control ControleAnterior { get; set; }
         public string TagFormato { get; set; }
         public string TagAction { get; set; }
         public int TagMaxDigito { get; set; }
         public static string UsuarioLogado { get; set; }
+
+        // 📌 Métodos virtuais
         public virtual void CarregarRegistros() { }
         public virtual void LimparCampos() { }
         public virtual void ExecutaFuncaoEvento(Control control) { }
-        //
-        //Final
 
-        protected void LoadConfig() {CarregaDadosControles("config.xml");}
+        // 🖱️ ToolTip para ListView
+        public ToolTip tlpListViewCelula = new ToolTip();
+        public string ultimoTextoTooltip = "";
+
+        protected void LoadConfig() 
+        {
+            CarregaDadosControles("config.xml");
+        }
         protected void ApplyConfigToControls(Control.ControlCollection controls, XDocument config)
         {
             foreach (Control control in controls)
@@ -156,6 +170,15 @@ namespace OrdemServicos.Forms
                     menuStrip.Renderer = new GradientMenuRenderer(this);
                     menuStrip.ForeColor = menuStripFontColor;
                 }
+                else if (control is ListView listView)
+                {
+                    tlpListViewCelula.InitialDelay = 100;     // Aparece quase instantaneamente
+                    tlpListViewCelula.ReshowDelay = 50;       // Reaparece rapidamente ao mover o mouse
+                    tlpListViewCelula.AutoPopDelay = 3000;    // Some após 3s
+                    tlpListViewCelula.ShowAlways = true;
+                    tlpListViewCelula.OwnerDraw = true;
+                    tlpListViewCelula.Draw += tlpListViewCelula_Draw;
+                }
             }
         }
         protected void BaseForm_Paint(object sender, PaintEventArgs e)
@@ -221,6 +244,24 @@ namespace OrdemServicos.Forms
                 }
                 // Desenhar o texto das abas inativas com a cor padrão
                 TextRenderer.DrawText(e.Graphics, tabPage.Text, tabPage.Font, tabRect, tabPage.ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+            }
+        }
+        protected void tlpListViewCelula_Draw(object sender, DrawToolTipEventArgs e)
+        {
+            // Fundo personalizado
+            using (SolidBrush backBrush = new SolidBrush(Color.FromArgb(40, 40, 40))) // fundo escuro
+            using (SolidBrush textBrush = new SolidBrush(Color.White)) // texto branco
+            using (Pen borderPen = new Pen(Color.SteelBlue)) // borda azul
+            {
+                // Desenhar fundo
+                e.Graphics.FillRectangle(backBrush, e.Bounds);
+
+                // Desenhar borda
+                e.Graphics.DrawRectangle(borderPen, e.Bounds);
+
+                // Desenhar texto com fonte personalizada
+                Font fonte = new Font("Segoe UI", 9, FontStyle.Regular);
+                e.Graphics.DrawString(e.ToolTipText, fonte, textBrush, e.Bounds);
             }
         }
         protected void TabPage_Paint(object sender, PaintEventArgs e)
@@ -455,7 +496,6 @@ namespace OrdemServicos.Forms
                 labelMarginBottom = int.Parse(config.Root.Element("LabelMarginBottom").Value);
 
                 panelBackgroundColor = ConvertHexToColor(config.Root.Element("PanelBackgroundColor").Value);
-
                 ApplyConfigToControls(Controls, config);
             }
             catch (Exception ex)

@@ -34,8 +34,18 @@ namespace OrdemServicos.Utils
                 }
             }
         }
-        public static void InicializarEventos(Control.ControlCollection controles, List<Control> controlesKeyPress, List<Control> controlesLeave, List<Control> controlesEnter, List<Control> controlesMouseDown, List<Control> controlesKeyDown, List<Control> controlesBotoes, BaseForm form, TabControl tabControl, TabPage tabPage)
-
+        public static void InicializarEventos(
+            Control.ControlCollection controles,
+            List<Control> controlesKeyPress,
+            List<Control> controlesLeave,
+            List<Control> controlesEnter,
+            List<Control> controlesMouseDown,
+            List<Control> controlesMouseMove,
+            List<Control> controlesKeyDown,
+            List<Control> controlesBotoes,
+            BaseForm form,
+            TabControl tabControl,
+            TabPage tabPage)
         {
             foreach (Control controle in controles)
             {
@@ -64,11 +74,29 @@ namespace OrdemServicos.Utils
                     controle.MouseEnter += (sender, e) => Button_MouseEnter(sender, e, form);
                     controle.MouseLeave += (sender, e) => Button_MouseLeave(sender, e, form);
                 }
+
+                // ✅ Adiciona suporte ao evento MouseMove para ListView
+                if (controlesMouseMove.Contains(controle))
+                {
+                    controle.MouseMove += (sender, e) => Evento_MouseMove(sender, e, controle, form);
+                }
+
+                // Recursividade para painéis e abas
                 if (controle is Panel || controle is TabControl || controle is TabPage)
                 {
-                    InicializarEventos(controle.Controls, controlesKeyPress,
-                                       controlesLeave, controlesEnter, controlesMouseDown,
-                                       controlesKeyDown, controlesBotoes, form, tabControl, tabPage);
+                    InicializarEventos(
+                        controle.Controls,
+                        controlesKeyPress,
+                        controlesLeave,
+                        controlesEnter,
+                        controlesMouseDown,
+                        controlesMouseMove,
+                        controlesKeyDown,
+                        controlesBotoes,
+                        form,
+                        tabControl,
+                        tabPage
+                    );
                 }
             }
         }
@@ -150,6 +178,13 @@ namespace OrdemServicos.Utils
                 {
                     // Permite somente letras no TextBox específico
                     e.Handled = true;
+                }
+            }
+            else if (sender is ComboBox comboBox)
+            {
+                if (comboBox.DropDownStyle == ComboBoxStyle.DropDown && !char.IsControl(e.KeyChar))
+                {
+                    e.KeyChar = char.ToUpper(e.KeyChar);
                 }
             }
         }
@@ -263,7 +298,7 @@ namespace OrdemServicos.Utils
                         {
                             form.ExecutaFuncaoEvento(maskedTextBox);
                         }
-                        
+
                     }
                 }
             }
@@ -324,6 +359,32 @@ namespace OrdemServicos.Utils
                 }
             }
         }
+        public static void Evento_MouseMove(object sender, MouseEventArgs e, Control nomeControles, BaseForm form)
+        {
+            if (sender is ListView listView)
+            {
+
+                ListViewHitTestInfo hit = listView.HitTest(e.Location);
+                ListViewItem item = hit.Item;
+                ListViewItem.ListViewSubItem subItem = hit.SubItem;
+
+                if (item != null && subItem != null)
+                {
+                    string texto = subItem.Text;
+
+                    if (texto != form.ultimoTextoTooltip)
+                    {
+                        form.tlpListViewCelula.SetToolTip(listView, texto);
+                        form.ultimoTextoTooltip = texto;
+                   }
+                }
+                else
+                {
+                    form.tlpListViewCelula.SetToolTip(listView, "");
+                    form.ultimoTextoTooltip = "";
+                }
+            }
+        }
         public static void Button_MouseEnter(object sender, EventArgs e, BaseForm form)
         {
             if (sender is Button button)
@@ -343,7 +404,7 @@ namespace OrdemServicos.Utils
         public static void AcaoBotoes(String acaoBotao, BaseForm form)
         {
             Button btnSalvar = null, btnAlterar = null,
-                   btnExcluir = null, btnFechar = null, btnNovo = null, 
+                   btnExcluir = null, btnFechar = null, btnNovo = null,
                    btnCarregaArquivoCnpj = null, btnCarregaArquivoCpf = null, btnCancelar = null;
 
             foreach (Control control in form.Controls)

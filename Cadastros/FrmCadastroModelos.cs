@@ -1,6 +1,7 @@
 ﻿using OrdemServicos.BLL;
 using OrdemServicos.Forms;
 using OrdemServicos.Model;
+using OrdemServicos.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,32 +12,33 @@ namespace OrdemServicos
 {
     public partial class frmModelos : BaseForm
     {
-		private int sortColumn = -1;
-		private bool sortAscending = true;
-		private Color defaultHeaderBackColor = Color.DarkTurquoise;
-		private Color clickedHeaderBackColor = Color.CadetBlue;
+        private int sortColumn = -1;
+        private bool sortAscending = true;
+        private Color defaultHeaderBackColor = Color.DarkTurquoise;
+        private Color clickedHeaderBackColor = Color.CadetBlue;
+        private (Control, string)[] camposObrigatorios;
+        private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
+        private List<Control> controlesKeyPress = new List<Control>();
+        private List<Control> controlesLeave = new List<Control>();
+        private List<Control> controlesEnter = new List<Control>();
+        private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesMouseMove = new List<Control>();
+        private List<Control> controlesBotoes = new List<Control>();
+        private List<Control> controlesKeyDown = new List<Control>();
 
-		private (Control, string)[] camposObrigatorios;
-		private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
-		private List<Control> controlesKeyPress = new List<Control>();
-		private List<Control> controlesLeave = new List<Control>();
-		private List<Control> controlesEnter = new List<Control>();
-		private List<Control> controlesMouseDown = new List<Control>();
-		private List<Control> controlesBotoes = new List<Control>();
-		private List<Control> controlesKeyDown = new List<Control>();
-
-		public frmModelos()
+        public frmModelos()
         {
-			InitializeComponent();
-			LoadConfig();
-			Paint += new PaintEventHandler(BaseForm_Paint);
-			InitializeTabControl(tabControlModelos);
-			erpProvider = new ErrorProvider();
-			ConfigurarTextBox();
-			CarregaKey();
-			ConfigurarTabIndexControles();
-			CarregarRegistros();
-		}
+            InitializeComponent();
+            LoadConfig();
+            Paint += new PaintEventHandler(BaseForm_Paint);
+            InitializeTabControl(tabControlModelos);
+            erpProvider = new ErrorProvider();
+            ConfigurarComboBoxMarcas();
+            ConfigurarTextBox();
+            CarregaKey();
+            ConfigurarTabIndexControles();
+            CarregarRegistros();
+        }
         private void InitializeListView()
         {
             // Configurar a ListView
@@ -49,9 +51,11 @@ namespace OrdemServicos
             // Adicionar colunas
             listViewModelos.Columns.Add("ID", 50, HorizontalAlignment.Right);
             listViewModelos.Columns.Add("  MARCA", 250, HorizontalAlignment.Left);
-            listViewModelos.Columns.Add("  DESCRIÇÃO", -1, HorizontalAlignment.Left);
+            listViewModelos.Columns.Add("  DESCRIÇÃO", 459, HorizontalAlignment.Left);
             // Adicionar evento de clique no cabeçalho da coluna
             listViewModelos.ColumnClick += new ColumnClickEventHandler(ListViewModelos_ColumnClick);
+            listViewModelos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+            listViewModelos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
         private void ListViewModelos_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -184,27 +188,61 @@ namespace OrdemServicos
         }
         private void CarregaKey()
         {
-            txtDescricao.KeyDown += Evento_KeyDown;
-            txtPesquisaListView.KeyDown += Evento_KeyDown;
-            cmbMarca.KeyDown += Evento_KeyDown;
-            listViewModelos.KeyDown += Evento_KeyDown;
+            // Adicionar controles às listas específicas com base no tipo de evento
+            controlesKeyPress.AddRange(new Control[] {
+                cmbMarca
+            });
 
-            cmbMarca.Leave += Evento_Leave; // Adiciona o evento Leave
-            txtDescricao.Leave += Evento_Leave;
+            controlesLeave.AddRange(new Control[] {
+                cmbMarca,
+                txtDescricao
+            });
 
-            // Adiciona eventos de mouse aos botões
-            btnSalvar.MouseEnter += Button_MouseEnter;
-            btnSalvar.MouseLeave += Button_MouseLeave;
-            btnAlterar.MouseEnter += Button_MouseEnter;
-            btnAlterar.MouseLeave += Button_MouseLeave;
-            btnExcluir.MouseEnter += Button_MouseEnter;
-            btnExcluir.MouseLeave += Button_MouseLeave;
-            btnFechar.MouseEnter += Button_MouseEnter;
-            btnFechar.MouseLeave += Button_MouseLeave;
-            btnNovo.MouseEnter += Button_MouseEnter;
-            btnNovo.MouseLeave += Button_MouseLeave;
+            controlesEnter.AddRange(new Control[] {
+                cmbMarca,
+                txtDescricao,
+                txtPesquisaListView,
+                listViewModelos
+            });
+
+            controlesMouseDown.AddRange(new Control[] { });
+
+            controlesMouseMove.AddRange(new Control[] {
+                 listViewModelos
+            });
+
+            controlesKeyDown.AddRange(new Control[] {
+                cmbMarca,
+                txtDescricao,
+                txtPesquisaListView,
+                listViewModelos
+            });
+
+            controlesBotoes.AddRange(new Control[] {
+                btnSalvar,
+                btnAlterar,
+                btnExcluir,
+                btnFechar,
+                btnCancelar,
+                btnNovo
+            });
+
+            // Definir a propriedade Tag para comportamentos específicos
+            this.Tag = "frmModelos";
+
+            txtDescricao.Tag = new BaseForm { TagAction = "TabPage" }; // Permitir somente letras
+
+            // Localizar o TabControl e a TabPage
+            var tabControl = Controls.Find("tabDadosModelo", true).FirstOrDefault() as TabControl;
+            var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
+
+            // Inicializar eventos para os controles
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
             listViewModelos.Click += ListViewModelos_Click;
+
+            // Focar no btnNovo ao iniciar
+            txtPesquisaListView.Focus();
         }
         private void ConfigurarTabIndexControles()
         {
@@ -212,24 +250,6 @@ namespace OrdemServicos
             cmbMarca.TabIndex = 0;
             txtDescricao.TabIndex = 1;
             btnSalvar.TabIndex = 2;
-        }
-        private void Button_MouseEnter(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-            if (button != null)
-            {
-                button.BackColor = buttonFontColor; // Cor de fundo ao passar o mouse
-                button.ForeColor = buttonBackgroundColor; // Cor da fonte ao passar o mouse
-            }
-        }
-        private void Button_MouseLeave(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-            if (button != null)
-            {
-                button.BackColor = buttonBackgroundColor; // Cor de fundo original
-                button.ForeColor = buttonFontColor; // Cor da fonte original
-            }
         }
         private bool MarcaExiste(string descricao)
         {
@@ -242,38 +262,9 @@ namespace OrdemServicos
             cmbMarca.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             cmbMarca.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
-        private void Evento_KeyDown(object sender, KeyEventArgs e)
+        public override void ExecutaFuncaoEvento(Control control)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true; // Impede o som de "beep"
-                SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                escPressed = true;
-                AutoValidate = AutoValidate.Disable;
-                CarregarRegistros();
-                LimparCampos();
-                AutoValidate = AutoValidate.EnablePreventFocusChange;
-            }
-        }
-        private void Evento_Leave(object sender, EventArgs e)
-        {
-            if (escPressed)
-            {
-                return; // Sai do método sem fazer verificações
-            }
-            TextBox textBox = sender as TextBox;
-            if (textBox != null)
-            {
-                if (sender == txtDescricao && !string.IsNullOrEmpty(txtDescricao.Text))
-                {
-                    tabControlModelos.SelectedTab = tabInformacoesAdicionais;
-                }
-            }
-            ComboBox comboBox = sender as ComboBox;
-            if (comboBox != null)
+            if (control == cmbMarca)
             {
                 string marcaDigitada = cmbMarca.Text.ToUpper(); // Converte para maiúsculas
                 cmbMarca.Text = marcaDigitada; // Atualiza o texto no ComboBox
@@ -288,11 +279,9 @@ namespace OrdemServicos
                             frmMarcas frm = new frmMarcas();
                             frm.ShowDialog();
                             MarcaBLL marcaBLL = new MarcaBLL();
-                            // Recarregar as marcas no ComboBox
-                            List<MarcaInfo> marcas = marcaBLL.Listar();
-                            // Ordenar a lista de marcas em ordem alfabética
-                            marcas = marcas.OrderBy(m => m.Descricao).ToList();
-                            // Definir a fonte de dados do ComboBox
+                            List<MarcaInfo> marcas = marcaBLL.Listar()
+                                .OrderBy(m => m.Descricao?.ToUpperInvariant())
+                                .ToList();
                             cmbMarca.DataSource = marcas;
                             cmbMarca.DisplayMember = "Descricao";
                             cmbMarca.ValueMember = "IDMarca";
@@ -305,12 +294,13 @@ namespace OrdemServicos
                     cmbMarca.Text = string.Empty;
                     cmbMarca.Focus();
                 }
-                else if (string.IsNullOrEmpty(marcaDigitada))
+                if (string.IsNullOrEmpty(marcaDigitada))
                 {
                     MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     cmbMarca.Focus();
                 }
             }
+
         }
         private void ConfigurarTextBox()
         {
@@ -324,10 +314,10 @@ namespace OrdemServicos
                 camposObrigatorios
             );
         }
-        private new void CarregarRegistros()
+        public override void CarregarRegistros()
         {
-            DesabilitarCampos();
-            DesabilitarBotoesAcoes();
+            DesabilitarCamposDoFormulario();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
             listViewModelos.Items.Clear();
             listViewModelos.Columns.Clear();
             InitializeListView();
@@ -347,15 +337,19 @@ namespace OrdemServicos
                 lbTotalRegistros.Text = "Total de Registros: " + listViewModelos.Items.Count;
                 sortColumn = 2;
                 sortAscending = true;
-                listViewModelos.Sort();
                 listViewModelos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
+                listViewModelos.Sort();
+                listViewModelos.Columns[sortColumn].Width = listViewModelos.Columns[sortColumn].Width;
                 ajustaLarguraCabecalho(listViewModelos);
+                tabControlModelos.SelectedTab = tabDadosModelo;
+
                 MarcaBLL marcaBLL = new MarcaBLL();
-                List<MarcaInfo> marcas = marcaBLL.Listar();
+                List<MarcaInfo> marcas = marcaBLL.Listar()
+                    .OrderBy(m => m.Descricao?.ToUpperInvariant())
+                    .ToList();
                 cmbMarca.DataSource = marcas;
                 cmbMarca.DisplayMember = "Descricao";
                 cmbMarca.ValueMember = "IDMarca";
-                tabControlModelos.SelectedTab = tabDadosModelo;
             }
             catch (Exception ex)
             {
@@ -381,7 +375,7 @@ namespace OrdemServicos
                         cmbMarca.SelectedValue = marca.IDMarca;
                     }
                     txtDescricao.Text = item.SubItems[2].Text;
-                    HabilitarBotoesAlterarExcluir();
+                    EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
                 }
             }
             catch (Exception ex)
@@ -392,10 +386,10 @@ namespace OrdemServicos
         private void btnNovo_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            HabilitarBotaoSalvar();
+            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
             txtIDModelo.Text = "0";
             bNovo = true;
-            HabilitarCampos("Novo");
+            HabilitarCamposDoFormulario("Novo");
         }
         private void btnSalvar_Click(object sender, EventArgs e)
         {
@@ -404,7 +398,6 @@ namespace OrdemServicos
             if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
             {
                 MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 return;
             }
             bool isAtualizacao = false;
@@ -444,8 +437,8 @@ namespace OrdemServicos
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
-            HabilitarBotaoSalvar();
-            HabilitarCampos("Alterar");
+            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
+            HabilitarCamposDoFormulario("Alterar");
         }
         private void btnExcluir_Click(object sender, EventArgs e)
         {
@@ -462,79 +455,55 @@ namespace OrdemServicos
                 }
             }
             CarregarRegistros();
-            DesabilitarBotoesAcoes();
-            LimparCampos();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
         }
         private void btnFechar_Click(object sender, EventArgs e)
         {
-            Close();
+            this.Close();
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             CarregarRegistros();
-            LimparCampos();
         }
-        private void DesabilitarCampos()
+        private void DesabilitarCamposDoFormulario()
         {
-            cmbMarca.Enabled = false;
-            txtDescricao.Enabled = false;
+            List<Control> controlesDesabilitar = new List<Control>
+        {
+            cmbMarca,
+            txtDescricao
+        };
+            EventosUtils.DesabilitarControles(controlesDesabilitar, this);
             listViewModelos.Enabled = true;
             txtPesquisaListView.Enabled = true;
+
         }
-        private void HabilitarCampos(string buttonPressed)
+        private void HabilitarCamposDoFormulario(string buttonPressed)
         {
-            cmbMarca.Enabled = true;
-            txtDescricao.Enabled = true;
+
             listViewModelos.Enabled = false;
             txtPesquisaListView.Enabled = false;
+
+            List<Control> controlesHabilitar = new List<Control>
+            {
+            cmbMarca,
+            txtDescricao
+            };
+            EventosUtils.HabilitarControles(controlesHabilitar, this);
             switch (buttonPressed)
             {
                 case "Novo":
                     cmbMarca.Focus();
                     break;
-                case "Salvar":
-                    // Adicionar ações específicas para "Salvar" se necessário
-                    break;
                 case "Alterar":
                     cmbMarca.Focus();
                     break;
-                case "Excluir":
-                    // Adicionar ações específicas para "Excluir" se necessário
-                    break;
-                default:
-                    break;
             }
         }
-        private void DesabilitarBotoesAcoes()
-        {
-            btnSalvar.Enabled = false;
-            btnAlterar.Enabled = false;
-            btnExcluir.Enabled = false;
-            btnFechar.Enabled = true;
-            btnNovo.Enabled = true;
-            btnNovo.Focus();
-        }
-        private void HabilitarBotaoSalvar()
-        {
-            btnSalvar.Enabled = true;
-            btnAlterar.Enabled = false;
-            btnExcluir.Enabled = false;
-            btnFechar.Enabled = false;
-            btnNovo.Enabled = false;
-        }
-        private void HabilitarBotoesAlterarExcluir()
-        {
-            btnAlterar.Enabled = true;
-            btnExcluir.Enabled = true;
-            btnSalvar.Enabled = false;
-            btnFechar.Enabled = true;
-            btnNovo.Enabled = true;
-        }
-        private new void LimparCampos()
+        public override void LimparCampos()
         {
             txtIDModelo.Clear();
             cmbMarca.SelectedIndex = -1;
-			txtDescricao.Clear();
+            txtDescricao.Clear();
             txtPesquisaListView.Clear();
             bNovo = false;
         }
@@ -577,35 +546,5 @@ namespace OrdemServicos
                 MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-		private void btnNovo_Click_1( object sender, EventArgs e )
-		{
-
-		}
-
-		private void btnAlterar_Click_1( object sender, EventArgs e )
-		{
-
-		}
-
-		private void btnSalvar_Click_1( object sender, EventArgs e )
-		{
-
-		}
-
-		private void btnExcluir_Click_1( object sender, EventArgs e )
-		{
-
-		}
-
-		private void btnFechar_Click_1( object sender, EventArgs e )
-		{
-
-		}
-
-		private void btnCancelar_Click_1( object sender, EventArgs e )
-		{
-
-		}
-	}
+    }
 }

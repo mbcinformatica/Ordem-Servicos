@@ -20,6 +20,7 @@ namespace OrdemServicos
         private List<Control> controlesLeave = new List<Control>();
         private List<Control> controlesEnter = new List<Control>();
         private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesMouseMove = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
 
@@ -62,7 +63,7 @@ namespace OrdemServicos
             TabControl tabControl = null;
             TabPage tabPage = null;
 
-            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
         }
         public override void ExecutaFuncaoEvento(Control control)
         {

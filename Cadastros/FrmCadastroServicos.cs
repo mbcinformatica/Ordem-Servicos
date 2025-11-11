@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 namespace OrdemServicos
 {
 	public partial class frmServicos : BaseForm
@@ -16,16 +17,17 @@ namespace OrdemServicos
 		private bool sortAscending = true;
 		private Color defaultHeaderBackColor = Color.DarkTurquoise;
 		private Color clickedHeaderBackColor = Color.CadetBlue;
-
+		
 		private (Control, string)[] camposObrigatorios;
 		private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
 		private List<Control> controlesKeyPress = new List<Control>();
 		private List<Control> controlesLeave = new List<Control>();
 		private List<Control> controlesEnter = new List<Control>();
 		private List<Control> controlesMouseDown = new List<Control>();
-		private List<Control> controlesBotoes = new List<Control>();
+        private List<Control> controlesMouseMove = new List<Control>();
+        private List<Control> controlesBotoes = new List<Control>();
 		private List<Control> controlesKeyDown = new List<Control>();
-
+		
 		public frmServicos()
 		{
 			InitializeComponent();
@@ -50,14 +52,12 @@ namespace OrdemServicos
 			listViewServicos.DrawSubItem += new DrawListViewSubItemEventHandler(listViewServicos_DrawSubItem);
 			// Adicionar colunas
 			listViewServicos.Columns.Add("ID", 50, HorizontalAlignment.Right);
-			listViewServicos.Columns.Add("  CÓDIGO BASE", 250, HorizontalAlignment.Right);
-			listViewServicos.Columns.Add("  CATEGORIA", 450, HorizontalAlignment.Left);
-			listViewServicos.Columns.Add("  DESCRIÇÃO", 450, HorizontalAlignment.Left);
+			listViewServicos.Columns.Add("  CÓDIGO BASE", 150, HorizontalAlignment.Right);
+			listViewServicos.Columns.Add("  CATEGORIA", 400, HorizontalAlignment.Left);
+			listViewServicos.Columns.Add("  DESCRIÇÃO", 620, HorizontalAlignment.Left);
 			listViewServicos.Columns.Add("VALOR DO SERVIÇO", 200, HorizontalAlignment.Right);
-			// Adicionar evento de clique no cabeçalho da coluna
+
 			listViewServicos.ColumnClick += new ColumnClickEventHandler(ListViewServicos_ColumnClick);
-			listViewServicos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-			listViewServicos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 		}
 		private void ListViewServicos_ColumnClick( object sender, ColumnClickEventArgs e )
 		{
@@ -106,7 +106,6 @@ namespace OrdemServicos
 				this.col = column;
 				this.ascending = ascending;
 			}
-
 			public int Compare( object x, object y )
 			{
 				// Comparar valores das subitens
@@ -199,8 +198,8 @@ namespace OrdemServicos
 		{
 			// Adicionar controles às listas específicas com base no tipo de evento
 			controlesKeyPress.AddRange(new Control[] {
-				txtValorServico
-			});
+                cmbCategoriaServico
+            });
 
 			controlesLeave.AddRange(new Control[] {
 				txtDescricao,
@@ -220,7 +219,12 @@ namespace OrdemServicos
 
 			controlesMouseDown.AddRange(new Control[] { });
 
-			controlesKeyDown.AddRange(new Control[] {
+            controlesMouseMove.AddRange(new Control[] {
+				 listViewServicos
+
+            });
+
+            controlesKeyDown.AddRange(new Control[] {
 				txtDescricao,
 				cmbCategoriaServico,
 				txtIDCodigoBase,
@@ -240,15 +244,15 @@ namespace OrdemServicos
 
 			// Definir a propriedade Tag para comportamentos específicos
 			this.Tag = "frmServicos";
-
-			txtDescricao.Tag = new BaseForm { TagAction = "TabPage" }; // Permitir somente letras
+            txtValorServico.Tag = new BaseForm { TagFormato = "FormatoMoeda", TagAction = "TabPage" }; // Formato de moeda e ação de TabPage
+            txtDescricao.Tag = new BaseForm { TagAction = "TabPage" }; // Permitir somente letras
 
 			// Localizar o TabControl e a TabPage
 			var tabControl = Controls.Find("tabControlServicos", true).FirstOrDefault() as TabControl;
 			var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
 
 			// Inicializar eventos para os controles
-			EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+			EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
 			listViewServicos.Click += ListViewServicos_Click;
 
@@ -275,7 +279,7 @@ namespace OrdemServicos
 							// Recarregar as categoriaServicos no ComboBox
 							List<CategoriaServicoInfo> categoriaServicos = categoriaServicoBLL.Listar();
 							// Ordenar a lista de categoriaServicos em ordem alfabética
-							categoriaServicos = categoriaServicos.OrderBy(m => m.Descricao).ToList();
+							categoriaServicos = categoriaServicos.OrderBy(cs => cs.Descricao).ToList();
 							// Definir a fonte de dados do ComboBox
 							cmbCategoriaServico.DataSource = categoriaServicos;
 							cmbCategoriaServico.DisplayMember = "Descricao";
@@ -300,7 +304,7 @@ namespace OrdemServicos
 		{
 			CategoriaServicoBLL categoriaServicoBLL = new CategoriaServicoBLL();
 			List<CategoriaServicoInfo> categoriaServicos = categoriaServicoBLL.Listar();
-			return categoriaServicos.Any(m => m.Descricao.Equals(descricao, StringComparison.OrdinalIgnoreCase));
+			return categoriaServicos.Any(cs => cs.Descricao.Equals(descricao, StringComparison.OrdinalIgnoreCase));
 		}
 		private void ConfigurarComboBoxCategoriaServicos()
 		{
@@ -328,50 +332,51 @@ namespace OrdemServicos
 			txtDescricao.TabIndex = 2;
 			btnSalvar.TabIndex = 3;
 		}
-		public override void CarregarRegistros()
-		{
-			DesabilitarCamposDoFormulario();
-			EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
-			listViewServicos.Items.Clear();
-			listViewServicos.Columns.Clear();
-			InitializeListView();
-			try
-			{
-				ServicoBLL servicoBLL = new ServicoBLL();
-				List<ServicoInfo> servicos = servicoBLL.Listar();
-				foreach (ServicoInfo servico in servicos)
-				{
-					ListViewItem item = new ListViewItem(servico.IDServico.ToString());
-					item.SubItems.Add(servico.IDCodigoBase);
-					item.SubItems.Add(servico.Categoria);
-					item.SubItems.Add(servico.Descricao);
-					item.SubItems.Add(StringUtils.FormatValorMoeda(servico.ValorServico.ToString()));
-					listViewServicos.Items.Add(item);
-				}
-				// Ajusta a largura das colunas
-		
-				listaOriginalItens = listViewServicos.Items.Cast<ListViewItem>().ToList();
-				lbTotalRegistros.Text = "Total de Registros: " + listViewServicos.Items.Count;
-				sortColumn = 3;
-				sortAscending = true;
-				listViewServicos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
-				listViewServicos.Sort();
-				listViewServicos.Columns[sortColumn].Width = listViewServicos.Columns[sortColumn].Width;
-				ajustaLarguraCabecalho(listViewServicos);
-				tabControlServicos.SelectedTab = tabDadosServico;
+        public override void CarregarRegistros()
+        {
+            DesabilitarCamposDoFormulario();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
+            listViewServicos.Items.Clear();
+            listViewServicos.Columns.Clear();
+            InitializeListView();
 
-				CategoriaServicoBLL categoriaServicoBLL = new CategoriaServicoBLL();
-				List<CategoriaServicoInfo> categoriaServico = categoriaServicoBLL.Listar();
-				cmbCategoriaServico.DataSource = categoriaServico;
-				cmbCategoriaServico.DisplayMember = "Descricao";
-				cmbCategoriaServico.ValueMember = "IDCategoriaServico";
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
-		private void ListViewServicos_Click( object sender, EventArgs e )
+            try
+            {
+                ServicoBLL servicoBLL = new ServicoBLL();
+                List<ServicoInfo> servicos = servicoBLL.Listar();
+
+                foreach (ServicoInfo servico in servicos)
+                {
+                    ListViewItem item = new ListViewItem(servico.IDServico.ToString());
+                    item.SubItems.Add(servico.IDCodigoBase);
+                    item.SubItems.Add(servico.Categoria);
+                    item.SubItems.Add(servico.Descricao);
+                    item.SubItems.Add(StringUtils.FormatValorMoeda(servico.ValorServico.ToString()));
+                    listViewServicos.Items.Add(item);
+                }
+                listaOriginalItens = listViewServicos.Items.Cast<ListViewItem>().ToList();
+                lbTotalRegistros.Text = "Total de Registros: " + listViewServicos.Items.Count;
+                sortColumn = 3;
+                sortAscending = true;
+                listViewServicos.Sort();
+                listViewServicos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
+                tabControlServicos.SelectedTab = tabDadosServico;
+
+                CategoriaServicoBLL categoriaServicoBLL = new CategoriaServicoBLL();
+                List<CategoriaServicoInfo> categoriaServico = categoriaServicoBLL.Listar()
+                    .OrderBy(cs => cs.Descricao?.ToUpperInvariant())
+                    .ToList();
+                cmbCategoriaServico.DataSource = categoriaServico;
+                cmbCategoriaServico.DisplayMember = "Descricao";
+                cmbCategoriaServico.ValueMember = "IDCategoriaServico";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            LimparCampos();
+        }
+        private void ListViewServicos_Click( object sender, EventArgs e )
 		{
 			escPressed = false;
 			if (listViewServicos.SelectedItems.Count > 0)
@@ -528,7 +533,8 @@ namespace OrdemServicos
 			cmbCategoriaServico.SelectedIndex = -1;
 			txtDescricao.Clear();
 			txtPesquisaListView.Clear();
-			bNovo = false;
+			txtValorServico.Text = StringUtils.FormatValorMoeda("0");
+            bNovo = false;
 		}
 		static void InserirServico( ServicoInfo Servico )
 		{

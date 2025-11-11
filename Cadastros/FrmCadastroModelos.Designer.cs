@@ -52,6 +52,7 @@
             this.lbTotalRegistros = new System.Windows.Forms.Label();
             this.btnFechar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.tlpListViewCelula = new System.Windows.Forms.ToolTip(this.components);
             this.tabDadosModelo.SuspendLayout();
             this.tabControlModelos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
@@ -391,5 +392,6 @@
 		private System.Windows.Forms.Label lbTotalRegistros;
 		private System.Windows.Forms.Button btnFechar;
 		private System.Windows.Forms.Button btnCancelar;
+		private System.Windows.Forms.ToolTip tlpListViewCelula;
 	}
 }

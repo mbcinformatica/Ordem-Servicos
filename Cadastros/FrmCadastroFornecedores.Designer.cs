@@ -43,8 +43,8 @@
             this.lbTotalRegistros = new System.Windows.Forms.Label();
             this.tabControlFornecedores = new System.Windows.Forms.TabControl();
             this.tabDadosFornecedor = new System.Windows.Forms.TabPage();
-            this.lblProgressoCNPJs = new System.Windows.Forms.Label();
             this.progressBarCNPJs = new System.Windows.Forms.ProgressBar();
+            this.lblProgressoCNPJs = new System.Windows.Forms.Label();
             this.btnCarregaArquivoCnpj = new System.Windows.Forms.Button();
             this.lblEmail = new System.Windows.Forms.Label();
             this.txtPesquisaListView = new System.Windows.Forms.TextBox();
@@ -79,6 +79,7 @@
             this.btnCarregaArquivoCpf = new System.Windows.Forms.Button();
             this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
+            this.tlpListViewCelula = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.tabControlFornecedores.SuspendLayout();
@@ -262,8 +263,8 @@
             // tabDadosFornecedor
             // 
             this.tabDadosFornecedor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tabDadosFornecedor.Controls.Add(this.lblProgressoCNPJs);
             this.tabDadosFornecedor.Controls.Add(this.progressBarCNPJs);
+            this.tabDadosFornecedor.Controls.Add(this.lblProgressoCNPJs);
             this.tabDadosFornecedor.Controls.Add(this.btnCarregaArquivoCnpj);
             this.tabDadosFornecedor.Controls.Add(this.lblEmail);
             this.tabDadosFornecedor.Controls.Add(this.txtIDFornecedor);
@@ -307,6 +308,19 @@
             this.tabDadosFornecedor.TabIndex = 0;
             this.tabDadosFornecedor.Text = "Dados do Fornecedor";
             // 
+            // progressBarCNPJs
+            // 
+            this.progressBarCNPJs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.progressBarCNPJs.ForeColor = System.Drawing.Color.Blue;
+            this.progressBarCNPJs.Location = new System.Drawing.Point(363, 140);
+            this.progressBarCNPJs.Margin = new System.Windows.Forms.Padding(4);
+            this.progressBarCNPJs.Name = "progressBarCNPJs";
+            this.progressBarCNPJs.Size = new System.Drawing.Size(648, 54);
+            this.progressBarCNPJs.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.progressBarCNPJs.TabIndex = 124;
+            this.progressBarCNPJs.Tag = "naoAplicar";
+            this.progressBarCNPJs.Visible = false;
+            // 
             // lblProgressoCNPJs
             // 
             this.lblProgressoCNPJs.BackColor = System.Drawing.Color.Azure;
@@ -322,24 +336,12 @@
             this.lblProgressoCNPJs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lblProgressoCNPJs.Visible = false;
             // 
-            // progressBarCNPJs
-            // 
-            this.progressBarCNPJs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.progressBarCNPJs.ForeColor = System.Drawing.Color.Blue;
-            this.progressBarCNPJs.Location = new System.Drawing.Point(363, 140);
-            this.progressBarCNPJs.Margin = new System.Windows.Forms.Padding(4);
-            this.progressBarCNPJs.Name = "progressBarCNPJs";
-            this.progressBarCNPJs.Size = new System.Drawing.Size(648, 54);
-            this.progressBarCNPJs.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBarCNPJs.TabIndex = 124;
-            this.progressBarCNPJs.Tag = "naoAplicar";
-            this.progressBarCNPJs.Visible = false;
-            // 
             // btnCarregaArquivoCnpj
             // 
             this.btnCarregaArquivoCnpj.AutoSize = true;
             this.btnCarregaArquivoCnpj.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCarregaArquivoCnpj.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCarregaArquivoCnpj.Image = ((System.Drawing.Image)(resources.GetObject("btnCarregaArquivoCnpj.Image")));
             this.btnCarregaArquivoCnpj.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCarregaArquivoCnpj.Location = new System.Drawing.Point(473, 198);
             this.btnCarregaArquivoCnpj.Margin = new System.Windows.Forms.Padding(4);
@@ -702,6 +704,7 @@
             this.btnCarregaArquivoCpf.AutoSize = true;
             this.btnCarregaArquivoCpf.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCarregaArquivoCpf.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCarregaArquivoCpf.Image = ((System.Drawing.Image)(resources.GetObject("btnCarregaArquivoCpf.Image")));
             this.btnCarregaArquivoCpf.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCarregaArquivoCpf.Location = new System.Drawing.Point(753, 198);
             this.btnCarregaArquivoCpf.Margin = new System.Windows.Forms.Padding(4);
@@ -800,5 +803,6 @@
 		private System.Windows.Forms.Label lblProgressoCNPJs;
 		private System.Windows.Forms.ProgressBar progressBarCNPJs;
 		private System.Windows.Forms.Button btnCarregaArquivoCpf;
+		private System.Windows.Forms.ToolTip tlpListViewCelula;
 	}
 }

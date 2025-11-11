@@ -23,7 +23,8 @@ namespace OrdemServicos
 		private List<Control> controlesLeave = new List<Control>();
 		private List<Control> controlesEnter = new List<Control>();
 		private List<Control> controlesMouseDown = new List<Control>();
-		private List<Control> controlesBotoes = new List<Control>();
+        private List<Control> controlesMouseMove = new List<Control>();
+        private List<Control> controlesBotoes = new List<Control>();
 		private List<Control> controlesKeyDown = new List<Control>();
 
 		public frmUnidades()
@@ -196,7 +197,11 @@ namespace OrdemServicos
 
 			controlesMouseDown.AddRange(new Control[] { });
 
-			controlesKeyDown.AddRange(new Control[] {
+            controlesMouseMove.AddRange(new Control[] {
+                 listViewUnidades
+            });
+
+            controlesKeyDown.AddRange(new Control[] {
 				txtDescricao,
 				txtPesquisaListView,
 				listViewUnidades
@@ -221,10 +226,10 @@ namespace OrdemServicos
 			var tabControl = Controls.Find("tabControlUnidades", true).FirstOrDefault() as TabControl;
 			var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
 
-			// Inicializar eventos para os controles
-			EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+            // Inicializar eventos para os controles
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
-			listViewUnidades.Click += ListViewUnidades_Click;
+            listViewUnidades.Click += ListViewUnidades_Click;
 
 			// Focar no btnNovo ao iniciar
 			txtPesquisaListView.Focus();
@@ -282,7 +287,7 @@ namespace OrdemServicos
 						}
 						else
 						{
-							column.Width = 700; // Ignorar cliques em outras colunas
+							column.Width = 1370; // Ignorar cliques em outras colunas
 						}
 					}
 				}
@@ -301,7 +306,8 @@ namespace OrdemServicos
 			{
 				MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-		}
+			LimparCampos();
+        }
 		private void ListViewUnidades_Click( object sender, EventArgs e )
 		{
 			escPressed = false;
@@ -395,9 +401,7 @@ namespace OrdemServicos
 		private void btnCancelar_Click( object sender, EventArgs e )
 		{
 			CarregarRegistros();
-			LimparCampos();
 		}
-
 		private void DesabilitarCamposDoFormulario()
 		{
 			List<Control> controlesDesabilitar = new List<Control>
@@ -438,8 +442,6 @@ namespace OrdemServicos
 			txtPesquisaListView.Clear();
 			bNovo = false;
 		}
-
-
 		static void InserirUnidade( UnidadeInfo Unidade )
 		{
 			try
@@ -478,36 +480,6 @@ namespace OrdemServicos
 			{
 				MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-		}
-
-		private void btnNovo_Click_1( object sender, EventArgs e )
-		{
-
-		}
-
-		private void btnAlterar_Click_1( object sender, EventArgs e )
-		{
-
-		}
-
-		private void btnSalvar_Click_1( object sender, EventArgs e )
-		{
-
-		}
-
-		private void btnExcluir_Click_1( object sender, EventArgs e )
-		{
-
-		}
-
-		private void btnFechar_Click_1( object sender, EventArgs e )
-		{
-
-		}
-
-		private void btnCancelar_Click_1( object sender, EventArgs e )
-		{
-
 		}
 	}
 }

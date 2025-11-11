@@ -23,6 +23,7 @@ namespace OrdemServicos
         private List<Control> controlesLeave = new List<Control>();
         private List<Control> controlesEnter = new List<Control>();
         private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesMouseMove = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
 
@@ -196,6 +197,9 @@ namespace OrdemServicos
 
             controlesMouseDown.AddRange(new Control[] { });
 
+            controlesMouseMove.AddRange(new Control[] {
+                 listViewCategoriaServico
+            });
             controlesKeyDown.AddRange(new Control[] {
                 txtDescricao,
                 txtPesquisaListView,
@@ -222,7 +226,7 @@ namespace OrdemServicos
             var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
 
             // Inicializar eventos para os controles
-            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
             listViewCategoriaServico.Click += ListViewCategoriaServico_Click;
 
@@ -300,6 +304,7 @@ namespace OrdemServicos
             {
                 MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            LimparCampos();
         }
         private void ListViewCategoriaServico_Click(object sender, EventArgs e)
         {

@@ -30,6 +30,7 @@ namespace OrdemServicos
         private List<Control> controlesLeave = new List<Control>();
         private List<Control> controlesEnter = new List<Control>();
         private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesMouseMove = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
 		private readonly EventArgs e = new EventArgs();
@@ -75,8 +76,6 @@ namespace OrdemServicos
             listViewUsuario.ColumnClick += new ColumnClickEventHandler(ListViewUsuarios_ColumnClick);
             listViewUsuario.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             listViewUsuario.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-
-
         }
         private void ListViewUsuarios_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -241,6 +240,10 @@ namespace OrdemServicos
 
             controlesMouseDown.AddRange(new Control[] { });
 
+            controlesMouseMove.AddRange(new Control[] {
+                 listViewUsuario
+            });
+
             controlesLeave.AddRange(new Control[] {
                 txtNome,
                 txtLogin,
@@ -292,8 +295,7 @@ namespace OrdemServicos
             var tabControl = Controls.Find("tabControlUsuarios", true).FirstOrDefault() as TabControl;
             var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
 
-            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter,
-                                            controlesMouseDown, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
             listViewUsuario.Click += ListViewUsuarios_Click;
             txtPesquisaListView.Focus();
@@ -464,6 +466,7 @@ namespace OrdemServicos
             {
                 MessageBox.Show("Erro ao carregar registros: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            LimparCampos();
         }
         private void ListViewUsuarios_Click(object sender, EventArgs e)
         {
@@ -1025,7 +1028,6 @@ namespace OrdemServicos
             // Limpar a imagem do PictureBox
             imgImagemUsuario.Image = null;
         }
-
 		private void tabDadosUsuario_Click( object sender, EventArgs e )
 		{
 
