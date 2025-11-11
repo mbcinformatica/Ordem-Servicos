@@ -61,11 +61,12 @@
             // 
             this.tabInformacoesAdicionais.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabInformacoesAdicionais.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tabInformacoesAdicionais.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabInformacoesAdicionais.Location = new System.Drawing.Point(4, 22);
+            this.tabInformacoesAdicionais.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabInformacoesAdicionais.Location = new System.Drawing.Point(4, 28);
+            this.tabInformacoesAdicionais.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabInformacoesAdicionais.Name = "tabInformacoesAdicionais";
-            this.tabInformacoesAdicionais.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInformacoesAdicionais.Size = new System.Drawing.Size(768, 110);
+            this.tabInformacoesAdicionais.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabInformacoesAdicionais.Size = new System.Drawing.Size(1415, 249);
             this.tabInformacoesAdicionais.TabIndex = 1;
             this.tabInformacoesAdicionais.Text = "  Informações Adicionais";
             // 
@@ -86,11 +87,12 @@
             this.tabDadosUnidade.Controls.Add(this.lbIDUnidade);
             this.tabDadosUnidade.Controls.Add(this.txtIDUnidade);
             this.tabDadosUnidade.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tabDadosUnidade.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabDadosUnidade.Location = new System.Drawing.Point(4, 22);
+            this.tabDadosUnidade.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabDadosUnidade.Location = new System.Drawing.Point(4, 28);
+            this.tabDadosUnidade.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabDadosUnidade.Name = "tabDadosUnidade";
-            this.tabDadosUnidade.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDadosUnidade.Size = new System.Drawing.Size(768, 110);
+            this.tabDadosUnidade.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabDadosUnidade.Size = new System.Drawing.Size(1415, 249);
             this.tabDadosUnidade.TabIndex = 0;
             this.tabDadosUnidade.Text = "Dados da Unidade";
             // 
@@ -98,22 +100,22 @@
             // 
             this.txtPesquisaListView.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtPesquisaListView.Enabled = false;
-            this.txtPesquisaListView.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPesquisaListView.Location = new System.Drawing.Point(16, 80);
-            this.txtPesquisaListView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtPesquisaListView.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPesquisaListView.Location = new System.Drawing.Point(10, 117);
+            this.txtPesquisaListView.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.txtPesquisaListView.Name = "txtPesquisaListView";
-            this.txtPesquisaListView.Size = new System.Drawing.Size(328, 22);
+            this.txtPesquisaListView.Size = new System.Drawing.Size(490, 26);
             this.txtPesquisaListView.TabIndex = 56;
             this.txtPesquisaListView.TextChanged += new System.EventHandler(this.txtPesquisaListView_TextChanged);
             // 
             // lblPesquisaListView
             // 
             this.lblPesquisaListView.AutoSize = true;
-            this.lblPesquisaListView.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPesquisaListView.Location = new System.Drawing.Point(16, 64);
-            this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPesquisaListView.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPesquisaListView.Location = new System.Drawing.Point(10, 97);
+            this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblPesquisaListView.Name = "lblPesquisaListView";
-            this.lblPesquisaListView.Size = new System.Drawing.Size(109, 15);
+            this.lblPesquisaListView.Size = new System.Drawing.Size(140, 19);
             this.lblPesquisaListView.TabIndex = 57;
             this.lblPesquisaListView.Text = "Pesquisa Unidade..:";
             // 
@@ -123,32 +125,32 @@
             this.txtDescricao.AccessibleName = "";
             this.txtDescricao.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtDescricao.Enabled = false;
-            this.txtDescricao.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescricao.Location = new System.Drawing.Point(136, 24);
-            this.txtDescricao.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtDescricao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDescricao.Location = new System.Drawing.Point(204, 30);
+            this.txtDescricao.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(432, 22);
+            this.txtDescricao.Size = new System.Drawing.Size(646, 26);
             this.txtDescricao.TabIndex = 65;
             // 
             // lbDescricao
             // 
             this.lbDescricao.AutoSize = true;
-            this.lbDescricao.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbDescricao.Location = new System.Drawing.Point(136, 8);
-            this.lbDescricao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbDescricao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbDescricao.Location = new System.Drawing.Point(204, 10);
+            this.lbDescricao.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbDescricao.Name = "lbDescricao";
-            this.lbDescricao.Size = new System.Drawing.Size(68, 15);
+            this.lbDescricao.Size = new System.Drawing.Size(89, 19);
             this.lbDescricao.TabIndex = 63;
             this.lbDescricao.Text = "Descrição..:";
             // 
             // lbIDUnidade
             // 
             this.lbIDUnidade.AutoSize = true;
-            this.lbIDUnidade.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbIDUnidade.Location = new System.Drawing.Point(16, 8);
-            this.lbIDUnidade.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbIDUnidade.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbIDUnidade.Location = new System.Drawing.Point(10, 10);
+            this.lbIDUnidade.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbIDUnidade.Name = "lbIDUnidade";
-            this.lbIDUnidade.Size = new System.Drawing.Size(30, 15);
+            this.lbIDUnidade.Size = new System.Drawing.Size(40, 19);
             this.lbIDUnidade.TabIndex = 61;
             this.lbIDUnidade.Text = "ID..:";
             // 
@@ -156,11 +158,11 @@
             // 
             this.txtIDUnidade.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtIDUnidade.Enabled = false;
-            this.txtIDUnidade.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIDUnidade.Location = new System.Drawing.Point(16, 24);
-            this.txtIDUnidade.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtIDUnidade.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIDUnidade.Location = new System.Drawing.Point(10, 30);
+            this.txtIDUnidade.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.txtIDUnidade.Name = "txtIDUnidade";
-            this.txtIDUnidade.Size = new System.Drawing.Size(96, 22);
+            this.txtIDUnidade.Size = new System.Drawing.Size(142, 26);
             this.txtIDUnidade.TabIndex = 64;
             this.txtIDUnidade.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -169,11 +171,12 @@
             this.tabControlUnidades.Controls.Add(this.tabDadosUnidade);
             this.tabControlUnidades.Controls.Add(this.tabInformacoesAdicionais);
             this.tabControlUnidades.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tabControlUnidades.Location = new System.Drawing.Point(14, 3);
+            this.tabControlUnidades.Location = new System.Drawing.Point(21, 5);
+            this.tabControlUnidades.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabControlUnidades.Multiline = true;
             this.tabControlUnidades.Name = "tabControlUnidades";
             this.tabControlUnidades.SelectedIndex = 0;
-            this.tabControlUnidades.Size = new System.Drawing.Size(776, 136);
+            this.tabControlUnidades.Size = new System.Drawing.Size(1423, 281);
             this.tabControlUnidades.TabIndex = 73;
             // 
             // listViewUnidades
@@ -182,9 +185,10 @@
             this.listViewUnidades.FullRowSelect = true;
             this.listViewUnidades.GridLines = true;
             this.listViewUnidades.HideSelection = false;
-            this.listViewUnidades.Location = new System.Drawing.Point(14, 144);
+            this.listViewUnidades.Location = new System.Drawing.Point(18, 290);
+            this.listViewUnidades.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.listViewUnidades.Name = "listViewUnidades";
-            this.listViewUnidades.Size = new System.Drawing.Size(776, 176);
+            this.listViewUnidades.Size = new System.Drawing.Size(1423, 276);
             this.listViewUnidades.TabIndex = 71;
             this.listViewUnidades.UseCompatibleStateImageBehavior = false;
             this.listViewUnidades.View = System.Windows.Forms.View.Details;
@@ -203,10 +207,11 @@
             this.pnlBotoes.Controls.Add(this.lbTotalRegistros);
             this.pnlBotoes.Controls.Add(this.btnFechar);
             this.pnlBotoes.Controls.Add(this.btnCancelar);
-            this.pnlBotoes.Location = new System.Drawing.Point(14, 328);
+            this.pnlBotoes.Location = new System.Drawing.Point(18, 573);
+            this.pnlBotoes.Margin = new System.Windows.Forms.Padding(4);
             this.pnlBotoes.Name = "pnlBotoes";
-            this.pnlBotoes.Size = new System.Drawing.Size(776, 49);
-            this.pnlBotoes.TabIndex = 72;
+            this.pnlBotoes.Size = new System.Drawing.Size(1423, 61);
+            this.pnlBotoes.TabIndex = 99;
             // 
             // btnSalvar
             // 
@@ -215,10 +220,11 @@
             this.btnSalvar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
             this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvar.Location = new System.Drawing.Point(451, 2);
+            this.btnSalvar.Location = new System.Drawing.Point(1007, 3);
+            this.btnSalvar.Margin = new System.Windows.Forms.Padding(4);
             this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(98, 40);
-            this.btnSalvar.TabIndex = 69;
+            this.btnSalvar.Size = new System.Drawing.Size(126, 51);
+            this.btnSalvar.TabIndex = 67;
             this.btnSalvar.Text = "      Salvar";
             this.btnSalvar.UseVisualStyleBackColor = false;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
@@ -230,10 +236,11 @@
             this.btnAlterar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAlterar.Image = ((System.Drawing.Image)(resources.GetObject("btnAlterar.Image")));
             this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAlterar.Location = new System.Drawing.Point(347, 2);
+            this.btnAlterar.Location = new System.Drawing.Point(873, 3);
+            this.btnAlterar.Margin = new System.Windows.Forms.Padding(4);
             this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(98, 40);
-            this.btnAlterar.TabIndex = 68;
+            this.btnAlterar.Size = new System.Drawing.Size(126, 51);
+            this.btnAlterar.TabIndex = 66;
             this.btnAlterar.Tag = "";
             this.btnAlterar.Text = "       Alterar";
             this.btnAlterar.UseVisualStyleBackColor = false;
@@ -246,10 +253,11 @@
             this.btnExcluir.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExcluir.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluir.Image")));
             this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExcluir.Location = new System.Drawing.Point(555, 2);
+            this.btnExcluir.Location = new System.Drawing.Point(1140, 3);
+            this.btnExcluir.Margin = new System.Windows.Forms.Padding(4);
             this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(98, 40);
-            this.btnExcluir.TabIndex = 70;
+            this.btnExcluir.Size = new System.Drawing.Size(126, 51);
+            this.btnExcluir.TabIndex = 68;
             this.btnExcluir.Text = "     Excluir";
             this.btnExcluir.UseVisualStyleBackColor = false;
             this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
@@ -261,10 +269,11 @@
             this.btnNovo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNovo.Image = ((System.Drawing.Image)(resources.GetObject("btnNovo.Image")));
             this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNovo.Location = new System.Drawing.Point(243, 2);
+            this.btnNovo.Location = new System.Drawing.Point(739, 3);
+            this.btnNovo.Margin = new System.Windows.Forms.Padding(4);
             this.btnNovo.Name = "btnNovo";
-            this.btnNovo.Size = new System.Drawing.Size(98, 40);
-            this.btnNovo.TabIndex = 67;
+            this.btnNovo.Size = new System.Drawing.Size(126, 51);
+            this.btnNovo.TabIndex = 65;
             this.btnNovo.Text = "     Novo";
             this.btnNovo.UseVisualStyleBackColor = false;
             this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
@@ -274,13 +283,13 @@
             this.lbTotalRegistros.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.lbTotalRegistros.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lbTotalRegistros.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lbTotalRegistros.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTotalRegistros.Location = new System.Drawing.Point(4, 6);
-            this.lbTotalRegistros.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbTotalRegistros.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTotalRegistros.Location = new System.Drawing.Point(10, 8);
+            this.lbTotalRegistros.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbTotalRegistros.Name = "lbTotalRegistros";
-            this.lbTotalRegistros.Size = new System.Drawing.Size(220, 33);
-            this.lbTotalRegistros.TabIndex = 66;
-            this.lbTotalRegistros.Tag = "naoAplicarAutoSize";
+            this.lbTotalRegistros.Size = new System.Drawing.Size(401, 42);
+            this.lbTotalRegistros.TabIndex = 58;
+            this.lbTotalRegistros.Tag = "naoAplicar";
             this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnFechar
@@ -290,10 +299,11 @@
             this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
             this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFechar.Location = new System.Drawing.Point(659, 2);
+            this.btnFechar.Location = new System.Drawing.Point(1274, 3);
+            this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
             this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(98, 40);
-            this.btnFechar.TabIndex = 71;
+            this.btnFechar.Size = new System.Drawing.Size(126, 51);
+            this.btnFechar.TabIndex = 69;
             this.btnFechar.Text = "     Fechar";
             this.btnFechar.UseVisualStyleBackColor = false;
             this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
@@ -305,24 +315,27 @@
             this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
             this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(659, 2);
+            this.btnCancelar.Location = new System.Drawing.Point(1274, 3);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(99, 40);
-            this.btnCancelar.TabIndex = 72;
+            this.btnCancelar.Size = new System.Drawing.Size(127, 51);
+            this.btnCancelar.TabIndex = 70;
             this.btnCancelar.Text = "     Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // frmUnidades
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 394);
+            this.ClientSize = new System.Drawing.Size(1461, 640);
             this.ControlBox = false;
+            this.Controls.Add(this.pnlBotoes);
             this.Controls.Add(this.tabControlUnidades);
             this.Controls.Add(this.listViewUnidades);
-            this.Controls.Add(this.pnlBotoes);
+            this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmUnidades";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Cadastro de Unidades";
@@ -351,13 +364,13 @@
         private System.Windows.Forms.TabControl tabControlUnidades;
         private System.Windows.Forms.ErrorProvider erpProvider;
         private System.Windows.Forms.ListView listViewUnidades;
-        private System.Windows.Forms.Panel pnlBotoes;
-        private System.Windows.Forms.Label lbTotalRegistros;
-		private System.Windows.Forms.Button btnFechar;
+		private System.Windows.Forms.Panel pnlBotoes;
 		private System.Windows.Forms.Button btnSalvar;
 		private System.Windows.Forms.Button btnAlterar;
 		private System.Windows.Forms.Button btnExcluir;
 		private System.Windows.Forms.Button btnNovo;
+		private System.Windows.Forms.Label lbTotalRegistros;
+		private System.Windows.Forms.Button btnFechar;
 		private System.Windows.Forms.Button btnCancelar;
 	}
 }

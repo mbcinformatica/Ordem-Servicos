@@ -17,7 +17,6 @@ namespace OrdemServicos
 		private bool sortAscending = true;
 		private Color defaultHeaderBackColor = Color.DarkTurquoise;
 		private Color clickedHeaderBackColor = Color.CadetBlue;
-
 		private (Control, string)[] camposObrigatorios;
 		private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
 		private List<Control> controlesKeyPress = new List<Control>();
@@ -117,7 +116,6 @@ namespace OrdemServicos
 			listView.EndUpdate();
 			listView.Invalidate(); // Redesenha a ListView para refletir as mudanças
 		}
-		// Método para desenhar cabeçalhos das colunas da ListView
 		private void listViewMarcas_DrawColumnHeader( object sender, DrawListViewColumnHeaderEventArgs e )
 		{
 			Color headerBackColor = e.ColumnIndex == sortColumn ? clickedHeaderBackColor : defaultHeaderBackColor;
@@ -469,6 +467,6 @@ namespace OrdemServicos
 			{
 				MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
-		}
 	}
+    }
 }

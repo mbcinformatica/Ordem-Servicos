@@ -609,6 +609,7 @@ namespace OrdemServicos
             {
                 MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            LimparCampos();
         }
         private void ConfigurarcmbFornecedores()
         {
@@ -1251,5 +1252,9 @@ namespace OrdemServicos
             }
             imgImagemProduto.Cursor = Cursors.Hand;
         }
-    }
+		private void tabDadosProduto_Click( object sender, EventArgs e )
+		{
+
+		}
+	}
 }

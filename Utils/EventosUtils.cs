@@ -343,7 +343,8 @@ namespace OrdemServicos.Utils
         public static void AcaoBotoes(String acaoBotao, BaseForm form)
         {
             Button btnSalvar = null, btnAlterar = null,
-                   btnExcluir = null, btnFechar = null, btnNovo = null, btnCancelar = null;
+                   btnExcluir = null, btnFechar = null, btnNovo = null, 
+                   btnCarregaArquivoCnpj = null, btnCarregaArquivoCpf = null, btnCancelar = null;
 
             foreach (Control control in form.Controls)
             {
@@ -373,6 +374,12 @@ namespace OrdemServicos.Utils
                                 case "btnCancelar":
                                     btnCancelar = button;
                                     break;
+                                case "btnCarregaArquivoCnpj":
+                                    btnCarregaArquivoCnpj = button;
+                                    break;
+                                case "btnCarregaArquivoCpf":
+                                    btnCarregaArquivoCpf = button;
+                                    break;
                             }
                         }
                     }
@@ -393,6 +400,18 @@ namespace OrdemServicos.Utils
                     btnNovo.Focus();
                 }
             }
+            else if (acaoBotao == "DesabilitarTodosBotoesAcoes")
+            {
+                if (btnSalvar != null) btnSalvar.Enabled = false;
+                if (btnAlterar != null) btnAlterar.Enabled = false;
+                if (btnExcluir != null) btnExcluir.Enabled = false;
+                if (btnFechar != null) btnFechar.Enabled = false;
+                if (btnCancelar != null) btnCancelar.Enabled = false;
+                if (btnNovo != null) btnNovo.Enabled = false;
+                if (btnCarregaArquivoCnpj != null) btnCarregaArquivoCnpj.Enabled = false;
+                if (btnCarregaArquivoCpf != null) btnCarregaArquivoCpf.Enabled = false;
+
+            }
             else if (acaoBotao == "HabilitarBotaoSalvar")
             {
                 if (btnSalvar != null) btnSalvar.Enabled = true;
@@ -403,6 +422,9 @@ namespace OrdemServicos.Utils
                 if (btnNovo != null) btnNovo.Enabled = false;
                 if (btnCancelar != null) btnCancelar.Visible = true;
                 if (btnCancelar != null) btnCancelar.Enabled = true;
+                if (btnCarregaArquivoCnpj != null) btnCarregaArquivoCnpj.Enabled = false;
+                if (btnCarregaArquivoCpf != null) btnCarregaArquivoCpf.Enabled = false;
+
             }
             else if (acaoBotao == "HabilitarBotoesAlterarExcluir")
             {
@@ -414,6 +436,9 @@ namespace OrdemServicos.Utils
                 if (btnNovo != null) btnNovo.Enabled = true;
                 if (btnCancelar != null) btnCancelar.Visible = false;
                 if (btnCancelar != null) btnCancelar.Enabled = false;
+                if (btnCarregaArquivoCnpj != null) btnCarregaArquivoCnpj.Enabled = false;
+                if (btnCarregaArquivoCpf != null) btnCarregaArquivoCpf.Enabled = false;
+
             }
         }
         public static void DesabilitarControles(List<Control> controles, BaseForm form)

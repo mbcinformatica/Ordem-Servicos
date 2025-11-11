@@ -475,5 +475,5 @@ namespace OrdemServicos
                 MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-    }
+	}
 }

@@ -47,7 +47,7 @@ namespace OrdemServicos.Forms
         protected int labelMarginRight { get; set; }
         protected int labelMarginBottom { get; set; }
         protected Color panelBackgroundColor { get; set; }
-
+        //
         // Faz parte dos Formularios, EventosUtils, BaseFormFuncoes
         // Inicio
 
@@ -60,13 +60,10 @@ namespace OrdemServicos.Forms
         public string TagAction { get; set; }
         public int TagMaxDigito { get; set; }
         public static string UsuarioLogado { get; set; }
-
-
         public virtual void CarregarRegistros() { }
-
         public virtual void LimparCampos() { }
         public virtual void ExecutaFuncaoEvento(Control control) { }
-
+        //
         //Final
 
         protected void LoadConfig() {CarregaDadosControles("config.xml");}
@@ -552,6 +549,22 @@ namespace OrdemServicos.Forms
             }
 
             listView.Columns[listView.Columns.Count - 1].Width = -2;
+        }
+        public static void RegistrarErroLog(string mensagem)
+        {
+            try
+            {
+                string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads", "CnpjErros.txt");
+                using (StreamWriter logWriter = new StreamWriter(logPath, true))
+                {
+                    string logEntry = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss} - {mensagem}";
+                    logWriter.WriteLine(logEntry);
+                }
+            }
+            catch
+            {
+                // Se falhar ao registrar o log, não interrompe o fluxo
+            }
         }
     }
 }

@@ -479,5 +479,35 @@ namespace OrdemServicos
 				MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
+
+		private void btnNovo_Click_1( object sender, EventArgs e )
+		{
+
+		}
+
+		private void btnAlterar_Click_1( object sender, EventArgs e )
+		{
+
+		}
+
+		private void btnSalvar_Click_1( object sender, EventArgs e )
+		{
+
+		}
+
+		private void btnExcluir_Click_1( object sender, EventArgs e )
+		{
+
+		}
+
+		private void btnFechar_Click_1( object sender, EventArgs e )
+		{
+
+		}
+
+		private void btnCancelar_Click_1( object sender, EventArgs e )
+		{
+
+		}
 	}
 }

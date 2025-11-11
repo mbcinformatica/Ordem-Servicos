@@ -11,8 +11,8 @@
 	<TextBoxFontColor>FF000000</TextBoxFontColor>
 	<TextBoxBorderStyle>FixedSingle</TextBoxBorderStyle>
 	<TextBoxFontFamily>Times New Roman</TextBoxFontFamily>
-	<TextBoxFontSize>9,75</TextBoxFontSize>
-	<TextBoxFontStyle>Regular</TextBoxFontStyle>
+	<TextBoxFontSize>12</TextBoxFontSize>
+	<TextBoxFontStyle>Bold</TextBoxFontStyle>
 	<TextBoxMarginLeft>4</TextBoxMarginLeft>
 	<TextBoxMarginTop>3</TextBoxMarginTop>
 	<TextBoxMarginRight>4</TextBoxMarginRight>
@@ -35,7 +35,7 @@
 	<LabelFontColor>FF000000</LabelFontColor>
 	<LabelAutoSize>true</LabelAutoSize>
 	<LabelFontFamily>Times New Roman</LabelFontFamily>
-	<LabelFontSize>9,75</LabelFontSize>
+	<LabelFontSize>12</LabelFontSize>
 	<LabelFontStyle>Bold</LabelFontStyle>
 	<LabelMarginLeft>4</LabelMarginLeft>
 	<LabelMarginTop>0</LabelMarginTop>

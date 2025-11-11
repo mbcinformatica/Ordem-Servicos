@@ -278,7 +278,6 @@ namespace OrdemServicos
                 btnFechar,
                 btnCancelar,
                 btnNovo,
-                btnPesquisaCep,
                 btnInserirImagem,
                 btnExcluirImagem
             });
@@ -377,9 +376,9 @@ namespace OrdemServicos
             }
             else if (control == txtCep && !string.IsNullOrEmpty(txtCep.Text))
             {
-                btnPesquisaCep_Click(control, e);
-                control.Text = StringUtils.SemFormatacao(control.Text);
-                control.Text = StringUtils.FormatCEP(control.Text);
+                string cep = StringUtils.SemFormatacao(txtCep.Text);
+                PesquisaCep(cep);
+                control.Text = StringUtils.FormatCEP(cep);
             }
         }
         private void ConfigurarTextBox()
@@ -644,7 +643,6 @@ namespace OrdemServicos
                 txtFone_1,
                 txtFone_2,
                 txtEmail,
-                btnPesquisaCep,
                 btnInserirImagem,
                 btnExcluirImagem
             };
@@ -753,11 +751,11 @@ namespace OrdemServicos
             }
 
         }
-        private async void btnPesquisaCep_Click(object sender, EventArgs e)
+        private async void PesquisaCep(String Cep)
         {
-            if (!string.IsNullOrEmpty(txtCep.Text))
+            if (!string.IsNullOrEmpty(Cep))
             {
-                string cep = StringUtils.SemFormatacao(txtCep.Text); 
+                string cep = StringUtils.SemFormatacao(Cep);
                 var resultado = await StringUtils.BuscarCEP(cep);
 
                 if (!string.IsNullOrEmpty(resultado))
@@ -1027,5 +1025,10 @@ namespace OrdemServicos
             // Limpar a imagem do PictureBox
             imgImagemUsuario.Image = null;
         }
-    }
+
+		private void tabDadosUsuario_Click( object sender, EventArgs e )
+		{
+
+		}
+	}
 }
