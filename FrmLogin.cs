@@ -98,8 +98,10 @@ namespace OrdemServicos
         }
         private new void LimparCampos()
         {
-            txtLogin.Clear();
-            txtSenha.Clear();
+ //           txtLogin.Clear();
+ //           txtSenha.Clear();
+            txtLogin.Text = "mbc";
+            txtSenha.Text = "12345678";
             txtSenhaHash.Clear();
             txtLogin.Focus();
             imgCadeadoAberto.Visible = false;
@@ -112,6 +114,7 @@ namespace OrdemServicos
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
+
             if (ValidarCredenciais())
             {
                 Close();

@@ -4,7 +4,7 @@
 #define MyAppName "Gerenciador OS"
 #define MyAppVersion "1.0"
 #define MyAppPublisher "MBC Informática"
-#define MyAppExeName "Ordem-Servicos.exe"
+#define MyAppExeName "OrdemServicos.exe"
 #define MyAppAssocName MyAppName + " File"
 #define MyAppAssocExt ".myp"
 #define MyAppAssocKey StringChange(MyAppAssocName, " ", "") + MyAppAssocExt

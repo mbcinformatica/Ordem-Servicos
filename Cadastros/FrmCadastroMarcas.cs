@@ -48,12 +48,10 @@ namespace OrdemServicos
 			listViewMarcas.DrawItem += listViewMarcas_DrawItem;
 			listViewMarcas.DrawSubItem += listViewMarcas_DrawSubItem;
 			listViewMarcas.Columns.Add("ID", 50, HorizontalAlignment.Right);
-			listViewMarcas.Columns.Add("DESCRIÇÃO", 120, HorizontalAlignment.Left);
-			listViewMarcas.ColumnClick += ListViewMarcas_ColumnClick;
-			listViewMarcas.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-			listViewMarcas.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
-		}
-		private void ListViewMarcas_ColumnClick( object sender, ColumnClickEventArgs e )
+			listViewMarcas.Columns.Add("DESCRIÇÃO", 1370, HorizontalAlignment.Left);
+            listViewMarcas.ColumnClick += new ColumnClickEventHandler(ListViewMarcas_ColumnClick);
+        }
+        private void ListViewMarcas_ColumnClick( object sender, ColumnClickEventArgs e )
 		{
 			if (e.Column != 1)
 				return; // Ignorar cliques em outras colunas
@@ -269,28 +267,12 @@ namespace OrdemServicos
 					item.SubItems.Add(marca.Descricao);
 					listViewMarcas.Items.Add(item);
 				}
-				// Ajusta a largura das colunas
-				foreach (ColumnHeader column in listViewMarcas.Columns)
-				{
-					{
-						if (column.Text == "ID")
-						{
-							column.Width = 50; // Ignorar cliques em outras colunas
-						}
-						else
-						{
-							column.Width = 700; // Ignorar cliques em outras colunas
-						}
-					}
-				}
 				listaOriginalItens = listViewMarcas.Items.Cast<ListViewItem>().ToList();
 				lbTotalRegistros.Text = "Total de Registros: " + listViewMarcas.Items.Count;
 				sortColumn = 1;
 				sortAscending = true;
-
 				listViewMarcas.Sort();
 				listViewMarcas.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
-				listViewMarcas.Columns[sortColumn].Width = listViewMarcas.Columns[sortColumn].Width;
 				tabControlMarcas.SelectedTab = tabDadosMarca;
 
 			}
@@ -361,7 +343,6 @@ namespace OrdemServicos
 				}
 			}
 			CarregarRegistros();
-			LimparCampos();
 		}
 		private void btnAlterar_Click( object sender, EventArgs e )
 		{
@@ -384,7 +365,6 @@ namespace OrdemServicos
 			}
 			CarregarRegistros();
 			EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
-			LimparCampos();
 		}
 		private void btnFechar_Click( object sender, EventArgs e )
 		{
@@ -393,7 +373,6 @@ namespace OrdemServicos
 		private void btnCancelar_Click( object sender, EventArgs e )
 		{
 			CarregarRegistros();
-			LimparCampos();
 		}
 		private void DesabilitarCamposDoFormulario()
 		{

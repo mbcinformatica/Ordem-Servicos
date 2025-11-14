@@ -1,4 +1,6 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -103,5 +105,5 @@ namespace OrdemServicos.Utils
             }
             return valor;
         }
-    }
+     }
 }

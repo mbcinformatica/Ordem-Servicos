@@ -1,4 +1,6 @@
-﻿using OrdemServicos.Forms;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using OrdemServicos.Forms;
 using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
@@ -133,7 +135,6 @@ namespace OrdemServicos.Utils
                 form.escPressed = true;
                 form.AutoValidate = AutoValidate.Disable;
                 form.CarregarRegistros();
-                form.LimparCampos();
                 form.AutoValidate = AutoValidate.EnablePreventFocusChange;
             }
             else if (e.Shift && e.KeyCode == Keys.Tab)
@@ -258,7 +259,6 @@ namespace OrdemServicos.Utils
                 {
                     form.escPressed = true;
                     form.CarregarRegistros();
-                    form.LimparCampos();
                 }
                 return;
             }

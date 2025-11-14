@@ -50,12 +50,10 @@ namespace OrdemServicos
             listViewModelos.DrawSubItem += new DrawListViewSubItemEventHandler(listViewModelos_DrawSubItem);
             // Adicionar colunas
             listViewModelos.Columns.Add("ID", 50, HorizontalAlignment.Right);
-            listViewModelos.Columns.Add("  MARCA", 250, HorizontalAlignment.Left);
-            listViewModelos.Columns.Add("  DESCRIÇÃO", 459, HorizontalAlignment.Left);
+            listViewModelos.Columns.Add("  MARCA", 370, HorizontalAlignment.Left);
+            listViewModelos.Columns.Add("  DESCRIÇÃO", 1000, HorizontalAlignment.Left);
             // Adicionar evento de clique no cabeçalho da coluna
             listViewModelos.ColumnClick += new ColumnClickEventHandler(ListViewModelos_ColumnClick);
-            listViewModelos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listViewModelos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
         private void ListViewModelos_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -337,10 +335,8 @@ namespace OrdemServicos
                 lbTotalRegistros.Text = "Total de Registros: " + listViewModelos.Items.Count;
                 sortColumn = 2;
                 sortAscending = true;
-                listViewModelos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
                 listViewModelos.Sort();
-                listViewModelos.Columns[sortColumn].Width = listViewModelos.Columns[sortColumn].Width;
-                ajustaLarguraCabecalho(listViewModelos);
+                listViewModelos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
                 tabControlModelos.SelectedTab = tabDadosModelo;
 
                 MarcaBLL marcaBLL = new MarcaBLL();

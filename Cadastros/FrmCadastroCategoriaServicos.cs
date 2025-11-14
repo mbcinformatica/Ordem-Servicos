@@ -50,11 +50,8 @@ namespace OrdemServicos
             listViewCategoriaServico.DrawSubItem += new DrawListViewSubItemEventHandler(listViewCategoriaServico_DrawSubItem);
             // Adicionar colunas
             listViewCategoriaServico.Columns.Add("ID", 50, HorizontalAlignment.Right);
-            listViewCategoriaServico.Columns.Add("  DESCRIÇÃO", 120, HorizontalAlignment.Left);
-            // Adicionar evento de clique no cabeçalho da coluna
+            listViewCategoriaServico.Columns.Add("  DESCRIÇÃO", 1370, HorizontalAlignment.Left);
             listViewCategoriaServico.ColumnClick += new ColumnClickEventHandler(ListViewCategoriaServico_ColumnClick);
-            listViewCategoriaServico.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listViewCategoriaServico.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
         private void ListViewCategoriaServico_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -275,28 +272,13 @@ namespace OrdemServicos
                     item.SubItems.Add(categoriaServico.Descricao);
                     listViewCategoriaServico.Items.Add(item);
                 }
-                // Ajusta a largura das colunas
-                foreach (ColumnHeader column in listViewCategoriaServico.Columns)
-                {
-                    {
-                        if (column.Text == "ID")
-                        {
-                            column.Width = 50; // Ignorar cliques em outras colunas
-                        }
-                        else
-                        {
-                            column.Width = 720; // Ignorar cliques em outras colunas
-                        }
-                    }
-                }
+ 
                 listaOriginalItens = listViewCategoriaServico.Items.Cast<ListViewItem>().ToList();
                 lbTotalRegistros.Text = "Total de Registros: " + listViewCategoriaServico.Items.Count;
                 sortColumn = 1;
                 sortAscending = true;
-
                 listViewCategoriaServico.Sort();
                 listViewCategoriaServico.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
-                listViewCategoriaServico.Columns[sortColumn].Width = listViewCategoriaServico.Columns[sortColumn].Width;
                 tabControlCategoriaServicos.SelectedTab = tabDadosCategoriaServico;
 
             }
@@ -367,7 +349,6 @@ namespace OrdemServicos
                 }
             }
             CarregarRegistros();
-            LimparCampos();
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
@@ -390,7 +371,6 @@ namespace OrdemServicos
             }
             CarregarRegistros();
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
-            LimparCampos();
         }
         private void btnFechar_Click(object sender, EventArgs e)
         {
@@ -399,7 +379,6 @@ namespace OrdemServicos
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             CarregarRegistros();
-            LimparCampos();
         }
         private void DesabilitarCamposDoFormulario()
         {

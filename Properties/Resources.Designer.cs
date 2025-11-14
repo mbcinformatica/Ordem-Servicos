@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Properties {
+namespace OrdemServicos.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("OrdemServicos.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -166,6 +166,16 @@ namespace Properties {
         internal static System.Drawing.Bitmap LogoRelatorio {
             get {
                 object obj = ResourceManager.GetObject("LogoRelatorio", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MBCLogo11 {
+            get {
+                object obj = ResourceManager.GetObject("MBCLogo11", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

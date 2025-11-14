@@ -735,7 +735,6 @@ namespace OrdemServicos
                 }
             }
             CarregarRegistros();
-            LimparCampos();
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
@@ -758,7 +757,6 @@ namespace OrdemServicos
             }
             CarregarRegistros();
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
-            LimparCampos();
         }
         private void btnFechar_Click(object sender, EventArgs e)
         {
@@ -767,7 +765,6 @@ namespace OrdemServicos
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             CarregarRegistros();
-            LimparCampos();
         }
         private void DesabilitarCamposDoFormulario()
         {

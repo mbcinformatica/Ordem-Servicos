@@ -505,7 +505,6 @@ namespace OrdemServicos
                 }
             }
             CarregarRegistros();
-            LimparCampos();
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
@@ -529,7 +528,6 @@ namespace OrdemServicos
             }
             CarregarRegistros();
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
-            LimparCampos();
         }
         private void btnFechar_Click(object sender, EventArgs e)
         {
@@ -538,7 +536,6 @@ namespace OrdemServicos
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             CarregarRegistros();
-            LimparCampos();
         }
         public override void ExecutaFuncaoEvento(Control control)
         {
@@ -691,17 +688,20 @@ namespace OrdemServicos
             rdbCnpj.Checked = false;
             escPressed = false;
         }
-        static void InserirFornecedor(FornecedorInfo Fornecedor)
+        static bool InserirFornecedor(FornecedorInfo Fornecedor)
         {
             try
             {
                 FornecedorBLL fornecedorBLL = new FornecedorBLL();
                 fornecedorBLL.InserirFornecedor(Fornecedor);
                 //              MessageBox.Show("Fornecedor inserido com sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true; // inclusão realizada com sucesso
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // falha na inclusão
+
             }
         }
         static void AtualizarFornecedor(FornecedorInfo Fornecedor)
@@ -731,7 +731,7 @@ namespace OrdemServicos
             }
 
         }
-        private async void PesquisarCnpj(String cnpj)
+        private async Task<bool> PesquisarCnpj(string cnpj)
         {
             try
             {
@@ -752,12 +752,14 @@ namespace OrdemServicos
                     txtFone_2.Text = info.Fone_2;
                     txtEmail.Text = info.Email;
                     txtDataCadastro.Text = info.DataCadastro;
+
                     if (leituraAutomaticaAtiva)
                     {
                         rdbCnpj.Checked = true;
                         rdbCpf.Checked = false;
                         txtIDFornecedor.Enabled = false;
                         bNovo = true;
+
                         FornecedorInfo fornecedor = new FornecedorInfo
                         {
                             TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA",
@@ -775,24 +777,35 @@ namespace OrdemServicos
                             Email = txtEmail.Text,
                             DataCadastro = DateTime.Now
                         };
-                        InserirFornecedor(fornecedor);
+
+                        bool inserido = InserirFornecedor(fornecedor);
                         LimparCampos();
+                        return inserido;
                     }
+
                     if (!leituraAutomaticaAtiva)
                     {
                         txtNomeRazaoSocial.Focus();
                     }
+
+                    return false; // info foi preenchido, mas não houve inclusão
                 }
                 else if (!leituraAutomaticaAtiva)
                 {
-                    MessageBox.Show(cnpj + "CNPJ não encontrado ou erro na pesquisa.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(cnpj + " CNPJ não encontrado ou erro na pesquisa.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
+                return false;
+            }
+            catch
+            {
+                return false;
             }
             finally
             {
                 if (!leituraAutomaticaAtiva)
                 {
-                    Cursor.Current = Cursors.Default; // Restaurar o cursor padrão
+                    Cursor.Current = Cursors.Default;
                 }
             }
         }
@@ -867,10 +880,10 @@ namespace OrdemServicos
 
                     try
                     {
-
                         EventosUtils.AcaoBotoes("DesabilitarTodosBotoesAcoes", this);
 
                         string[] linhas = File.ReadAllLines(filePath);
+                        List<string> cnpjsRestantes = new List<string>();
                         int total = linhas.Length;
                         int atual = 0;
 
@@ -882,42 +895,70 @@ namespace OrdemServicos
                         lblProgressoCNPJs.Enabled = true;
                         lblProgressoCNPJs.BackColor = Color.Azure;
                         lblProgressoCNPJs.ForeColor = Color.Red;
-                        lblProgressoCNPJs.Font = new System.Drawing.Font("Times New Roman", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                        lblProgressoCNPJs.Font = new Font("Times New Roman", 16F, FontStyle.Regular);
                         lblProgressoCNPJs.AutoSize = false;
                         leituraAutomaticaAtiva = true;
 
+                        DBSetupBLL dbSetupBLL = new DBSetupBLL();
+
                         foreach (string linha in linhas)
                         {
-                            RegistrarErroLog($"Numero de Linha {linha}");
                             string cnpj = linha.Trim();
                             string txt_CNPJ = StringUtils.FormatCNPJ(cnpj);
                             int porcentagem = (int)(((double)atual / total) * 100);
                             lblProgressoCNPJs.Text = $"Processando CNPJ {txt_CNPJ}... ({porcentagem}%)";
                             await Task.Delay(500);
 
+                            bool incluirNoArquivo = true;
+
                             if (ValidaCnpj(cnpj))
                             {
-                                try
+                                if (dbSetupBLL.VerificarSeCadastrado(cnpj, "DBFornecedores", "Cpf_Cnpj"))
                                 {
-                                    DBSetupBLL dbSetupBLL = new DBSetupBLL();
-                                    if (!dbSetupBLL.VerificarSeCadastrado(cnpj, "DBFornecedores", "Cpf_Cnpj"))
-                                    {
-                                        PesquisarCnpj(cnpj);
-                                    }
+                                    incluirNoArquivo = false;
                                 }
-                                catch { }
+                                else
+                                {
+                                    try
+                                    {
+                                        bool sucesso = await PesquisarCnpj(cnpj); // retorna true se inclusão no BD foi bem-sucedida
+                                        if (sucesso)
+                                        {
+                                            incluirNoArquivo = false;
+                                        }
+                                    }
+                                    catch { }
+                                }
                             }
+                            else
+                            {
+                                incluirNoArquivo = false;
+                            }
+
+                            if (incluirNoArquivo)
+                            {
+                                cnpjsRestantes.Add(cnpj);
+                            }
+
                             atual++;
                             progressBarCNPJs.Value = atual;
                         }
 
+                        // Criar backup antes de sobrescrever
+                        string backupFile = filePath + ".bak";
+                        File.Copy(filePath, backupFile, true);
+
+                        // Sobrescrever o arquivo original com os CNPJs restantes
+                        File.WriteAllLines(filePath, cnpjsRestantes);
+
                         lblProgressoCNPJs.Text = "Processamento concluído!";
-                        MessageBox.Show("Todos os CNPJs foram processados.", "Concluído", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"Todos os CNPJs foram processados.\nArquivo atualizado em:\n{filePath}\nBackup salvo em:\n{backupFile}",
+                                        "Concluído", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                         progressBarCNPJs.Visible = false;
                         lblProgressoCNPJs.Visible = false;
                         lblProgressoCNPJs.Enabled = false;
                         CarregarRegistros();
-                        LimparCampos();
                     }
                     catch (Exception ex)
                     {
@@ -1050,7 +1091,6 @@ namespace OrdemServicos
                                 lblProgressoCNPJs.Visible = false;
                                 lblProgressoCNPJs.Enabled = false;
                                 CarregarRegistros();
-                                LimparCampos();
                             }
                             catch (Exception ex)
                             {

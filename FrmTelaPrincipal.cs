@@ -210,37 +210,37 @@ namespace OrdemServicos
         {
             AbrirRelatorioClientes();
         }
-		private void AbrirRelatorioClientes()
-		{
-			// Defina o caminho base onde o relatório será salvo
+        private void AbrirRelatorioClientes()
+        {
+            // Defina o caminho base onde o relatório será salvo
             string diretorioRelatorio = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RelatorioPDF");
 
             // Verifique se o diretório existe, se não, crie-o
             if (!Directory.Exists(diretorioRelatorio))
-			{
-				Directory.CreateDirectory(diretorioRelatorio);
-			}
+            {
+                Directory.CreateDirectory(diretorioRelatorio);
+            }
 
-			string caminhoBase = Path.Combine(diretorioRelatorio, "RelatorioClientes.pdf");
-			string caminhoArquivo = caminhoBase;
+            string caminhoBase = Path.Combine(diretorioRelatorio, "RelatorioClientes.pdf");
+            string caminhoArquivo = caminhoBase;
 
-			// Verifique se o arquivo já existe e gere um novo nome se necessário
-			int contador = 1;
-			while (File.Exists(caminhoArquivo))
-			{
-				string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
-				string extensao = Path.GetExtension(caminhoBase);
-				caminhoArquivo = Path.Combine(diretorioRelatorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
-				contador++;
-			}
+            // Verifique se o arquivo já existe e gere um novo nome se necessário
+            int contador = 1;
+            while (File.Exists(caminhoArquivo))
+            {
+                string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
+                string extensao = Path.GetExtension(caminhoBase);
+                caminhoArquivo = Path.Combine(diretorioRelatorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
+                contador++;
+            }
 
-			// Crie uma instância da classe RelatorioClientes
-			RelatorioClientes relatorio = new RelatorioClientes();
+            // Crie uma instância da classe RelatorioClientes
+            RelatorioClientes relatorio = new RelatorioClientes();
 
-			// Gere o relatório
-			relatorio.GerarRelatorioClientes(caminhoArquivo);
-		}
-		private void cadastroDeFornecedoresToolStripMenuItem_Click(object sender, EventArgs e)
+            // Gere o relatório
+            relatorio.GerarRelatorioClientes(caminhoArquivo);
+        }
+        private void cadastroDeFornecedoresToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirRelatorioFornecedores();
         }

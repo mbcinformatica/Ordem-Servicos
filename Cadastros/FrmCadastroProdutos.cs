@@ -319,7 +319,6 @@ namespace OrdemServicos
                 escPressed = true;
                 AutoValidate = AutoValidate.Disable;
                 CarregarRegistros();
-                LimparCampos();
                 AutoValidate = AutoValidate.EnablePreventFocusChange;
             }
         }
@@ -615,7 +614,6 @@ namespace OrdemServicos
                 cmbUnidade.DataSource = unidades;
                 cmbUnidade.DisplayMember = "Descricao";
                 cmbUnidade.ValueMember = "IDUnidade";
-
                 tabControlProdutos.SelectedTab = tabDadosProduto;
             }
             catch (Exception ex)
@@ -842,7 +840,6 @@ namespace OrdemServicos
                 }
             }
             CarregarRegistros();
-            LimparCampos();
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
@@ -865,7 +862,6 @@ namespace OrdemServicos
             }
             CarregarRegistros();
             DesabilitarBotoesAcoes();
-            LimparCampos();
         }
         private void btnFechar_Click(object sender, EventArgs e)
         {
@@ -874,7 +870,6 @@ namespace OrdemServicos
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             CarregarRegistros();
-            LimparCampos();
         }
         private void DesabilitarCampos()
         {

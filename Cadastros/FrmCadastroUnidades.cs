@@ -50,11 +50,9 @@ namespace OrdemServicos
 			listViewUnidades.DrawSubItem += new DrawListViewSubItemEventHandler(listViewUnidades_DrawSubItem);
 			// Adicionar colunas
 			listViewUnidades.Columns.Add("ID", 50, HorizontalAlignment.Right);
-			listViewUnidades.Columns.Add("  DESCRIÇÃO", 120, HorizontalAlignment.Left);
+			listViewUnidades.Columns.Add("  DESCRIÇÃO", 1370, HorizontalAlignment.Left);
 			// Adicionar evento de clique no cabeçalho da coluna
 			listViewUnidades.ColumnClick += new ColumnClickEventHandler(ListViewUnidades_ColumnClick);
-			listViewUnidades.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-			listViewUnidades.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
 		}
 		private void ListViewUnidades_ColumnClick( object sender, ColumnClickEventArgs e )
 		{
@@ -277,28 +275,13 @@ namespace OrdemServicos
 					item.SubItems.Add(marca.Descricao);
 					listViewUnidades.Items.Add(item);
 				}
-				// Ajusta a largura das colunas
-				foreach (ColumnHeader column in listViewUnidades.Columns)
-				{
-					{
-						if (column.Text == "ID")
-						{
-							column.Width = 50; // Ignorar cliques em outras colunas
-						}
-						else
-						{
-							column.Width = 1370; // Ignorar cliques em outras colunas
-						}
-					}
-				}
+
 				listaOriginalItens = listViewUnidades.Items.Cast<ListViewItem>().ToList();
 				lbTotalRegistros.Text = "Total de Registros: " + listViewUnidades.Items.Count;
 				sortColumn = 1;
 				sortAscending = true;
-
 				listViewUnidades.Sort();
 				listViewUnidades.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
-				listViewUnidades.Columns[sortColumn].Width = listViewUnidades.Columns[sortColumn].Width;
 				tabControlUnidades.SelectedTab = tabDadosUnidade;
 
 			}
@@ -369,7 +352,6 @@ namespace OrdemServicos
 				}
 			}
 			CarregarRegistros();
-			LimparCampos();
 		}
 		private void btnAlterar_Click( object sender, EventArgs e )
 		{
@@ -392,7 +374,6 @@ namespace OrdemServicos
 			}
 			CarregarRegistros();
 			EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
-			LimparCampos();
 		}
 		private void btnFechar_Click( object sender, EventArgs e )
 		{

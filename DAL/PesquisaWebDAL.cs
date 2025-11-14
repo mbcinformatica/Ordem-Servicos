@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using OrdemServicos.Forms;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ using static OrdemServicos.Model.PesquisaWebInfo;
 
 namespace OrdemServicos.DAL
 {
-    public class PesquisaWebDAL:BaseForm
+    public class PesquisaWebDAL
     {
         public class ReceitaFederalApi
         {

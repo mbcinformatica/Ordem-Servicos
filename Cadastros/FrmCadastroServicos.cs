@@ -56,7 +56,6 @@ namespace OrdemServicos
 			listViewServicos.Columns.Add("  CATEGORIA", 400, HorizontalAlignment.Left);
 			listViewServicos.Columns.Add("  DESCRIÇÃO", 620, HorizontalAlignment.Left);
 			listViewServicos.Columns.Add("VALOR DO SERVIÇO", 200, HorizontalAlignment.Right);
-
 			listViewServicos.ColumnClick += new ColumnClickEventHandler(ListViewServicos_ColumnClick);
 		}
 		private void ListViewServicos_ColumnClick( object sender, ColumnClickEventArgs e )
@@ -453,8 +452,6 @@ namespace OrdemServicos
 				}
 			}
 			CarregarRegistros();
-			LimparCampos();
-
 		}
 		private void btnAlterar_Click( object sender, EventArgs e )
 		{
@@ -477,7 +474,6 @@ namespace OrdemServicos
 			}
 			CarregarRegistros();
 			EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
-			LimparCampos();
 		}
 		private void btnFechar_Click( object sender, EventArgs e )
 		{
@@ -486,7 +482,6 @@ namespace OrdemServicos
 		private void btnCancelar_Click( object sender, EventArgs e )
 		{
 			CarregarRegistros();
-			LimparCampos();
 		}
 		private void DesabilitarCamposDoFormulario()
 		{
