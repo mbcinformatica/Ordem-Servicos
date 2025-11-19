@@ -79,7 +79,6 @@
             this.txtDataUltimaCompra = new System.Windows.Forms.TextBox();
             this.lbDataUltimaCompra = new System.Windows.Forms.Label();
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
-            this.tlpListViewCelula = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.tabControlProdutos.SuspendLayout();
@@ -815,6 +814,5 @@
 		private System.Windows.Forms.Button btnExcluir;
 		private System.Windows.Forms.Button btnNovo;
 		private System.Windows.Forms.Button btnCancelar;
-		private System.Windows.Forms.ToolTip tlpListViewCelula;
 	}
 }

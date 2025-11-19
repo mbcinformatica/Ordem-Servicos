@@ -58,7 +58,6 @@ namespace OrdemServicos
             this.lblTitulo = new System.Windows.Forms.Label();
             this.imgCadeadoFechado = new System.Windows.Forms.PictureBox();
             this.imgCadeadoAberto = new System.Windows.Forms.PictureBox();
-            this.tlpListViewCelula = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgImagemUsuario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgCadeadoFechado)).BeginInit();
@@ -256,7 +255,6 @@ namespace OrdemServicos
 		private System.Windows.Forms.Label lblTitulo;
 		private PictureBox imgCadeadoAberto;
 		private PictureBox imgCadeadoFechado;
-		private ToolTip tlpListViewCelula;
 	}
 }
 

@@ -172,9 +172,9 @@ namespace OrdemServicos.Forms
                 }
                 else if (control is ListView listView)
                 {
-                    tlpListViewCelula.InitialDelay = 100;     // Aparece quase instantaneamente
-                    tlpListViewCelula.ReshowDelay = 50;       // Reaparece rapidamente ao mover o mouse
-                    tlpListViewCelula.AutoPopDelay = 3000;    // Some após 3s
+  //                  tlpListViewCelula.InitialDelay = 100;     // Aparece quase instantaneamente
+  //                  tlpListViewCelula.ReshowDelay = 50;       // Reaparece rapidamente ao mover o mouse
+  //                  tlpListViewCelula.AutoPopDelay = 3000;    // Some após 3s
                     tlpListViewCelula.ShowAlways = true;
                     tlpListViewCelula.OwnerDraw = true;
                     tlpListViewCelula.Draw += tlpListViewCelula_Draw;
@@ -249,8 +249,8 @@ namespace OrdemServicos.Forms
         protected void tlpListViewCelula_Draw(object sender, DrawToolTipEventArgs e)
         {
             // Fundo personalizado
-            using (SolidBrush backBrush = new SolidBrush(Color.FromArgb(40, 40, 40))) // fundo escuro
-            using (SolidBrush textBrush = new SolidBrush(Color.White)) // texto branco
+            using (SolidBrush backBrush = new SolidBrush(Color.FromArgb(198, 242, 242))) // fundo escuro
+            using (SolidBrush textBrush = new SolidBrush(Color.FromArgb(0, 0, 0))) // texto branco
             using (Pen borderPen = new Pen(Color.SteelBlue)) // borda azul
             {
                 // Desenhar fundo
@@ -260,7 +260,7 @@ namespace OrdemServicos.Forms
                 e.Graphics.DrawRectangle(borderPen, e.Bounds);
 
                 // Desenhar texto com fonte personalizada
-                Font fonte = new Font("Segoe UI", 9, FontStyle.Regular);
+                Font fonte = new Font("Times New Roman", 10, FontStyle.Bold);
                 e.Graphics.DrawString(e.ToolTipText, fonte, textBrush, e.Bounds);
             }
         }

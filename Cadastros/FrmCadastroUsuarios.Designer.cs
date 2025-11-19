@@ -76,7 +76,6 @@
             this.txtDataCadastro = new System.Windows.Forms.TextBox();
             this.lbDataCadastro = new System.Windows.Forms.Label();
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
-            this.tlpListViewCelula = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.tabControlUsuarios.SuspendLayout();
@@ -793,6 +792,5 @@
         private System.Windows.Forms.Button btnInserirImagem;
         private System.Windows.Forms.Button btnExcluirImagem;
         private System.Windows.Forms.Button btnCancelar;
-		private System.Windows.Forms.ToolTip tlpListViewCelula;
 	}
 }

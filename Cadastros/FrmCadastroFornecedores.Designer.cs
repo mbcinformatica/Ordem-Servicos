@@ -79,7 +79,6 @@
             this.btnCarregaArquivoCpf = new System.Windows.Forms.Button();
             this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
-            this.tlpListViewCelula = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.tabControlFornecedores.SuspendLayout();
@@ -803,6 +802,5 @@
 		private System.Windows.Forms.Label lblProgressoCNPJs;
 		private System.Windows.Forms.ProgressBar progressBarCNPJs;
 		private System.Windows.Forms.Button btnCarregaArquivoCpf;
-		private System.Windows.Forms.ToolTip tlpListViewCelula;
 	}
 }

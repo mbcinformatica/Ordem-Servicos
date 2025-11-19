@@ -363,6 +363,7 @@ namespace OrdemServicos.Utils
         {
             if (sender is ListView listView)
             {
+                listView.FullRowSelect = true;
 
                 ListViewHitTestInfo hit = listView.HitTest(e.Location);
                 ListViewItem item = hit.Item;
@@ -374,13 +375,14 @@ namespace OrdemServicos.Utils
 
                     if (texto != form.ultimoTextoTooltip)
                     {
-                        form.tlpListViewCelula.SetToolTip(listView, texto);
+                        // Usa Show para garantir que o tooltip apareça na posição do mouse
+                        form.tlpListViewCelula.Show(texto, listView, e.Location.X + 15, e.Location.Y + 15, 3000);
                         form.ultimoTextoTooltip = texto;
-                   }
+                    }
                 }
                 else
                 {
-                    form.tlpListViewCelula.SetToolTip(listView, "");
+                    form.tlpListViewCelula.Hide(listView);
                     form.ultimoTextoTooltip = "";
                 }
             }
