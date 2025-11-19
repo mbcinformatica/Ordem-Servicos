@@ -7,56 +7,73 @@ namespace OrdemServicos.DAL
 {
     public class DBSetupDAL
     {
-        private readonly string connectionString;
-        private readonly string connectionStringWithoutDatabase;
+        private string connectionString;
+        private string connectionStringWithoutDatabase;
 
         public DBSetupDAL()
         {
             connectionString = ConfigurationManager.AppSettings["ConnectionString"];
             connectionStringWithoutDatabase = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
+
         }
 
         public bool CheckAndSetupDatabase()
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionStringWithoutDatabase))
-            {
-                try
-                {
-                    connection.Open();
+            bool sucesso = false;
 
-                    // Verifica se o banco de dados existe
-                    var checkDbQuery = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'DBOrdemServicos'";
-                    using (var checkDbCommand = new MySqlCommand(checkDbQuery, connection))
+            while (!sucesso )
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionStringWithoutDatabase))
+                {
+                    try
                     {
-                        var dbExists = checkDbCommand.ExecuteScalar() != null;
-                        if (!dbExists)
+                        connection.Open();
+
+                        // Verifica se o banco existe
+                        var checkDbQuery = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'DBOrdemServicos'";
+                        using (var checkDbCommand = new MySqlCommand(checkDbQuery, connection))
                         {
-                            // Cria o banco de dados
-                            var createDbQuery = "CREATE DATABASE DBOrdemServicos;";
-                            using (var createDbCommand = new MySqlCommand(createDbQuery, connection))
+                            var dbExists = checkDbCommand.ExecuteScalar() != null;
+                            if (!dbExists)
                             {
-                                createDbCommand.ExecuteNonQuery();
+                                var createDbQuery = "CREATE DATABASE DBOrdemServicos;";
+                                using (var createDbCommand = new MySqlCommand(createDbQuery, connection))
+                                {
+                                    createDbCommand.ExecuteNonQuery();
+                                }
                             }
                         }
-                    }
 
-                    // Usa o banco de dados
-                    var useDbQuery = "USE DBOrdemServicos;";
-                    using (var useDbCommand = new MySqlCommand(useDbQuery, connection))
+                        // Usa o banco
+                        using (var useDbCommand = new MySqlCommand("USE DBOrdemServicos;", connection))
+                        {
+                            useDbCommand.ExecuteNonQuery();
+                        }
+
+                        // Cria tabelas se necessário
+                        VerifyAndCreateTables(connection);
+
+                        sucesso = true;
+                    }
+                    catch 
                     {
-                        useDbCommand.ExecuteNonQuery();
-                    }
+                        MessageBox.Show("Erro ao Conectar ao Banco de Dados, Favor Configurar o Banco de Dados:  " ,
+                                        "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                    // Verifica e cria tabelas e colunas
-                    VerifyAndCreateTables(connection);
+                        // Abre o formulário de configuração
+
+                        frmConfigDB FrmConfigDB = new frmConfigDB();
+                        frmConfigDB formularioConfigDB = FrmConfigDB;
+
+                        // Ajusta a localização para ficar abaixo do menu do formulário principal
+                        formularioConfigDB.StartPosition = FormStartPosition.CenterScreen;
+                        formularioConfigDB.ShowDialog();
+                        connectionString = ConfigurationManager.AppSettings["ConnectionString"];
+                        connectionStringWithoutDatabase = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao conectar ao banco de dados: " + ex.Message, "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-                return true;
             }
+            return sucesso;
         }
         private void VerifyAndCreateTables(MySqlConnection connection)
         {
@@ -201,7 +218,7 @@ namespace OrdemServicos.DAL
             {
                 "IDCategoriaServico int NOT NULL AUTO_INCREMENT",
                 "Descricao varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL",
-				"PRIMARY KEY (IDCategoriaServico)",
+                "PRIMARY KEY (IDCategoriaServico)",
                 "UNIQUE KEY Descricao_UNIQUE (Descricao)"
             });
 

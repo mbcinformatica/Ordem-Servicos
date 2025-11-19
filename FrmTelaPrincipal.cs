@@ -1,4 +1,5 @@
 ﻿using OrdemServicos.BLL;
+using OrdemServicos.DAL;
 using OrdemServicos.Forms;
 using System;
 using System.Configuration;
@@ -10,7 +11,7 @@ namespace OrdemServicos
 {
     public partial class frmTelaPrincipal : BaseForm
     {
-        private readonly string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
+ //       private readonly string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
         public frmTelaPrincipal()
         {
             InitializeComponent();
@@ -31,7 +32,10 @@ namespace OrdemServicos
                         string mensagem = "Não existe Usuário Cadastrado.\n\nAntes de continuar a usar o sistema, \nFavor Cadastrar um Usuario com Direitos Administrativo.\n\nCadastre um novo usuário.";
                         MessageBox.Show(mensagem, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         AbrirFormularioUsuarios();
-						Application.Exit();
+                        if (usuarioBLL.IsUsuariosEmpty())
+                        {
+                            Application.Exit();
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -39,14 +43,14 @@ namespace OrdemServicos
                     MessageBox.Show("Erro ao conectar ao banco de dados: " + ex.Message, "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
                 }
+                AbrirFormularioLogin();
+                this.Text = this.Text + $" {BaseForm.UsuarioLogado}";
             }
             else
             {
                 MessageBox.Show("Erro ao conectar ao banco de dados: ", "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
-            AbrirFormularioLogin();
-            this.Text = this.Text + $" {BaseForm.UsuarioLogado}";
         }
         private void frmTelaPrincipal_Load(object sender, EventArgs e)
         {
@@ -67,7 +71,6 @@ namespace OrdemServicos
 
             // Ajusta a localização para ficar abaixo do menu do formulário principal
             formularioLogin.StartPosition = FormStartPosition.CenterScreen;
-
             formularioLogin.ShowDialog();
         }
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
