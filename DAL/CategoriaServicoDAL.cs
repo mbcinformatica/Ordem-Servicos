@@ -3,6 +3,7 @@ using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Windows.Forms;
 
 namespace OrdemServicos.DAL
 {
@@ -11,86 +12,163 @@ namespace OrdemServicos.DAL
         private readonly string connectionString;
         public CategoriaServicoDAL()
         {
-            connectionString = ConfigurationManager.AppSettings["ConnectionString"];
+            try
+            {
+                connectionString = ConfigurationManager.AppSettings["ConnectionString"];
+            }
+            catch (ConfigurationErrorsException ex)
+            {
+                MessageBox.Show("Erro ao carregar configuração do banco: " + ex.Message,
+                                "Erro de Configuração", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
         public List<CategoriaServicoInfo> Listar()
         {
             List<CategoriaServicoInfo> CategoriaServicosList = new List<CategoriaServicoInfo>();
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                conn.Open();
-                string query = "SELECT * FROM DBCategoriaServicos";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                using (MySqlDataReader reader = cmd.ExecuteReader())
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
-                    while (reader.Read())
+                    conn.Open();
+                    string query = "SELECT * FROM DBCategoriaServicos";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        CategoriaServicoInfo categoria = new CategoriaServicoInfo
+                        while (reader.Read())
                         {
-                            IDCategoriaServico = Convert.ToInt32(reader["IDCategoriaServico"]),
-                            Descricao = reader["Descricao"].ToString()
-                        };
-                        CategoriaServicosList.Add(categoria);
+                            CategoriaServicoInfo categoria = new CategoriaServicoInfo
+                            {
+                                IDCategoriaServico = Convert.ToInt32(reader["IDCategoriaServico"]),
+                                Descricao = reader["Descricao"].ToString()
+                            };
+                            CategoriaServicosList.Add(categoria);
+                        }
                     }
                 }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro MySQL ao listar categorias de serviço: " + ex.Message,
+                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro inesperado ao listar categorias de serviço: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return CategoriaServicosList;
         }
+
         public CategoriaServicoInfo GetCategoriaServico(int idCategoriaServico)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                conn.Open();
-                string query = "SELECT * FROM DBCategoriaServicos WHERE IDCategoriaServico = @IDCategoriaServico";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@IDCategoriaServico", idCategoriaServico);
-                using (MySqlDataReader reader = cmd.ExecuteReader())
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
-                    if (reader.Read())
+                    conn.Open();
+                    string query = "SELECT * FROM DBCategoriaServicos WHERE IDCategoriaServico = @IDCategoriaServico";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@IDCategoriaServico", idCategoriaServico);
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        CategoriaServicoInfo categoria = new CategoriaServicoInfo
+                        if (reader.Read())
                         {
-                            IDCategoriaServico = Convert.ToInt32(reader["IDCategoriaServico"]),
-                            Descricao = reader["Descricao"].ToString()
-                        };
-                        return categoria;
+                            return new CategoriaServicoInfo
+                            {
+                                IDCategoriaServico = Convert.ToInt32(reader["IDCategoriaServico"]),
+                                Descricao = reader["Descricao"].ToString()
+                            };
+                        }
                     }
                 }
             }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro MySQL ao buscar categoria de serviço: " + ex.Message,
+                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro inesperado ao buscar categoria de serviço: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             return null;
         }
+
         public void AtualizarCategoriaServico(CategoriaServicoInfo categoria)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                conn.Open();
-                string query = "UPDATE DBCategoriaServicos SET Descricao = @Descricao WHERE IDCategoriaServico = @IDCategoriaServico";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@IDCategoriaServico", categoria.IDCategoriaServico); // Adiciona o parâmetro IDCategoriaServico
-                cmd.Parameters.AddWithValue("@Descricao", categoria.Descricao);
-                cmd.ExecuteNonQuery();
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "UPDATE DBCategoriaServicos SET Descricao = @Descricao WHERE IDCategoriaServico = @IDCategoriaServico";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@IDCategoriaServico", categoria.IDCategoriaServico);
+                    cmd.Parameters.AddWithValue("@Descricao", categoria.Descricao);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro MySQL ao atualizar categoria de serviço: " + ex.Message,
+                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro inesperado ao atualizar categoria de serviço: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         public void InserirCategoriaServico(CategoriaServicoInfo categoria)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                conn.Open();
-                string query = "INSERT INTO DBCategoriaServicos (Descricao) VALUES (@Descricao)";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Descricao", categoria.Descricao);
-                cmd.ExecuteNonQuery();
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "INSERT INTO DBCategoriaServicos (Descricao) VALUES (@Descricao)";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@Descricao", categoria.Descricao);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro MySQL ao inserir categoria de serviço: " + ex.Message,
+                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro inesperado ao inserir categoria de serviço: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         public void ExcluirCategoriaServico(int IDCategoriaServico)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            try
             {
-                conn.Open();
-                string query = "DELETE FROM DBCategoriaServicos WHERE IDCategoriaServico = @IDCategoriaServico";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@IDCategoriaServico", IDCategoriaServico);
-                cmd.ExecuteNonQuery();
+                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "DELETE FROM DBCategoriaServicos WHERE IDCategoriaServico = @IDCategoriaServico";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@IDCategoriaServico", IDCategoriaServico);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro MySQL ao excluir categoria de serviço: " + ex.Message,
+                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro inesperado ao excluir categoria de serviço: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

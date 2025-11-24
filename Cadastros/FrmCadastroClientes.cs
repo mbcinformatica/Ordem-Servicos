@@ -502,10 +502,7 @@ namespace OrdemServicos
                     AtualizarCliente(cliente);
                 }
             }
-            if (!leituraAutomaticaAtiva)
-            {
-                CarregarRegistros();
-            }
+            CarregarRegistros();
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {

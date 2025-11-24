@@ -3,6 +3,7 @@ using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Windows.Forms;
 
 namespace OrdemServicos.DAL
 {
@@ -11,8 +12,17 @@ namespace OrdemServicos.DAL
         private readonly string connectionString;
         public FornecedorDAL()
         {
-            connectionString = ConfigurationManager.AppSettings["ConnectionString"];
+            try
+            {
+                connectionString = ConfigurationManager.AppSettings["ConnectionString"];
+            }
+            catch (ConfigurationErrorsException ex)
+            {
+                MessageBox.Show("Erro ao carregar configuração do banco: " + ex.Message,
+                                "Erro de Configuração", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
         public List<FornecedorInfo> Listar()
         {
             List<FornecedorInfo> FornecedoresList = new List<FornecedorInfo>();
@@ -27,7 +37,7 @@ namespace OrdemServicos.DAL
                     {
                         while (reader.Read())
                         {
-                            FornecedorInfo Fornecedor = new FornecedorInfo
+                            FornecedorInfo fornecedor = new FornecedorInfo
                             {
                                 IDFornecedor = Convert.ToInt32(reader["IDFornecedor"]),
                                 TipoPessoa = reader["TipoPessoa"].ToString(),
@@ -45,14 +55,20 @@ namespace OrdemServicos.DAL
                                 Email = reader["Email"].ToString(),
                                 DataCadastro = Convert.ToDateTime(reader["DataCadastro"])
                             };
-                            FornecedoresList.Add(Fornecedor);
+                            FornecedoresList.Add(fornecedor);
                         }
                     }
                 }
             }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro MySQL ao listar fornecedores: " + ex.Message,
+                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao listar fornecedores: " + ex.Message);
+                MessageBox.Show("Erro inesperado ao listar fornecedores: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return FornecedoresList;
@@ -94,9 +110,15 @@ namespace OrdemServicos.DAL
                     }
                 }
             }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro MySQL ao buscar fornecedor: " + ex.Message,
+                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao buscar fornecedor: " + ex.Message);
+                MessageBox.Show("Erro inesperado ao buscar fornecedor: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return null;
@@ -131,9 +153,15 @@ namespace OrdemServicos.DAL
                     cmd.ExecuteNonQuery();
                 }
             }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro MySQL ao atualizar fornecedor: " + ex.Message,
+                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao atualizar fornecedor: " + ex.Message);
+                MessageBox.Show("Erro inesperado ao atualizar fornecedor: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -164,9 +192,15 @@ namespace OrdemServicos.DAL
                     cmd.ExecuteNonQuery();
                 }
             }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Erro MySQL ao inserir fornecedor: " + ex.Message,
+                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao inserir fornecedor: " + ex.Message);
+                MessageBox.Show("Erro inesperado ao inserir fornecedor: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -178,14 +212,24 @@ namespace OrdemServicos.DAL
                 {
                     conn.Open();
                     string query = "DELETE FROM DBFornecedores WHERE IDFornecedor = @IDFornecedor";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@IDFornecedor", IDFornecedor);
-                    cmd.ExecuteNonQuery();
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@IDFornecedor", IDFornecedor);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (MySqlException ex)
+            {
+                // Erros específicos de banco (ex.: chave estrangeira impedindo exclusão)
+                MessageBox.Show("Erro MySQL ao excluir fornecedor: " + ex.Message,
+                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao excluir fornecedor: " + ex.Message);
+                // Erros inesperados
+                MessageBox.Show("Erro inesperado ao excluir fornecedor: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
