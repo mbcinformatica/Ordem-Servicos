@@ -252,7 +252,12 @@ namespace OrdemServicos
 				erpProvider,
 				camposObrigatorios
 			);
-		}
+            List<Control> controlesCampos = new List<Control>
+            {
+                txtDescricao
+            };
+            EventosUtils.AjustarCamposTexto(controlesCampos, "DBUnidades");
+        }
 		private void ConfigurarTabIndexControles()
 		{
 			txtDescricao.TabIndex = 0;

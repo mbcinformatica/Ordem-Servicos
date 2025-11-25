@@ -511,6 +511,18 @@ namespace OrdemServicos
                 erpProvider,
                 camposObrigatorios
             );
+            List<Control> controlesCampos = new List<Control>
+            {
+                txtIDProdutoFabricante,
+                txtIDProdutoInterno,
+                txtDescricao,
+                txtPrecoCompra,
+                txtPrecoVenda,
+                txtEstoqueAtual,
+                txtEstoqueMinimo,
+                txtGarantia
+            };
+            EventosUtils.AjustarCamposTexto(controlesCampos, "DBProdutos");
         }
         private void ConfigurarTabIndexControles()
         {

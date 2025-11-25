@@ -72,9 +72,9 @@
             this.lbCep = new System.Windows.Forms.Label();
             this.txtDataCadastro = new System.Windows.Forms.TextBox();
             this.lbDataCadastro = new System.Windows.Forms.Label();
-            this.txtNomeRazaoSocial = new System.Windows.Forms.TextBox();
+            this.txtNome_RazaoSocial = new System.Windows.Forms.TextBox();
             this.lbNomeRazaoSocial = new System.Windows.Forms.Label();
-            this.txtCpfCnpj = new System.Windows.Forms.MaskedTextBox();
+            this.txtCpf_Cnpj = new System.Windows.Forms.MaskedTextBox();
             this.lbCpfCnpj = new System.Windows.Forms.Label();
             this.btnCarregaArquivoCpf = new System.Windows.Forms.Button();
             this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
@@ -292,9 +292,9 @@
             this.tabDadosFornecedor.Controls.Add(this.lbCep);
             this.tabDadosFornecedor.Controls.Add(this.txtDataCadastro);
             this.tabDadosFornecedor.Controls.Add(this.lbDataCadastro);
-            this.tabDadosFornecedor.Controls.Add(this.txtNomeRazaoSocial);
+            this.tabDadosFornecedor.Controls.Add(this.txtNome_RazaoSocial);
             this.tabDadosFornecedor.Controls.Add(this.lbNomeRazaoSocial);
-            this.tabDadosFornecedor.Controls.Add(this.txtCpfCnpj);
+            this.tabDadosFornecedor.Controls.Add(this.txtCpf_Cnpj);
             this.tabDadosFornecedor.Controls.Add(this.lbCpfCnpj);
             this.tabDadosFornecedor.Controls.Add(this.btnCarregaArquivoCpf);
             this.tabDadosFornecedor.Cursor = System.Windows.Forms.Cursors.Default;
@@ -652,16 +652,16 @@
             this.lbDataCadastro.TabIndex = 100;
             this.lbDataCadastro.Text = "Data Cadastro..:";
             // 
-            // txtNomeRazaoSocial
+            // txtNome_RazaoSocial
             // 
-            this.txtNomeRazaoSocial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNomeRazaoSocial.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtNomeRazaoSocial.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNomeRazaoSocial.Location = new System.Drawing.Point(377, 30);
-            this.txtNomeRazaoSocial.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.txtNomeRazaoSocial.Name = "txtNomeRazaoSocial";
-            this.txtNomeRazaoSocial.Size = new System.Drawing.Size(682, 26);
-            this.txtNomeRazaoSocial.TabIndex = 93;
+            this.txtNome_RazaoSocial.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNome_RazaoSocial.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.txtNome_RazaoSocial.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNome_RazaoSocial.Location = new System.Drawing.Point(377, 30);
+            this.txtNome_RazaoSocial.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.txtNome_RazaoSocial.Name = "txtNome_RazaoSocial";
+            this.txtNome_RazaoSocial.Size = new System.Drawing.Size(682, 26);
+            this.txtNome_RazaoSocial.TabIndex = 93;
             // 
             // lbNomeRazaoSocial
             // 
@@ -674,18 +674,18 @@
             this.lbNomeRazaoSocial.TabIndex = 98;
             this.lbNomeRazaoSocial.Text = "Nome/Razão Social..:";
             // 
-            // txtCpfCnpj
+            // txtCpf_Cnpj
             // 
-            this.txtCpfCnpj.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCpfCnpj.Culture = new System.Globalization.CultureInfo("");
-            this.txtCpfCnpj.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCpfCnpj.Location = new System.Drawing.Point(175, 30);
-            this.txtCpfCnpj.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.txtCpfCnpj.Name = "txtCpfCnpj";
-            this.txtCpfCnpj.Size = new System.Drawing.Size(156, 26);
-            this.txtCpfCnpj.TabIndex = 91;
-            this.txtCpfCnpj.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtCpfCnpj.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.txtCpf_Cnpj.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCpf_Cnpj.Culture = new System.Globalization.CultureInfo("");
+            this.txtCpf_Cnpj.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCpf_Cnpj.Location = new System.Drawing.Point(175, 30);
+            this.txtCpf_Cnpj.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.txtCpf_Cnpj.Name = "txtCpf_Cnpj";
+            this.txtCpf_Cnpj.Size = new System.Drawing.Size(156, 26);
+            this.txtCpf_Cnpj.TabIndex = 91;
+            this.txtCpf_Cnpj.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtCpf_Cnpj.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // lbCpfCnpj
             // 
@@ -787,9 +787,9 @@
         private System.Windows.Forms.Label lbCep;
         private System.Windows.Forms.TextBox txtDataCadastro;
         private System.Windows.Forms.Label lbDataCadastro;
-        private System.Windows.Forms.TextBox txtNomeRazaoSocial;
+        private System.Windows.Forms.TextBox txtNome_RazaoSocial;
         private System.Windows.Forms.Label lbNomeRazaoSocial;
-        private System.Windows.Forms.MaskedTextBox txtCpfCnpj;
+        private System.Windows.Forms.MaskedTextBox txtCpf_Cnpj;
         private System.Windows.Forms.Label lbCpfCnpj;
 		private System.Windows.Forms.Button btnFechar;
 		private System.Windows.Forms.Button btnSalvar;

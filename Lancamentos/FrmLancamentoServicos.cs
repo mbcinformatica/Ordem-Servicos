@@ -338,6 +338,16 @@ namespace OrdemServicos
                 erpProvider,
                 camposObrigatorios
             );
+            List<Control> controlesCampos = new List<Control>
+            {
+                txtDataEmissao,
+                txtDataConclusao,
+                txtNumeroSerie,
+                txtDescricaoDefeito,
+                txtValorTotalServico,
+                txtValorTotalMaterial,
+            };
+            EventosUtils.AjustarCamposTexto(controlesCampos, "DBLancamentoServicos");
         }
         public override void CarregarRegistros()
         {

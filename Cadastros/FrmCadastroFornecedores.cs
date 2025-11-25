@@ -228,21 +228,21 @@ namespace OrdemServicos
         private void CarregaKey()
         {
             controlesKeyPress.AddRange(new Control[] {
-                txtCpfCnpj,
+                txtCpf_Cnpj,
                 txtCep,
                 txtFone_1,
                 txtFone_2
             });
             controlesLeave.AddRange(new Control[] {
-                txtCpfCnpj,
+                txtCpf_Cnpj,
                 txtCep,
                 txtNumero,
                 txtFone_1,
                 txtFone_2
             });
             controlesEnter.AddRange(new Control[] {
-                txtCpfCnpj,
-                txtNomeRazaoSocial,
+                txtCpf_Cnpj,
+                txtNome_RazaoSocial,
                 txtEndereco,
                 txtNumero,
                 txtBairro,
@@ -266,8 +266,8 @@ namespace OrdemServicos
             });
 
             controlesKeyDown.AddRange(new Control[] {
-                txtCpfCnpj,
-                txtNomeRazaoSocial,
+                txtCpf_Cnpj,
+                txtNome_RazaoSocial,
                 txtEndereco,
                 txtNumero,
                 txtBairro,
@@ -300,7 +300,7 @@ namespace OrdemServicos
             txtCep.Tag = new BaseForm { TagFormato = "FormataCep", TagMaxDigito = 8 };
             txtFone_1.Tag = new BaseForm { TagFormato = "FormataFone", TagMaxDigito = 11 };
             txtFone_2.Tag = new BaseForm { TagFormato = "FormataFone", TagMaxDigito = 10 };
-            txtCpfCnpj.Tag = new BaseForm { TagFormato = "FormataCpfCnpj", TagMaxDigito = 14 };
+            txtCpf_Cnpj.Tag = new BaseForm { TagFormato = "FormataCpfCnpj", TagMaxDigito = 14 };
             txtEmail.Tag = new BaseForm { TagAction = "FocaBotaoSalvar" };
 
             var tabControl = Controls.Find("tabControlFornecedores", true).FirstOrDefault() as TabControl;
@@ -315,8 +315,8 @@ namespace OrdemServicos
         {
             rdbCpf.TabIndex = 0;
             rdbCnpj.TabIndex = 1;
-            txtCpfCnpj.TabIndex = 2;
-            txtNomeRazaoSocial.TabIndex = 4;
+            txtCpf_Cnpj.TabIndex = 2;
+            txtNome_RazaoSocial.TabIndex = 4;
             txtCep.TabIndex = 5;
             txtEndereco.TabIndex = 7;
             txtNumero.TabIndex = 8;
@@ -333,8 +333,8 @@ namespace OrdemServicos
         {
             camposObrigatorios = new (Control, string)[]
             {
-   //             (txtCpfCnpj, "Cpf_Cnpj"),
-    //            (txtNomeRazaoSocial, "Nome"),
+   //             (txtCpf_Cnpj, "Cpf_Cnpj"),
+    //            (txtNome_RazaoSocial, "Nome"),
     //            (txtCep, "Cep"),
     //            (txtFone_1, "Celular"),
             };
@@ -343,6 +343,21 @@ namespace OrdemServicos
                 erpProvider,
                 camposObrigatorios
             );
+            List<Control> controlesCampos = new List<Control>
+            {
+                txtNome_RazaoSocial,
+                txtEndereco,
+                txtNumero,
+                txtBairro,
+                txtMunicipio,
+                txtUF,
+                txtCep,
+                txtContato,
+                txtFone_1,
+                txtFone_2,
+                txtEmail
+            };
+            EventosUtils.AjustarCamposTexto(controlesCampos, "DBFornecedores");
         }
         public override void CarregarRegistros()
         {
@@ -410,8 +425,8 @@ namespace OrdemServicos
                 // Carregar os RadioButton com base no valor do campo TipoPessoa
                 rdbCpf.Checked = item.SubItems[1].Text == "FÍSICA";
                 rdbCnpj.Checked = item.SubItems[1].Text == "JURÍDICA";
-                txtCpfCnpj.Text = item.SubItems[2].Text;
-                txtNomeRazaoSocial.Text = item.SubItems[3].Text;
+                txtCpf_Cnpj.Text = item.SubItems[2].Text;
+                txtNome_RazaoSocial.Text = item.SubItems[3].Text;
                 txtEndereco.Text = item.SubItems[4].Text;
                 txtNumero.Text = item.SubItems[5].Text;
                 txtBairro.Text = item.SubItems[6].Text;
@@ -452,7 +467,7 @@ namespace OrdemServicos
 
             if (!isAtualizacao)
             {
-                string cpfcnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text);
+                string cpfcnpj = StringUtils.SemFormatacao(txtCpf_Cnpj.Text);
                 DBSetupBLL dbSetupBLL = new DBSetupBLL();
 
                 DialogResult result = DialogResult.Yes;
@@ -461,8 +476,8 @@ namespace OrdemServicos
                     FornecedorInfo fornecedor = new FornecedorInfo
                     {
                         TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA", // Define o valor do RadioButton
-                        Cpf_Cnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text),
-                        Nome_RazaoSocial = txtNomeRazaoSocial.Text,
+                        Cpf_Cnpj = StringUtils.SemFormatacao(txtCpf_Cnpj.Text),
+                        Nome_RazaoSocial = txtNome_RazaoSocial.Text,
                         Endereco = txtEndereco.Text,
                         Numero = txtNumero.Text,
                         Bairro = txtBairro.Text,
@@ -488,8 +503,8 @@ namespace OrdemServicos
                     {
                         IDFornecedor = int.Parse(txtIDFornecedor.Text),
                         TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA", // Define o valor do RadioButton
-                        Cpf_Cnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text),
-                        Nome_RazaoSocial = txtNomeRazaoSocial.Text,
+                        Cpf_Cnpj = StringUtils.SemFormatacao(txtCpf_Cnpj.Text),
+                        Nome_RazaoSocial = txtNome_RazaoSocial.Text,
                         Endereco = txtEndereco.Text,
                         Numero = txtNumero.Text,
                         Bairro = txtBairro.Text,
@@ -539,16 +554,16 @@ namespace OrdemServicos
         }
         public override void ExecutaFuncaoEvento(Control control)
         {
-            if (control == txtCpfCnpj && !string.IsNullOrEmpty(txtCpfCnpj.Text))
+            if (control == txtCpf_Cnpj && !string.IsNullOrEmpty(txtCpf_Cnpj.Text))
             {
-                string cpfcnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text);
+                string cpfcnpj = StringUtils.SemFormatacao(txtCpf_Cnpj.Text);
                 DBSetupBLL dbSetupBLL = new DBSetupBLL();
-                string cpfCnpj = txtCpfCnpj.Text;
+                string cpfCnpj = txtCpf_Cnpj.Text;
                 if (dbSetupBLL.VerificarSeCadastrado(cpfcnpj, "DBFornecedores", "Cpf_Cnpj"))
                 {
                     MessageBox.Show("Fornecedor já Cadastrado. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    txtCpfCnpj.Clear();
-                    txtCpfCnpj.Focus();
+                    txtCpf_Cnpj.Clear();
+                    txtCpf_Cnpj.Focus();
                     return;
                 }
                 if (rdbCpf.Checked)
@@ -556,8 +571,8 @@ namespace OrdemServicos
                     if (!ValidaCpf(cpfCnpj))
                     {
                         MessageBox.Show("CPF informado está incorreto. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        txtCpfCnpj.Clear();
-                        txtCpfCnpj.Focus();
+                        txtCpf_Cnpj.Clear();
+                        txtCpf_Cnpj.Focus();
                         return;
                     }
                     else
@@ -571,8 +586,8 @@ namespace OrdemServicos
                     if (!ValidaCnpj(cpfCnpj))
                     {
                         MessageBox.Show("CNPJ informado está incorreto. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        txtCpfCnpj.Clear();
-                        txtCpfCnpj.Focus();
+                        txtCpf_Cnpj.Clear();
+                        txtCpf_Cnpj.Focus();
                         return;
                     }
                     else
@@ -600,8 +615,8 @@ namespace OrdemServicos
         {
             List<Control> controlesDesabilitar = new List<Control>
             {
-                txtCpfCnpj,
-                txtNomeRazaoSocial,
+                txtCpf_Cnpj,
+                txtNome_RazaoSocial,
                 txtEndereco,
                 txtNumero,
                 txtBairro,
@@ -626,7 +641,7 @@ namespace OrdemServicos
         {
             List<Control> controlesHabilitar = new List<Control>
             {
-                txtNomeRazaoSocial,
+                txtNome_RazaoSocial,
                 txtEndereco,
                 txtNumero,
                 txtBairro,
@@ -648,7 +663,7 @@ namespace OrdemServicos
                      {
                         rdbCpf,
                         rdbCnpj,
-                        txtCpfCnpj
+                        txtCpf_Cnpj
                     };
                     EventosUtils.HabilitarControles(controlesHabilitarNovo, this);
                     rdbCpf.Checked = false;
@@ -659,8 +674,8 @@ namespace OrdemServicos
                 case "Alterar":
                     rdbCpf.Enabled = false;
                     rdbCnpj.Enabled = false;
-                    txtCpfCnpj.Enabled = false;
-                    txtNomeRazaoSocial.Focus();
+                    txtCpf_Cnpj.Enabled = false;
+                    txtNome_RazaoSocial.Focus();
                     break;
             }
             btnCarregaArquivoCnpj.Enabled = false;
@@ -670,8 +685,8 @@ namespace OrdemServicos
         public override void LimparCampos()
         {
             txtIDFornecedor.Clear();
-            txtCpfCnpj.Clear();
-            txtNomeRazaoSocial.Clear();
+            txtCpf_Cnpj.Clear();
+            txtNome_RazaoSocial.Clear();
             txtEndereco.Clear();
             txtNumero.Clear();
             txtBairro.Clear();
@@ -739,8 +754,8 @@ namespace OrdemServicos
                 CnpjInfo info = await ReceitaFederalApi.PesquisarCnpjAsync(cnpj);
                 if (info != null)
                 {
-                    txtCpfCnpj.Text = info.Cpf_Cnpj;
-                    txtNomeRazaoSocial.Text = info.Nome_RazaoSocial;
+                    txtCpf_Cnpj.Text = info.Cpf_Cnpj;
+                    txtNome_RazaoSocial.Text = info.Nome_RazaoSocial;
                     txtEndereco.Text = info.Endereco;
                     txtNumero.Text = info.Numero;
                     txtBairro.Text = info.Bairro;
@@ -763,8 +778,8 @@ namespace OrdemServicos
                         FornecedorInfo fornecedor = new FornecedorInfo
                         {
                             TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA",
-                            Cpf_Cnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text),
-                            Nome_RazaoSocial = txtNomeRazaoSocial.Text,
+                            Cpf_Cnpj = StringUtils.SemFormatacao(txtCpf_Cnpj.Text),
+                            Nome_RazaoSocial = txtNome_RazaoSocial.Text,
                             Endereco = txtEndereco.Text,
                             Numero = txtNumero.Text,
                             Bairro = txtBairro.Text,
@@ -785,7 +800,7 @@ namespace OrdemServicos
 
                     if (!leituraAutomaticaAtiva)
                     {
-                        txtNomeRazaoSocial.Focus();
+                        txtNome_RazaoSocial.Focus();
                     }
 
                     return false; // info foi preenchido, mas não houve inclusão
@@ -817,8 +832,8 @@ namespace OrdemServicos
                 CpfInfo info = await ReceitaFederalApi.PesquisarCpfAsync(cpf);
                 if (info != null)
                 {
-                    txtCpfCnpj.Text = info.Cpf_Cnpj;
-                    txtNomeRazaoSocial.Text = info.Nome_RazaoSocial;
+                    txtCpf_Cnpj.Text = info.Cpf_Cnpj;
+                    txtNome_RazaoSocial.Text = info.Nome_RazaoSocial;
                     txtEndereco.Text = info.Endereco;
                     txtBairro.Text = info.Bairro;
                     txtMunicipio.Text = info.Municipio;
@@ -826,7 +841,7 @@ namespace OrdemServicos
                     txtCep.Text = info.Cep;
                     txtContato.Text = info.Contato;
                     txtEmail.Text = info.Email;
-                    txtNomeRazaoSocial.Focus();
+                    txtNome_RazaoSocial.Focus();
                 }
                 else
                 {
@@ -1041,8 +1056,8 @@ namespace OrdemServicos
                                             };
 
                                             // Preenche os campos do formulário
-                                            txtCpfCnpj.Text = info.Cpf_Cnpj;
-                                            txtNomeRazaoSocial.Text = info.Nome_RazaoSocial;
+                                            txtCpf_Cnpj.Text = info.Cpf_Cnpj;
+                                            txtNome_RazaoSocial.Text = info.Nome_RazaoSocial;
                                             txtEndereco.Text = info.Endereco;
                                             txtBairro.Text = info.Bairro;
                                             txtMunicipio.Text = info.Municipio;
@@ -1059,8 +1074,8 @@ namespace OrdemServicos
                                             FornecedorInfo fornecedor = new FornecedorInfo
                                             {
                                                 TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA",
-                                                Cpf_Cnpj = StringUtils.SemFormatacao(txtCpfCnpj.Text),
-                                                Nome_RazaoSocial = txtNomeRazaoSocial.Text,
+                                                Cpf_Cnpj = StringUtils.SemFormatacao(txtCpf_Cnpj.Text),
+                                                Nome_RazaoSocial = txtNome_RazaoSocial.Text,
                                                 Endereco = txtEndereco.Text,
                                                 Numero = txtNumero.Text,
                                                 Bairro = txtBairro.Text,

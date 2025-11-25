@@ -396,6 +396,21 @@ namespace OrdemServicos
                 erpProvider,
                 camposObrigatorios
             );
+            List<Control> controlesCampos = new List<Control>
+            {
+                txtNome,
+                txtLogin,
+                txtEndereco,
+                txtNumero,
+                txtBairro,
+                txtMunicipio,
+                txtUF,
+                txtCep,
+                txtFone_1,
+                txtFone_2,
+                txtEmail
+            };
+            EventosUtils.AjustarCamposTexto(controlesCampos, "DBUsuarios");
         }
         private void ConfigurarTabIndexControles()
         {
@@ -655,6 +670,7 @@ namespace OrdemServicos
         {
             listViewUsuario.Enabled = false;
             txtPesquisaListView.Enabled = false;
+
             List<Control> controlesHabilitar = new List<Control>
             {
                 txtNome,
@@ -677,14 +693,16 @@ namespace OrdemServicos
             {
                 case "Novo":
                     List<Control> controlesHabilitarNovo = new List<Control>
-                     {
-                        txtSenha,
-                        txtConfirmaSenha
-                     };
+            {
+                txtSenha,
+                txtConfirmaSenha
+            };
                     EventosUtils.HabilitarControles(controlesHabilitarNovo, this);
+
                     txtDataCadastro.Text = DateTime.Now.ToString();
-                    txtNome.Focus(); // Focar no rdbCpf para 
+                    txtNome.Focus();
                     break;
+
                 case "Alterar":
                     txtNome.Focus();
                     break;

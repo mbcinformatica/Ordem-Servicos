@@ -1,9 +1,11 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
+using MySql.Data.MySqlClient;
 using OrdemServicos.Forms;
 using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -544,6 +546,48 @@ namespace OrdemServicos.Utils
                 if (childControl.HasChildren)
                 {
                     HabilitarControleRecursivo(childControl, controle);
+                }
+            }
+        }
+        public static void AjustarCamposTexto(List<Control> controles, string tabela)
+        {
+           string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                foreach (var controle in controles)
+                {
+                    string coluna = controle.Name.Replace("txt", "").Replace("msk", "");
+                    // Ex: txtNome -> Nome, mskCpf -> Cpf
+
+                    string query = @"SELECT CHARACTER_MAXIMUM_LENGTH
+                                     FROM INFORMATION_SCHEMA.COLUMNS
+                                     WHERE TABLE_SCHEMA = DATABASE()
+                                       AND TABLE_NAME = @tabela
+                                       AND COLUMN_NAME = @coluna";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@tabela", tabela);
+                        cmd.Parameters.AddWithValue("@coluna", coluna);
+
+                        object result = cmd.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
+                        {
+                            int maxLength = Convert.ToInt32(result);
+
+                            if (controle is TextBox textBox)
+                            {
+                                textBox.MaxLength = maxLength;
+                            }
+                            else if (controle is MaskedTextBox maskedTextBox)
+                            {
+                                maskedTextBox.MaxLength = maxLength;
+                            }
+                        }
+                    }
                 }
             }
         }

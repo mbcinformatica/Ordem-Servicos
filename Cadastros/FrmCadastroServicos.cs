@@ -323,7 +323,14 @@ namespace OrdemServicos
 				erpProvider,
 				camposObrigatorios
 			);
-		}
+            List<Control> controlesCampos = new List<Control>
+            {
+				txtIDCodigoBase,
+				txtDescricao,
+				txtValorServico
+            };
+            EventosUtils.AjustarCamposTexto(controlesCampos, "DBServicos");
+        }
 		private void ConfigurarTabIndexControles()
 		{
 			txtIDCodigoBase.TabIndex = 0;

@@ -311,6 +311,11 @@ namespace OrdemServicos
                 erpProvider,
                 camposObrigatorios
             );
+            List<Control> controlesCampos = new List<Control>
+            {
+                txtDescricao
+            };
+            EventosUtils.AjustarCamposTexto(controlesCampos, "DBModelos");
         }
         public override void CarregarRegistros()
         {
