@@ -1043,9 +1043,6 @@ namespace OrdemServicos
             // Limpar a imagem do PictureBox
             imgImagemUsuario.Image = null;
         }
-		private void tabDadosUsuario_Click( object sender, EventArgs e )
-		{
 
-		}
 	}
 }

@@ -301,7 +301,6 @@
             this.tabDadosUsuario.Size = new System.Drawing.Size(1415, 249);
             this.tabDadosUsuario.TabIndex = 0;
             this.tabDadosUsuario.Text = "Dados do Usuário";
-            this.tabDadosUsuario.Click += new System.EventHandler(this.tabDadosUsuario_Click);
             // 
             // btnExcluirImagem
             // 
@@ -338,7 +337,7 @@
             // txtEmail
             // 
             this.txtEmail.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Location = new System.Drawing.Point(806, 152);
+            this.txtEmail.Location = new System.Drawing.Point(804, 152);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(410, 26);
@@ -349,7 +348,7 @@
             // 
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmail.Location = new System.Drawing.Point(806, 132);
+            this.lblEmail.Location = new System.Drawing.Point(804, 132);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(69, 19);
@@ -359,7 +358,7 @@
             // txtFone_2
             // 
             this.txtFone_2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFone_2.Location = new System.Drawing.Point(632, 152);
+            this.txtFone_2.Location = new System.Drawing.Point(630, 152);
             this.txtFone_2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtFone_2.Name = "txtFone_2";
             this.txtFone_2.Size = new System.Drawing.Size(138, 26);
@@ -372,7 +371,7 @@
             // 
             this.lbFone_2.AutoSize = true;
             this.lbFone_2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbFone_2.Location = new System.Drawing.Point(632, 132);
+            this.lbFone_2.Location = new System.Drawing.Point(630, 132);
             this.lbFone_2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFone_2.Name = "lbFone_2";
             this.lbFone_2.Size = new System.Drawing.Size(51, 19);
@@ -382,7 +381,7 @@
             // txtFone_1
             // 
             this.txtFone_1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFone_1.Location = new System.Drawing.Point(458, 152);
+            this.txtFone_1.Location = new System.Drawing.Point(456, 152);
             this.txtFone_1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtFone_1.Name = "txtFone_1";
             this.txtFone_1.Size = new System.Drawing.Size(138, 26);
@@ -406,7 +405,7 @@
             // 
             this.txtUF.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtUF.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUF.Location = new System.Drawing.Point(370, 152);
+            this.txtUF.Location = new System.Drawing.Point(368, 152);
             this.txtUF.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtUF.MaxLength = 2;
             this.txtUF.Name = "txtUF";
@@ -419,7 +418,7 @@
             // 
             this.lbUF.AutoSize = true;
             this.lbUF.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbUF.Location = new System.Drawing.Point(370, 132);
+            this.lbUF.Location = new System.Drawing.Point(368, 132);
             this.lbUF.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbUF.Name = "lbUF";
             this.lbUF.Size = new System.Drawing.Size(41, 19);
@@ -452,7 +451,7 @@
             // 
             this.txtBairro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtBairro.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBairro.Location = new System.Drawing.Point(868, 91);
+            this.txtBairro.Location = new System.Drawing.Point(866, 91);
             this.txtBairro.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(348, 26);
@@ -463,7 +462,7 @@
             // 
             this.lbBairro.AutoSize = true;
             this.lbBairro.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbBairro.Location = new System.Drawing.Point(868, 71);
+            this.lbBairro.Location = new System.Drawing.Point(866, 71);
             this.lbBairro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbBairro.Name = "lbBairro";
             this.lbBairro.Size = new System.Drawing.Size(65, 19);
@@ -474,7 +473,7 @@
             // 
             this.txtNumero.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNumero.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNumero.Location = new System.Drawing.Point(722, 91);
+            this.txtNumero.Location = new System.Drawing.Point(720, 91);
             this.txtNumero.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtNumero.MaxLength = 8;
             this.txtNumero.Name = "txtNumero";
@@ -487,7 +486,7 @@
             // 
             this.lbNumero.AutoSize = true;
             this.lbNumero.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbNumero.Location = new System.Drawing.Point(722, 71);
+            this.lbNumero.Location = new System.Drawing.Point(720, 71);
             this.lbNumero.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbNumero.Name = "lbNumero";
             this.lbNumero.Size = new System.Drawing.Size(76, 19);
@@ -498,7 +497,7 @@
             // 
             this.txtEndereco.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtEndereco.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEndereco.Location = new System.Drawing.Point(168, 91);
+            this.txtEndereco.Location = new System.Drawing.Point(166, 91);
             this.txtEndereco.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtEndereco.Name = "txtEndereco";
             this.txtEndereco.Size = new System.Drawing.Size(506, 26);
@@ -544,7 +543,7 @@
             // txtConfirmaSenha
             // 
             this.txtConfirmaSenha.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtConfirmaSenha.Location = new System.Drawing.Point(1017, 30);
+            this.txtConfirmaSenha.Location = new System.Drawing.Point(1015, 30);
             this.txtConfirmaSenha.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtConfirmaSenha.Name = "txtConfirmaSenha";
             this.txtConfirmaSenha.Size = new System.Drawing.Size(199, 26);
@@ -556,7 +555,7 @@
             // 
             this.lblConfirme.AutoSize = true;
             this.lblConfirme.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirme.Location = new System.Drawing.Point(1020, 10);
+            this.lblConfirme.Location = new System.Drawing.Point(1015, 10);
             this.lblConfirme.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblConfirme.Name = "lblConfirme";
             this.lblConfirme.Size = new System.Drawing.Size(129, 19);
@@ -566,7 +565,7 @@
             // txtSenha
             // 
             this.txtSenha.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSenha.Location = new System.Drawing.Point(806, 30);
+            this.txtSenha.Location = new System.Drawing.Point(804, 30);
             this.txtSenha.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.Size = new System.Drawing.Size(168, 26);
@@ -578,7 +577,7 @@
             // 
             this.lblSenha.AutoSize = true;
             this.lblSenha.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSenha.Location = new System.Drawing.Point(807, 10);
+            this.lblSenha.Location = new System.Drawing.Point(804, 10);
             this.lblSenha.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSenha.Name = "lblSenha";
             this.lblSenha.Size = new System.Drawing.Size(63, 19);
@@ -588,7 +587,7 @@
             // txtLogin
             // 
             this.txtLogin.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLogin.Location = new System.Drawing.Point(497, 30);
+            this.txtLogin.Location = new System.Drawing.Point(495, 30);
             this.txtLogin.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtLogin.Name = "txtLogin";
             this.txtLogin.Size = new System.Drawing.Size(266, 26);

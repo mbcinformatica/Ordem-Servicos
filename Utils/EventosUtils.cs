@@ -373,13 +373,23 @@ namespace OrdemServicos.Utils
 
                 if (item != null && subItem != null)
                 {
-                    string texto = subItem.Text;
+                    // Recupera o índice da coluna atual
+                    int colunaIndex = item.SubItems.IndexOf(subItem);
 
-                    if (texto != form.ultimoTextoTooltip)
+                    // Garante que o texto completo da célula seja usado
+                    string textoCompleto = item.SubItems[colunaIndex].Text;
+
+                    // Evita mostrar o mesmo tooltip repetidamente
+                    if (textoCompleto != form.ultimoTextoTooltip)
                     {
-                        // Usa Show para garantir que o tooltip apareça na posição do mouse
-                        form.tlpListViewCelula.Show(texto, listView, e.Location.X + 15, e.Location.Y + 15, 3000);
-                        form.ultimoTextoTooltip = texto;
+                        form.tlpListViewCelula.Show(
+                            textoCompleto,
+                            listView,
+                            e.Location.X + 15,
+                            e.Location.Y + 15,
+                            5000 // tempo de exibição
+                        );
+                        form.ultimoTextoTooltip = textoCompleto;
                     }
                 }
                 else
@@ -581,10 +591,6 @@ namespace OrdemServicos.Utils
                             if (controle is TextBox textBox)
                             {
                                 textBox.MaxLength = maxLength;
-                            }
-                            else if (controle is MaskedTextBox maskedTextBox)
-                            {
-                                maskedTextBox.MaxLength = maxLength;
                             }
                         }
                     }

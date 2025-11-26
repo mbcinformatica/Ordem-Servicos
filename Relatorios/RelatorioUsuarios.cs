@@ -20,7 +20,7 @@ namespace OrdemServicos
             // Verificar se a lista de usuarios está vazia
             if (usuarios.Count == 0)
             {
-                MessageBox.Show("Nenhum dado de usuarios disponível para gerar o relatório.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Nenhum Dados de Usuários Disponível para Gerar o Relatório.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -83,7 +83,7 @@ namespace OrdemServicos
             doc.Close();
 
             // Exiba uma mensagem de confirmação
-            MessageBox.Show("Relatório gerado com sucesso em " + caminhoArquivo, "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Relatório Gerado com Sucesso em: \n\n " + caminhoArquivo, "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Abre arquivo PDF
             Process.Start(new ProcessStartInfo(caminhoArquivo) { UseShellExecute = true });

@@ -40,7 +40,7 @@ namespace OrdemServicos
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Erro ao conectar ao banco de dados: " + ex.Message, "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Erro ao Conectar ao Banco de Dados: " + ex.Message, "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Application.Exit();
                 }
                 AbrirFormularioLogin();
@@ -48,7 +48,6 @@ namespace OrdemServicos
             }
             else
             {
-                MessageBox.Show("Erro ao conectar ao banco de dados: ", "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }

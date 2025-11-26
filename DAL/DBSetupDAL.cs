@@ -55,10 +55,8 @@ namespace OrdemServicos.DAL
                     }
                     catch
                     {
-                        MessageBox.Show("Erro ao Conectar ao Banco de Dados, Favor Configurar o Banco de Dados:  ",
-                                        "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        // Abre o formulário de configuração
+                        string mensagem = "Erro ao Conectar  ao Banco de Dados.\n\nFavor Configurar o Banco de Dados.";
+                        MessageBox.Show(mensagem, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         frmConfigDB FrmConfigDB = new frmConfigDB();
                         frmConfigDB formularioConfigDB = FrmConfigDB;
@@ -68,6 +66,7 @@ namespace OrdemServicos.DAL
                         formularioConfigDB.ShowDialog();
                         connectionString = ConfigurationManager.AppSettings["ConnectionString"];
                         connectionStringWithoutDatabase = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
+                        break;
                     }
                 }
             }

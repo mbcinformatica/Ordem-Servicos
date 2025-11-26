@@ -21,8 +21,8 @@ namespace OrdemServicos
 			// Verificar se a lista de fornecedores está vazia
 			if (fornecedores.Count == 0)
 			{
-				MessageBox.Show("Nenhum dado de fornecedores disponível para gerar o relatório.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				return;
+                MessageBox.Show("Nenhum Dados de Fornecedores Disponível para Gerar o Relatório.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
 			}
 			// Configurar documento para A4 paisagem com margens
 			Document doc = new Document(PageSize.A4.Rotate());
@@ -85,8 +85,8 @@ namespace OrdemServicos
             // Fechar documento
             doc.Close();
 
-			// Exiba uma mensagem de confirmação
-			MessageBox.Show("Relatório gerado com sucesso em " + caminhoArquivo, "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Exiba uma mensagem de confirmação
+            MessageBox.Show("Relatório Gerado com Sucesso em: \n\n " + caminhoArquivo, "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // Abre arquivo PDF
             Process.Start(new ProcessStartInfo(caminhoArquivo) { UseShellExecute = true });
