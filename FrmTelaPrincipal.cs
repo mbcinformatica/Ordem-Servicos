@@ -3,65 +3,98 @@ using OrdemServicos.DAL;
 using OrdemServicos.Forms;
 using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OrdemServicos
 {
     public partial class frmTelaPrincipal : BaseForm
     {
- //       private readonly string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
+  //      private readonly string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
         public frmTelaPrincipal()
         {
+            /*
             InitializeComponent();
-            // Chama o método LoadConfig() para aplicar as configurações
-            LoadConfig();
             Paint += new PaintEventHandler(BaseForm_Paint);
             Load += frmTelaPrincipal_Load;
+            LoadConfig();
+            */
 
-            DBSetupBLL dbsetupBLL = new DBSetupBLL();
-            if (dbsetupBLL.CheckAndSetupDatabase())
+            InitializeComponent();
+            Paint += new PaintEventHandler(BaseForm_Paint);
+            Load += frmTelaPrincipal_Load;
+            LoadConfig();
+
+            // ✅ inicia oculto
+            this.WindowState = FormWindowState.Minimized;
+            this.ShowInTaskbar = false;
+            this.Visible = false;
+        }
+        private async void frmTelaPrincipal_Load(object sender, EventArgs e)
+        {
+
+            // ✅ Verifica login
+            if (!await VerificaLoginAsync())
             {
+                Application.Exit();
+            }
+            else
+            {
+                AbrirFormularioLogin();
+                this.Text = this.Text + $" {BaseForm.UsuarioLogado}";
 
+                // ✅ só mostra se login OK
+                this.Visible = true;
+                this.ShowInTaskbar = true;
+                this.WindowState = FormWindowState.Normal;
+                // tamanho e posição já podem ser definidos aqui
+                Width = (int)(Screen.PrimaryScreen.WorkingArea.Width * 0.8);
+                Height = (int)(Screen.PrimaryScreen.WorkingArea.Height * 0.8);
+                StartPosition = FormStartPosition.Manual;
+                Location = new Point(
+                   (Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
+                   (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
+            }
+        }
+        private async Task<bool> VerificaLoginAsync()
+        {
+            var dbsetupBLL = new DBSetupBLL();
+
+            if (await dbsetupBLL.CheckAndSetupDatabaseAsync()) // ✅ chamada assíncrona
+            {
                 try
                 {
-                    UsuarioBLL usuarioBLL = new UsuarioBLL();
+                    var usuarioBLL = new UsuarioBLL();
+
                     if (usuarioBLL.IsUsuariosEmpty())
                     {
-                        string mensagem = "Não existe Usuário Cadastrado.\n\nAntes de continuar a usar o sistema, \nFavor Cadastrar um Usuario com Direitos Administrativo.\n\nCadastre um novo usuário.";
+                        string mensagem = "Não existe Usuário Cadastrado.\n\nAntes de continuar a usar o sistema, \nFavor Cadastrar um Usuário com Direitos Administrativos.\n\nCadastre um novo usuário.";
                         MessageBox.Show(mensagem, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                         AbrirFormularioUsuarios();
+
                         if (usuarioBLL.IsUsuariosEmpty())
                         {
-                            Application.Exit();
+                            return false;
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Erro ao Conectar ao Banco de Dados: " + ex.Message, "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Application.Exit();
+                    MessageBox.Show("Erro ao Conectar ao Banco de Dados: " + ex.Message,
+                                    "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
-                AbrirFormularioLogin();
-                this.Text = this.Text + $" {BaseForm.UsuarioLogado}";
             }
             else
             {
-                Application.Exit();
+                return false;
             }
-        }
-        private void frmTelaPrincipal_Load(object sender, EventArgs e)
-        {
-            // Define o tamanho do formulário para 80% da largura e altura da tela
-            Width = (int)(Screen.PrimaryScreen.WorkingArea.Width * 0.8);
-            Height = (int)(Screen.PrimaryScreen.WorkingArea.Height * 0.8);
 
-            // Centraliza o formulário na tela
-            StartPosition = FormStartPosition.Manual;
-            Location = new Point(
-               (Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
-               (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
+            return true;
         }
         private void AbrirFormularioLogin()
         {
@@ -208,11 +241,11 @@ namespace OrdemServicos
             formularioServicos.StartPosition = FormStartPosition.CenterScreen;
             formularioServicos.ShowDialog();
         }
-        private void cadastroDeClientesToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void cadastroDeClientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirRelatorioClientes();
+            await AbrirRelatorioClientesAsync();
         }
-        private void AbrirRelatorioClientes()
+        private async Task AbrirRelatorioClientesAsync()
         {
             // Defina o caminho base onde o relatório será salvo
             string diretorioRelatorio = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RelatorioPDF");
@@ -237,80 +270,122 @@ namespace OrdemServicos
             }
 
             // Crie uma instância da classe RelatorioClientes
-            RelatorioClientes relatorio = new RelatorioClientes();
+            var relatorio = new RelatorioClientes();
 
-            // Gere o relatório
-            relatorio.GerarRelatorioClientes(caminhoArquivo);
+            // Gere o relatório de forma assíncrona
+            string resultado = await relatorio.GerarRelatorioClientesAsync(caminhoArquivo);
+
+            if (resultado == null)
+            {
+                MessageBox.Show("Nenhum dado de clientes disponível para gerar o relatório.",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Relatório gerado com sucesso em:\n\n" + resultado,
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Abre o PDF
+                Process.Start(new ProcessStartInfo(resultado) { UseShellExecute = true });
+            }
         }
-        private void cadastroDeFornecedoresToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void cadastroDeFornecedoresToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirRelatorioFornecedores();
+            await AbrirRelatorioFornecedoresAsync();
         }
-		private void AbrirRelatorioFornecedores()
-		{
+        private async Task AbrirRelatorioFornecedoresAsync()
+        {
             // Defina o caminho base onde o relatório será salvo
             string diretorioRelatorio = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RelatorioPDF");
 
             // Verifique se o diretório existe, se não, crie-o
             if (!Directory.Exists(diretorioRelatorio))
-			{
-				Directory.CreateDirectory(diretorioRelatorio);
-			}
+            {
+                Directory.CreateDirectory(diretorioRelatorio);
+            }
 
-			string caminhoBase = Path.Combine(diretorioRelatorio, "RelatorioFornecedores.pdf");
-			string caminhoArquivo = caminhoBase;
+            string caminhoBase = Path.Combine(diretorioRelatorio, "RelatorioFornecedores.pdf");
+            string caminhoArquivo = caminhoBase;
 
-			// Verifique se o arquivo já existe e gere um novo nome se necessário
-			int contador = 1;
-			while (File.Exists(caminhoArquivo))
-			{
-				string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
-				string extensao = Path.GetExtension(caminhoBase);
-				caminhoArquivo = Path.Combine(diretorioRelatorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
-				contador++;
-			}
+            // Verifique se o arquivo já existe e gere um novo nome se necessário
+            int contador = 1;
+            while (File.Exists(caminhoArquivo))
+            {
+                string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
+                string extensao = Path.GetExtension(caminhoBase);
+                caminhoArquivo = Path.Combine(diretorioRelatorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
+                contador++;
+            }
 
-			// Crie uma instância da classe RelatorioFornecedores
-			RelatorioFornecedores relatorio = new RelatorioFornecedores();
+            // Crie uma instância da classe RelatorioFornecedores
+            var relatorio = new RelatorioFornecedores();
 
-			// Gere o relatório
-			relatorio.GerarRelatorioFornecedores(caminhoArquivo);
-		}
-		private void cadastroDeUsuáriosToolStripMenuItem_Click( object sender, EventArgs e )
-		{
-			AbrirRelatorioUsuarios();
-		}
-		private void AbrirRelatorioUsuarios()
-		{
+            // Gere o relatório de forma assíncrona
+            string resultado = await relatorio.GerarRelatorioFornecedoresAsync(caminhoArquivo);
+
+            if (resultado == null)
+            {
+                MessageBox.Show("Nenhum dado de fornecedores disponível para gerar o relatório.",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Relatório gerado com sucesso em:\n\n" + resultado,
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Abre o PDF
+                Process.Start(new ProcessStartInfo(resultado) { UseShellExecute = true });
+            }
+        }
+        private async void cadastroDeUsuáriosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            await AbrirRelatorioUsuariosAsync();
+        }
+        private async Task AbrirRelatorioUsuariosAsync()
+        {
             // Defina o caminho base onde o relatório será salvo
             string diretorioRelatorio = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "RelatorioPDF");
 
             // Verifique se o diretório existe, se não, crie-o
             if (!Directory.Exists(diretorioRelatorio))
-			{
-				Directory.CreateDirectory(diretorioRelatorio);
-			}
+            {
+                Directory.CreateDirectory(diretorioRelatorio);
+            }
 
-			string caminhoBase = Path.Combine(diretorioRelatorio, "RelatorioUsuarios.pdf");
-			string caminhoArquivo = caminhoBase;
+            string caminhoBase = Path.Combine(diretorioRelatorio, "RelatorioUsuarios.pdf");
+            string caminhoArquivo = caminhoBase;
 
-			// Verifique se o arquivo já existe e gere um novo nome se necessário
-			int contador = 1;
-			while (File.Exists(caminhoArquivo))
-			{
-				string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
-				string extensao = Path.GetExtension(caminhoBase);
-				caminhoArquivo = Path.Combine(diretorioRelatorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
-				contador++;
-			}
+            // Verifique se o arquivo já existe e gere um novo nome se necessário
+            int contador = 1;
+            while (File.Exists(caminhoArquivo))
+            {
+                string nomeArquivoSemExtensao = Path.GetFileNameWithoutExtension(caminhoBase);
+                string extensao = Path.GetExtension(caminhoBase);
+                caminhoArquivo = Path.Combine(diretorioRelatorio, $"{nomeArquivoSemExtensao}_{contador}{extensao}");
+                contador++;
+            }
 
-			// Crie uma instância da classe RelatorioUsuarios
-			RelatorioUsuarios relatorio = new RelatorioUsuarios();
+            // Crie uma instância da classe RelatorioUsuarios
+            var relatorio = new RelatorioUsuarios();
 
-			// Gere o relatório
-			relatorio.GerarRelatorioUsuarios(caminhoArquivo);
-		}
-		private void ProdutosToolStripMenuItem_Click(object sender, EventArgs e)
+            // Gere o relatório de forma assíncrona
+            string resultado = await relatorio.GerarRelatorioUsuariosAsync(caminhoArquivo);
+
+            if (resultado == null)
+            {
+                MessageBox.Show("Nenhum dado de usuários disponível para gerar o relatório.",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Relatório gerado com sucesso em:\n\n" + resultado,
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Abre o PDF
+                Process.Start(new ProcessStartInfo(resultado) { UseShellExecute = true });
+            }
+        }
+        private void ProdutosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirFormularioProdutos();
         }

@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OrdemServicos
@@ -21,35 +22,36 @@ namespace OrdemServicos
     {
         private int sortColumn = -1;
         private bool sortAscending = true;
-
         private Color defaultHeaderBackColor = Color.DarkTurquoise;
         private Color clickedHeaderBackColor = Color.CadetBlue;
-
         private (Control, string)[] camposObrigatorios;
         private List<ListViewItem> listaOriginalItens = new List<ListViewItem>();
-
+        private List<Control> controlesKeyPress = new List<Control>();
+        private List<Control> controlesLeave = new List<Control>();
+        private List<Control> controlesEnter = new List<Control>();
+        private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesMouseMove = new List<Control>();
+        private List<Control> controlesBotoes = new List<Control>();
+        private List<Control> controlesKeyDown = new List<Control>();
+        private readonly EventArgs e = new EventArgs();
         private VideoCaptureDevice videoSource;
         private FilterInfoCollection videoDevices;
 
         public frmProdutos()
         {
             InitializeComponent();
-            // Chama o método LoadConfig() para aplicar as configurações
             LoadConfig();
-            Paint += new System.Windows.Forms.PaintEventHandler(BaseForm_Paint);
-            InitializeTabControl(tabControlProdutos); // Chama o método para inicializar o TabControl
+            Paint += new PaintEventHandler(BaseForm_Paint);
+            InitializeTabControl(tabControlProdutos);
             erpProvider = new ErrorProvider();
-            ConfigurarcmbFornecedores();
-            ConfigurarComboBoxMarcas();
-            ConfigurarComboBoxModelos();
-            ConfigurarComboBoxUnidades();
-            CarregarRegistros();
-            // Configurar eventos dos TextBoxes para maiúsculas
             ConfigurarTextBox();
-            // Configurar TabIndex dos Controles
-            ConfigurarTabIndexControles();
-            // Configurando os Key para os TextBox
             CarregaKey();
+            ConfigurarTabIndexControles();
+            ConfigurarComboBox(cmbFornecedor);
+            ConfigurarComboBox(cmbMarca);
+            ConfigurarComboBox(cmbModelo);
+            ConfigurarComboBox(cmbUnidade);
+            CarregarRegistros();
         }
         private void InitializeListView()
         {
@@ -60,25 +62,106 @@ namespace OrdemServicos
             listViewProdutos.DrawColumnHeader += new DrawListViewColumnHeaderEventHandler(listViewProdutos_DrawColumnHeader);
             listViewProdutos.DrawItem += new DrawListViewItemEventHandler(listViewProdutos_DrawItem);
             listViewProdutos.DrawSubItem += new DrawListViewSubItemEventHandler(listViewProdutos_DrawSubItem);
+
             // Adicionar colunas
             listViewProdutos.Columns.Add("ID", 50, HorizontalAlignment.Right);
             listViewProdutos.Columns.Add("CÓD. INTERNO", 120, HorizontalAlignment.Right);
             listViewProdutos.Columns.Add("CÓD. FABRICANTE", 120, HorizontalAlignment.Right);
-            listViewProdutos.Columns.Add("  DESCRIÇÃO", 120, HorizontalAlignment.Left);
-            listViewProdutos.Columns.Add("  FORNECEDOR", 300, HorizontalAlignment.Left);
-            listViewProdutos.Columns.Add("  MARCA", 200, HorizontalAlignment.Left);
-            listViewProdutos.Columns.Add("  MODELO", 200, HorizontalAlignment.Left);
-            listViewProdutos.Columns.Add("  UNIDADE", 150, HorizontalAlignment.Left);
+            listViewProdutos.Columns.Add("DESCRIÇÃO", 120, HorizontalAlignment.Left);
+            listViewProdutos.Columns.Add("FORNECEDOR", 300, HorizontalAlignment.Left);
+            listViewProdutos.Columns.Add("MARCA", 200, HorizontalAlignment.Left);
+            listViewProdutos.Columns.Add("MODELO", 200, HorizontalAlignment.Left);
+            listViewProdutos.Columns.Add("UNIDADE", 150, HorizontalAlignment.Left);
             listViewProdutos.Columns.Add("PREÇO COMPRA", 200, HorizontalAlignment.Right);
             listViewProdutos.Columns.Add("PREÇO VENDA", 200, HorizontalAlignment.Right);
             listViewProdutos.Columns.Add("ESTOQUE ATUAL", 200, HorizontalAlignment.Right);
             listViewProdutos.Columns.Add("ESTOQUE MINIMO", 200, HorizontalAlignment.Right);
             listViewProdutos.Columns.Add("ULTIMA COMPRA", 100, HorizontalAlignment.Center);
-            listViewProdutos.Columns.Add("  GARANTIA", 100, HorizontalAlignment.Left);
-            // Adicionar evento de clique no cabeçalho da coluna
-            listViewProdutos.ColumnClick += new ColumnClickEventHandler(ListViewProdutos_ColumnClick);
-            listViewProdutos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listViewProdutos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
+            var colGarantia = listViewProdutos.Columns.Add("GARANTIA", 100, HorizontalAlignment.Left);
+            colGarantia.Width = -2; // auto-size
+
+            listViewProdutos.ColumnClick += ListViewProdutos_ColumnClick;
+            listViewProdutos.SelectedIndexChanged += ListViewProdutos_SelectedIndexChanged;
+        }
+        private async void ListViewProdutos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            escPressed = false; // Reseta a variável de controle
+
+            if (listViewProdutos.SelectedItems.Count > 0)
+            {
+                var item = listViewProdutos.SelectedItems[0];
+
+                txtIDProduto.Text = item.SubItems[0].Text;
+                txtIDProdutoInterno.Text = item.SubItems[1].Text;
+                txtIDProdutoFabricante.Text = item.SubItems[2].Text;
+                txtDescricao.Text = item.SubItems[3].Text;
+
+                // Fornecedor
+                string fornecedorNome = item.SubItems[4].Text;
+                var fornecedorBLL = new FornecedorBLL();
+                var fornecedores = await fornecedorBLL.ListarAsync(); // ✅ chamada assíncrona
+                var fornecedor = fornecedores.FirstOrDefault(f => f.Nome_RazaoSocial == fornecedorNome);
+                if (fornecedor != null)
+                {
+                    cmbFornecedor.SelectedValue = fornecedor.IDFornecedor;
+                }
+
+                // Marca
+                string marcaNome = item.SubItems[5].Text;
+                var marcaBLL = new MarcaBLL();
+                var marcas = await marcaBLL.ListarAsync(); // ✅ chamada assíncrona
+                var marca = marcas.FirstOrDefault(m => m.Descricao == marcaNome);
+                if (marca != null)
+                {
+                    cmbMarca.SelectedValue = marca.IDMarca;
+                }
+
+                // Modelo
+                string modeloNome = item.SubItems[6].Text;
+                var modeloBLL = new ModeloBLL();
+                var modelos = await modeloBLL.ListarAsync(); // ✅ chamada assíncrona
+                var modelo = modelos.FirstOrDefault(mo => mo.Descricao == modeloNome);
+                if (modelo != null)
+                {
+                    cmbModelo.SelectedValue = modelo.IDModelo;
+                }
+
+                // Unidade
+                string unidadeNome = item.SubItems[7].Text;
+                var unidadeBLL = new UnidadeBLL();
+                var unidades = await unidadeBLL.ListarAsync(); // ✅ chamada assíncrona
+                var unidade = unidades.FirstOrDefault(u => u.Descricao == unidadeNome);
+                if (unidade != null)
+                {
+                    cmbUnidade.SelectedValue = unidade.IDUnidade;
+                }
+
+                // Preços e estoque
+                txtPrecoCompra.Text = item.SubItems[8].Text;
+                txtPrecoVenda.Text = item.SubItems[9].Text;
+                txtEstoqueAtual.Text = item.SubItems[10].Text;
+                txtEstoqueMinimo.Text = item.SubItems[11].Text;
+                txtDataUltimaCompra.Text = item.SubItems[12].Text;
+                txtGarantia.Text = item.SubItems[13].Text;
+
+                // Exibir imagem
+                var produtoBLL = new ProdutoBLL();
+                var produto = await produtoBLL.GetProdutoAsync(Convert.ToInt32(item.SubItems[0].Text)); // ✅ assíncrono
+                if (produto?.Imagem != null && produto.Imagem.Length > 0)
+                {
+                    using (var ms = new MemoryStream(produto.Imagem))
+                    {
+                        imgImagemProduto.Image = Image.FromStream(ms);
+                    }
+                }
+                else
+                {
+                    imgImagemProduto.Image = null;
+                }
+
+                EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
+            }
         }
         private void ListViewProdutos_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -111,43 +194,66 @@ namespace OrdemServicos
             listViewProdutos.Invalidate(); // Redesenhar ListView para atualizar a cor do cabeçalho
             txtPesquisaListView.Focus();
         }
-        public class ListViewItemComparer : IComparer
+        private class ListViewItemComparer : IComparer
         {
-            private int col;
-            private bool ascending;
+            private readonly int col;
+            private readonly bool ascending;
 
+            // Colunas tratadas como numéricas
+            private readonly HashSet<string> numericColumns = new HashSet<string>
+            {
+                "ID", "PREÇO COMPRA", "PREÇO VENDA",
+                "ESTOQUE ATUAL", "ESTOQUE MINIMO"
+            };
+            // Colunas tratadas como datas
+            private readonly HashSet<string> dateColumns = new HashSet<string>
+            {
+                 "ULTIMA COMPRA"
+            };
             public ListViewItemComparer(int column, bool ascending)
             {
-                this.col = column;
+                col = column;
                 this.ascending = ascending;
             }
             public int Compare(object x, object y)
             {
-                // Comparar valores das subitens
-                int returnVal = String.Compare(((ListViewItem)x).SubItems[col].Text,
-                                              ((ListViewItem)y).SubItems[col].Text);
-                return ascending ? returnVal : -returnVal; // Ordem crescente ou decrescente
-            }
-        }
-        private void txtPesquisaListView_TextChanged(object sender, EventArgs e)
-        {
-            PesquisarListView(txtPesquisaListView.Text, listViewProdutos, sortColumn);
-        }
-        private void PesquisarListView(string texto, ListView listView, int coluna)
-        {
-            listView.BeginUpdate();
-            var itemsVisiveis = new List<ListViewItem>();
-            foreach (ListViewItem item in listaOriginalItens)
-            {
-                if (item.SubItems[coluna].Text.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
+                var itemX = x as ListViewItem;
+                var itemY = y as ListViewItem;
+
+                if (itemX == null || itemY == null)
+                    return 0;
+
+                string valX = itemX.SubItems[col].Text ?? string.Empty;
+                string valY = itemY.SubItems[col].Text ?? string.Empty;
+
+                string colName = itemX.ListView.Columns[col].Text.Trim().ToUpper();
+                int result;
+
+                if (numericColumns.Contains(colName))
                 {
-                    itemsVisiveis.Add(item);
+                    // Remove formatação de moeda/unidade antes de comparar
+                    valX = StringUtils.SemFormatacao(valX);
+                    valY = StringUtils.SemFormatacao(valY);
+
+                    if (decimal.TryParse(valX, out decimal numX) && decimal.TryParse(valY, out decimal numY))
+                        result = numX.CompareTo(numY);
+                    else
+                        result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
                 }
+                else if (dateColumns.Contains(colName))
+                {
+                    if (DateTime.TryParse(valX, out DateTime dtX) && DateTime.TryParse(valY, out DateTime dtY))
+                        result = dtX.CompareTo(dtY);
+                    else
+                        result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
+                }
+                else
+                {
+                    result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
+                }
+
+                return ascending ? result : -result;
             }
-            listView.Items.Clear();
-            listView.Items.AddRange(itemsVisiveis.ToArray());
-            listView.EndUpdate();
-            listView.Invalidate(); // Redesenha a ListView para refletir as mudanças
         }
         private void listViewProdutos_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
@@ -209,292 +315,149 @@ namespace OrdemServicos
                 e.Graphics.DrawString(e.SubItem.Text, e.SubItem.Font, Brushes.Black, e.Bounds, sf);
             }
         }
+        private void txtPesquisaListView_TextChanged(object sender, EventArgs e)
+        {
+            PesquisarListView(txtPesquisaListView.Text, listViewProdutos, sortColumn);
+        }
+        private void PesquisarListView(string texto, ListView listView, int coluna)
+        {
+            listView.BeginUpdate();
+            var itemsVisiveis = new List<ListViewItem>();
+
+            foreach (ListViewItem item in listaOriginalItens)
+            {
+                string valorCelula = item.SubItems[coluna].Text;
+
+                if (string.IsNullOrEmpty(texto) || valorCelula.StartsWith(texto, StringComparison.OrdinalIgnoreCase))
+                    itemsVisiveis.Add(item);
+            }
+
+            listView.Items.Clear();
+            listView.Items.AddRange(itemsVisiveis.ToArray());
+            listView.EndUpdate();
+        }
         private void CarregaKey()
         {
-            txtIDProdutoInterno.KeyDown += Evento_KeyDown;
-            txtIDProdutoFabricante.KeyDown += Evento_KeyDown;
-            txtDescricao.KeyDown += Evento_KeyDown;
-            cmbFornecedor.KeyDown += Evento_KeyDown;
-            cmbMarca.KeyDown += Evento_KeyDown;
-            cmbModelo.KeyDown += Evento_KeyDown;
-            cmbUnidade.KeyDown += Evento_KeyDown;
-            txtPrecoCompra.KeyDown += Evento_KeyDown;
-            txtPrecoVenda.KeyDown += Evento_KeyDown;
-            txtEstoqueAtual.KeyDown += Evento_KeyDown;
-            txtEstoqueMinimo.KeyDown += Evento_KeyDown;
-            txtDataUltimaCompra.KeyDown += Evento_KeyDown;
-            txtGarantia.KeyDown += Evento_KeyDown;
-            txtPesquisaListView.KeyDown += Evento_KeyDown;
-            listViewProdutos.KeyDown += Evento_KeyDown;
+            // Controles que disparam KeyPress
+            controlesKeyPress.AddRange(new Control[] {
+                txtPrecoCompra,
+                txtPrecoVenda,
+                txtEstoqueAtual,
+                txtEstoqueMinimo
+             });
 
-            txtPrecoCompra.KeyPress += Evento_KeyPress;
-            txtPrecoVenda.KeyPress += Evento_KeyPress;
-            txtEstoqueAtual.KeyPress += Evento_KeyPress;
-            txtEstoqueMinimo.KeyPress += Evento_KeyPress;
+            // Controles que disparam Leave
+            controlesLeave.AddRange(new Control[] {
+                txtPrecoCompra,
+                txtPrecoVenda,
+                txtEstoqueAtual,
+                txtEstoqueMinimo,
+                txtGarantia,
+                cmbFornecedor,
+                cmbMarca,
+                cmbModelo,
+                cmbUnidade
+             });
 
-            txtPrecoCompra.Leave += Evento_Leave;
-            txtPrecoVenda.Leave += Evento_Leave;
-            txtEstoqueAtual.Leave += Evento_Leave;
-            txtEstoqueMinimo.Leave += Evento_Leave;
+            // Controles que disparam Enter
+            controlesEnter.AddRange(new Control[] {
+                txtIDProdutoInterno,
+                txtIDProdutoFabricante,
+                txtDescricao,
+                cmbFornecedor,
+                cmbMarca,
+                cmbModelo,
+                cmbUnidade,
+                txtPrecoCompra,
+                txtPrecoVenda,
+                txtEstoqueAtual,
+                txtEstoqueMinimo,
+                txtDataUltimaCompra,
+                txtGarantia,
+                txtPesquisaListView,
+                listViewProdutos
+             });
 
-            txtGarantia.Leave += Evento_Leave;
+            // Controles que disparam MouseDown
+            controlesMouseDown.AddRange(new Control[] { });
 
-            cmbFornecedor.Leave += Evento_Leave; // Adiciona o evento Leave
-            cmbMarca.Leave += Evento_Leave; // Adiciona o evento Leave
-            cmbModelo.Leave += Evento_Leave; // Adiciona o evento Leave
-            cmbUnidade.Leave += Evento_Leave; // Adiciona o evento Leave
+            // Controles que disparam MouseMove
+            controlesMouseMove.AddRange(new Control[] {
+                listViewProdutos
+             });
 
-            // Adiciona eventos de mouse aos botões
-            btnSalvar.MouseEnter += Button_MouseEnter;
-            btnSalvar.MouseLeave += Button_MouseLeave;
-            btnAlterar.MouseEnter += Button_MouseEnter;
-            btnAlterar.MouseLeave += Button_MouseLeave;
-            btnExcluir.MouseEnter += Button_MouseEnter;
-            btnExcluir.MouseLeave += Button_MouseLeave;
-            btnInserirImagem.MouseEnter += Button_MouseEnter;
-            btnInserirImagem.MouseLeave += Button_MouseLeave;
-            btnExcluirImagem.MouseEnter += Button_MouseEnter;
-            btnExcluirImagem.MouseLeave += Button_MouseLeave;
-            btnFechar.MouseEnter += Button_MouseEnter;
-            btnFechar.MouseLeave += Button_MouseLeave;
-            btnNovo.MouseEnter += Button_MouseEnter;
-            btnNovo.MouseLeave += Button_MouseLeave;
+            // Controles que disparam KeyDown
+            controlesKeyDown.AddRange(new Control[] {
+                txtIDProdutoInterno,
+                txtIDProdutoFabricante,
+                txtDescricao,
+                cmbFornecedor,
+                cmbMarca,
+                cmbModelo,
+                cmbUnidade,
+                txtPrecoCompra,
+                txtPrecoVenda,
+                txtEstoqueAtual,
+                txtEstoqueMinimo,
+                txtDataUltimaCompra,
+                txtGarantia,
+                txtPesquisaListView,
+                listViewProdutos
+             });
 
+            // Botões
+            controlesBotoes.AddRange(new Control[] {
+                btnSalvar,
+                btnAlterar,
+                btnExcluir,
+                btnFechar,
+                btnCancelar,
+                btnNovo,
+                btnInserirImagem,
+                btnExcluirImagem
+             });
 
-            cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
-            listViewProdutos.Click += ListViewProdutos_Click;
-        }
-        private void Button_MouseEnter(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-            if (button != null)
-            {
-                button.BackColor = buttonFontColor; // Cor de fundo ao passar o mouse
-                button.ForeColor = buttonBackgroundColor; // Cor da fonte ao passar o mouse
-            }
-        }
-        private void Button_MouseLeave(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-            if (button != null)
-            {
-                button.BackColor = buttonBackgroundColor; // Cor de fundo original
-                button.ForeColor = buttonFontColor; // Cor da fonte original
-            }
-        }
-        private void Evento_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true; // Impede o som de "beep"
-                DBSetupBLL dbSetupBLL = new DBSetupBLL();
+            // Tag para identificar o formulário
+            this.Tag = "frmProdutos";
 
-                if (sender == txtIDProdutoInterno && bNovo)
-                {
-                    string idProdutoInterno = txtIDProdutoInterno.Text;
-                    if (dbSetupBLL.VerificarSeCadastrado(idProdutoInterno, "DBProdutos", "IDProdutoInterno"))
-                    {
-                        MessageBox.Show("Código Produto Interno já cadastrado. Favor verificar!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        txtIDProdutoInterno.Clear();
-                        txtIDProdutoInterno.Focus();
-                        return;
-                    }
-                }
-                else if (sender == txtIDProdutoFabricante && bNovo)
-                {
-                    string idProdutoFabricante = txtIDProdutoFabricante.Text;
-                    if (dbSetupBLL.VerificarSeCadastrado(idProdutoFabricante, "DBProdutos", "IDProdutoFabricante"))
-                    {
-                        MessageBox.Show("Código Produto Fabricante já cadastrado. Favor verificar!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        txtIDProdutoFabricante.Clear();
-                        txtIDProdutoFabricante.Focus();
-                        return;
-                    }
-                }
+            // Configuração de validação via Tag
+            txtPrecoCompra.Tag = new BaseForm { TagFormato = "FormatoMoeda", TagAction = "TabPage" }; // Formato de moeda e ação de TabPage
+            txtPrecoVenda.Tag = new BaseForm { TagFormato = "FormatoMoeda" }; // Formato de moeda
+            txtEstoqueAtual.Tag = new BaseForm { TagFormato = "FormatoUnidade" }; // Formato de moed
+            txtEstoqueMinimo.Tag = new BaseForm { TagFormato = "FormatoUnidade" }; // Formato de moed
+            txtGarantia.Tag = new BaseForm { TagAction = "FocaBotaoSalvar" };
 
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                escPressed = true;
-                AutoValidate = AutoValidate.Disable;
-                CarregarRegistros();
-                AutoValidate = AutoValidate.EnablePreventFocusChange;
-            }
-        }
-        private void Evento_Leave(object sender, EventArgs e)
-        {
-            if (escPressed)
-            {
-                return; // Sai do método sem fazer verificações
-            }
-            TextBox textBox = sender as TextBox;
-            if (textBox != null)
-            {
-                if (sender == txtGarantia)
-                {
-                    tabControlProdutos.SelectedTab = tabInformacoesAdicionais;
-                }
-            }
-            MaskedTextBox maskedTextBox = sender as MaskedTextBox;
-            if (maskedTextBox != null)
-            {
-                if (sender == txtPrecoCompra || sender == txtPrecoVenda)
-                {
-                    maskedTextBox.Text = StringUtils.FormatValorMoeda(maskedTextBox.Text);
-                }
-                else if (sender == txtEstoqueAtual || sender == txtEstoqueMinimo)
-                {
-                    maskedTextBox.Text = StringUtils.FormatValorUnidade(maskedTextBox.Text);
-                }
-            }
-            ComboBox combobox = sender as ComboBox;
-            if (combobox != null)
-            {
-                if (sender == cmbFornecedor)
-                {
-                    string fornecedorDigitado = cmbFornecedor.Text.ToUpper(); // Converte para maiúsculas
-                    cmbFornecedor.Text = fornecedorDigitado; // Atualiza o texto no ComboBox
-                    if (!FornecedorExiste(fornecedorDigitado) && !string.IsNullOrEmpty(fornecedorDigitado))
-                    {
-                        try
-                        {
-                            DialogResult result = MessageBox.Show($"Fornecedor '{fornecedorDigitado}' não Cadastrado", "Fornecedor não Encontrado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                            if (result == DialogResult.Yes)
-                            {
-                                // Abre o formulário frmMarcas
-                                frmFornecedores frm = new frmFornecedores();
-                                frm.ShowDialog();
-                                FornecedorBLL fornecedorBLL = new FornecedorBLL();
-                                // Recarregar as marcas no ComboBox
-                                List<FornecedorInfo> fornecedores = fornecedorBLL.Listar();
-                                // Ordenar a lista de marcas em ordem alfabética
-                                fornecedores = fornecedores.OrderBy(m => m.Nome_RazaoSocial).ToList();
-                                // Definir a fonte de dados do ComboBox
-                                cmbFornecedor.DataSource = fornecedores;
-                                cmbFornecedor.DisplayMember = "Nome_RazaoSocial";
-                                cmbFornecedor.ValueMember = "IDFornecedor";
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        cmbFornecedor.Text = string.Empty;
-                        cmbFornecedor.Focus();
-                    }
-                    if (string.IsNullOrEmpty(fornecedorDigitado))
-                    {
-                        MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        cmbFornecedor.Focus();
-                    }
-                }
-                if (sender == cmbMarca)
-                {
-                    string marcaDigitada = cmbMarca.Text.ToUpper(); // Converte para maiúsculas
-                    cmbMarca.Text = marcaDigitada; // Atualiza o texto no ComboBox
-                    if (!MarcaExiste(marcaDigitada) && !string.IsNullOrEmpty(marcaDigitada))
-                    {
-                        try
-                        {
-                            DialogResult result = MessageBox.Show($"A Marca '{marcaDigitada}' não Existe. Deseja Cadastrá-la?", "Marca não Encontrada", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                            if (result == DialogResult.Yes)
-                            {
-                                // Abre o formulário frmMarcas
-                                frmMarcas frm = new frmMarcas();
-                                frm.ShowDialog();
-                                MarcaBLL marcaBLL = new MarcaBLL();
-                                // Recarregar as marcas no ComboBox
-                                List<MarcaInfo> marcas = marcaBLL.Listar();
-                                // Ordenar a lista de marcas em ordem alfabética
-                                marcas = marcas.OrderBy(m => m.Descricao).ToList();
-                                // Definir a fonte de dados do ComboBox
-                                cmbMarca.DataSource = marcas;
-                                cmbMarca.DisplayMember = "Descricao";
-                                cmbMarca.ValueMember = "IDMarca";
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        cmbModelo.Text = string.Empty;
-                        cmbMarca.Text = string.Empty;
-                        cmbMarca.Focus();
-                    }
-                    else if (string.IsNullOrEmpty(marcaDigitada))
-                    {
-                        MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        cmbMarca.Focus();
-                    }
-                }
-                if (sender == cmbModelo)
-                {
-                    string modeloDigitado = cmbModelo.Text.ToUpper(); // Converte para maiúsculas
-                    cmbModelo.Text = modeloDigitado; // Atualiza o texto no ComboBox
-                    int idMarca = Convert.ToInt32(cmbMarca.SelectedValue); // Método para obter o ID da marca selecionada
-                    if (!ModeloExiste(idMarca, modeloDigitado) && modeloDigitado != string.Empty && idMarca != 0)
-                    {
-                        try
-                        {
-                            DialogResult result = MessageBox.Show($"O Modelo '{modeloDigitado}' não Existe para a Marca Selecionada. Deseja Cadastrá-lo?", "Modelo não Encontrado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                            if (result == DialogResult.Yes)
-                            {
-                                // Abre o formulário frmMarcas
-                                frmModelos frm = new frmModelos();
-                                frm.ShowDialog();
-                                if (cmbMarca.SelectedValue != null)
-                                {
-                                    int idmarca = Convert.ToInt32(cmbMarca.SelectedValue);
-                                    CarregarModelosPorMarca(idmarca);
-                                }
-                            }
-                            else
-                            {
-                                cmbModelo.Text = string.Empty;
-                                cmbModelo.Focus();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                    else if (modeloDigitado == string.Empty || idMarca == 0)
-                    {
-                        MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        cmbModelo.Focus();
-                    }
-                }
-                if (sender == cmbUnidade)
-                {
-                    string unidadeDigitado = cmbUnidade.Text.ToUpper(); // Converte para maiúsculas
-                    cmbUnidade.Text = unidadeDigitado; // Atualiza o texto no ComboBox
-                    if (unidadeDigitado == string.Empty)
-                    {
-                        MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        cmbUnidade.Focus();
-                    }
-                }
-            }
-        }
-        private void Evento_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Permitir somente números, ponto e controle (como backspace)
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
-            {
-                e.Handled = true;
-            }
-            // Permitir somente um ponto decimal
-            if (e.KeyChar == ',' && (sender as MaskedTextBox).Text.IndexOf(',') > -1)
-            {
-                e.Handled = true;
-            }
+            // Localiza TabControl e TabPage
+            var tabControl = Controls.Find("tabControlProdutos", true).FirstOrDefault() as TabControl;
+            var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
+
+            // Inicializa eventos
+            EventosUtils.InicializarEventos(
+                Controls,
+                controlesKeyPress,
+                controlesLeave,
+                controlesEnter,
+                controlesMouseDown,
+                controlesMouseMove,
+                controlesKeyDown,
+                controlesBotoes,
+                this,
+                tabControl,
+                tabPage
+            );
+
+            // Melhor usar SelectedIndexChanged em vez de Click
+            listViewProdutos.SelectedIndexChanged += ListViewProdutos_SelectedIndexChanged;
+
+            // Foco inicial
+            if (txtPesquisaListView != null)
+                txtPesquisaListView.Focus();
         }
         private void ConfigurarTextBox()
         {
             camposObrigatorios = new (Control, string)[]
             {
+                /*
                 (txtIDProduto, "IDProduto"),
                 (txtIDProdutoInterno, "IDProdutoInterno"),
                 (txtIDProdutoFabricante, "IDProdutoFabricante"),
@@ -506,6 +469,7 @@ namespace OrdemServicos
                 (txtPrecoCompra, "PrecoCompra"),
                 (txtPrecoVenda, "PrecoVenda"),
                 (txtEstoqueAtual, "EstoqueAtual"),
+                */
             };
             AdicionarValidacao(
                 erpProvider,
@@ -540,22 +504,21 @@ namespace OrdemServicos
             txtGarantia.TabIndex = 11;
             btnSalvar.TabIndex = 12;
         }
-        private new void CarregarRegistros()
+        public override async Task CarregarRegistros()
         {
-            DesabilitarCampos();
-            DesabilitarBotoesAcoes();
+            DesabilitarCamposDoFormulario();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
             listViewProdutos.Items.Clear();
-            listViewProdutos.Columns.Clear();
             InitializeListView();
 
             try
             {
-                ProdutoBLL produtoBLL = new ProdutoBLL();
-                List<ProdutoInfo> produtos = produtoBLL.Listar();
+                var produtoBLL = new ProdutoBLL();
+                var produtos = await produtoBLL.ListarAsync(); // ✅ chamada assíncrona
 
-                foreach (ProdutoInfo produto in produtos)
+                foreach (var produto in produtos)
                 {
-                    ListViewItem item = new ListViewItem(produto.IDProduto.ToString());
+                    var item = new ListViewItem(produto.IDProduto.ToString());
                     item.SubItems.Add(produto.IDProdutoInterno);
                     item.SubItems.Add(produto.IDProdutoFabricante);
                     item.SubItems.Add(produto.Descricao);
@@ -572,15 +535,17 @@ namespace OrdemServicos
 
                     if (produto.Imagem != null && produto.Imagem.Length > 0)
                     {
-                        using (MemoryStream ms = new MemoryStream(produto.Imagem))
+                        using (var ms = new MemoryStream(produto.Imagem))
                         {
-                            Image imgImagemProduto = Image.FromStream(ms);
+                            // Se quiser exibir a imagem em algum PictureBox, pode atribuir aqui
+                            var imgImagemProduto = Image.FromStream(ms);
                         }
                     }
 
                     listViewProdutos.Items.Add(item);
                 }
 
+                // Ajuste automático das colunas
                 foreach (ColumnHeader column in listViewProdutos.Columns)
                 {
                     column.AutoResize(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -594,6 +559,7 @@ namespace OrdemServicos
 
                 listaOriginalItens = listViewProdutos.Items.Cast<ListViewItem>().ToList();
                 lbTotalRegistros.Text = "Total de Registros: " + listViewProdutos.Items.Count;
+
                 sortColumn = 3;
                 sortAscending = true;
                 listViewProdutos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
@@ -601,8 +567,8 @@ namespace OrdemServicos
                 listViewProdutos.Columns[sortColumn].Width = listViewProdutos.Columns[sortColumn].Width;
 
                 // 🔠 Carregar fornecedores ordenados
-                FornecedorBLL fornecedorBLL = new FornecedorBLL();
-                List<FornecedorInfo> fornecedores = fornecedorBLL.Listar()
+                var fornecedorBLL = new FornecedorBLL();
+                var fornecedores = (await fornecedorBLL.ListarAsync()) // ✅ assíncrono
                     .OrderBy(f => f.Nome_RazaoSocial?.ToUpperInvariant())
                     .ToList();
                 cmbFornecedor.DataSource = fornecedores;
@@ -610,8 +576,8 @@ namespace OrdemServicos
                 cmbFornecedor.ValueMember = "IDFornecedor";
 
                 // 🔠 Carregar marcas ordenadas
-                MarcaBLL marcaBLL = new MarcaBLL();
-                List<MarcaInfo> marcas = marcaBLL.Listar()
+                var marcaBLL = new MarcaBLL();
+                var marcas = (await marcaBLL.ListarAsync()) // ✅ assíncrono
                     .OrderBy(m => m.Descricao?.ToUpperInvariant())
                     .ToList();
                 cmbMarca.DataSource = marcas;
@@ -619,71 +585,182 @@ namespace OrdemServicos
                 cmbMarca.ValueMember = "IDMarca";
 
                 // 🔠 Carregar unidades ordenadas
-                UnidadeBLL unidadeBLL = new UnidadeBLL();
-                List<UnidadeInfo> unidades = unidadeBLL.Listar()
+                var unidadeBLL = new UnidadeBLL();
+                var unidades = (await unidadeBLL.ListarAsync()) // ✅ assíncrono
                     .OrderBy(u => u.Descricao?.ToUpperInvariant())
                     .ToList();
                 cmbUnidade.DataSource = unidades;
                 cmbUnidade.DisplayMember = "Descricao";
                 cmbUnidade.ValueMember = "IDUnidade";
+
                 tabControlProdutos.SelectedTab = tabDadosProduto;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
             LimparCampos();
         }
-        private void ConfigurarcmbFornecedores()
+        public override async void ExecutaFuncaoEventoAsync(Control control)
         {
-            cmbFornecedor.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbFornecedor.AutoCompleteSource = AutoCompleteSource.ListItems;
-        }
-        private void ConfigurarComboBoxMarcas()
-        {
-            cmbMarca.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbMarca.AutoCompleteSource = AutoCompleteSource.ListItems;
-        }
-        private void ConfigurarComboBoxModelos()
-        {
-            cmbModelo.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbModelo.AutoCompleteSource = AutoCompleteSource.ListItems;
-        }
-        private void ConfigurarComboBoxUnidades()
-        {
-            cmbUnidade.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbUnidade.AutoCompleteSource = AutoCompleteSource.ListItems;
+            if (control == cmbFornecedor)
+            {
+                string fornecedorDigitado = cmbFornecedor.Text.ToUpper(); // Converte para maiúsculas
+                cmbFornecedor.Text = fornecedorDigitado; // Atualiza o texto no ComboBox
+                if (!await FornecedorExisteAsync(fornecedorDigitado) && !string.IsNullOrEmpty(fornecedorDigitado))
+                {
+                    try
+                    {
+                        DialogResult result = MessageBox.Show($"Cliente '{fornecedorDigitado}' não Cadastrado", "Cliente não Encontrado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (result == DialogResult.Yes)
+                        {
+                            // Abre o formulário frmClientes
+                            frmFornecedores frm = new frmFornecedores();
+                            frm.ShowDialog();
+
+                            // Carregar clientes no ComboBox em ordem alfabética crescente
+                            var fornecedorBLL = new FornecedorBLL();
+                            var fornecedor = (await fornecedorBLL.ListarAsync())
+                                .OrderBy(c => c.Nome_RazaoSocial?.ToUpperInvariant())
+                                .ToList();
+                            cmbFornecedor.DataSource = fornecedor;
+                            cmbFornecedor.DisplayMember = "Nome_RazaoSocial";
+                            cmbFornecedor.ValueMember = "IDFornecedor";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    cmbFornecedor.Text = string.Empty;
+                    cmbFornecedor.Focus();
+                }
+                if (string.IsNullOrEmpty(fornecedorDigitado))
+                {
+                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cmbFornecedor.Focus();
+                }
+            }
+            else if (control == cmbMarca)
+            {
+                string marcaDigitada = cmbMarca.Text.ToUpper(); // Converte para maiúsculas
+                cmbMarca.Text = marcaDigitada; // Atualiza o texto no ComboBox
+                if (!await MarcaExisteAsync(marcaDigitada) && !string.IsNullOrEmpty(marcaDigitada))
+                {
+                    try
+                    {
+                        DialogResult result = MessageBox.Show($"A Marca '{marcaDigitada}' não Existe. Deseja Cadastrá-la?", "Marca não Encontrada", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (result == DialogResult.Yes)
+                        {
+                            // Abre o formulário frmMarcas
+                            frmMarcas frm = new frmMarcas();
+                            frm.ShowDialog();
+
+                            // Carregar marcas no ComboBox
+                            var marcaBLL = new MarcaBLL();
+                            var marcas = (await marcaBLL.ListarAsync())
+                                .OrderBy(m => m.Descricao?.ToUpperInvariant())
+                                .ToList();
+                            cmbMarca.DataSource = marcas;
+                            cmbMarca.DisplayMember = "Descricao";
+                            cmbMarca.ValueMember = "IDMarca";
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    cmbMarca.Text = string.Empty;
+                    cmbMarca.Focus();
+                }
+                if (string.IsNullOrEmpty(marcaDigitada))
+                {
+                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cmbMarca.Focus();
+                }
+            }
+            else if (control == cmbModelo)
+            {
+                string modeloDigitado = cmbModelo.Text.ToUpper(); // Converte para maiúsculas
+                cmbModelo.Text = modeloDigitado; // Atualiza o texto no ComboBox
+                int idMarca = Convert.ToInt32(cmbMarca.SelectedValue); // Método para obter o ID da marca selecionada
+                if (!await ModeloExisteAsync(idMarca, modeloDigitado) && modeloDigitado != string.Empty && idMarca != 0)
+                {
+                    try
+                    {
+                        DialogResult result = MessageBox.Show($"O Modelo '{modeloDigitado}' não Existe para a Marca Selecionada. Deseja Cadastrá-lo?", "Modelo não Encontrado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (result == DialogResult.Yes)
+                        {
+                            // Abre o formulário frmProdutos
+                            frmProdutos frm = new frmProdutos();
+                            frm.ShowDialog();
+                            if (cmbMarca.SelectedValue != null)
+                            {
+                                int idmarca = Convert.ToInt32(cmbMarca.SelectedValue);
+                                CarregarModelosPorMarcaAsync(idmarca);
+                            }
+                        }
+                        else
+                        {
+                            cmbModelo.Text = string.Empty;
+                            cmbModelo.Focus();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                if (modeloDigitado == string.Empty || idMarca == 0)
+                {
+                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cmbModelo.Focus();
+                }
+            }
+            else if (control == cmbUnidade)
+            {
+                string unidadeDigitado = cmbUnidade.Text.ToUpper(); // Converte para maiúsculas
+                cmbUnidade.Text = unidadeDigitado; // Atualiza o texto no ComboBox
+                if (unidadeDigitado == string.Empty)
+                {
+                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cmbUnidade.Focus();
+                }
+            }
+
         }
         private void CmbMarca_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbMarca.SelectedValue != null)
             {
                 int idMarca = Convert.ToInt32(cmbMarca.SelectedValue);
-                CarregarModelosPorMarca(idMarca);
+                CarregarModelosPorMarcaAsync(idMarca);
             }
         }
-        private bool FornecedorExiste(string nome_RazaoSocial)
+        private async Task<bool> FornecedorExisteAsync(string nome_RazaoSocial)
         {
-            FornecedorBLL fornecedorBLL = new FornecedorBLL();
-            List<FornecedorInfo> fornecedores = fornecedorBLL.Listar();
+            var fornecedorBLL = new FornecedorBLL();
+            var fornecedores = await fornecedorBLL.ListarAsync(); // ✅ chamada assíncrona
             return fornecedores.Any(f => f.Nome_RazaoSocial.Equals(nome_RazaoSocial, StringComparison.OrdinalIgnoreCase));
         }
-        private bool MarcaExiste(string descricao)
+        private async Task<bool> MarcaExisteAsync(string descricao)
         {
-            MarcaBLL marcaBLL = new MarcaBLL();
-            List<MarcaInfo> marcas = marcaBLL.Listar();
+            var marcaBLL = new MarcaBLL();
+            var marcas = await marcaBLL.ListarAsync(); // ✅ chamada assíncrona
             return marcas.Any(m => m.Descricao.Equals(descricao, StringComparison.OrdinalIgnoreCase));
         }
-        private bool ModeloExiste(int idMarca, string descricao)
+        private async Task<bool> ModeloExisteAsync(int idMarca, string descricao)
         {
-            ModeloDAL modeloDAL = new ModeloDAL();
-            List<ModeloInfo> modelos = modeloDAL.ListarPorMarca(idMarca);
+            var modeloBLL = new ModeloBLL(); // melhor usar BLL em vez de DAL direto
+            var modelos = await modeloBLL.ListarPorMarcaAsync(idMarca); // ✅ chamada assíncrona
             return modelos.Any(mo => mo.Descricao.Equals(descricao, StringComparison.OrdinalIgnoreCase));
         }
-        private void CarregarModelosPorMarca(int idMarca)
+        private async Task CarregarModelosPorMarcaAsync(int idMarca)
         {
-            ModeloBLL modeloBLL = new ModeloBLL();
-            List<ModeloInfo> modelos = modeloBLL.ListarPorMarca(idMarca)
+            var modeloBLL = new ModeloBLL();
+            var modelos = (await modeloBLL.ListarPorMarcaAsync(idMarca)) // ✅ chamada assíncrona
                 .OrderBy(mo => mo.Descricao?.ToUpperInvariant())
                 .ToList();
 
@@ -699,164 +776,99 @@ namespace OrdemServicos
                 cmbModelo.Items.Clear();
             }
         }
-        private void ListViewProdutos_Click(object sender, EventArgs e)
-        {
-            escPressed = false; // Reseta a variável de controle
-            if (listViewProdutos.SelectedItems.Count > 0)
-            {
-                ListViewItem item = listViewProdutos.SelectedItems[0];
-                txtIDProduto.Text = item.SubItems[0].Text;
-                txtIDProdutoInterno.Text = item.SubItems[1].Text;
-                txtIDProdutoFabricante.Text = item.SubItems[2].Text;
-                txtDescricao.Text = item.SubItems[3].Text;
-                string fornecedorNome = item.SubItems[4].Text;
-                FornecedorBLL fornecedorBLL = new FornecedorBLL();
-                List<FornecedorInfo> fornecedores = fornecedorBLL.Listar();
-                FornecedorInfo fornecedor = fornecedores.FirstOrDefault(f => f.Nome_RazaoSocial == fornecedorNome);
-                if (fornecedor != null)
-                {
-                    cmbFornecedor.SelectedValue = fornecedor.IDFornecedor;
-                }
-                string marcaNome = item.SubItems[5].Text; // Índice da coluna da marca
-                MarcaBLL marcaBLL = new MarcaBLL();
-                List<MarcaInfo> marcas = marcaBLL.Listar();
-                MarcaInfo marca = marcas.FirstOrDefault(m => m.Descricao == marcaNome);
-                if (marca != null)
-                {
-                    cmbMarca.SelectedValue = marca.IDMarca;
-                }
-                string modeloNome = item.SubItems[6].Text; // Índice da coluna da marca
-                ModeloBLL modeloBLL = new ModeloBLL();
-                List<ModeloInfo> modelos = modeloBLL.Listar();
-                ModeloInfo modelo = modelos.FirstOrDefault(mo => mo.Descricao == modeloNome);
-                if (modelo != null)
-                {
-                    cmbModelo.SelectedValue = modelo.IDModelo;
-                }
-                string unidadeNome = item.SubItems[7].Text; // Índice da coluna da marca
-                UnidadeBLL unidadeBLL = new UnidadeBLL();
-                List<UnidadeInfo> unidades = unidadeBLL.Listar();
-                UnidadeInfo unidade = unidades.FirstOrDefault(u => u.Descricao == unidadeNome);
-                if (unidade != null)
-                {
-                    cmbUnidade.SelectedValue = unidade.IDUnidade;
-                }
-                txtPrecoCompra.Text = item.SubItems[8].Text;
-                txtPrecoVenda.Text = item.SubItems[9].Text;
-                txtEstoqueAtual.Text = item.SubItems[10].Text;
-                txtEstoqueMinimo.Text = item.SubItems[11].Text;
-                txtDataUltimaCompra.Text = item.SubItems[12].Text;
-                txtGarantia.Text = item.SubItems[13].Text;
-                // Exibir a imagem no PictureBox
-                ProdutoBLL produtoBLL = new ProdutoBLL();
-                ProdutoInfo produto = produtoBLL.GetProduto(Convert.ToInt32(item.SubItems[0].Text));
-                if (produto.Imagem != null && produto.Imagem.Length > 0)
-                {
-                    using (MemoryStream ms = new MemoryStream(produto.Imagem))
-                    {
-                        imgImagemProduto.Image = Image.FromStream(ms);
-                    }
-                }
-                else
-                {
-                    imgImagemProduto.Image = null;
-                }
-                HabilitarBotoesAlterarExcluir();
-            }
-        }
         private void btnNovo_Click(object sender, EventArgs e)
         {
             LimparCampos();
-            HabilitarBotaoSalvar();
+            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
             txtIDProduto.Text = "0";
             bNovo = true;
-            HabilitarCampos("Novo");
+            HabilitarCamposDoFormulario("Novo");
         }
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
-            DBSetupBLL dbSetupBLL = new DBSetupBLL();
-            ProdutoBLL produtoBLL = new ProdutoBLL();
-
-            // Verificar se algum campo obrigatório está vazio
-            if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
-            {
-                MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.", "Informaçâo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+            var produtoBLL = new ProdutoBLL();
+            var dbSetupBLL = new DBSetupBLL();
             bool isAtualizacao = false;
-            if (!string.IsNullOrEmpty(txtIDProduto.Text))
+
+            // Verifica se já existe ID informado
+            if (!string.IsNullOrWhiteSpace(txtIDProduto.Text))
             {
                 int idProduto = Convert.ToInt32(txtIDProduto.Text);
-                isAtualizacao = produtoBLL.GetProduto(idProduto) != null;
+                var produtoExistente = await produtoBLL.GetProdutoAsync(idProduto); // ✅ chamada assíncrona
+                isAtualizacao = produtoExistente != null;
             }
+
+            var produto = new ProdutoInfo
+            {
+                IDProdutoInterno = txtIDProdutoInterno.Text,
+                IDProdutoFabricante = txtIDProdutoFabricante.Text,
+                Descricao = txtDescricao.Text,
+                IDFornecedor = Convert.ToInt32(cmbFornecedor.SelectedValue),
+                IDMarca = Convert.ToInt32(cmbMarca.SelectedValue),
+                IDModelo = Convert.ToInt32(cmbModelo.SelectedValue),
+                IDUnidade = Convert.ToInt32(cmbUnidade.SelectedValue),
+                PrecoCompra = Convert.ToDecimal(StringUtils.SemFormatacao(txtPrecoCompra.Text)),
+                PrecoVenda = Convert.ToDecimal(StringUtils.SemFormatacao(txtPrecoVenda.Text)),
+                EstoqueAtual = Convert.ToDecimal(StringUtils.SemFormatacao(txtEstoqueAtual.Text)),
+                EstoqueMinimo = Convert.ToDecimal(StringUtils.SemFormatacao(txtEstoqueMinimo.Text)),
+                Garantia = txtGarantia.Text,
+                Imagem = ImageToByteArray(imgImagemProduto.Image)
+            };
+
             if (!isAtualizacao)
             {
-                string idProdutoInterno = txtIDProdutoInterno.Text;
-                if (dbSetupBLL.VerificarSeCadastrado(idProdutoInterno, "DBProdutos", "IDProdutoInterno"))
+                // Verifica duplicidade de códigos
+                if (await dbSetupBLL.VerificarSeCadastradoAsync(produto.IDProdutoInterno, "DBProdutos", "IDProdutoInterno"))
                 {
-                    MessageBox.Show("Código de Produto Interno já cadastrado. Favor verificar!", "Informaçâo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Código de Produto Interno já cadastrado. Favor verificar!",
+                                    "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                string idProdutoFabricante = txtIDProdutoFabricante.Text;
-                if (dbSetupBLL.VerificarSeCadastrado(idProdutoFabricante, "DBProdutos", "IDProdutoFabricante"))
+
+                if (await dbSetupBLL.VerificarSeCadastradoAsync(produto.IDProdutoFabricante, "DBProdutos", "IDProdutoFabricante"))
                 {
-                    MessageBox.Show("Código de Produto do Fabricante já cadastrado. Favor verificar!", "Informaçâo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Código de Produto do Fabricante já cadastrado. Favor verificar!",
+                                    "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Incluir Esse Produto?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                produto.DataUltimaCompra = DateTime.Now;
+
+                DialogResult result = MessageBox.Show(
+                    "Tem certeza que deseja incluir esse produto?",
+                    "Confirmação",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
                 if (result == DialogResult.Yes)
                 {
-                    ProdutoInfo produto = new ProdutoInfo
-                    {
-                        IDProdutoInterno = txtIDProdutoInterno.Text,
-                        IDProdutoFabricante = txtIDProdutoFabricante.Text,
-                        Descricao = txtDescricao.Text,
-                        IDFornecedor = Convert.ToInt32(cmbFornecedor.SelectedValue),
-                        IDMarca = Convert.ToInt32(cmbMarca.SelectedValue),
-                        IDModelo = Convert.ToInt32(cmbModelo.SelectedValue),
-                        IDUnidade = Convert.ToInt32(cmbUnidade.SelectedValue),
-                        PrecoCompra = Convert.ToDecimal(StringUtils.SemFormatacao(txtPrecoCompra.Text)),
-                        PrecoVenda = Convert.ToDecimal(StringUtils.SemFormatacao(txtPrecoVenda.Text)),
-                        EstoqueAtual = Convert.ToDecimal(StringUtils.SemFormatacao(txtEstoqueAtual.Text)),
-                        EstoqueMinimo = Convert.ToDecimal(StringUtils.SemFormatacao(txtEstoqueMinimo.Text)),
-                        DataUltimaCompra = DateTime.Now,
-                        Garantia = txtGarantia.Text,
-                        Imagem = ImageToByteArray(imgImagemProduto.Image)
-                    };
-                    InserirProduto(produto);
+                    await produtoBLL.InserirProdutoAsync(produto); // ✅ chamada assíncrona
                 }
             }
             else
             {
-                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Salvar as Alterações Realizadas?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                produto.IDProduto = Convert.ToInt32(txtIDProduto.Text);
+
+                DialogResult result = MessageBox.Show(
+                    "Tem certeza que deseja salvar as alterações realizadas?",
+                    "Confirmação",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
                 if (result == DialogResult.Yes)
                 {
-                    ProdutoInfo produto = new ProdutoInfo
-                    {
-                        IDProduto = int.Parse(txtIDProduto.Text),
-                        IDProdutoInterno = txtIDProdutoInterno.Text,
-                        IDProdutoFabricante = txtIDProdutoFabricante.Text,
-                        Descricao = txtDescricao.Text,
-                        IDFornecedor = Convert.ToInt32(cmbFornecedor.SelectedValue),
-                        IDMarca = Convert.ToInt32(cmbMarca.SelectedValue),
-                        IDModelo = Convert.ToInt32(cmbModelo.SelectedValue),
-                        IDUnidade = Convert.ToInt32(cmbUnidade.SelectedValue),
-                        PrecoCompra = Convert.ToDecimal(StringUtils.SemFormatacao(txtPrecoCompra.Text)),
-                        PrecoVenda = Convert.ToDecimal(StringUtils.SemFormatacao(txtPrecoVenda.Text)),
-                        EstoqueAtual = Convert.ToDecimal(StringUtils.SemFormatacao(txtEstoqueAtual.Text)),
-                        EstoqueMinimo = Convert.ToDecimal(StringUtils.SemFormatacao(txtEstoqueMinimo.Text)),
-                        Garantia = txtGarantia.Text,
-                        Imagem = ImageToByteArray(imgImagemProduto.Image)
-                    };
-                    AtualizarProduto(produto);
+                    await produtoBLL.AtualizarProdutoAsync(produto); // ✅ chamada assíncrona
                 }
             }
-            CarregarRegistros();
+
+            await CarregarRegistros(); // ✅ aguarda recarregamento
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
-            HabilitarBotaoSalvar();
-            HabilitarCampos("Alterar");
+            EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
+            HabilitarCamposDoFormulario("Alterar");
         }
         private void btnExcluir_Click(object sender, EventArgs e)
         {
@@ -865,7 +877,7 @@ namespace OrdemServicos
             {
                 if (int.TryParse(txtIDProduto.Text, out int produtoID))
                 {
-                    ExcluirProduto(produtoID);
+                    ExcluirProdutoAsync(produtoID);
                 }
                 else
                 {
@@ -873,7 +885,7 @@ namespace OrdemServicos
                 }
             }
             CarregarRegistros();
-            DesabilitarBotoesAcoes();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
         }
         private void btnFechar_Click(object sender, EventArgs e)
         {
@@ -881,39 +893,47 @@ namespace OrdemServicos
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            CarregarRegistros();
+           CarregarRegistros();
         }
-        private void DesabilitarCampos()
+        private void DesabilitarCamposDoFormulario()
         {
-            txtIDProdutoInterno.Enabled = false;
-            txtIDProdutoFabricante.Enabled = false;
-            txtDescricao.Enabled = false;
-            cmbFornecedor.Enabled = false;
-            cmbMarca.Enabled = false;
-            cmbModelo.Enabled = false;
-            cmbUnidade.Enabled = false;
-            txtPrecoCompra.Enabled = false;
-            txtPrecoVenda.Enabled = false;
-            txtEstoqueAtual.Enabled = false;
-            txtEstoqueMinimo.Enabled = false;
-            txtDataUltimaCompra.Enabled = false;
-            txtGarantia.Enabled = false;
+            List<Control> controlesDesabilitar = new List<Control>
+            {
+                txtIDProdutoInterno,
+                txtIDProdutoFabricante,
+                txtDescricao,
+                cmbFornecedor,
+                cmbMarca,
+                cmbModelo,
+                cmbUnidade,
+                txtPrecoCompra,
+                txtPrecoVenda,
+                txtEstoqueAtual,
+                txtEstoqueMinimo,
+                txtDataUltimaCompra,
+                txtGarantia
+            };
+            EventosUtils.DesabilitarControles(controlesDesabilitar, this);
             listViewProdutos.Enabled = true;
             txtPesquisaListView.Enabled = true;
         }
-        private void HabilitarCampos(string buttonPressed)
+        private void HabilitarCamposDoFormulario(string buttonPressed)
         {
-            txtIDProdutoFabricante.Enabled = true;
-            txtDescricao.Enabled = true;
-            cmbFornecedor.Enabled = true;
-            cmbMarca.Enabled = true;
-            cmbModelo.Enabled = true;
-            cmbUnidade.Enabled = true;
-            txtPrecoCompra.Enabled = true;
-            txtPrecoVenda.Enabled = true;
-            txtEstoqueAtual.Enabled = true;
-            txtEstoqueMinimo.Enabled = true;
-            txtGarantia.Enabled = true;
+            List<Control> controlesHabilitar = new List<Control>
+            {
+                txtIDProdutoFabricante,
+                txtDescricao,
+                cmbFornecedor,
+                cmbMarca,
+                cmbModelo,
+                cmbUnidade,
+                txtPrecoCompra,
+                txtPrecoVenda,
+                txtEstoqueAtual,
+                txtEstoqueMinimo,
+                txtGarantia
+            };
+            EventosUtils.HabilitarControles(controlesHabilitar, this);
             listViewProdutos.Enabled = false;
             txtPesquisaListView.Enabled = false;
             switch (buttonPressed)
@@ -923,58 +943,21 @@ namespace OrdemServicos
                     txtIDProdutoInterno.Enabled = true;
                     txtIDProdutoInterno.Focus();
                     break;
-                case "Salvar":
-                    // Adicionar ações específicas para "Salvar" se necessário
-                    break;
                 case "Alterar":
                     txtIDProdutoFabricante.Focus();
                     break;
-                case "Excluir":
-                    // Adicionar ações específicas para "Excluir" se necessário
-                    break;
-                default:
-                    break;
             }
-        }
-        private void DesabilitarBotoesAcoes()
-        {
-            btnSalvar.Enabled = false;
-            btnAlterar.Enabled = false;
-            btnExcluir.Enabled = false;
-            btnInserirImagem.Enabled = false;
-            btnExcluirImagem.Enabled = false;
-            btnFechar.Enabled = true;
-            btnNovo.Enabled = true;
-            btnNovo.Focus();
-        }
-        private void HabilitarBotaoSalvar()
-        {
-            btnSalvar.Enabled = true;
-            btnAlterar.Enabled = false;
-            btnExcluir.Enabled = false;
-            btnInserirImagem.Enabled = true;
-            btnExcluirImagem.Enabled = true;
-            btnFechar.Enabled = false;
-            btnNovo.Enabled = false;
-        }
-        private void HabilitarBotoesAlterarExcluir()
-        {
-            btnAlterar.Enabled = true;
-            btnExcluir.Enabled = true;
-            btnSalvar.Enabled = false;
-            btnFechar.Enabled = true;
-            btnNovo.Enabled = true;
         }
         private new void LimparCampos()
         {
             txtIDProdutoInterno.Clear();
             txtIDProdutoFabricante.Clear();
             txtDescricao.Clear();
-			cmbFornecedor.SelectedIndex = -1;
-			cmbMarca.SelectedIndex = -1;
-			cmbModelo.SelectedIndex = -1;
-			cmbUnidade.SelectedIndex = -1;
-			txtPrecoCompra.Clear();
+            cmbFornecedor.SelectedIndex = -1;
+            cmbMarca.SelectedIndex = -1;
+            cmbModelo.SelectedIndex = -1;
+            cmbUnidade.SelectedIndex = -1;
+            txtPrecoCompra.Clear();
             txtPrecoVenda.Clear();
             txtEstoqueAtual.Clear();
             txtEstoqueMinimo.Clear();
@@ -983,44 +966,51 @@ namespace OrdemServicos
             imgImagemProduto.Image = null;
             txtPesquisaListView.Clear();
             bNovo = false;
+            escPressed = false;
         }
-        static void InserirProduto(ProdutoInfo Produto)
+        private static async Task InserirProdutoAsync(ProdutoInfo produto)
         {
             try
             {
-                ProdutoBLL ProdutoBLL = new ProdutoBLL();
-                ProdutoBLL.InserirProduto(Produto);
-                MessageBox.Show("Produto Inserido com Sucesso!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var produtoBLL = new ProdutoBLL();
+                await produtoBLL.InserirProdutoAsync(produto); // ✅ chamada assíncrona
+                MessageBox.Show("Produto inserido com sucesso!",
+                                "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        static void AtualizarProduto(ProdutoInfo Produto)
+        private static async Task AtualizarProdutoAsync(ProdutoInfo produto)
         {
             try
             {
-                ProdutoBLL ProdutoBLL = new ProdutoBLL();
-                ProdutoBLL.AtualizarProduto(Produto);
-                MessageBox.Show("Produto Atualizado com Sucesso!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var produtoBLL = new ProdutoBLL();
+                await produtoBLL.AtualizarProdutoAsync(produto); // ✅ chamada assíncrona
+                MessageBox.Show("Produto atualizado com sucesso!",
+                                "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        static void ExcluirProduto(int idProduto)
+        private static async Task ExcluirProdutoAsync(int idProduto)
         {
             try
             {
-                ProdutoBLL ProdutoBLL = new ProdutoBLL();
-                ProdutoBLL.ExcluirProduto(idProduto);
-                MessageBox.Show("Produto Excluído com Sucesso!", "Informaçâo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var produtoBLL = new ProdutoBLL();
+                await produtoBLL.ExcluirProdutoAsync(idProduto); // ✅ chamada assíncrona
+                MessageBox.Show("Produto excluído com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void btnInserirImagem_Click(object sender, EventArgs e)
@@ -1077,12 +1067,12 @@ namespace OrdemServicos
                 };
 
                 // Adicionando eventos de mouse aos botões
-                btnLocal.MouseEnter += Button_MouseEnter;
-                btnLocal.MouseLeave += Button_MouseLeave;
-                btnWebcam.MouseEnter += Button_MouseEnter;
-                btnWebcam.MouseLeave += Button_MouseLeave;
-                btnFechar.MouseEnter += Button_MouseEnter;
-                btnFechar.MouseLeave += Button_MouseLeave;
+                btnLocal.MouseEnter += Button_MouseEnterImg;
+                btnLocal.MouseLeave += Button_MouseLeaveImg;
+                btnWebcam.MouseEnter += Button_MouseEnterImg;
+                btnWebcam.MouseLeave += Button_MouseLeaveImg;
+                btnFechar.MouseEnter += Button_MouseEnterImg;
+                btnFechar.MouseLeave += Button_MouseLeaveImg;
 
                 // Calculando a posição inicial para centralizar os botões
                 int totalButtonWidth = 3 * 98 + 20; // 3 botões de 98px cada e 10px de espaço entre eles
@@ -1106,6 +1096,24 @@ namespace OrdemServicos
 
                 form.StartPosition = FormStartPosition.CenterParent;
                 form.ShowDialog(this);
+            }
+        }
+        private void Button_MouseEnterImg(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                button.BackColor = buttonFontColor; // Cor de fundo ao passar o mouse
+                button.ForeColor = buttonBackgroundColor; // Cor da fonte ao passar o mouse
+            }
+        }
+        private void Button_MouseLeaveImg(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                button.BackColor = buttonBackgroundColor; // Cor de fundo original
+                button.ForeColor = buttonFontColor; // Cor da fonte original
             }
         }
         private void BtnLocal_Click(object sender, EventArgs e)
@@ -1275,9 +1283,5 @@ namespace OrdemServicos
             }
             imgImagemProduto.Cursor = Cursors.Hand;
         }
-		private void tabDadosProduto_Click( object sender, EventArgs e )
-		{
-
-		}
-	}
+    }
 }

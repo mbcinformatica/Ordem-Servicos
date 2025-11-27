@@ -3,34 +3,29 @@ using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.DAL
 {
     public class ProdutoDAL
     {
         private readonly string connectionString;
+
         public ProdutoDAL()
         {
-            try
-            {
-                connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-            }
-            catch (ConfigurationErrorsException ex)
-            {
-                MessageBox.Show("Erro ao carregar configuração do banco: " + ex.Message,
-                                "Erro de Configuração", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            connectionString = ConfigurationManager.AppSettings["ConnectionString"];
         }
 
-        public List<ProdutoInfo> Listar()
+        public async Task<List<ProdutoInfo>> ListarAsync()
         {
-            List<ProdutoInfo> ProdutosList = new List<ProdutoInfo>();
+            var produtosList = new List<ProdutoInfo>();
+
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
+
                     string query = @"
                         SELECT p.IDProduto, p.IDProdutoInterno, p.IDProdutoFabricante, p.Descricao, 
                                f.Nome_RazaoSocial AS Fornecedor, m.Descricao AS Marca, mo.Descricao AS Modelo, 
@@ -41,12 +36,13 @@ namespace OrdemServicos.DAL
                         JOIN DBMarcas m ON p.IDMarca = m.IDMarca
                         JOIN DBModelos mo ON p.IDModelo = mo.IDModelo
                         JOIN DBUnidades u ON p.IDUnidade = u.IDUnidade";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        while (reader.Read())
+                        while (await reader.ReadAsync())
                         {
-                            ProdutoInfo produto = new ProdutoInfo
+                            var produto = new ProdutoInfo
                             {
                                 IDProduto = Convert.ToInt32(reader["IDProduto"]),
                                 IDProdutoInterno = reader["IDProdutoInterno"].ToString(),
@@ -64,163 +60,172 @@ namespace OrdemServicos.DAL
                                 Garantia = reader["Garantia"].ToString(),
                                 Imagem = reader["Imagem"] != DBNull.Value ? (byte[])reader["Imagem"] : null
                             };
-                            ProdutosList.Add(produto);
-                        }
-                    }
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao listar produtos: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro inesperado ao listar produtos: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return ProdutosList;
-        }
-
-        public List<ProdutoInfo> ListarPorMarca(int idMarca)
-        {
-            List<ProdutoInfo> produtosList = new List<ProdutoInfo>();
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = "SELECT IDProduto, Descricao, Imagem FROM DBProdutos WHERE IDMarca = @IDMarca";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@IDMarca", idMarca);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            ProdutoInfo produto = new ProdutoInfo
-                            {
-                                IDProduto = Convert.ToInt32(reader["IDProduto"]),
-                                Descricao = reader["Descricao"].ToString(),
-                                Imagem = reader["Imagem"] != DBNull.Value ? (byte[])reader["Imagem"] : null
-                            };
                             produtosList.Add(produto);
                         }
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao listar produtos por marca: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao listar produtos por marca: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao listar produtos: " + ex.Message, ex);
             }
+
             return produtosList;
         }
 
-        public ProdutoInfo GetProduto(int idProduto)
+        public async Task<List<ProdutoInfo>> ListarPorMarcaAsync(int idMarca)
         {
+            var produtosList = new List<ProdutoInfo>();
+
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
-                    string query = "SELECT * FROM DBProdutos WHERE IDProduto = @IDProduto";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@IDProduto", idProduto);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    await conn.OpenAsync();
+
+                    string query = "SELECT IDProduto, Descricao, Imagem FROM DBProdutos WHERE IDMarca = @IDMarca";
+                    using (var cmd = new MySqlCommand(query, conn))
                     {
-                        if (reader.Read())
+                        cmd.Parameters.AddWithValue("@IDMarca", idMarca);
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
                         {
-                            return new ProdutoInfo
+                            while (await reader.ReadAsync())
                             {
-                                IDProduto = Convert.ToInt32(reader["IDProduto"]),
-                                IDProdutoInterno = reader["IDProdutoInterno"].ToString(),
-                                IDProdutoFabricante = reader["IDProdutoFabricante"].ToString(),
-                                Descricao = reader["Descricao"].ToString(),
-                                IDFornecedor = Convert.ToInt32(reader["IDFornecedor"]),
-                                IDMarca = Convert.ToInt32(reader["IDMarca"]),
-                                IDModelo = Convert.ToInt32(reader["IDModelo"]),
-                                IDUnidade = Convert.ToInt32(reader["IDUnidade"]),
-                                PrecoCompra = Convert.ToDecimal(reader["PrecoCompra"]),
-                                PrecoVenda = Convert.ToDecimal(reader["PrecoVenda"]),
-                                EstoqueAtual = Convert.ToDecimal(reader["EstoqueAtual"]),
-                                EstoqueMinimo = Convert.ToDecimal(reader["EstoqueMinimo"]),
-                                DataUltimaCompra = Convert.ToDateTime(reader["DataUltimaCompra"]),
-                                Garantia = reader["Garantia"].ToString(),
-                                Imagem = reader["Imagem"] != DBNull.Value ? (byte[])reader["Imagem"] : null
-                            };
+                                var produto = new ProdutoInfo
+                                {
+                                    IDProduto = Convert.ToInt32(reader["IDProduto"]),
+                                    Descricao = reader["Descricao"].ToString(),
+                                    Imagem = reader["Imagem"] != DBNull.Value ? (byte[])reader["Imagem"] : null
+                                };
+                                produtosList.Add(produto);
+                            }
                         }
                     }
                 }
             }
-            catch (MySqlException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Erro MySQL ao buscar produto: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao listar produtos por marca: " + ex.Message, ex);
+            }
+
+            return produtosList;
+        }
+
+        public async Task<ProdutoInfo> GetProdutoAsync(int idProduto)
+        {
+            try
+            {
+                using (var conn = new MySqlConnection(connectionString))
+                {
+                    await conn.OpenAsync();
+
+                    string query = "SELECT * FROM DBProdutos WHERE IDProduto = @IDProduto";
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@IDProduto", idProduto);
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            if (await reader.ReadAsync())
+                            {
+                                return new ProdutoInfo
+                                {
+                                    IDProduto = Convert.ToInt32(reader["IDProduto"]),
+                                    IDProdutoInterno = reader["IDProdutoInterno"].ToString(),
+                                    IDProdutoFabricante = reader["IDProdutoFabricante"].ToString(),
+                                    Descricao = reader["Descricao"].ToString(),
+                                    IDFornecedor = Convert.ToInt32(reader["IDFornecedor"]),
+                                    IDMarca = Convert.ToInt32(reader["IDMarca"]),
+                                    IDModelo = Convert.ToInt32(reader["IDModelo"]),
+                                    IDUnidade = Convert.ToInt32(reader["IDUnidade"]),
+                                    PrecoCompra = Convert.ToDecimal(reader["PrecoCompra"]),
+                                    PrecoVenda = Convert.ToDecimal(reader["PrecoVenda"]),
+                                    EstoqueAtual = Convert.ToDecimal(reader["EstoqueAtual"]),
+                                    EstoqueMinimo = Convert.ToDecimal(reader["EstoqueMinimo"]),
+                                    DataUltimaCompra = Convert.ToDateTime(reader["DataUltimaCompra"]),
+                                    Garantia = reader["Garantia"].ToString(),
+                                    Imagem = reader["Imagem"] != DBNull.Value ? (byte[])reader["Imagem"] : null
+                                };
+                            }
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao buscar produto: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao buscar produto: " + ex.Message, ex);
             }
+
             return null;
         }
 
-        public void AtualizarProduto(ProdutoInfo produto)
+        public async Task AtualizarProdutoAsync(ProdutoInfo produto)
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
-                    string query = "UPDATE DBProdutos SET IDProdutoInterno = @IDProdutoInterno, IDProdutoFabricante = @IDProdutoFabricante, Descricao = @Descricao, " +
-                                   "IDFornecedor = @IDFornecedor, IDMarca = @IDMarca, IDModelo = @IDModelo, IDUnidade = @IDUnidade, PrecoCompra = @PrecoCompra, PrecoVenda = @PrecoVenda, " +
-                                   "EstoqueAtual = @EstoqueAtual, EstoqueMinimo = @EstoqueMinimo, Garantia = @Garantia, Imagem = @Imagem WHERE IDProduto = @IDProduto";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@IDProdutoInterno", produto.IDProdutoInterno);
-                    cmd.Parameters.AddWithValue("@IDProdutoFabricante", produto.IDProdutoFabricante);
-                    cmd.Parameters.AddWithValue("@Descricao", produto.Descricao);
-                    cmd.Parameters.AddWithValue("@IDFornecedor", produto.IDFornecedor);
-                    cmd.Parameters.AddWithValue("@IDMarca", produto.IDMarca);
-                    cmd.Parameters.AddWithValue("@IDModelo", produto.IDModelo);
-                    cmd.Parameters.AddWithValue("@IDUnidade", produto.IDUnidade);
-                    cmd.Parameters.AddWithValue("@PrecoCompra", produto.PrecoCompra);
-                    cmd.Parameters.AddWithValue("@PrecoVenda", produto.PrecoVenda);
-                    cmd.Parameters.AddWithValue("@EstoqueAtual", produto.EstoqueAtual);
-                    cmd.Parameters.AddWithValue("@EstoqueMinimo", produto.EstoqueMinimo);
-                    cmd.Parameters.AddWithValue("@Garantia", produto.Garantia);
-                    cmd.Parameters.AddWithValue("@Imagem", produto.Imagem ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("@IDProduto", produto.IDProduto);
-                    cmd.ExecuteNonQuery();
+                    await conn.OpenAsync();
+
+                    string query = @"UPDATE DBProdutos 
+                                     SET IDProdutoInterno = @IDProdutoInterno, 
+                                         IDProdutoFabricante = @IDProdutoFabricante, 
+                                         Descricao = @Descricao, 
+                                         IDFornecedor = @IDFornecedor, 
+                                         IDMarca = @IDMarca, 
+                                         IDModelo = @IDModelo, 
+                                         IDUnidade = @IDUnidade, 
+                                         PrecoCompra = @PrecoCompra, 
+                                         PrecoVenda = @PrecoVenda, 
+                                         EstoqueAtual = @EstoqueAtual, 
+                                         EstoqueMinimo = @EstoqueMinimo, 
+                                         Garantia = @Garantia, 
+                                         Imagem = @Imagem 
+                                     WHERE IDProduto = @IDProduto";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@IDProdutoInterno", produto.IDProdutoInterno);
+                        cmd.Parameters.AddWithValue("@IDProdutoFabricante", produto.IDProdutoFabricante);
+                        cmd.Parameters.AddWithValue("@Descricao", produto.Descricao);
+                        cmd.Parameters.AddWithValue("@IDFornecedor", produto.IDFornecedor);
+                        cmd.Parameters.AddWithValue("@IDMarca", produto.IDMarca);
+                        cmd.Parameters.AddWithValue("@IDModelo", produto.IDModelo);
+                        cmd.Parameters.AddWithValue("@IDUnidade", produto.IDUnidade);
+                        cmd.Parameters.AddWithValue("@PrecoCompra", produto.PrecoCompra);
+                        cmd.Parameters.AddWithValue("@PrecoVenda", produto.PrecoVenda);
+                        cmd.Parameters.AddWithValue("@EstoqueAtual", produto.EstoqueAtual);
+                        cmd.Parameters.AddWithValue("@EstoqueMinimo", produto.EstoqueMinimo);
+                        cmd.Parameters.AddWithValue("@Garantia", produto.Garantia);
+                        cmd.Parameters.AddWithValue("@Imagem", produto.Imagem ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@IDProduto", produto.IDProduto);
+
+                        await cmd.ExecuteNonQueryAsync();
+                    }
                 }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao atualizar produto: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao atualizar produto: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao atualizar produto: " + ex.Message, ex);
             }
         }
-        public void InserirProduto(ProdutoInfo produto)
+
+        public async Task InserirProdutoAsync(ProdutoInfo produto)
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
-                    string query = "INSERT INTO DBProdutos (IDProdutoInterno, IDProdutoFabricante, Descricao, IDFornecedor, IDMarca, IDModelo, " +
-                                   "IDUnidade, PrecoCompra, PrecoVenda, EstoqueAtual, EstoqueMinimo, DataUltimaCompra, Garantia, Imagem) " +
-                                   "VALUES (@IDProdutoInterno, @IDProdutoFabricante, @Descricao, @IDFornecedor, @IDMarca, @IDModelo, @IDUnidade, @PrecoCompra, " +
-                                   "@PrecoVenda, @EstoqueAtual, @EstoqueMinimo, @DataUltimaCompra, @Garantia, @Imagem)";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    await conn.OpenAsync();
+
+                    string query = @"INSERT INTO DBProdutos 
+                                    (IDProdutoInterno, IDProdutoFabricante, Descricao, IDFornecedor, IDMarca, IDModelo, 
+                                     IDUnidade, PrecoCompra, PrecoVenda, EstoqueAtual, EstoqueMinimo, DataUltimaCompra, Garantia, Imagem) 
+                                    VALUES (@IDProdutoInterno, @IDProdutoFabricante, @Descricao, @IDFornecedor, @IDMarca, @IDModelo, 
+                                            @IDUnidade, @PrecoCompra, @PrecoVenda, @EstoqueAtual, @EstoqueMinimo, @DataUltimaCompra, @Garantia, @Imagem)";
+
+                    using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@IDProdutoInterno", produto.IDProdutoInterno);
                         cmd.Parameters.AddWithValue("@IDProdutoFabricante", produto.IDProdutoFabricante);
@@ -237,46 +242,35 @@ namespace OrdemServicos.DAL
                         cmd.Parameters.AddWithValue("@Garantia", produto.Garantia);
                         cmd.Parameters.AddWithValue("@Imagem", produto.Imagem ?? (object)DBNull.Value);
 
-                        cmd.ExecuteNonQuery();
+                        await cmd.ExecuteNonQueryAsync();
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao inserir produto: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao inserir produto: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao inserir produto: " + ex.Message, ex);
             }
         }
 
-        public void ExcluirProduto(int idProduto)
+        public async Task ExcluirProdutoAsync(int idProduto)
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
+
                     string query = "DELETE FROM DBProdutos WHERE IDProduto = @IDProduto";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@IDProduto", idProduto);
-                        cmd.ExecuteNonQuery();
+                        await cmd.ExecuteNonQueryAsync();
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao excluir produto: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao excluir produto: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao excluir produto: " + ex.Message, ex);
             }
         }
     }

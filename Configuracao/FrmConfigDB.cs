@@ -5,6 +5,7 @@ using OrdemServicos.Utils;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OrdemServicos
@@ -21,7 +22,7 @@ namespace OrdemServicos
         private List<Control> controlesMouseMove = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
-        private bool vCloseSistema;
+        public bool vCloseSistema;
 
         public frmConfigDB()
         {
@@ -147,7 +148,7 @@ namespace OrdemServicos
             }
             return sucesso;
         }
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_ClickAsync(object sender, EventArgs e)
         {
             string connStr = $"Server={txtServidor.Text};Port={txtPorta.Text};Database={txtBanco.Text};Uid={txtUsuario.Text};Pwd={txtSenha.Text};";
             string connStrSemDB = $"Server={txtServidor.Text};Port={txtPorta.Text};Uid={txtUsuario.Text};Pwd={txtSenha.Text};";
@@ -163,14 +164,14 @@ namespace OrdemServicos
 
             try
             {
-                DBSetupDAL mysqlSetup = new DBSetupDAL();
-                mysqlSetup.CheckAndSetupDatabase();
+                var mysqlSetup = new DBSetupDAL();
+                mysqlSetup.CheckAndSetupDatabaseAsync();
                 using (MySqlConnection conexao = new MySqlConnection(connStr))
                 {
                     conexao.Open();
                 }
-                DBSetupDAL dbSetup = new DBSetupDAL();
-                if (dbSetup.CheckAndSetupDatabase())
+                var dbSetup = new DBSetupDAL();
+                if (await dbSetup.CheckAndSetupDatabaseAsync())
                 {
                     MessageBox.Show("Configuração salva e banco/tabelas criados com sucesso!", "Sucesso",
                                     MessageBoxButtons.OK, MessageBoxIcon.Information);

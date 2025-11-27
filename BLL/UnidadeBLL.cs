@@ -1,35 +1,40 @@
 ﻿using OrdemServicos.DAL;
 using OrdemServicos.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.BLL
 {
     public class UnidadeBLL
     {
-        public List<UnidadeInfo> Listar()
+        public async Task<List<UnidadeInfo>> ListarAsync()
         {
-            UnidadeDAL unidadeDAL = new UnidadeDAL();
-            return unidadeDAL.Listar();
+            var unidadeDAL = new UnidadeDAL();
+            return await unidadeDAL.ListarAsync();
         }
-        public UnidadeInfo GetUnidade(int IDUnidade)
+
+        public async Task<UnidadeInfo> GetUnidadeAsync(int idUnidade)
         {
-            UnidadeDAL unidadeDAL = new UnidadeDAL();
-            return unidadeDAL.GetUnidade(IDUnidade);
+            var unidadeDAL = new UnidadeDAL();
+            return await unidadeDAL.GetUnidadeAsync(idUnidade);
         }
-        public void AtualizarUnidade(UnidadeInfo Unidade)
+
+        public async Task AtualizarUnidadeAsync(UnidadeInfo unidade)
         {
-            UnidadeDAL unidadeDAL = new UnidadeDAL();
-            unidadeDAL.AtualizarUnidade(Unidade);
+            var unidadeDAL = new UnidadeDAL();
+            await unidadeDAL.AtualizarUnidadeAsync(unidade);
         }
-        public void InserirUnidade(UnidadeInfo Unidade)
+
+        public async Task InserirUnidadeAsync(UnidadeInfo unidade)
         {
-            UnidadeDAL unidadeDAL = new UnidadeDAL();
-            unidadeDAL.InserirUnidade(Unidade);
+            var unidadeDAL = new UnidadeDAL();
+            await unidadeDAL.InserirUnidadeAsync(unidade);
         }
-        public void ExcluirUnidade(int IdUnidade)
+
+        public async Task ExcluirUnidadeAsync(int idUnidade)
         {
-            UnidadeDAL unidadeDAL = new UnidadeDAL();
-            unidadeDAL.ExcluirUnidade(IdUnidade);
+            var unidadeDAL = new UnidadeDAL();
+            await unidadeDAL.ExcluirUnidadeAsync(idUnidade);
         }
     }
 }

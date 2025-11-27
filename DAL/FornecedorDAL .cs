@@ -3,90 +3,74 @@ using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.DAL
 {
     public class FornecedorDAL
     {
         private readonly string connectionString;
+
         public FornecedorDAL()
         {
-            try
-            {
-                connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-            }
-            catch (ConfigurationErrorsException ex)
-            {
-                MessageBox.Show("Erro ao carregar configuração do banco: " + ex.Message,
-                                "Erro de Configuração", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            connectionString = ConfigurationManager.AppSettings["ConnectionString"];
         }
 
-        public List<FornecedorInfo> Listar()
+        public async Task<List<FornecedorInfo>> ListarAsync()
         {
-            List<FornecedorInfo> FornecedoresList = new List<FornecedorInfo>();
-            try
+            var fornecedoresList = new List<FornecedorInfo>();
+
+            using (var conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                await conn.OpenAsync();
+                string query = @"SELECT IDFornecedor, TipoPessoa, Cpf_Cnpj, Nome_RazaoSocial, Endereco, Numero, Bairro, Municipio, UF, Cep, Contato, Fone_1, Fone_2, Email, DataCadastro 
+                                 FROM DBFornecedores";
+
+                using (var cmd = new MySqlCommand(query, conn))
+                using (var reader = await cmd.ExecuteReaderAsync())
                 {
-                    conn.Open();
-                    string query = "SELECT * FROM DBFornecedores";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    while (await reader.ReadAsync())
                     {
-                        while (reader.Read())
+                        fornecedoresList.Add(new FornecedorInfo
                         {
-                            FornecedorInfo fornecedor = new FornecedorInfo
-                            {
-                                IDFornecedor = Convert.ToInt32(reader["IDFornecedor"]),
-                                TipoPessoa = reader["TipoPessoa"].ToString(),
-                                Cpf_Cnpj = reader["Cpf_Cnpj"].ToString(),
-                                Nome_RazaoSocial = reader["Nome_RazaoSocial"].ToString(),
-                                Endereco = reader["Endereco"].ToString(),
-                                Numero = reader["Numero"].ToString(),
-                                Bairro = reader["Bairro"].ToString(),
-                                Municipio = reader["Municipio"].ToString(),
-                                UF = reader["UF"].ToString(),
-                                Cep = reader["Cep"].ToString(),
-                                Contato = reader["Contato"].ToString(),
-                                Fone_1 = reader["Fone_1"].ToString(),
-                                Fone_2 = reader["Fone_2"].ToString(),
-                                Email = reader["Email"].ToString(),
-                                DataCadastro = Convert.ToDateTime(reader["DataCadastro"])
-                            };
-                            FornecedoresList.Add(fornecedor);
-                        }
+                            IDFornecedor = Convert.ToInt32(reader["IDFornecedor"]),
+                            TipoPessoa = reader["TipoPessoa"].ToString(),
+                            Cpf_Cnpj = reader["Cpf_Cnpj"].ToString(),
+                            Nome_RazaoSocial = reader["Nome_RazaoSocial"].ToString(),
+                            Endereco = reader["Endereco"].ToString(),
+                            Numero = reader["Numero"].ToString(),
+                            Bairro = reader["Bairro"].ToString(),
+                            Municipio = reader["Municipio"].ToString(),
+                            UF = reader["UF"].ToString(),
+                            Cep = reader["Cep"].ToString(),
+                            Contato = reader["Contato"].ToString(),
+                            Fone_1 = reader["Fone_1"].ToString(),
+                            Fone_2 = reader["Fone_2"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            DataCadastro = Convert.ToDateTime(reader["DataCadastro"])
+                        });
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao listar fornecedores: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro inesperado ao listar fornecedores: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
 
-            return FornecedoresList;
+            return fornecedoresList;
         }
 
-        public FornecedorInfo GetFornecedor(int IDFornecedor)
+        public async Task<FornecedorInfo> GetFornecedorAsync(int idFornecedor)
         {
-            try
+            using (var conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                await conn.OpenAsync();
+                string query = @"SELECT IDFornecedor, TipoPessoa, Cpf_Cnpj, Nome_RazaoSocial, Endereco, Numero, Bairro, Municipio, UF, Cep, Contato, Fone_1, Fone_2, Email, DataCadastro 
+                                 FROM DBFornecedores WHERE IDFornecedor = @IDFornecedor";
+
+                using (var cmd = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    string query = "SELECT * FROM DBFornecedores WHERE IDFornecedor = @IDFornecedor";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@IDFornecedor", IDFornecedor);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    cmd.Parameters.AddWithValue("@IDFornecedor", idFornecedor);
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        if (reader.Read())
+                        if (await reader.ReadAsync())
                         {
                             return new FornecedorInfo
                             {
@@ -110,32 +94,21 @@ namespace OrdemServicos.DAL
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao buscar fornecedor: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro inesperado ao buscar fornecedor: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
 
             return null;
         }
 
-        public void AtualizarFornecedor(FornecedorInfo fornecedor)
+        public async Task AtualizarFornecedorAsync(FornecedorInfo fornecedor)
         {
-            try
+            using (var conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                await conn.OpenAsync();
+                string query = @"UPDATE DBFornecedores SET TipoPessoa=@TipoPessoa, Cpf_Cnpj=@Cpf_Cnpj, Nome_RazaoSocial=@Nome_RazaoSocial,
+                                 Endereco=@Endereco, Numero=@Numero, Bairro=@Bairro, Municipio=@Municipio, UF=@UF, Cep=@Cep,
+                                 Contato=@Contato, Fone_1=@Fone_1, Fone_2=@Fone_2, Email=@Email WHERE IDFornecedor=@IDFornecedor";
+
+                using (var cmd = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    string query = "UPDATE DBFornecedores SET TipoPessoa = @TipoPessoa, Cpf_Cnpj = @Cpf_Cnpj, Nome_RazaoSocial = @Nome_RazaoSocial, " +
-                                   "Endereco = @Endereco, Numero = @Numero, Bairro = @Bairro, Municipio = @Municipio, " +
-                                   "UF = @UF, Cep = @Cep, Contato = @Contato, Fone_1 = @Fone_1, Fone_2 = @Fone_2, " +
-                                   "Email = @Email WHERE IDFornecedor = @IDFornecedor";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@TipoPessoa", fornecedor.TipoPessoa);
                     cmd.Parameters.AddWithValue("@Cpf_Cnpj", fornecedor.Cpf_Cnpj);
                     cmd.Parameters.AddWithValue("@Nome_RazaoSocial", fornecedor.Nome_RazaoSocial);
@@ -150,31 +123,22 @@ namespace OrdemServicos.DAL
                     cmd.Parameters.AddWithValue("@Fone_2", fornecedor.Fone_2);
                     cmd.Parameters.AddWithValue("@Email", fornecedor.Email);
                     cmd.Parameters.AddWithValue("@IDFornecedor", fornecedor.IDFornecedor);
-                    cmd.ExecuteNonQuery();
+
+                    await cmd.ExecuteNonQueryAsync();
                 }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao atualizar fornecedor: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro inesperado ao atualizar fornecedor: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        public void InserirFornecedor(FornecedorInfo fornecedor)
+        public async Task InserirFornecedorAsync(FornecedorInfo fornecedor)
         {
-            try
+            using (var conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                await conn.OpenAsync();
+                string query = @"INSERT INTO DBFornecedores (TipoPessoa, Cpf_Cnpj, Nome_RazaoSocial, Endereco, Numero, Bairro, Municipio, UF, Cep, Contato, Fone_1, Fone_2, Email, DataCadastro)
+                                 VALUES (@TipoPessoa, @Cpf_Cnpj, @Nome_RazaoSocial, @Endereco, @Numero, @Bairro, @Municipio, @UF, @Cep, @Contato, @Fone_1, @Fone_2, @Email, @DataCadastro)";
+
+                using (var cmd = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    string query = "INSERT INTO DBFornecedores (TipoPessoa, Cpf_Cnpj, Nome_RazaoSocial, Endereco, Numero, Bairro, Municipio, UF, Cep, Contato, Fone_1, Fone_2, Email, DataCadastro) " +
-                                   "VALUES (@TipoPessoa, @Cpf_Cnpj, @Nome_RazaoSocial, @Endereco, @Numero, @Bairro, @Municipio, @UF, @Cep, @Contato, @Fone_1, @Fone_2, @Email, @DataCadastro)";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@TipoPessoa", fornecedor.TipoPessoa);
                     cmd.Parameters.AddWithValue("@Cpf_Cnpj", fornecedor.Cpf_Cnpj);
                     cmd.Parameters.AddWithValue("@Nome_RazaoSocial", fornecedor.Nome_RazaoSocial);
@@ -189,47 +153,24 @@ namespace OrdemServicos.DAL
                     cmd.Parameters.AddWithValue("@Fone_2", fornecedor.Fone_2);
                     cmd.Parameters.AddWithValue("@Email", fornecedor.Email);
                     cmd.Parameters.AddWithValue("@DataCadastro", fornecedor.DataCadastro);
-                    cmd.ExecuteNonQuery();
+
+                    await cmd.ExecuteNonQueryAsync();
                 }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao inserir fornecedor: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro inesperado ao inserir fornecedor: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        public void ExcluirFornecedor(int IDFornecedor)
+        public async Task ExcluirFornecedorAsync(int idFornecedor)
         {
-            try
+            using (var conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                await conn.OpenAsync();
+                string query = "DELETE FROM DBFornecedores WHERE IDFornecedor = @IDFornecedor";
+
+                using (var cmd = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    string query = "DELETE FROM DBFornecedores WHERE IDFornecedor = @IDFornecedor";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@IDFornecedor", IDFornecedor);
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd.Parameters.AddWithValue("@IDFornecedor", idFornecedor);
+                    await cmd.ExecuteNonQueryAsync();
                 }
-            }
-            catch (MySqlException ex)
-            {
-                // Erros específicos de banco (ex.: chave estrangeira impedindo exclusão)
-                MessageBox.Show("Erro MySQL ao excluir fornecedor: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                // Erros inesperados
-                MessageBox.Show("Erro inesperado ao excluir fornecedor: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

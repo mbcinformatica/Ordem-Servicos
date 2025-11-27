@@ -1,39 +1,40 @@
 ﻿using OrdemServicos.DAL;
 using OrdemServicos.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.BLL
 {
     public class LancamentoServicoBLL
     {
-        public List<LancamentoServicoInfo> Listar()
+        public async Task<List<LancamentoServicoInfo>> ListarAsync()
         {
-            LancamentoServicoDAL lancamentoServicoDAL = new LancamentoServicoDAL();
-            return lancamentoServicoDAL.Listar();
+            var lancamentoServicoDAL = new LancamentoServicoDAL();
+            return await lancamentoServicoDAL.ListarAsync(); // ✅ chamada assíncrona
         }
 
-        public LancamentoServicoInfo GetLancamentoServico(int IDOrdenServico)
+        public async Task<LancamentoServicoInfo> GetLancamentoServicoAsync(int idOrdenServico)
         {
-            LancamentoServicoDAL lancamentoServicoDAL = new LancamentoServicoDAL();
-            return lancamentoServicoDAL.GetLancamentoServico(IDOrdenServico);
+            var lancamentoServicoDAL = new LancamentoServicoDAL();
+            return await lancamentoServicoDAL.GetLancamentoServicoAsync(idOrdenServico); // ✅ chamada assíncrona
         }
 
-        public void AtualizarLancamentoServico(LancamentoServicoInfo lancamentoServico)
+        public async Task AtualizarLancamentoServicoAsync(LancamentoServicoInfo lancamentoServico)
         {
-            LancamentoServicoDAL lancamentoServicoDAL = new LancamentoServicoDAL();
-            lancamentoServicoDAL.AtualizarLancamentoServico(lancamentoServico);
+            var lancamentoServicoDAL = new LancamentoServicoDAL();
+            await lancamentoServicoDAL.AtualizarLancamentoServicoAsync(lancamentoServico); // ✅ chamada assíncrona
         }
 
-        public void InserirLancamentoServico(LancamentoServicoInfo lancamentoServico)
+        public async Task InserirLancamentoServicoAsync(LancamentoServicoInfo lancamentoServico)
         {
-            LancamentoServicoDAL lancamentoServicoDAL = new LancamentoServicoDAL();
-            lancamentoServicoDAL.InserirLancamentoServico(lancamentoServico);
+            var lancamentoServicoDAL = new LancamentoServicoDAL();
+            await lancamentoServicoDAL.InserirLancamentoServicoAsync(lancamentoServico); // ✅ chamada assíncrona
         }
 
-        public void ExcluirLancamentoServico(int idOrdenServico)
+        public async Task ExcluirLancamentoServicoAsync(int idOrdenServico)
         {
-            LancamentoServicoDAL lancamentoServicoDAL = new LancamentoServicoDAL();
-            lancamentoServicoDAL.ExcluirLancamentoServico(idOrdenServico);
+            var lancamentoServicoDAL = new LancamentoServicoDAL();
+            await lancamentoServicoDAL.ExcluirLancamentoServicoAsync(idOrdenServico); // ✅ chamada assíncrona
         }
     }
 }

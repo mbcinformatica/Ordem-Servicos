@@ -184,7 +184,7 @@
             this.btnSalvar.TabIndex = 68;
             this.btnSalvar.Text = "      Salvar Configuração";
             this.btnSalvar.UseVisualStyleBackColor = false;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_ClickAsync);
             // 
             // btnTestarConexao
             // 

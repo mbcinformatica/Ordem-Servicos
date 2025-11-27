@@ -1,40 +1,46 @@
 ﻿using OrdemServicos.DAL;
 using OrdemServicos.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.BLL
 {
     public class ProdutoBLL
     {
-        public List<ProdutoInfo> Listar()
+        public async Task<List<ProdutoInfo>> ListarAsync()
         {
-            ProdutoDAL produtoDAL = new ProdutoDAL();
-            return produtoDAL.Listar();
+            var produtoDAL = new ProdutoDAL();
+            return await produtoDAL.ListarAsync();
         }
-        public List<ProdutoInfo> ListarPorMarca(int idMarca)
+
+        public async Task<List<ProdutoInfo>> ListarPorMarcaAsync(int idMarca)
         {
-            ProdutoDAL produtoDAL = new ProdutoDAL();
-            return produtoDAL.ListarPorMarca(idMarca);
+            var produtoDAL = new ProdutoDAL();
+            return await produtoDAL.ListarPorMarcaAsync(idMarca);
         }
-        public ProdutoInfo GetProduto(int IDProduto)
+
+        public async Task<ProdutoInfo> GetProdutoAsync(int idProduto)
         {
-            ProdutoDAL produtoDAL = new ProdutoDAL();
-            return produtoDAL.GetProduto(IDProduto);
+            var produtoDAL = new ProdutoDAL();
+            return await produtoDAL.GetProdutoAsync(idProduto);
         }
-        public void AtualizarProduto(ProdutoInfo Produto)
+
+        public async Task AtualizarProdutoAsync(ProdutoInfo produto)
         {
-            ProdutoDAL produtoDAL = new ProdutoDAL();
-            produtoDAL.AtualizarProduto(Produto);
+            var produtoDAL = new ProdutoDAL();
+            await produtoDAL.AtualizarProdutoAsync(produto);
         }
-        public void InserirProduto(ProdutoInfo Produto)
+
+        public async Task InserirProdutoAsync(ProdutoInfo produto)
         {
-            ProdutoDAL produtoDAL = new ProdutoDAL();
-            produtoDAL.InserirProduto(Produto);
+            var produtoDAL = new ProdutoDAL();
+            await produtoDAL.InserirProdutoAsync(produto);
         }
-        public void ExcluirProduto(int IdProduto)
+
+        public async Task ExcluirProdutoAsync(int idProduto)
         {
-            ProdutoDAL produtoDAL = new ProdutoDAL();
-            produtoDAL.ExcluirProduto(IdProduto);
+            var produtoDAL = new ProdutoDAL();
+            await produtoDAL.ExcluirProdutoAsync(idProduto);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.Forms
 {
@@ -69,9 +70,10 @@ namespace OrdemServicos.Forms
         public static string UsuarioLogado { get; set; }
 
         // 📌 Métodos virtuais
-        public virtual void CarregarRegistros() { }
+
+        public virtual async Task CarregarRegistros() { }
         public virtual void LimparCampos() { }
-        public virtual void ExecutaFuncaoEvento(Control control) { }
+        public virtual void ExecutaFuncaoEventoAsync(Control control) { }
 
         // 🖱️ ToolTip para ListView
         public ToolTip tlpListViewCelula = new ToolTip();
@@ -605,6 +607,13 @@ namespace OrdemServicos.Forms
             {
                 // Se falhar ao registrar o log, não interrompe o fluxo
             }
+        }
+        protected void ConfigurarComboBox(ComboBox comboBox)
+        {
+            comboBox.DropDownStyle = ComboBoxStyle.DropDown; // permite digitação
+            comboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboBox.FormattingEnabled = true;
         }
     }
 }

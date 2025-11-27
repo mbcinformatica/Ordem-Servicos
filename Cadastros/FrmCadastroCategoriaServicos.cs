@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace OrdemServicos
 {
@@ -80,7 +81,7 @@ namespace OrdemServicos
             listViewCategoriaServico.Invalidate(); // Redesenhar ListView para atualizar a cor do cabeçalho
             txtPesquisaListView.Focus();
         }
-        public class ListViewItemComparer : IComparer
+        private class ListViewItemComparer : IComparer
         {
             private int col;
             private bool ascending;
@@ -230,7 +231,7 @@ namespace OrdemServicos
             // Focar no btnNovo ao iniciar
             txtPesquisaListView.Focus();
         }
-        public override void ExecutaFuncaoEvento(Control control)
+        public override void ExecutaFuncaoEventoAsync(Control control)
         {
             if (control == txtDescricao)
             {
@@ -260,7 +261,7 @@ namespace OrdemServicos
             txtDescricao.TabIndex = 0;
             btnSalvar.TabIndex = 1;
         }
-        public override void CarregarRegistros()
+        public override async Task CarregarRegistros()
         {
             DesabilitarCamposDoFormulario();
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);

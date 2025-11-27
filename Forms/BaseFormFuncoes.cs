@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OrdemServicos.Forms
@@ -13,8 +14,8 @@ namespace OrdemServicos.Forms
         string TagAction { get; set; }
         int TagMaxDigito { get; set; }
         Control ControleAnterior { get; set; }
-        void CarregarRegistros();
+        Task CarregarRegistros();
         void LimparCampos();
-        void ExecutaFuncaoEvento(Control control);
+        void ExecutaFuncaoEventoAsync(Control control);
     }
 }

@@ -1,40 +1,46 @@
 ﻿using OrdemServicos.DAL;
 using OrdemServicos.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.BLL
 {
     public class ModeloBLL
     {
-        public List<ModeloInfo> Listar()
+        public async Task<List<ModeloInfo>> ListarAsync()
         {
-            ModeloDAL modeloDAL = new ModeloDAL();
-            return modeloDAL.Listar();
+            var modeloDAL = new ModeloDAL();
+            return await modeloDAL.ListarAsync();
         }
-        public List<ModeloInfo> ListarPorMarca(int idMarca)
+
+        public async Task<List<ModeloInfo>> ListarPorMarcaAsync(int idMarca)
         {
-            ModeloDAL modeloDAL = new ModeloDAL();
-            return modeloDAL.ListarPorMarca(idMarca);
+            var modeloDAL = new ModeloDAL();
+            return await modeloDAL.ListarPorMarcaAsync(idMarca);
         }
-        public ModeloInfo GetModelo(int IDModelo)
+
+        public async Task<ModeloInfo> GetModeloAsync(int idModelo)
         {
-            ModeloDAL modeloDAL = new ModeloDAL();
-            return modeloDAL.GetModelo(IDModelo);
+            var modeloDAL = new ModeloDAL();
+            return await modeloDAL.GetModeloAsync(idModelo);
         }
-        public void AtualizarModelo(ModeloInfo Modelo)
+
+        public async Task AtualizarModeloAsync(ModeloInfo modelo)
         {
-            ModeloDAL modeloDAL = new ModeloDAL();
-            modeloDAL.AtualizarModelo(Modelo);
+            var modeloDAL = new ModeloDAL();
+            await modeloDAL.AtualizarModeloAsync(modelo);
         }
-        public void InserirModelo(ModeloInfo Modelo)
+
+        public async Task InserirModeloAsync(ModeloInfo modelo)
         {
-            ModeloDAL modeloDAL = new ModeloDAL();
-            modeloDAL.InserirModelo(Modelo);
+            var modeloDAL = new ModeloDAL();
+            await modeloDAL.InserirModeloAsync(modelo);
         }
-        public void ExcluirModelo(int IdModelo)
+
+        public async Task ExcluirModeloAsync(int idModelo)
         {
-            ModeloDAL modeloDAL = new ModeloDAL();
-            modeloDAL.ExcluirModelo(IdModelo);
+            var modeloDAL = new ModeloDAL();
+            await modeloDAL.ExcluirModeloAsync(idModelo);
         }
     }
 }

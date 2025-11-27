@@ -309,10 +309,10 @@
             this.btnExcluirImagem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExcluirImagem.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluirImagem.Image")));
             this.btnExcluirImagem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExcluirImagem.Location = new System.Drawing.Point(1464, 117);
+            this.btnExcluirImagem.Location = new System.Drawing.Point(1270, 110);
             this.btnExcluirImagem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnExcluirImagem.Name = "btnExcluirImagem";
-            this.btnExcluirImagem.Size = new System.Drawing.Size(147, 59);
+            this.btnExcluirImagem.Size = new System.Drawing.Size(126, 51);
             this.btnExcluirImagem.TabIndex = 156;
             this.btnExcluirImagem.Text = "     Excluir";
             this.btnExcluirImagem.UseVisualStyleBackColor = false;
@@ -325,10 +325,10 @@
             this.btnInserirImagem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInserirImagem.Image = ((System.Drawing.Image)(resources.GetObject("btnInserirImagem.Image")));
             this.btnInserirImagem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnInserirImagem.Location = new System.Drawing.Point(1464, 47);
+            this.btnInserirImagem.Location = new System.Drawing.Point(1270, 41);
             this.btnInserirImagem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnInserirImagem.Name = "btnInserirImagem";
-            this.btnInserirImagem.Size = new System.Drawing.Size(147, 59);
+            this.btnInserirImagem.Size = new System.Drawing.Size(126, 51);
             this.btnInserirImagem.TabIndex = 155;
             this.btnInserirImagem.Text = "     Inserir";
             this.btnInserirImagem.UseVisualStyleBackColor = false;
@@ -337,10 +337,10 @@
             // txtEmail
             // 
             this.txtEmail.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEmail.Location = new System.Drawing.Point(804, 152);
+            this.txtEmail.Location = new System.Drawing.Point(745, 152);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(410, 26);
+            this.txtEmail.Size = new System.Drawing.Size(342, 26);
             this.txtEmail.TabIndex = 151;
             this.tlpDicas.SetToolTip(this.txtEmail, "Informe o E-Mail.");
             // 
@@ -348,7 +348,7 @@
             // 
             this.lblEmail.AutoSize = true;
             this.lblEmail.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmail.Location = new System.Drawing.Point(804, 132);
+            this.lblEmail.Location = new System.Drawing.Point(745, 132);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(69, 19);
@@ -358,7 +358,7 @@
             // txtFone_2
             // 
             this.txtFone_2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFone_2.Location = new System.Drawing.Point(630, 152);
+            this.txtFone_2.Location = new System.Drawing.Point(577, 152);
             this.txtFone_2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtFone_2.Name = "txtFone_2";
             this.txtFone_2.Size = new System.Drawing.Size(138, 26);
@@ -371,7 +371,7 @@
             // 
             this.lbFone_2.AutoSize = true;
             this.lbFone_2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbFone_2.Location = new System.Drawing.Point(630, 132);
+            this.lbFone_2.Location = new System.Drawing.Point(577, 132);
             this.lbFone_2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFone_2.Name = "lbFone_2";
             this.lbFone_2.Size = new System.Drawing.Size(51, 19);
@@ -381,7 +381,7 @@
             // txtFone_1
             // 
             this.txtFone_1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFone_1.Location = new System.Drawing.Point(456, 152);
+            this.txtFone_1.Location = new System.Drawing.Point(409, 152);
             this.txtFone_1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtFone_1.Name = "txtFone_1";
             this.txtFone_1.Size = new System.Drawing.Size(138, 26);
@@ -394,7 +394,7 @@
             // 
             this.lbFone_1.AutoSize = true;
             this.lbFone_1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbFone_1.Location = new System.Drawing.Point(458, 132);
+            this.lbFone_1.Location = new System.Drawing.Point(409, 132);
             this.lbFone_1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFone_1.Name = "lbFone_1";
             this.lbFone_1.Size = new System.Drawing.Size(70, 19);
@@ -405,7 +405,7 @@
             // 
             this.txtUF.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtUF.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUF.Location = new System.Drawing.Point(368, 152);
+            this.txtUF.Location = new System.Drawing.Point(327, 152);
             this.txtUF.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtUF.MaxLength = 2;
             this.txtUF.Name = "txtUF";
@@ -418,7 +418,7 @@
             // 
             this.lbUF.AutoSize = true;
             this.lbUF.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbUF.Location = new System.Drawing.Point(368, 132);
+            this.lbUF.Location = new System.Drawing.Point(333, 132);
             this.lbUF.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbUF.Name = "lbUF";
             this.lbUF.Size = new System.Drawing.Size(41, 19);
@@ -432,7 +432,7 @@
             this.txtMunicipio.Location = new System.Drawing.Point(10, 152);
             this.txtMunicipio.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtMunicipio.Name = "txtMunicipio";
-            this.txtMunicipio.Size = new System.Drawing.Size(322, 26);
+            this.txtMunicipio.Size = new System.Drawing.Size(287, 26);
             this.txtMunicipio.TabIndex = 145;
             this.tlpDicas.SetToolTip(this.txtMunicipio, "Informe o Municipio.");
             // 
@@ -451,10 +451,10 @@
             // 
             this.txtBairro.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtBairro.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBairro.Location = new System.Drawing.Point(866, 91);
+            this.txtBairro.Location = new System.Drawing.Point(776, 91);
             this.txtBairro.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtBairro.Name = "txtBairro";
-            this.txtBairro.Size = new System.Drawing.Size(348, 26);
+            this.txtBairro.Size = new System.Drawing.Size(307, 26);
             this.txtBairro.TabIndex = 141;
             this.tlpDicas.SetToolTip(this.txtBairro, "Informe o Bairro.");
             // 
@@ -462,7 +462,7 @@
             // 
             this.lbBairro.AutoSize = true;
             this.lbBairro.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbBairro.Location = new System.Drawing.Point(866, 71);
+            this.lbBairro.Location = new System.Drawing.Point(776, 71);
             this.lbBairro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbBairro.Name = "lbBairro";
             this.lbBairro.Size = new System.Drawing.Size(65, 19);
@@ -473,11 +473,11 @@
             // 
             this.txtNumero.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNumero.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNumero.Location = new System.Drawing.Point(720, 91);
+            this.txtNumero.Location = new System.Drawing.Point(646, 91);
             this.txtNumero.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtNumero.MaxLength = 8;
             this.txtNumero.Name = "txtNumero";
-            this.txtNumero.Size = new System.Drawing.Size(98, 26);
+            this.txtNumero.Size = new System.Drawing.Size(86, 26);
             this.txtNumero.TabIndex = 140;
             this.txtNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tlpDicas.SetToolTip(this.txtNumero, "Informe o Numero.");
@@ -486,7 +486,7 @@
             // 
             this.lbNumero.AutoSize = true;
             this.lbNumero.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbNumero.Location = new System.Drawing.Point(720, 71);
+            this.lbNumero.Location = new System.Drawing.Point(646, 71);
             this.lbNumero.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbNumero.Name = "lbNumero";
             this.lbNumero.Size = new System.Drawing.Size(76, 19);
@@ -497,10 +497,10 @@
             // 
             this.txtEndereco.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtEndereco.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEndereco.Location = new System.Drawing.Point(166, 91);
+            this.txtEndereco.Location = new System.Drawing.Point(162, 91);
             this.txtEndereco.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtEndereco.Name = "txtEndereco";
-            this.txtEndereco.Size = new System.Drawing.Size(506, 26);
+            this.txtEndereco.Size = new System.Drawing.Size(440, 26);
             this.txtEndereco.TabIndex = 139;
             this.tlpDicas.SetToolTip(this.txtEndereco, "Informe o Endereço.");
             // 
@@ -508,7 +508,7 @@
             // 
             this.lbEndereco.AutoSize = true;
             this.lbEndereco.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbEndereco.Location = new System.Drawing.Point(168, 71);
+            this.lbEndereco.Location = new System.Drawing.Point(162, 71);
             this.lbEndereco.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbEndereco.Name = "lbEndereco";
             this.lbEndereco.Size = new System.Drawing.Size(85, 19);
@@ -543,10 +543,10 @@
             // txtConfirmaSenha
             // 
             this.txtConfirmaSenha.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtConfirmaSenha.Location = new System.Drawing.Point(1015, 30);
+            this.txtConfirmaSenha.Location = new System.Drawing.Point(948, 30);
             this.txtConfirmaSenha.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtConfirmaSenha.Name = "txtConfirmaSenha";
-            this.txtConfirmaSenha.Size = new System.Drawing.Size(199, 26);
+            this.txtConfirmaSenha.Size = new System.Drawing.Size(136, 26);
             this.txtConfirmaSenha.TabIndex = 134;
             this.tlpDicas.SetToolTip(this.txtConfirmaSenha, "Confirme a Senha.");
             this.txtConfirmaSenha.UseSystemPasswordChar = true;
@@ -555,7 +555,7 @@
             // 
             this.lblConfirme.AutoSize = true;
             this.lblConfirme.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConfirme.Location = new System.Drawing.Point(1015, 10);
+            this.lblConfirme.Location = new System.Drawing.Point(948, 10);
             this.lblConfirme.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblConfirme.Name = "lblConfirme";
             this.lblConfirme.Size = new System.Drawing.Size(129, 19);
@@ -565,10 +565,10 @@
             // txtSenha
             // 
             this.txtSenha.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSenha.Location = new System.Drawing.Point(804, 30);
+            this.txtSenha.Location = new System.Drawing.Point(773, 30);
             this.txtSenha.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtSenha.Name = "txtSenha";
-            this.txtSenha.Size = new System.Drawing.Size(168, 26);
+            this.txtSenha.Size = new System.Drawing.Size(136, 26);
             this.txtSenha.TabIndex = 130;
             this.tlpDicas.SetToolTip(this.txtSenha, "Informe a Senha.");
             this.txtSenha.UseSystemPasswordChar = true;
@@ -577,7 +577,7 @@
             // 
             this.lblSenha.AutoSize = true;
             this.lblSenha.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSenha.Location = new System.Drawing.Point(804, 10);
+            this.lblSenha.Location = new System.Drawing.Point(773, 10);
             this.lblSenha.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSenha.Name = "lblSenha";
             this.lblSenha.Size = new System.Drawing.Size(63, 19);
@@ -587,10 +587,10 @@
             // txtLogin
             // 
             this.txtLogin.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLogin.Location = new System.Drawing.Point(495, 30);
+            this.txtLogin.Location = new System.Drawing.Point(519, 26);
             this.txtLogin.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(266, 26);
+            this.txtLogin.Size = new System.Drawing.Size(215, 26);
             this.txtLogin.TabIndex = 129;
             this.tlpDicas.SetToolTip(this.txtLogin, "Informe o Login.");
             // 
@@ -598,7 +598,7 @@
             // 
             this.lblLogin.AutoSize = true;
             this.lblLogin.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLogin.Location = new System.Drawing.Point(497, 10);
+            this.lblLogin.Location = new System.Drawing.Point(519, 6);
             this.lblLogin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLogin.Name = "lblLogin";
             this.lblLogin.Size = new System.Drawing.Size(60, 19);
@@ -612,7 +612,7 @@
             this.txtNome.Location = new System.Drawing.Point(10, 30);
             this.txtNome.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(442, 26);
+            this.txtNome.Size = new System.Drawing.Size(470, 26);
             this.txtNome.TabIndex = 128;
             this.tlpDicas.SetToolTip(this.txtNome, "Informe o Nome Completo.");
             // 
@@ -658,7 +658,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbImagemUsuario.AutoSize = true;
             this.lbImagemUsuario.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbImagemUsuario.Location = new System.Drawing.Point(1246, 10);
+            this.lbImagemUsuario.Location = new System.Drawing.Point(1110, 6);
             this.lbImagemUsuario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbImagemUsuario.Name = "lbImagemUsuario";
             this.lbImagemUsuario.Size = new System.Drawing.Size(132, 19);
@@ -672,7 +672,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.imgImagemUsuario.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgImagemUsuario.Location = new System.Drawing.Point(1240, 30);
+            this.imgImagemUsuario.Location = new System.Drawing.Point(1104, 26);
             this.imgImagemUsuario.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.imgImagemUsuario.Name = "imgImagemUsuario";
             this.imgImagemUsuario.Size = new System.Drawing.Size(156, 156);

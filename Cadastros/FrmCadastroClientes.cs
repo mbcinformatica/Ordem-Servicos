@@ -52,6 +52,7 @@ namespace OrdemServicos
         }
         private void InitializeListView()
         {
+
             // Configurar a ListView
             listViewClientes.View = View.Details;
             listViewClientes.FullRowSelect = true;
@@ -64,19 +65,49 @@ namespace OrdemServicos
             listViewClientes.Columns.Add("ID", 50, HorizontalAlignment.Right);
             listViewClientes.Columns.Add("PESSOA", 80, HorizontalAlignment.Center);
             listViewClientes.Columns.Add("CPF/CNPJ", 120, HorizontalAlignment.Right);
-            listViewClientes.Columns.Add("  NOME/RAZÃO SOCIAL", 300, HorizontalAlignment.Left);
-            listViewClientes.Columns.Add("  ENDEREÇO", 200, HorizontalAlignment.Left);
+            listViewClientes.Columns.Add("NOME/RAZÃO SOCIAL", 300, HorizontalAlignment.Left);
+            listViewClientes.Columns.Add("ENDEREÇO", 200, HorizontalAlignment.Left);
             listViewClientes.Columns.Add("NUMERO", 70, HorizontalAlignment.Right);
-            listViewClientes.Columns.Add("  BAIRRO", 150, HorizontalAlignment.Left);
-            listViewClientes.Columns.Add("  MUNICIPIO", 200, HorizontalAlignment.Left);
+            listViewClientes.Columns.Add("BAIRRO", 150, HorizontalAlignment.Left);
+            listViewClientes.Columns.Add("MUNICIPIO", 200, HorizontalAlignment.Left);
             listViewClientes.Columns.Add("UF", 30, HorizontalAlignment.Center);
             listViewClientes.Columns.Add("CEP", 70, HorizontalAlignment.Right);
-            listViewClientes.Columns.Add("  CONTATO", 150, HorizontalAlignment.Left);
+            listViewClientes.Columns.Add("CONTATO", 150, HorizontalAlignment.Left);
             listViewClientes.Columns.Add("CELULAR", 100, HorizontalAlignment.Right);
             listViewClientes.Columns.Add("FIXO", 100, HorizontalAlignment.Right);
-            listViewClientes.Columns.Add("  EMAIL", 300, HorizontalAlignment.Left);
-            listViewClientes.Columns.Add("DATA CADASTRO", -1, HorizontalAlignment.Right);
-            listViewClientes.ColumnClick += new ColumnClickEventHandler(ListViewClientes_ColumnClick);
+            listViewClientes.Columns.Add("EMAIL", 300, HorizontalAlignment.Left);
+
+            var colDataCadastro = listViewClientes.Columns.Add("DATA CADASTRO", 120, HorizontalAlignment.Right);
+            colDataCadastro.Width = -2; // auto-size
+
+            listViewClientes.ColumnClick += ListViewClientes_ColumnClick;
+            listViewClientes.SelectedIndexChanged += ListViewClientes_SelectedIndexChanged;
+        }
+        private void ListViewClientes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            escPressed = false;
+            if (listViewClientes.SelectedItems.Count == 0) return;
+
+            var item = listViewClientes.SelectedItems[0];
+
+            txtIDCliente.Text = item.SubItems.Count > 0 ? item.SubItems[0].Text : "";
+            rdbCpf.Checked = item.SubItems.Count > 1 && item.SubItems[1].Text == "FÍSICA";
+            rdbCnpj.Checked = item.SubItems.Count > 1 && item.SubItems[1].Text == "JURÍDICA";
+            txtCpf_Cnpj.Text = item.SubItems.Count > 2 ? item.SubItems[2].Text : "";
+            txtNome_RazaoSocial.Text = item.SubItems.Count > 3 ? item.SubItems[3].Text : "";
+            txtEndereco.Text = item.SubItems.Count > 4 ? item.SubItems[4].Text : "";
+            txtNumero.Text = item.SubItems.Count > 5 ? item.SubItems[5].Text : "";
+            txtBairro.Text = item.SubItems.Count > 6 ? item.SubItems[6].Text : "";
+            txtMunicipio.Text = item.SubItems.Count > 7 ? item.SubItems[7].Text : "";
+            txtUF.Text = item.SubItems.Count > 8 ? item.SubItems[8].Text : "";
+            txtCep.Text = item.SubItems.Count > 9 ? item.SubItems[9].Text : "";
+            txtContato.Text = item.SubItems.Count > 10 ? item.SubItems[10].Text : "";
+            txtFone_1.Text = item.SubItems.Count > 11 ? item.SubItems[11].Text : "";
+            txtFone_2.Text = item.SubItems.Count > 12 ? item.SubItems[12].Text : "";
+            txtEmail.Text = item.SubItems.Count > 13 ? item.SubItems[13].Text : "";
+            txtDataCadastro.Text = item.SubItems.Count > 14 ? item.SubItems[14].Text : "";
+
+            EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
         }
         private void ListViewClientes_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -114,45 +145,53 @@ namespace OrdemServicos
             listViewClientes.Invalidate(); // Redesenhar ListView para atualizar a cor do cabeçalho
             txtPesquisaListView.Focus();
         }
-        public class ListViewItemComparer : IComparer
+        private class ListViewItemComparer : IComparer
         {
-            private int col;
-            private bool ascending;
+            private readonly int col;
+            private readonly bool ascending;
+            private readonly HashSet<string> numericColumns = new HashSet<string>
+    {
+        "ID", "CEP", "NUMERO", "CELULAR", "FIXO"
+    };
 
             public ListViewItemComparer(int column, bool ascending)
             {
-                this.col = column;
+                col = column;
                 this.ascending = ascending;
             }
+
             public int Compare(object x, object y)
             {
-                // Comparar valores das subitens
-                int returnVal = String.Compare(((ListViewItem)x).SubItems[col].Text,
-                                              ((ListViewItem)y).SubItems[col].Text);
-                return ascending ? returnVal : -returnVal; // Ordem crescente ou decrescente
-            }
-        }
-        private void txtPesquisaListView_TextChanged(object sender, EventArgs e)
-        {
-            PesquisarListView(txtPesquisaListView.Text, listViewClientes, sortColumn);
-        }
-        private void PesquisarListView(string texto, ListView listView, int coluna)
-        {
-            listView.BeginUpdate();
-            var itemsVisiveis = new List<ListViewItem>();
+                var itemX = (ListViewItem)x;
+                var itemY = (ListViewItem)y;
 
-            foreach (ListViewItem item in listaOriginalItens)
-            {
-                if (item.SubItems[coluna].Text.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
+                string valX = itemX.SubItems[col].Text;
+                string valY = itemY.SubItems[col].Text;
+
+                string colName = itemX.ListView.Columns[col].Text.Trim().ToUpper();
+                int result;
+
+                if (numericColumns.Contains(colName))
                 {
-                    itemsVisiveis.Add(item);
+                    if (decimal.TryParse(valX, out decimal numX) && decimal.TryParse(valY, out decimal numY))
+                        result = numX.CompareTo(numY);
+                    else
+                        result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
                 }
-            }
+                else if (colName == "DATA CADASTRO")
+                {
+                    if (DateTime.TryParse(valX, out DateTime dtX) && DateTime.TryParse(valY, out DateTime dtY))
+                        result = dtX.CompareTo(dtY);
+                    else
+                        result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
+                }
+                else
+                {
+                    result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
+                }
 
-            listView.Items.Clear();
-            listView.Items.AddRange(itemsVisiveis.ToArray());
-            listView.EndUpdate();
-            listView.Invalidate(); // Redesenha a ListView para refletir as mudanças
+                return ascending ? result : -result;
+            }
         }
         private void listViewClientes_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
@@ -223,8 +262,93 @@ namespace OrdemServicos
                 e.Graphics.DrawString(e.SubItem.Text, e.SubItem.Font, Brushes.Black, e.Bounds, sf);
             }
         }
+        private void txtPesquisaListView_TextChanged(object sender, EventArgs e)
+        {
+            PesquisarListView(txtPesquisaListView.Text, listViewClientes, sortColumn);
+        }
+        private void PesquisarListView(string texto, ListView listView, int coluna)
+        {
+            listView.BeginUpdate();
+            var itemsVisiveis = new List<ListViewItem>();
+
+            foreach (ListViewItem item in listaOriginalItens)
+            {
+                string valorCelula = item.SubItems[coluna].Text;
+
+                if (string.IsNullOrEmpty(texto) || valorCelula.StartsWith(texto, StringComparison.OrdinalIgnoreCase))
+                    itemsVisiveis.Add(item);
+            }
+
+            listView.Items.Clear();
+            listView.Items.AddRange(itemsVisiveis.ToArray());
+            listView.EndUpdate();
+        }
+        public override async Task CarregarRegistros()
+        {
+            DesabilitarCamposDoFormulario();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
+
+            listViewClientes.Items.Clear(); // limpa apenas os itens
+            btnCarregaArquivoCnpj.Enabled = true;
+            btnCarregaArquivoCpf.Enabled = true;
+
+            InitializeListView(); // garante colunas
+
+            try
+            {
+                var clienteBLL = new ClienteBLL();
+                var clientes = await clienteBLL.ListarAsync(); // ✅ chamada assíncrona
+
+                foreach (var cliente in clientes)
+                {
+                    var item = new ListViewItem(cliente.IDCliente.ToString())
+                    {
+                        Tag = cliente // opcional: guardar objeto original
+                    };
+
+                    item.SubItems.Add(cliente.TipoPessoa);
+                    item.SubItems.Add(cliente.TipoPessoa == "FÍSICA"
+                        ? StringUtils.FormatCPF(cliente.Cpf_Cnpj)
+                        : StringUtils.FormatCNPJ(cliente.Cpf_Cnpj));
+
+                    item.SubItems.Add(cliente.Nome_RazaoSocial);
+                    item.SubItems.Add(cliente.Endereco);
+                    item.SubItems.Add(cliente.Numero);
+                    item.SubItems.Add(cliente.Bairro);
+                    item.SubItems.Add(cliente.Municipio);
+                    item.SubItems.Add(cliente.UF);
+                    item.SubItems.Add(StringUtils.FormatCEP(cliente.Cep));
+                    item.SubItems.Add(cliente.Contato);
+                    item.SubItems.Add(StringUtils.FormatPhoneNumber(cliente.Fone_1));
+                    item.SubItems.Add(StringUtils.FormatPhoneNumber(cliente.Fone_2));
+                    item.SubItems.Add(cliente.Email);
+                    item.SubItems.Add(cliente.DataCadastro.ToString("dd/MM/yyyy"));
+
+                    listViewClientes.Items.Add(item);
+                }
+
+                listaOriginalItens = listViewClientes.Items.Cast<ListViewItem>().ToList();
+                lbTotalRegistros.Text = $"Total de Registros..: {listViewClientes.Items.Count}";
+
+                // Ordenação inicial
+                sortColumn = 3; // Nome/Razão Social
+                sortAscending = true;
+                listViewClientes.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
+                listViewClientes.Sort();
+
+                ajustaLarguraCabecalho(listViewClientes);
+                tabControlClientes.SelectedTab = tabDadosClientes;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar registros: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            LimparCampos();
+        }
         private void CarregaKey()
         {
+            // Controles que disparam KeyPress
             controlesKeyPress.AddRange(new Control[] {
                 txtCpf_Cnpj,
                 txtCep,
@@ -232,6 +356,7 @@ namespace OrdemServicos
                 txtFone_2
             });
 
+            // Controles que disparam Leave
             controlesLeave.AddRange(new Control[] {
                 txtCpf_Cnpj,
                 txtCep,
@@ -240,6 +365,7 @@ namespace OrdemServicos
                 txtFone_2
             });
 
+            // Controles que disparam Enter
             controlesEnter.AddRange(new Control[] {
                 txtCpf_Cnpj,
                 txtNome_RazaoSocial,
@@ -259,13 +385,15 @@ namespace OrdemServicos
                 listViewClientes
             });
 
-
+            // Controles que disparam MouseDown
             controlesMouseDown.AddRange(new Control[] { });
 
+            // Controles que disparam MouseMove
             controlesMouseMove.AddRange(new Control[] {
-                 listViewClientes
+                listViewClientes
             });
 
+            // Controles que disparam KeyDown
             controlesKeyDown.AddRange(new Control[] {
                 txtCpf_Cnpj,
                 txtNome_RazaoSocial,
@@ -285,6 +413,7 @@ namespace OrdemServicos
                 listViewClientes
             });
 
+            // Botões
             controlesBotoes.AddRange(new Control[] {
                 btnSalvar,
                 btnAlterar,
@@ -296,22 +425,41 @@ namespace OrdemServicos
                 btnCarregaArquivoCnpj
             });
 
+            // Tag para identificar o formulário
             this.Tag = "frmClientes";
 
+            // Configuração de validação via Tag
             txtCep.Tag = new BaseForm { TagFormato = "FormataCep", TagMaxDigito = 8 };
             txtFone_1.Tag = new BaseForm { TagFormato = "FormataFone", TagMaxDigito = 11 };
             txtFone_2.Tag = new BaseForm { TagFormato = "FormataFone", TagMaxDigito = 10 };
             txtCpf_Cnpj.Tag = new BaseForm { TagFormato = "FormataCpfCnpj", TagMaxDigito = 14 };
-
             txtEmail.Tag = new BaseForm { TagAction = "FocaBotaoSalvar" };
 
+            // Localiza TabControl e TabPage
             var tabControl = Controls.Find("tabControlClientes", true).FirstOrDefault() as TabControl;
             var tabPage = tabControl?.TabPages["tabInformacoesAdicionais"];
 
-            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+            // Inicializa eventos
+            EventosUtils.InicializarEventos(
+                Controls,
+                controlesKeyPress,
+                controlesLeave,
+                controlesEnter,
+                controlesMouseDown,
+                controlesMouseMove,
+                controlesKeyDown,
+                controlesBotoes,
+                this,
+                tabControl,
+                tabPage
+            );
 
-            listViewClientes.Click += ListViewClientes_Click;
-            txtPesquisaListView.Focus();
+            // Melhor usar SelectedIndexChanged em vez de Click
+            listViewClientes.SelectedIndexChanged += ListViewClientes_SelectedIndexChanged;
+
+            // Foco inicial
+            if (txtPesquisaListView != null)
+                txtPesquisaListView.Focus();
         }
         private void ConfigurarTextBox()
         {
@@ -362,86 +510,6 @@ namespace OrdemServicos
             txtEmail.TabIndex = 14;
             btnSalvar.TabIndex = 15;
         }
-        public override void CarregarRegistros()
-        {
-            DesabilitarCamposDoFormulario();
-            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
-            listViewClientes.Items.Clear();
-            listViewClientes.Columns.Clear();
-            btnCarregaArquivoCnpj.Enabled = true;
-            btnCarregaArquivoCpf.Enabled = true;
-
-            InitializeListView(); // Adicionar colunas novamente, caso necessário
-            try
-            {
-                ClienteBLL clienteBLL = new ClienteBLL();
-                List<ClienteInfo> clientes = clienteBLL.Listar();
-                foreach (ClienteInfo cliente in clientes)
-                {
-                    ListViewItem item = new ListViewItem(cliente.IDCliente.ToString());
-                    item.SubItems.Add(cliente.TipoPessoa);
-                    if (cliente.TipoPessoa == "FÍSICA")
-                    {
-                        item.SubItems.Add(StringUtils.FormatCPF(cliente.Cpf_Cnpj));
-                    }
-                    else if (cliente.TipoPessoa == "JURÍDICA")
-                    {
-                        item.SubItems.Add(StringUtils.FormatCNPJ(cliente.Cpf_Cnpj));
-                    }
-                    item.SubItems.Add(cliente.Nome_RazaoSocial);
-                    item.SubItems.Add(cliente.Endereco);
-                    item.SubItems.Add(cliente.Numero);
-                    item.SubItems.Add(cliente.Bairro);
-                    item.SubItems.Add(cliente.Municipio);
-                    item.SubItems.Add(cliente.UF);
-                    item.SubItems.Add(StringUtils.FormatCEP(cliente.Cep));
-                    item.SubItems.Add(cliente.Contato);
-                    item.SubItems.Add(StringUtils.FormatPhoneNumber(cliente.Fone_1));
-                    item.SubItems.Add(StringUtils.FormatPhoneNumber(cliente.Fone_2));
-                    item.SubItems.Add(cliente.Email);
-                    item.SubItems.Add(cliente.DataCadastro.ToString("dd/MM/yyyy"));
-                    listViewClientes.Items.Add(item);
-                }
-                listaOriginalItens = listViewClientes.Items.Cast<ListViewItem>().ToList();
-                lbTotalRegistros.Text = "Total de Registros..:  " + listViewClientes.Items.Count;
-                sortColumn = 3;
-                sortAscending = true;
-                listViewClientes.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
-                listViewClientes.Sort();
-                ajustaLarguraCabecalho(listViewClientes);
-                tabControlClientes.SelectedTab = tabDadosClientes;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao carregar registros: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            LimparCampos();
-        }
-        private void ListViewClientes_Click(object sender, EventArgs e)
-        {
-            escPressed = false;
-            if (listViewClientes.SelectedItems.Count > 0)
-            {
-                ListViewItem item = listViewClientes.SelectedItems[0];
-                txtIDCliente.Text = item.SubItems[0].Text;
-                rdbCpf.Checked = item.SubItems[1].Text == "FÍSICA";
-                rdbCnpj.Checked = item.SubItems[1].Text == "JURÍDICA";
-                txtCpf_Cnpj.Text = item.SubItems[2].Text;
-                txtNome_RazaoSocial.Text = item.SubItems[3].Text;
-                txtEndereco.Text = item.SubItems[4].Text;
-                txtNumero.Text = item.SubItems[5].Text;
-                txtBairro.Text = item.SubItems[6].Text;
-                txtMunicipio.Text = item.SubItems[7].Text;
-                txtUF.Text = item.SubItems[8].Text;
-                txtCep.Text = item.SubItems[9].Text;
-                txtContato.Text = item.SubItems[10].Text;
-                txtFone_1.Text = item.SubItems[11].Text;
-                txtFone_2.Text = item.SubItems[12].Text;
-                txtEmail.Text = item.SubItems[13].Text;
-                txtDataCadastro.Text = item.SubItems[14].Text;
-                EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
-            }
-        }
         private void btnNovo_Click(object sender, EventArgs e)
         {
             LimparCampos();
@@ -454,71 +522,61 @@ namespace OrdemServicos
         }
         private async void btnSalvar_Click(object sender, EventArgs e)
         {
-            ClienteBLL clienteBLL = new ClienteBLL();
+            var clienteBLL = new ClienteBLL();
             bool isAtualizacao = false;
 
-            if (!string.IsNullOrEmpty(txtIDCliente.Text))
+            if (!string.IsNullOrWhiteSpace(txtIDCliente.Text))
             {
                 int idCliente = Convert.ToInt32(txtIDCliente.Text);
-                isAtualizacao = clienteBLL.GetCliente(idCliente) != null;
+                var clienteExistente = await clienteBLL.GetClienteAsync(idCliente); // ✅ chamada assíncrona
+                isAtualizacao = clienteExistente != null;
             }
+
+            var cliente = new ClienteInfo
+            {
+                TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA",
+                Cpf_Cnpj = StringUtils.SemFormatacao(txtCpf_Cnpj.Text),
+                Nome_RazaoSocial = txtNome_RazaoSocial.Text,
+                Endereco = txtEndereco.Text,
+                Numero = txtNumero.Text,
+                Bairro = txtBairro.Text,
+                Municipio = txtMunicipio.Text,
+                UF = txtUF.Text,
+                Cep = StringUtils.SemFormatacao(txtCep.Text),
+                Contato = txtContato.Text,
+                Fone_1 = StringUtils.SemFormatacao(txtFone_1.Text),
+                Fone_2 = StringUtils.SemFormatacao(txtFone_2.Text),
+                Email = txtEmail.Text
+            };
 
             if (!isAtualizacao)
             {
-                string cpfcnpj = StringUtils.SemFormatacao(txtCpf_Cnpj.Text);
-                DBSetupBLL dbSetupBLL = new DBSetupBLL();
+                cliente.DataCadastro = DateTime.Now;
 
-                DialogResult result = DialogResult.Yes; // Pode substituir por MessageBox se quiser confirmação
+                DialogResult result = DialogResult.Yes; // ✅ pode usar MessageBox se quiser confirmação
                 if (result == DialogResult.Yes)
                 {
-                    ClienteInfo cliente = new ClienteInfo
-                    {
-                        TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA",
-                        Cpf_Cnpj = StringUtils.SemFormatacao(txtCpf_Cnpj.Text),
-                        Nome_RazaoSocial = txtNome_RazaoSocial.Text,
-                        Endereco = txtEndereco.Text,
-                        Numero = txtNumero.Text,
-                        Bairro = txtBairro.Text,
-                        Municipio = txtMunicipio.Text,
-                        UF = txtUF.Text,
-                        Cep = StringUtils.SemFormatacao(txtCep.Text),
-                        Contato = txtContato.Text,
-                        Fone_1 = StringUtils.SemFormatacao(txtFone_1.Text),
-                        Fone_2 = StringUtils.SemFormatacao(txtFone_2.Text),
-                        Email = txtEmail.Text,
-                        DataCadastro = DateTime.Now
-                    };
-
-                    InserirCliente(cliente);
+                    InserirClienteAsync(cliente); // ✅ chamada assíncrona
                 }
             }
             else
             {
-                DialogResult result = MessageBox.Show("Tem certeza que deseja salvar as alterações realizadas?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                cliente.IDCliente = Convert.ToInt32(txtIDCliente.Text);
+
+                DialogResult result = MessageBox.Show(
+                    "Tem certeza que deseja salvar as alterações realizadas?",
+                    "Confirmação",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
                 if (result == DialogResult.Yes)
                 {
-                    ClienteInfo cliente = new ClienteInfo
-                    {
-                        IDCliente = int.Parse(txtIDCliente.Text),
-                        TipoPessoa = rdbCpf.Checked ? "FÍSICA" : "JURÍDICA",
-                        Cpf_Cnpj = StringUtils.SemFormatacao(txtCpf_Cnpj.Text),
-                        Nome_RazaoSocial = txtNome_RazaoSocial.Text,
-                        Endereco = txtEndereco.Text,
-                        Numero = txtNumero.Text,
-                        Bairro = txtBairro.Text,
-                        Municipio = txtMunicipio.Text,
-                        UF = txtUF.Text,
-                        Cep = StringUtils.SemFormatacao(txtCep.Text),
-                        Contato = txtContato.Text,
-                        Fone_1 = StringUtils.SemFormatacao(txtFone_1.Text),
-                        Fone_2 = StringUtils.SemFormatacao(txtFone_2.Text),
-                        Email = txtEmail.Text
-                    };
-
-                    AtualizarCliente(cliente);
+                    AtualizarClienteAsync(cliente); // ✅ chamada assíncrona
                 }
             }
-            CarregarRegistros();
+
+            await CarregarRegistros(); // ✅ aguarda recarregamento
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
@@ -533,7 +591,7 @@ namespace OrdemServicos
             {
                 if (int.TryParse(txtIDCliente.Text, out int clienteID))
                 {
-                    ExcluirCliente(clienteID);
+                    ExcluirClienteAsync(clienteID);
                 }
                 else
                 {
@@ -551,25 +609,29 @@ namespace OrdemServicos
         {
             CarregarRegistros();
         }
-        public override void ExecutaFuncaoEvento(Control control)
+        public override async void ExecutaFuncaoEventoAsync(Control control)
         {
             if (control == txtCpf_Cnpj && !string.IsNullOrEmpty(txtCpf_Cnpj.Text))
             {
                 string cpfcnpj = StringUtils.SemFormatacao(txtCpf_Cnpj.Text);
-                DBSetupBLL dbSetupBLL = new DBSetupBLL();
+                var dbSetupBLL = new DBSetupBLL();
                 string cpfCnpj = txtCpf_Cnpj.Text;
-                if (dbSetupBLL.VerificarSeCadastrado(cpfcnpj, "DBClientes", "Cpf_Cnpj"))
+
+                if (await dbSetupBLL.VerificarSeCadastradoAsync(cpfcnpj, "DBClientes", "Cpf_Cnpj"))
                 {
-                    MessageBox.Show("Cliente já Cadastrado. Favor Verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Cliente já Cadastrado. Favor Verificar!",
+                                    "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtCpf_Cnpj.Clear();
                     txtCpf_Cnpj.Focus();
                     return;
                 }
+
                 if (rdbCpf.Checked)
                 {
                     if (!ValidaCpf(cpfCnpj))
                     {
-                        MessageBox.Show("CPF Informado está Incorreto. Favor Verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("CPF Informado está Incorreto. Favor Verificar!",
+                                        "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtCpf_Cnpj.Clear();
                         txtCpf_Cnpj.Focus();
                         return;
@@ -584,7 +646,8 @@ namespace OrdemServicos
                 {
                     if (!ValidaCnpj(cpfCnpj))
                     {
-                        MessageBox.Show("CNPJ Informado está Incorreto. Favor Verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("CNPJ Informado está Incorreto. Favor Verificar!",
+                                        "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         txtCpf_Cnpj.Clear();
                         txtCpf_Cnpj.Focus();
                         return;
@@ -703,15 +766,16 @@ namespace OrdemServicos
             rdbCnpj.Checked = true;
             escPressed = false;
         }
-        static bool InserirCliente(ClienteInfo cliente)
+        private static async Task<bool> InserirClienteAsync(ClienteInfo cliente)
         {
             try
             {
-                ClienteBLL clienteBLL = new ClienteBLL();
-                clienteBLL.InserirCliente(cliente);
+                var clienteBLL = new ClienteBLL();
+                await clienteBLL.InserirClienteAsync(cliente); // ✅ chamada assíncrona
 
-//                MessageBox.Show("Cliente inserido com sucesso!",
-//                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Opcional: exibir mensagem de sucesso
+                // MessageBox.Show("Cliente inserido com sucesso!",
+                //                 "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return true; // inclusão realizada com sucesso
             }
@@ -723,32 +787,37 @@ namespace OrdemServicos
                 return false; // falha na inclusão
             }
         }
-        static void AtualizarCliente(ClienteInfo Cliente)
+        private static async Task AtualizarClienteAsync(ClienteInfo cliente)
         {
             try
             {
-                ClienteBLL clienteBLL = new ClienteBLL();
-                clienteBLL.AtualizarCliente(Cliente);
-                MessageBox.Show("Cliente atualizado com sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var clienteBLL = new ClienteBLL();
+                await clienteBLL.AtualizarClienteAsync(cliente); // ✅ chamada assíncrona
+
+                MessageBox.Show("Cliente atualizado com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        static void ExcluirCliente(int idCliente)
+        private static async Task ExcluirClienteAsync(int idCliente)
         {
             try
             {
-                ClienteBLL clienteBLL = new ClienteBLL();
-                clienteBLL.ExcluirCliente(idCliente);
-                MessageBox.Show("Cliente excluído com sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var clienteBLL = new ClienteBLL();
+                await clienteBLL.ExcluirClienteAsync(idCliente); // ✅ chamada assíncrona
+
+                MessageBox.Show("Cliente excluído com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
         private async Task<bool> PesquisarCnpj(string cnpj)
         {
@@ -797,7 +866,7 @@ namespace OrdemServicos
                             DataCadastro = DateTime.Now
                         };
 
-                        bool inserido = InserirCliente(cliente);
+                        bool inserido = await InserirClienteAsync(cliente);
                         LimparCampos();
                         return inserido;
                     }
@@ -932,9 +1001,9 @@ namespace OrdemServicos
 
                             if (ValidaCnpj(cnpj))
                             {
-                                if (dbSetupBLL.VerificarSeCadastrado(cnpj, "DBClientes", "Cpf_Cnpj"))
+                                if (await dbSetupBLL.VerificarSeCadastradoAsync(cnpj, "DBClientes", "Cpf_Cnpj"))
                                 {
-                                    incluirNoArquivo = false;
+                                        incluirNoArquivo = false;
                                 }
                                 else
                                 {
@@ -1042,7 +1111,8 @@ namespace OrdemServicos
                                     try
                                     {
                                         DBSetupBLL dbSetupBLL = new DBSetupBLL();
-                                        if (!dbSetupBLL.VerificarSeCadastrado(cpf, "DBClientes", "Cpf_Cnpj"))
+                                        if (!await dbSetupBLL.VerificarSeCadastradoAsync(cpf, "DBClientes", "Cpf_Cnpj"))
+
                                         {
 
                                             CpfInfo info = new CpfInfo
@@ -1092,7 +1162,7 @@ namespace OrdemServicos
                                                 Email = txtEmail.Text,
                                                 DataCadastro = DateTime.Now
                                             };
-                                            InserirCliente(cliente);
+                                            InserirClienteAsync(cliente);
                                             LimparCampos();
                                         }
                                     }
@@ -1119,12 +1189,12 @@ namespace OrdemServicos
                     }
                     finally
                     {
-                            Cursor.Current = Cursors.Default; // Restaurar o cursor padrão
+                        Cursor.Current = Cursors.Default; // Restaurar o cursor padrão
                     }
                 }
 
             }
 
         }
-	}
+    }
 }

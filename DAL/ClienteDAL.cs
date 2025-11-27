@@ -3,90 +3,74 @@ using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.DAL
 {
     public class ClienteDAL
     {
         private readonly string connectionString;
+
         public ClienteDAL()
         {
-            try
-            {
-                connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-            }
-            catch (ConfigurationErrorsException ex)
-            {
-                MessageBox.Show("Erro ao carregar configuração do banco: " + ex.Message,
-                                "Erro de Configuração", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            connectionString = ConfigurationManager.AppSettings["ConnectionString"];
         }
 
-        public List<ClienteInfo> Listar()
+        public async Task<List<ClienteInfo>> ListarAsync()
         {
-            List<ClienteInfo> ClientesList = new List<ClienteInfo>();
-            try
+            var clientesList = new List<ClienteInfo>();
+
+            using (var conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                await conn.OpenAsync();
+                string query = @"SELECT IDCliente, TipoPessoa, Cpf_Cnpj, Nome_RazaoSocial, Endereco, Numero, Bairro, Municipio, UF, Cep, Contato, Fone_1, Fone_2, Email, DataCadastro 
+                                 FROM DBClientes";
+
+                using (var cmd = new MySqlCommand(query, conn))
+                using (var reader = await cmd.ExecuteReaderAsync())
                 {
-                    conn.Open();
-                    string query = "SELECT * FROM DBClientes";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    while (await reader.ReadAsync())
                     {
-                        while (reader.Read())
+                        clientesList.Add(new ClienteInfo
                         {
-                            ClienteInfo Cliente = new ClienteInfo
-                            {
-                                IDCliente = Convert.ToInt32(reader["IDCliente"]),
-                                TipoPessoa = reader["TipoPessoa"].ToString(),
-                                Cpf_Cnpj = reader["Cpf_Cnpj"].ToString(),
-                                Nome_RazaoSocial = reader["Nome_RazaoSocial"].ToString(),
-                                Endereco = reader["Endereco"].ToString(),
-                                Numero = reader["Numero"].ToString(),
-                                Bairro = reader["Bairro"].ToString(),
-                                Municipio = reader["Municipio"].ToString(),
-                                UF = reader["UF"].ToString(),
-                                Cep = reader["Cep"].ToString(),
-                                Contato = reader["Contato"].ToString(),
-                                Fone_1 = reader["Fone_1"].ToString(),
-                                Fone_2 = reader["Fone_2"].ToString(),
-                                Email = reader["Email"].ToString(),
-                                DataCadastro = Convert.ToDateTime(reader["DataCadastro"])
-                            };
-                            ClientesList.Add(Cliente);
-                        }
+                            IDCliente = Convert.ToInt32(reader["IDCliente"]),
+                            TipoPessoa = reader["TipoPessoa"].ToString(),
+                            Cpf_Cnpj = reader["Cpf_Cnpj"].ToString(),
+                            Nome_RazaoSocial = reader["Nome_RazaoSocial"].ToString(),
+                            Endereco = reader["Endereco"].ToString(),
+                            Numero = reader["Numero"].ToString(),
+                            Bairro = reader["Bairro"].ToString(),
+                            Municipio = reader["Municipio"].ToString(),
+                            UF = reader["UF"].ToString(),
+                            Cep = reader["Cep"].ToString(),
+                            Contato = reader["Contato"].ToString(),
+                            Fone_1 = reader["Fone_1"].ToString(),
+                            Fone_2 = reader["Fone_2"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            DataCadastro = Convert.ToDateTime(reader["DataCadastro"])
+                        });
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao listar clientes: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro inesperado ao listar clientes: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
 
-            return ClientesList;
+            return clientesList;
         }
 
-        public ClienteInfo GetCliente(int IDCliente)
+        public async Task<ClienteInfo> GetClienteAsync(int idCliente)
         {
-            try
+            using (var conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                await conn.OpenAsync();
+                string query = @"SELECT IDCliente, TipoPessoa, Cpf_Cnpj, Nome_RazaoSocial, Endereco, Numero, Bairro, Municipio, UF, Cep, Contato, Fone_1, Fone_2, Email, DataCadastro 
+                                 FROM DBClientes WHERE IDCliente = @IDCliente";
+
+                using (var cmd = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    string query = "SELECT * FROM DBClientes WHERE IDCliente = @IDCliente";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@IDCliente", IDCliente);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    cmd.Parameters.AddWithValue("@IDCliente", idCliente);
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        if (reader.Read())
+                        if (await reader.ReadAsync())
                         {
                             return new ClienteInfo
                             {
@@ -110,32 +94,21 @@ namespace OrdemServicos.DAL
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao buscar cliente: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro inesperado ao buscar cliente: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
 
             return null;
         }
 
-        public void AtualizarCliente(ClienteInfo cliente)
+        public async Task AtualizarClienteAsync(ClienteInfo cliente)
         {
-            try
+            using (var conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                await conn.OpenAsync();
+                string query = @"UPDATE DBClientes SET TipoPessoa=@TipoPessoa, Cpf_Cnpj=@Cpf_Cnpj, Nome_RazaoSocial=@Nome_RazaoSocial,
+                                 Endereco=@Endereco, Numero=@Numero, Bairro=@Bairro, Municipio=@Municipio, UF=@UF, Cep=@Cep,
+                                 Contato=@Contato, Fone_1=@Fone_1, Fone_2=@Fone_2, Email=@Email WHERE IDCliente=@IDCliente";
+
+                using (var cmd = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    string query = "UPDATE DBClientes SET TipoPessoa = @TipoPessoa, Cpf_Cnpj = @Cpf_Cnpj, Nome_RazaoSocial = @Nome_RazaoSocial, " +
-                                   "Endereco = @Endereco, Numero = @Numero, Bairro = @Bairro, Municipio = @Municipio, " +
-                                   "UF = @UF, Cep = @Cep, Contato = @Contato, Fone_1 = @Fone_1, Fone_2 = @Fone_2, " +
-                                   "Email = @Email WHERE IDCliente = @IDCliente";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@TipoPessoa", cliente.TipoPessoa);
                     cmd.Parameters.AddWithValue("@Cpf_Cnpj", cliente.Cpf_Cnpj);
                     cmd.Parameters.AddWithValue("@Nome_RazaoSocial", cliente.Nome_RazaoSocial);
@@ -150,31 +123,22 @@ namespace OrdemServicos.DAL
                     cmd.Parameters.AddWithValue("@Fone_2", cliente.Fone_2);
                     cmd.Parameters.AddWithValue("@Email", cliente.Email);
                     cmd.Parameters.AddWithValue("@IDCliente", cliente.IDCliente);
-                    cmd.ExecuteNonQuery();
+
+                    await cmd.ExecuteNonQueryAsync();
                 }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao atualizar cliente: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro inesperado ao atualizar cliente: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        public void InserirCliente(ClienteInfo cliente)
+        public async Task InserirClienteAsync(ClienteInfo cliente)
         {
-            try
+            using (var conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                await conn.OpenAsync();
+                string query = @"INSERT INTO DBClientes (TipoPessoa, Cpf_Cnpj, Nome_RazaoSocial, Endereco, Numero, Bairro, Municipio, UF, Cep, Contato, Fone_1, Fone_2, Email, DataCadastro)
+                                 VALUES (@TipoPessoa, @Cpf_Cnpj, @Nome_RazaoSocial, @Endereco, @Numero, @Bairro, @Municipio, @UF, @Cep, @Contato, @Fone_1, @Fone_2, @Email, @DataCadastro)";
+
+                using (var cmd = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    string query = "INSERT INTO DBClientes (TipoPessoa, Cpf_Cnpj, Nome_RazaoSocial, Endereco, Numero, Bairro, Municipio, UF, Cep, Contato, Fone_1, Fone_2, Email, DataCadastro) " +
-                                   "VALUES (@TipoPessoa, @Cpf_Cnpj, @Nome_RazaoSocial, @Endereco, @Numero, @Bairro, @Municipio, @UF, @Cep, @Contato, @Fone_1, @Fone_2, @Email, @DataCadastro)";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@TipoPessoa", cliente.TipoPessoa);
                     cmd.Parameters.AddWithValue("@Cpf_Cnpj", cliente.Cpf_Cnpj);
                     cmd.Parameters.AddWithValue("@Nome_RazaoSocial", cliente.Nome_RazaoSocial);
@@ -189,47 +153,25 @@ namespace OrdemServicos.DAL
                     cmd.Parameters.AddWithValue("@Fone_2", cliente.Fone_2);
                     cmd.Parameters.AddWithValue("@Email", cliente.Email);
                     cmd.Parameters.AddWithValue("@DataCadastro", cliente.DataCadastro);
-                    cmd.ExecuteNonQuery();
+
+                    await cmd.ExecuteNonQueryAsync();
                 }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao inserir cliente: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro inesperado ao inserir cliente: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        public void ExcluirCliente(int IDCliente)
+        public async Task ExcluirClienteAsync(int idCliente)
         {
-            try
+            using (var conn = new MySqlConnection(connectionString))
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                await conn.OpenAsync();
+                string query = "DELETE FROM DBClientes WHERE IDCliente = @IDCliente";
+
+                using (var cmd = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    string query = "DELETE FROM DBClientes WHERE IDCliente = @IDCliente";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@IDCliente", IDCliente);
-                        cmd.ExecuteNonQuery();
-                    }
+                    cmd.Parameters.AddWithValue("@IDCliente", idCliente);
+                    await cmd.ExecuteNonQueryAsync();
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao excluir cliente: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro inesperado ao excluir cliente: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
-
     }
 }

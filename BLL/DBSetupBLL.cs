@@ -1,18 +1,20 @@
 ﻿using OrdemServicos.DAL;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.BLL
 {
     public class DBSetupBLL
     {
-        public bool CheckAndSetupDatabase()
+        public async Task<bool> CheckAndSetupDatabaseAsync()
         {
-            DBSetupDAL dbsetupDAL = new DBSetupDAL();
-            return dbsetupDAL.CheckAndSetupDatabase();
+            var dbsetupDAL = new DBSetupDAL();
+            return await dbsetupDAL.CheckAndSetupDatabaseAsync();
         }
-        public bool VerificarSeCadastrado(object valor, string tabela, string coluna)
+
+        public async Task<bool> VerificarSeCadastradoAsync(object valor, string tabela, string coluna)
         {
-            DBSetupDAL dbsetupDAL = new DBSetupDAL();
-            return dbsetupDAL.VerificarSeCadastrado(valor, tabela, coluna);
+            var dbsetupDAL = new DBSetupDAL();
+            return await dbsetupDAL.VerificarSeCadastradoAsync(valor, tabela, coluna);
         }
     }
 }

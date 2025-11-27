@@ -1,35 +1,40 @@
 ﻿using OrdemServicos.DAL;
 using OrdemServicos.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.BLL
 {
     public class MarcaBLL
     {
-        public List<MarcaInfo> Listar()
+        public async Task<List<MarcaInfo>> ListarAsync()
         {
-            MarcaDAL marcaDAL = new MarcaDAL();
-            return marcaDAL.Listar();
+            var marcaDAL = new MarcaDAL();
+            return await marcaDAL.ListarAsync();
         }
-        public MarcaInfo GetMarca(int IDMarca)
+
+        public async Task<MarcaInfo> GetMarcaAsync(int idMarca)
         {
-            MarcaDAL marcaDAL = new MarcaDAL();
-            return marcaDAL.GetMarca(IDMarca);
+            var marcaDAL = new MarcaDAL();
+            return await marcaDAL.GetMarcaAsync(idMarca);
         }
-        public void AtualizarMarca(MarcaInfo Marca)
+
+        public async Task AtualizarMarcaAsync(MarcaInfo marca)
         {
-            MarcaDAL marcaDAL = new MarcaDAL();
-            marcaDAL.AtualizarMarca(Marca);
+            var marcaDAL = new MarcaDAL();
+            await marcaDAL.AtualizarMarcaAsync(marca);
         }
-        public void InserirMarca(MarcaInfo Marca)
+
+        public async Task InserirMarcaAsync(MarcaInfo marca)
         {
-            MarcaDAL marcaDAL = new MarcaDAL();
-            marcaDAL.InserirMarca(Marca);
+            var marcaDAL = new MarcaDAL();
+            await marcaDAL.InserirMarcaAsync(marca);
         }
-        public void ExcluirMarca(int IdMarca)
+
+        public async Task ExcluirMarcaAsync(int idMarca)
         {
-            MarcaDAL marcaDAL = new MarcaDAL();
-            marcaDAL.ExcluirMarca(IdMarca);
+            var marcaDAL = new MarcaDAL();
+            await marcaDAL.ExcluirMarcaAsync(idMarca);
         }
     }
 }

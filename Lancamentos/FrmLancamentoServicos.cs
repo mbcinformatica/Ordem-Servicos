@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OrdemServicos
@@ -55,21 +56,22 @@ namespace OrdemServicos
             listViewLancamentoServicos.DrawItem += new DrawListViewItemEventHandler(listViewLancamentoServicos_DrawItem);
             listViewLancamentoServicos.DrawSubItem += new DrawListViewSubItemEventHandler(listViewLancamentoServicos_DrawSubItem);
             // Adicionar colunas
-            listViewLancamentoServicos.Columns.Add("  ID", 50, HorizontalAlignment.Right);
-            listViewLancamentoServicos.Columns.Add("  DATA EMISSÃO", 200, HorizontalAlignment.Center);
-            listViewLancamentoServicos.Columns.Add("  DATA CONCLUSÃO", 200, HorizontalAlignment.Center);
-            listViewLancamentoServicos.Columns.Add("  CLIENTE", 120, HorizontalAlignment.Left);
-            listViewLancamentoServicos.Columns.Add("  MARCA", 200, HorizontalAlignment.Left);
-            listViewLancamentoServicos.Columns.Add("  PRODUTO", 150, HorizontalAlignment.Left);
-            listViewLancamentoServicos.Columns.Add("  NUMERO DE SÉRIE", 200, HorizontalAlignment.Right);
-            listViewLancamentoServicos.Columns.Add("  DESCRIÇÃO DO DEFEITO", 200, HorizontalAlignment.Left);
-            listViewLancamentoServicos.Columns.Add("  VALOR TOTAL SERVIÇO", 200, HorizontalAlignment.Right);
-            listViewLancamentoServicos.Columns.Add("  VALOR TOTAL MATERIAIS", 200, HorizontalAlignment.Right);
+            listViewLancamentoServicos.Columns.Add("ID", 50, HorizontalAlignment.Right);
+            listViewLancamentoServicos.Columns.Add("DATA EMISSÃO", 200, HorizontalAlignment.Center);
+            listViewLancamentoServicos.Columns.Add("DATA CONCLUSÃO", 200, HorizontalAlignment.Center);
+            listViewLancamentoServicos.Columns.Add("CLIENTE", 120, HorizontalAlignment.Left);
+            listViewLancamentoServicos.Columns.Add("MARCA", 200, HorizontalAlignment.Left);
+            listViewLancamentoServicos.Columns.Add("PRODUTO", 150, HorizontalAlignment.Left);
+            listViewLancamentoServicos.Columns.Add("NUMERO DE SÉRIE", 200, HorizontalAlignment.Right);
+            listViewLancamentoServicos.Columns.Add("DESCRIÇÃO DO DEFEITO", 200, HorizontalAlignment.Left);
+            listViewLancamentoServicos.Columns.Add("VALOR TOTAL SERVIÇO", 200, HorizontalAlignment.Right);
 
-            // Adicionar evento de clique no cabeçalho da coluna
-            listViewLancamentoServicos.ColumnClick += new ColumnClickEventHandler(ListViewLancamentoServico_ColumnClick);
-            listViewLancamentoServicos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-            listViewLancamentoServicos.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            var colValorTotalMaterial = listViewLancamentoServicos.Columns.Add(" VALOR TOTAL MATERIAIS", 200, HorizontalAlignment.Right);
+
+            colValorTotalMaterial.Width = -2; // auto-size
+
+            listViewLancamentoServicos.ColumnClick += ListViewLancamentoServico_ColumnClick;
+            listViewLancamentoServicos.SelectedIndexChanged += ListViewLancamentoServicos_SelectedIndexChanged;
         }
         private void ListViewLancamentoServico_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -104,22 +106,63 @@ namespace OrdemServicos
             listViewLancamentoServicos.Invalidate(); // Redesenhar ListView para atualizar a cor do cabeçalho
             txtPesquisaListView.Focus();
         }
-        public class ListViewItemComparer : IComparer
+        private class ListViewItemComparer : IComparer
         {
-            private int col;
-            private bool ascending;
+            private readonly int col;
+            private readonly bool ascending;
 
+            // Colunas tratadas como numéricas
+            private readonly HashSet<string> numericColumns = new HashSet<string>
+            {
+                "ID", "VALOR TOTAL SERVIÇO", "VALOR TOTAL MATERIAIS"
+            };
+            // Colunas tratadas como datas
+            private readonly HashSet<string> dateColumns = new HashSet<string>
+            {
+                "DATA EMISSÃO", "DATA CONCLUSÃO"            };
             public ListViewItemComparer(int column, bool ascending)
             {
-                this.col = column;
+                col = column;
                 this.ascending = ascending;
             }
             public int Compare(object x, object y)
             {
-                // Comparar valores das subitens
-                int returnVal = String.Compare(((ListViewItem)x).SubItems[col].Text,
-                                              ((ListViewItem)y).SubItems[col].Text);
-                return ascending ? returnVal : -returnVal; // Ordem crescente ou decrescente
+                var itemX = x as ListViewItem;
+                var itemY = y as ListViewItem;
+
+                if (itemX == null || itemY == null)
+                    return 0;
+
+                string valX = itemX.SubItems[col].Text ?? string.Empty;
+                string valY = itemY.SubItems[col].Text ?? string.Empty;
+
+                string colName = itemX.ListView.Columns[col].Text.Trim().ToUpper();
+                int result;
+
+                if (numericColumns.Contains(colName))
+                {
+                    // Remove formatação de moeda/unidade antes de comparar
+                    valX = StringUtils.SemFormatacao(valX);
+                    valY = StringUtils.SemFormatacao(valY);
+
+                    if (decimal.TryParse(valX, out decimal numX) && decimal.TryParse(valY, out decimal numY))
+                        result = numX.CompareTo(numY);
+                    else
+                        result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
+                }
+                else if (dateColumns.Contains(colName))
+                {
+                    if (DateTime.TryParse(valX, out DateTime dtX) && DateTime.TryParse(valY, out DateTime dtY))
+                        result = dtX.CompareTo(dtY);
+                    else
+                        result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
+                }
+                else
+                {
+                    result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
+                }
+
+                return ascending ? result : -result;
             }
         }
         private void listViewLancamentoServicos_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
@@ -190,17 +233,18 @@ namespace OrdemServicos
         {
             listView.BeginUpdate();
             var itemsVisiveis = new List<ListViewItem>();
+
             foreach (ListViewItem item in listaOriginalItens)
             {
-                if (item.SubItems[coluna].Text.IndexOf(texto, StringComparison.OrdinalIgnoreCase) >= 0)
-                {
+                string valorCelula = item.SubItems[coluna].Text;
+
+                if (string.IsNullOrEmpty(texto) || valorCelula.StartsWith(texto, StringComparison.OrdinalIgnoreCase))
                     itemsVisiveis.Add(item);
-                }
             }
+
             listView.Items.Clear();
             listView.Items.AddRange(itemsVisiveis.ToArray());
             listView.EndUpdate();
-            listView.Invalidate(); // Redesenha a ListView para refletir as mudanças
         }
         private void CarregaKey()
         {
@@ -287,7 +331,7 @@ namespace OrdemServicos
             // Associar eventos SelectedIndexChanged e Click
             cmbProduto.SelectedIndexChanged += cmbProduto_SelectedIndexChanged;
             cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
-            listViewLancamentoServicos.Click += ListViewLancamentoServicos_Click;
+            listViewLancamentoServicos.Click += ListViewLancamentoServicos_SelectedIndexChanged;
 
             // Focar no btnNovo ao iniciar
             txtPesquisaListView.Focus();
@@ -349,7 +393,7 @@ namespace OrdemServicos
             };
             EventosUtils.AjustarCamposTexto(controlesCampos, "DBLancamentoServicos");
         }
-        public override void CarregarRegistros()
+        public override async Task CarregarRegistros()
         {
             DesabilitarCamposDoFormulario();
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
@@ -358,8 +402,8 @@ namespace OrdemServicos
             InitializeListView();
             try
             {
-                LancamentoServicoBLL lancamentoServicoBLL = new LancamentoServicoBLL();
-                List<LancamentoServicoInfo> lancamentoServicos = lancamentoServicoBLL.Listar();
+                var lancamentoServicoBLL = new LancamentoServicoBLL();
+               var lancamentoServicos = (await lancamentoServicoBLL.ListarAsync());
                 foreach (LancamentoServicoInfo lancamentoServico in lancamentoServicos)
                 {
                     ListViewItem item = new ListViewItem(lancamentoServico.IDOrdenServico.ToString());
@@ -395,8 +439,8 @@ namespace OrdemServicos
                 tabControlOrdenServico.SelectedTab = tabDadosOrdenServico;
 
                 // Carregar clientes no ComboBox em ordem alfabética crescente
-                ClienteBLL clienteBLL = new ClienteBLL();
-                List<ClienteInfo> clientes = clienteBLL.Listar()
+                var clienteBLL = new ClienteBLL();
+                var clientes = (await clienteBLL.ListarAsync())
                     .OrderBy(c => c.Nome_RazaoSocial?.ToUpperInvariant())
                     .ToList();
                 cmbCliente.DataSource = clientes;
@@ -404,8 +448,8 @@ namespace OrdemServicos
                 cmbCliente.ValueMember = "IDCliente";
 
                 // Carregar marcas no ComboBox
-                MarcaBLL marcaBLL = new MarcaBLL();
-                List<MarcaInfo> marcas = marcaBLL.Listar()
+                var marcaBLL = new MarcaBLL();
+                var marcas = (await marcaBLL.ListarAsync())
                     .OrderBy(m => m.Descricao?.ToUpperInvariant())
                     .ToList();
                 cmbMarca.DataSource = marcas;
@@ -418,51 +462,57 @@ namespace OrdemServicos
             }
             LimparCampos();
         }
-        private void ListViewLancamentoServicos_Click(object sender, EventArgs e)
+        private async void ListViewLancamentoServicos_SelectedIndexChanged(object sender, EventArgs e)
         {
             escPressed = false; // Reseta a variável de controle
-            if (listViewLancamentoServicos.SelectedItems.Count > 0)
-            {
-                ListViewItem item = listViewLancamentoServicos.SelectedItems[0];
-                txtIDOrdenServico.Text = item.SubItems[0].Text;
-                txtDataEmissao.Text = item.SubItems[1].Text;
-                txtDataConclusao.Text = item.SubItems[2].Text;
-                string clienteNome = item.SubItems[3].Text;
-                ClienteBLL clienteBLL = new ClienteBLL();
-                List<ClienteInfo> clientes = clienteBLL.Listar();
-                ClienteInfo cliente = clientes.FirstOrDefault(c => c.Nome_RazaoSocial == clienteNome);
-                if (cliente != null)
-                {
-                    cmbCliente.SelectedValue = cliente.IDCliente;
-                }
-                string marcaNome = item.SubItems[4].Text; // Índice da coluna da marca
-                MarcaBLL marcaBLL = new MarcaBLL();
-                List<MarcaInfo> marcas = marcaBLL.Listar();
-                MarcaInfo marca = marcas.FirstOrDefault(m => m.Descricao == marcaNome);
-                if (marca != null)
-                {
-                    cmbMarca.SelectedValue = marca.IDMarca;
-                }
+            if (listViewLancamentoServicos.SelectedItems.Count == 0) return;
 
-                string produtoNome = item.SubItems[5].Text; // Índice da coluna da marca
-                ProdutoBLL produtoBLL = new ProdutoBLL();
-                List<ProdutoInfo> produtos = produtoBLL.Listar();
-                ProdutoInfo produto = produtos.FirstOrDefault(p => p.Descricao == produtoNome);
+            try
+            {
+                var item = listViewLancamentoServicos.SelectedItems[0];
+
+                txtIDOrdenServico.Text = item.SubItems.Count > 0 ? item.SubItems[0].Text : "";
+                txtDataEmissao.Text = item.SubItems.Count > 1 ? item.SubItems[1].Text : "";
+                txtDataConclusao.Text = item.SubItems.Count > 2 ? item.SubItems[2].Text : "";
+
+                // Cliente
+                string clienteNome = item.SubItems.Count > 3 ? item.SubItems[3].Text : "";
+                var clienteBLL = new ClienteBLL();
+                var clientes = await clienteBLL.ListarAsync();
+                var cliente = clientes.FirstOrDefault(c => c.Nome_RazaoSocial == clienteNome);
+                if (cliente != null)
+                    cmbCliente.SelectedValue = cliente.IDCliente;
+
+                // Marca
+                string marcaNome = item.SubItems.Count > 4 ? item.SubItems[4].Text : "";
+                var marcaBLL = new MarcaBLL();
+                var marcas = await marcaBLL.ListarAsync();
+                var marca = marcas.FirstOrDefault(m => m.Descricao == marcaNome);
+                if (marca != null)
+                    cmbMarca.SelectedValue = marca.IDMarca;
+
+                // Produto
+                string produtoNome = item.SubItems.Count > 5 ? item.SubItems[5].Text : "";
+                var produtoBLL = new ProdutoBLL();
+                var produtos = await produtoBLL.ListarAsync();
+                var produto = produtos.FirstOrDefault(p => p.Descricao == produtoNome);
                 if (produto != null)
-                {
                     cmbProduto.SelectedValue = produto.IDProduto;
-                }
-                txtNumeroSerie.Text = item.SubItems[6].Text;
-                txtDescricaoDefeito.Text = item.SubItems[7].Text;
-                txtValorTotalServico.Text = item.SubItems[8].Text;
-                txtValorTotalMaterial.Text = item.SubItems[9].Text;
+
+                // Demais campos
+                txtNumeroSerie.Text = item.SubItems.Count > 6 ? item.SubItems[6].Text : "";
+                txtDescricaoDefeito.Text = item.SubItems.Count > 7 ? item.SubItems[7].Text : "";
+                txtValorTotalServico.Text = item.SubItems.Count > 8 ? item.SubItems[8].Text : "";
+                txtValorTotalMaterial.Text = item.SubItems.Count > 9 ? item.SubItems[9].Text : "";
 
                 // Exibir a imagem no PictureBox
-                LancamentoServicoBLL lancamentoServicoBLL = new LancamentoServicoBLL();
-                LancamentoServicoInfo lancamentoServico = lancamentoServicoBLL.GetLancamentoServico(Convert.ToInt32(item.SubItems[0].Text));
-                if (lancamentoServico.Imagem != null && lancamentoServico.Imagem.Length > 0)
+                var lancamentoServicoBLL = new LancamentoServicoBLL();
+                var lancamentoServico = await lancamentoServicoBLL.GetLancamentoServicoAsync(
+                                            Convert.ToInt32(item.SubItems[0].Text));
+
+                if (lancamentoServico?.Imagem != null && lancamentoServico.Imagem.Length > 0)
                 {
-                    using (MemoryStream ms = new MemoryStream(lancamentoServico.Imagem))
+                    using (var ms = new MemoryStream(lancamentoServico.Imagem))
                     {
                         imgImagemProduto.Image = Image.FromStream(ms);
                     }
@@ -471,7 +521,13 @@ namespace OrdemServicos
                 {
                     imgImagemProduto.Image = null;
                 }
+
                 EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar dados do lançamento: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void ConfigurarComboBoxClientes()
@@ -495,7 +551,7 @@ namespace OrdemServicos
             if (cmbMarca.SelectedValue != null)
             {
                 int idMarca = Convert.ToInt32(cmbMarca.SelectedValue);
-                CarregarProdutosPorMarca(idMarca);
+                CarregarProdutosPorMarcaAsync(idMarca);
             }
         }
         private void cmbProduto_SelectedIndexChanged(object sender, EventArgs e)
@@ -519,13 +575,13 @@ namespace OrdemServicos
                 }
             }
         }
-        public override void ExecutaFuncaoEvento(Control control)
+        public override async void ExecutaFuncaoEventoAsync(Control control)
         {
             if (control == cmbCliente)
             {
                 string clienteDigitado = cmbCliente.Text.ToUpper(); // Converte para maiúsculas
                 cmbCliente.Text = clienteDigitado; // Atualiza o texto no ComboBox
-                if (!ClienteExiste(clienteDigitado) && !string.IsNullOrEmpty(clienteDigitado))
+                if (!await ClienteExisteAsync(clienteDigitado) && !string.IsNullOrEmpty(clienteDigitado))
                 {
                     try
                     {
@@ -535,12 +591,12 @@ namespace OrdemServicos
                             // Abre o formulário frmClientes
                             frmClientes frm = new frmClientes();
                             frm.ShowDialog();
-                            ClienteBLL clienteBLL = new ClienteBLL();
-                            // Recarregar os clientes no ComboBox
-                            List<ClienteInfo> clientes = clienteBLL.Listar();
-                            // Ordenar a lista de clientes em ordem alfabética
-                            clientes = clientes.OrderBy(c => c.Nome_RazaoSocial).ToList();
-                            // Definir a fonte de dados do ComboBox
+
+                            // Carregar clientes no ComboBox em ordem alfabética crescente
+                            var clienteBLL = new ClienteBLL();
+                            var clientes = (await clienteBLL.ListarAsync())
+                                .OrderBy(c => c.Nome_RazaoSocial?.ToUpperInvariant())
+                                .ToList();
                             cmbCliente.DataSource = clientes;
                             cmbCliente.DisplayMember = "Nome_RazaoSocial";
                             cmbCliente.ValueMember = "IDCliente";
@@ -563,7 +619,7 @@ namespace OrdemServicos
             {
                 string marcaDigitada = cmbMarca.Text.ToUpper(); // Converte para maiúsculas
                 cmbMarca.Text = marcaDigitada; // Atualiza o texto no ComboBox
-                if (!MarcaExiste(marcaDigitada) && !string.IsNullOrEmpty(marcaDigitada))
+                if (!await MarcaExisteAsync(marcaDigitada) && !string.IsNullOrEmpty(marcaDigitada))
                 {
                     try
                     {
@@ -573,15 +629,16 @@ namespace OrdemServicos
                             // Abre o formulário frmMarcas
                             frmMarcas frm = new frmMarcas();
                             frm.ShowDialog();
-                            MarcaBLL marcaBLL = new MarcaBLL();
-                            // Recarregar as marcas no ComboBox
-                            List<MarcaInfo> marcas = marcaBLL.Listar();
-                            // Ordenar a lista de marcas em ordem alfabética
-                            marcas = marcas.OrderBy(m => m.Descricao).ToList();
-                            // Definir a fonte de dados do ComboBox
+
+                            // Carregar marcas no ComboBox
+                            var marcaBLL = new MarcaBLL();
+                            var marcas = (await marcaBLL.ListarAsync())
+                                .OrderBy(m => m.Descricao?.ToUpperInvariant())
+                                .ToList();
                             cmbMarca.DataSource = marcas;
                             cmbMarca.DisplayMember = "Descricao";
                             cmbMarca.ValueMember = "IDMarca";
+
                         }
                     }
                     catch (Exception ex)
@@ -602,7 +659,7 @@ namespace OrdemServicos
                 string produtoDigitado = cmbProduto.Text.ToUpper(); // Converte para maiúsculas
                 cmbProduto.Text = produtoDigitado; // Atualiza o texto no ComboBox
                 int idMarca = Convert.ToInt32(cmbMarca.SelectedValue); // Método para obter o ID da Marca selecionada
-                if (!ProdutoExiste(idMarca, produtoDigitado) && produtoDigitado != string.Empty && idMarca != 0)
+                if (!await ProdutoExisteAsync(idMarca, produtoDigitado) && produtoDigitado != string.Empty && idMarca != 0)
                 {
                     try
                     {
@@ -615,7 +672,7 @@ namespace OrdemServicos
                             if (cmbMarca.SelectedValue != null)
                             {
                                 int idmarca = Convert.ToInt32(cmbMarca.SelectedValue);
-                                CarregarProdutosPorMarca(idmarca);
+                                CarregarProdutosPorMarcaAsync(idmarca);
                             }
                         }
                         else
@@ -636,28 +693,28 @@ namespace OrdemServicos
                 }
             }
         }
-        private bool ClienteExiste(string nome_RazaoSocial)
+        private async Task<bool> ClienteExisteAsync(string nome_RazaoSocial)
         {
-            ClienteBLL clienteBLL = new ClienteBLL();
-            List<ClienteInfo> clientes = clienteBLL.Listar();
+            var clienteBLL = new ClienteBLL();
+            var clientes = (await clienteBLL.ListarAsync());
             return clientes.Any(c => c.Nome_RazaoSocial.Equals(nome_RazaoSocial, StringComparison.OrdinalIgnoreCase));
         }
-        private bool ProdutoExiste(int idMarca, string descricao)
+        private async Task<bool> ProdutoExisteAsync(int idMarca, string descricao)
         {
-            ProdutoDAL produtoDAL = new ProdutoDAL();
-            List<ProdutoInfo> produtos = produtoDAL.ListarPorMarca(idMarca);
+            var produtoDAL = new ProdutoDAL();
+            var produtos = (await produtoDAL.ListarPorMarcaAsync(idMarca));
             return produtos.Any(p => p.Descricao.Equals(descricao, StringComparison.OrdinalIgnoreCase));
         }
-        private bool MarcaExiste(string descricao)
+        private async Task<bool> MarcaExisteAsync(string descricao)
         {
-            MarcaBLL marcaBLL = new MarcaBLL();
-            List<MarcaInfo> marcas = marcaBLL.Listar();
+            var marcaBLL = new MarcaBLL();
+            var marcas = (await marcaBLL.ListarAsync());
             return marcas.Any(m => m.Descricao.Equals(descricao, StringComparison.OrdinalIgnoreCase));
         }
-        private void CarregarProdutosPorMarca(int idMarca)
+        private async Task CarregarProdutosPorMarcaAsync(int idMarca)
         {
-            ProdutoBLL produtoBLL = new ProdutoBLL();
-            List<ProdutoInfo> produtos = produtoBLL.ListarPorMarca(idMarca)
+            var produtoDAL = new ProdutoDAL();
+            var produtos = (await produtoDAL.ListarPorMarcaAsync(idMarca))
                 .OrderBy(p => p.Descricao?.ToUpperInvariant())
                 .ToList();
 
@@ -681,70 +738,64 @@ namespace OrdemServicos
             bNovo = true;
             HabilitarCamposDoFormulario("Novo");
         }
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
-            LancamentoServicoBLL lancamentoServicoBLL = new LancamentoServicoBLL();
-
-            // Verificar se algum campo obrigatório está vazio
-            if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
-            {
-                MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.", "Informaçâo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+            var lancamentoServicoBLL = new LancamentoServicoBLL();
             bool isAtualizacao = false;
-            if (!string.IsNullOrEmpty(txtIDOrdenServico.Text))
+
+            if (!string.IsNullOrWhiteSpace(txtIDOrdenServico.Text))
             {
                 int idOrdenServico = Convert.ToInt32(txtIDOrdenServico.Text);
-                isAtualizacao = lancamentoServicoBLL.GetLancamentoServico(idOrdenServico) != null;
+                var lancamentoExistente = await lancamentoServicoBLL.GetLancamentoServicoAsync(idOrdenServico); // ✅ chamada assíncrona
+                isAtualizacao = lancamentoExistente != null;
             }
+
+            var lancamentoServico = new LancamentoServicoInfo
+            {
+                DataEmissao = txtDataEmissao.Value,
+                DataConclusao = txtDataConclusao.Value,
+                IDCliente = Convert.ToInt32(cmbCliente.SelectedValue),
+                IDMarca = Convert.ToInt32(cmbMarca.SelectedValue),
+                IDProduto = Convert.ToInt32(cmbProduto.SelectedValue),
+                NumeroSerie = txtNumeroSerie.Text,
+                DescricaoDefeito = txtDescricaoDefeito.Text,
+                ValorTotalServico = Convert.ToDecimal(StringUtils.SemFormatacao(txtValorTotalServico.Text)),
+                ValorTotalMaterial = Convert.ToDecimal(StringUtils.SemFormatacao(txtValorTotalMaterial.Text)),
+                Imagem = ImageToByteArray(imgImagemProduto.Image)
+            };
+
             if (!isAtualizacao)
             {
-                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Incluir Esse Produto?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show(
+                    "Tem certeza que deseja incluir esse lançamento de serviço?",
+                    "Confirmação",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
                 if (result == DialogResult.Yes)
                 {
-
-                    LancamentoServicoInfo lancamentoServico = new LancamentoServicoInfo
-                    {
-                        DataEmissao = txtDataEmissao.Value,
-                        DataConclusao = txtDataConclusao.Value,
-                        IDCliente = Convert.ToInt32(cmbCliente.SelectedValue),
-                        IDMarca = Convert.ToInt32(cmbMarca.SelectedValue),
-                        IDProduto = Convert.ToInt32(cmbProduto.SelectedValue),
-                        NumeroSerie = txtNumeroSerie.Text,
-                        DescricaoDefeito = txtDescricaoDefeito.Text,
-                        ValorTotalServico = Convert.ToDecimal(StringUtils.SemFormatacao(txtValorTotalServico.Text)),
-                        ValorTotalMaterial = Convert.ToDecimal(StringUtils.SemFormatacao(txtValorTotalMaterial.Text)),
-                        Imagem = ImageToByteArray(imgImagemProduto.Image)
-                    };
-                    InserirLancamentoServico(lancamentoServico);
-
+                    InserirLancamentoServicoAsync(lancamentoServico); // ✅ chamada assíncrona
                 }
             }
             else
             {
-                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Salvar as Alterações Realizadas?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                lancamentoServico.IDOrdenServico = Convert.ToInt32(txtIDOrdenServico.Text);
+
+                DialogResult result = MessageBox.Show(
+                    "Tem certeza que deseja salvar as alterações realizadas?",
+                    "Confirmação",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
                 if (result == DialogResult.Yes)
                 {
-
-                    LancamentoServicoInfo lancamentoServico = new LancamentoServicoInfo
-                    {
-                        IDOrdenServico = int.Parse(txtIDOrdenServico.Text),
-                        DataEmissao = txtDataEmissao.Value,
-                        DataConclusao = txtDataConclusao.Value,
-                        IDCliente = Convert.ToInt32(cmbCliente.SelectedValue),
-                        IDMarca = Convert.ToInt32(cmbMarca.SelectedValue),
-                        IDProduto = Convert.ToInt32(cmbProduto.SelectedValue),
-                        NumeroSerie = txtNumeroSerie.Text,
-                        DescricaoDefeito = txtDescricaoDefeito.Text,
-                        ValorTotalServico = Convert.ToDecimal(StringUtils.SemFormatacao(txtValorTotalServico.Text)),
-                        ValorTotalMaterial = Convert.ToDecimal(StringUtils.SemFormatacao(txtValorTotalMaterial.Text)),
-                        Imagem = ImageToByteArray(imgImagemProduto.Image)
-                    };
-                    AtualizarLancamentoServico(lancamentoServico);
-
+                    AtualizarLancamentoServicoAsync(lancamentoServico); // ✅ chamada assíncrona
                 }
             }
-            CarregarRegistros();
+
+            await CarregarRegistros(); // ✅ aguarda recarregamento
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
@@ -758,7 +809,7 @@ namespace OrdemServicos
             {
                 if (int.TryParse(txtIDOrdenServico.Text, out int ordenServicoID))
                 {
-                    ExcluirLancamentoServico(ordenServicoID);
+                    ExcluirLancamentoServicoAsync(ordenServicoID);
                 }
                 else
                 {
@@ -845,44 +896,51 @@ namespace OrdemServicos
             txtPesquisaListView.Clear();
             bNovo = false;
         }
-        static void InserirLancamentoServico(LancamentoServicoInfo lancamentoServico)
+        private static async Task InserirLancamentoServicoAsync(LancamentoServicoInfo lancamentoServico)
         {
             try
             {
-                LancamentoServicoBLL lancamentoServicoBLL = new LancamentoServicoBLL();
-                lancamentoServicoBLL.InserirLancamentoServico(lancamentoServico);
-                MessageBox.Show("Orden de Serviço Inserido com Sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var lancamentoServicoBLL = new LancamentoServicoBLL();
+                await lancamentoServicoBLL.InserirLancamentoServicoAsync(lancamentoServico); // ✅ chamada assíncrona
+                MessageBox.Show("Ordem de Serviço inserida com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        static void AtualizarLancamentoServico(LancamentoServicoInfo lancamentoServico)
+        private static async Task AtualizarLancamentoServicoAsync(LancamentoServicoInfo lancamentoServico)
         {
             try
             {
-                LancamentoServicoBLL lancamentoServicoBLL = new LancamentoServicoBLL();
-                lancamentoServicoBLL.AtualizarLancamentoServico(lancamentoServico);
-                MessageBox.Show("Orden de Serviço Atualizado com Sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var lancamentoServicoBLL = new LancamentoServicoBLL();
+                await lancamentoServicoBLL.AtualizarLancamentoServicoAsync(lancamentoServico); // ✅ chamada assíncrona
+                MessageBox.Show("Ordem de Serviço atualizada com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        static void ExcluirLancamentoServico(int idOrdenServico)
+        private static async Task ExcluirLancamentoServicoAsync(int idOrdenServico)
         {
             try
             {
-                LancamentoServicoBLL lancamentoServicoBLL = new LancamentoServicoBLL();
-                lancamentoServicoBLL.ExcluirLancamentoServico(idOrdenServico); ;
-                MessageBox.Show("Orden de Serviço Excluído com Sucesso!", "Informaçâo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var lancamentoServicoBLL = new LancamentoServicoBLL();
+                await lancamentoServicoBLL.ExcluirLancamentoServicoAsync(idOrdenServico); // ✅ chamada assíncrona
+                MessageBox.Show("Ordem de Serviço excluída com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-	}
+
+    }
 }

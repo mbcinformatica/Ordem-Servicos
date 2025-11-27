@@ -1,35 +1,42 @@
 ﻿using OrdemServicos.DAL;
 using OrdemServicos.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.BLL
 {
     public class ClienteBLL
     {
-        public List<ClienteInfo> Listar()
+        private readonly ClienteDAL clienteDAL;
+
+        public ClienteBLL()
         {
-            ClienteDAL clienteDAL = new ClienteDAL();
-            return clienteDAL.Listar();
+            clienteDAL = new ClienteDAL();
         }
-        public ClienteInfo GetCliente(int IDCliente)
+
+        public async Task<List<ClienteInfo>> ListarAsync()
         {
-            ClienteDAL clienteDAL = new ClienteDAL();
-            return clienteDAL.GetCliente(IDCliente);
+            return await clienteDAL.ListarAsync();
         }
-        public void AtualizarCliente(ClienteInfo Cliente)
+
+        public async Task<ClienteInfo> GetClienteAsync(int idCliente)
         {
-            ClienteDAL clienteDAL = new ClienteDAL();
-            clienteDAL.AtualizarCliente(Cliente);
+            return await clienteDAL.GetClienteAsync(idCliente);
         }
-        public void InserirCliente(ClienteInfo Cliente)
+
+        public async Task AtualizarClienteAsync(ClienteInfo cliente)
         {
-            ClienteDAL clienteDAL = new ClienteDAL();
-            clienteDAL.InserirCliente(Cliente);
+            await clienteDAL.AtualizarClienteAsync(cliente);
         }
-        public void ExcluirCliente(int IdCliente)
+
+        public async Task InserirClienteAsync(ClienteInfo cliente)
         {
-            ClienteDAL clienteDAL = new ClienteDAL();
-            clienteDAL.ExcluirCliente(IdCliente);
+            await clienteDAL.InserirClienteAsync(cliente);
+        }
+
+        public async Task ExcluirClienteAsync(int idCliente)
+        {
+            await clienteDAL.ExcluirClienteAsync(idCliente);
         }
     }
 }

@@ -3,90 +3,74 @@ using iTextSharp.text.pdf;
 using OrdemServicos.BLL;
 using OrdemServicos.Model;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace OrdemServicos
 {
     public class RelatorioUsuarios
     {
-        public void GerarRelatorioUsuarios(string caminhoArquivo)
+        public async Task<string> GerarRelatorioUsuariosAsync(string caminhoArquivo)
         {
-            // Obter dados dos usuarios usando a camada BLL
-            UsuarioBLL usuarioBLL = new UsuarioBLL();
-            List<UsuarioInfo> usuarios = usuarioBLL.Listar();
-
-            // Verificar se a lista de usuarios está vazia
-            if (usuarios.Count == 0)
+            return await Task.Run(() =>
             {
-                MessageBox.Show("Nenhum Dados de Usuários Disponível para Gerar o Relatório.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+                var usuarioBLL = new UsuarioBLL();
+                List<UsuarioInfo> usuarios = usuarioBLL.Listar();
 
-            // Configurar documento para A4 paisagem com margens
-            Document doc = new Document(PageSize.A4.Rotate());
-            doc.SetMargins(20f, 20f, 90f, 40f);
-            PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(caminhoArquivo, FileMode.Create));
+                if (usuarios.Count == 0)
+                {
+                    return null; // retorna nulo se não houver dados
+                }
 
-            // Adicionar evento de página personalizado com título
-            HeaderFooter eventHandler = new HeaderFooter("Relatório de Usuários");
-            writer.PageEvent = eventHandler;
+                using (Document doc = new Document(PageSize.A4.Rotate()))
+                {
+                    doc.SetMargins(20f, 20f, 90f, 40f);
+                    PdfWriter writer = PdfWriter.GetInstance(doc, new FileStream(caminhoArquivo, FileMode.Create));
 
-            doc.Open();
+                    HeaderFooter eventHandler = new HeaderFooter("Relatório de Usuários");
+                    writer.PageEvent = eventHandler;
 
+                    doc.Open();
 
-            // Criar tabela
-            PdfPTable tabela = new PdfPTable(10);
-            tabela.WidthPercentage = 100;
+                    PdfPTable tabela = new PdfPTable(10);
+                    tabela.WidthPercentage = 100;
+                    tabela.SetWidths(new float[] { 56f, 56f, 40f, 14f, 30f, 36f, 14f, 20f, 20f, 35f });
 
-            // Configurar larguras das colunas
-            tabela.SetWidths(new float[] { 56f, 56f, 40f, 14f, 30f, 36f, 14f, 20f, 20f, 35f });
+                    HeaderFooter.AdicionarCelulaCabecalho(tabela, "NOME");
+                    HeaderFooter.AdicionarCelulaCabecalho(tabela, "LOGIN");
+                    HeaderFooter.AdicionarCelulaCabecalho(tabela, "ENDEREÇO");
+                    HeaderFooter.AdicionarCelulaCabecalho(tabela, "NUMERO");
+                    HeaderFooter.AdicionarCelulaCabecalho(tabela, "BAIRRO");
+                    HeaderFooter.AdicionarCelulaCabecalho(tabela, "MUNICIPIO");
+                    HeaderFooter.AdicionarCelulaCabecalho(tabela, "CEP");
+                    HeaderFooter.AdicionarCelulaCabecalho(tabela, "CELULAR");
+                    HeaderFooter.AdicionarCelulaCabecalho(tabela, "FIXO");
+                    HeaderFooter.AdicionarCelulaCabecalho(tabela, "EMAIL");
 
-            // Adicionar cabeçalhos
-            HeaderFooter.AdicionarCelulaCabecalho(tabela, "NOME");
-            HeaderFooter.AdicionarCelulaCabecalho(tabela, "LOGIN");
-            HeaderFooter.AdicionarCelulaCabecalho(tabela, "ENDEREÇO");
-            HeaderFooter.AdicionarCelulaCabecalho(tabela, "NUMERO");
-            HeaderFooter.AdicionarCelulaCabecalho(tabela, "BAIRRO");
-            HeaderFooter.AdicionarCelulaCabecalho(tabela, "MUNICIPIO");
-            HeaderFooter.AdicionarCelulaCabecalho(tabela, "CEP");
-            HeaderFooter.AdicionarCelulaCabecalho(tabela, "CELULAR");
-            HeaderFooter.AdicionarCelulaCabecalho(tabela, "FIXO");
-            HeaderFooter.AdicionarCelulaCabecalho(tabela, "EMAIL");
+                    tabela.HeaderRows = 1;
 
-            // Configurar a tabela para repetir os cabeçalhos em todas as páginas
-            tabela.HeaderRows = 1;
+                    bool linhaPar = false;
+                    foreach (var usuario in usuarios)
+                    {
+                        var corLinha = linhaPar ? BaseColor.LIGHT_GRAY : BaseColor.WHITE;
+                        HeaderFooter.AdicionarCelulaDado(tabela, usuario.Nome, 125f, Element.ALIGN_LEFT, corLinha);
+                        HeaderFooter.AdicionarCelulaDado(tabela, usuario.Login, 125f, Element.ALIGN_LEFT, corLinha);
+                        HeaderFooter.AdicionarCelulaDado(tabela, usuario.Endereco, 90f, Element.ALIGN_LEFT, corLinha);
+                        HeaderFooter.AdicionarCelulaDado(tabela, usuario.Numero, 10f, Element.ALIGN_RIGHT, corLinha);
+                        HeaderFooter.AdicionarCelulaDado(tabela, usuario.Bairro, 70f, Element.ALIGN_LEFT, corLinha);
+                        HeaderFooter.AdicionarCelulaDado(tabela, usuario.Municipio, 90f, Element.ALIGN_LEFT, corLinha);
+                        HeaderFooter.AdicionarCelulaDado(tabela, Utils.StringUtils.FormatCEP(usuario.Cep), 40f, Element.ALIGN_RIGHT, corLinha);
+                        HeaderFooter.AdicionarCelulaDado(tabela, Utils.StringUtils.FormatPhoneNumber(usuario.Fone_1), 47f, Element.ALIGN_RIGHT, corLinha);
+                        HeaderFooter.AdicionarCelulaDado(tabela, Utils.StringUtils.FormatPhoneNumber(usuario.Fone_2), 45f, Element.ALIGN_RIGHT, corLinha);
+                        HeaderFooter.AdicionarCelulaDado(tabela, usuario.Email, 80f, Element.ALIGN_LEFT, corLinha);
+                        linhaPar = !linhaPar;
+                    }
 
-            // Adicionar dados dos usuarios com cores alternadas
-            bool linhaPar = false;
-            foreach (var usuario in usuarios)
-            {
-                BaseColor corLinha = linhaPar ? BaseColor.LIGHT_GRAY : BaseColor.WHITE;
-                HeaderFooter.AdicionarCelulaDado(tabela, usuario.Nome, 125f, Element.ALIGN_LEFT, corLinha);
-                HeaderFooter.AdicionarCelulaDado(tabela, usuario.Login, 125f, Element.ALIGN_LEFT, corLinha);
-                HeaderFooter.AdicionarCelulaDado(tabela, usuario.Endereco, 90f, Element.ALIGN_LEFT, corLinha);
-                HeaderFooter.AdicionarCelulaDado(tabela, usuario.Numero, 10f, Element.ALIGN_RIGHT, corLinha);
-                HeaderFooter.AdicionarCelulaDado(tabela, usuario.Bairro, 70f, Element.ALIGN_LEFT, corLinha);
-                HeaderFooter.AdicionarCelulaDado(tabela, usuario.Municipio, 90f, Element.ALIGN_LEFT, corLinha);
-                HeaderFooter.AdicionarCelulaDado(tabela, Utils.StringUtils.FormatCEP(usuario.Cep), 40f, Element.ALIGN_RIGHT, corLinha);
-                HeaderFooter.AdicionarCelulaDado(tabela, Utils.StringUtils.FormatPhoneNumber(usuario.Fone_1), 47f, Element.ALIGN_RIGHT, corLinha);
-                HeaderFooter.AdicionarCelulaDado(tabela, Utils.StringUtils.FormatPhoneNumber(usuario.Fone_2), 45f, Element.ALIGN_RIGHT, corLinha);
-                HeaderFooter.AdicionarCelulaDado(tabela, usuario.Email, 80f, Element.ALIGN_LEFT, corLinha);
-                linhaPar = !linhaPar;
-            }
-
-            // Adicionar tabela ao documento
-            doc.Add(tabela);
-
-            // Fechar documento
-            doc.Close();
-
-            // Exiba uma mensagem de confirmação
-            MessageBox.Show("Relatório Gerado com Sucesso em: \n\n " + caminhoArquivo, "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // Abre arquivo PDF
-            Process.Start(new ProcessStartInfo(caminhoArquivo) { UseShellExecute = true });
+                    doc.Add(tabela);
+                    doc.Close();
+                }
+                return caminhoArquivo;
+            });
         }
     }
 }

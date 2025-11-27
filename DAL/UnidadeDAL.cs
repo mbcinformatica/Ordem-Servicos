@@ -3,172 +3,153 @@ using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.DAL
 {
     public class UnidadeDAL
     {
         private readonly string connectionString;
+
         public UnidadeDAL()
         {
-            try
-            {
-                connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-            }
-            catch (ConfigurationErrorsException ex)
-            {
-                MessageBox.Show("Erro ao carregar configuração do banco: " + ex.Message,
-                                "Erro de Configuração", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            connectionString = ConfigurationManager.AppSettings["ConnectionString"];
         }
 
-        public List<UnidadeInfo> Listar()
+        public async Task<List<UnidadeInfo>> ListarAsync()
         {
-            List<UnidadeInfo> UnidadesList = new List<UnidadeInfo>();
+            var unidadesList = new List<UnidadeInfo>();
+
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
                     string query = "SELECT * FROM DBUnidades";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        while (reader.Read())
+                        while (await reader.ReadAsync())
                         {
-                            UnidadeInfo unidade = new UnidadeInfo
+                            var unidade = new UnidadeInfo
                             {
                                 IDUnidade = Convert.ToInt32(reader["IDUnidade"]),
                                 Descricao = reader["Descricao"].ToString()
                             };
-                            UnidadesList.Add(unidade);
+                            unidadesList.Add(unidade);
                         }
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao listar unidades: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao listar unidades: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao listar unidades: " + ex.Message, ex);
             }
-            return UnidadesList;
+
+            return unidadesList;
         }
 
-        public UnidadeInfo GetUnidade(int IDUnidade)
+        public async Task<UnidadeInfo> GetUnidadeAsync(int idUnidade)
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
                     string query = "SELECT * FROM DBUnidades WHERE IDUnidade = @IDUnidade";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@IDUnidade", IDUnidade);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+
+                    using (var cmd = new MySqlCommand(query, conn))
                     {
-                        if (reader.Read())
+                        cmd.Parameters.AddWithValue("@IDUnidade", idUnidade);
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
                         {
-                            return new UnidadeInfo
+                            if (await reader.ReadAsync())
                             {
-                                IDUnidade = Convert.ToInt32(reader["IDUnidade"]),
-                                Descricao = reader["Descricao"].ToString()
-                            };
+                                return new UnidadeInfo
+                                {
+                                    IDUnidade = Convert.ToInt32(reader["IDUnidade"]),
+                                    Descricao = reader["Descricao"].ToString()
+                                };
+                            }
                         }
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao buscar unidade: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao buscar unidade: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao buscar unidade: " + ex.Message, ex);
             }
+
             return null;
         }
 
-        public void AtualizarUnidade(UnidadeInfo unidade)
+        public async Task AtualizarUnidadeAsync(UnidadeInfo unidade)
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
                     string query = "UPDATE DBUnidades SET Descricao = @Descricao WHERE IDUnidade = @IDUnidade";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@Descricao", unidade.Descricao);
-                    cmd.Parameters.AddWithValue("@IDUnidade", unidade.IDUnidade);
-                    cmd.ExecuteNonQuery();
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Descricao", unidade.Descricao);
+                        cmd.Parameters.AddWithValue("@IDUnidade", unidade.IDUnidade);
+
+                        await cmd.ExecuteNonQueryAsync();
+                    }
                 }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao atualizar unidade: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao atualizar unidade: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao atualizar unidade: " + ex.Message, ex);
             }
         }
 
-        public void InserirUnidade(UnidadeInfo unidade)
+        public async Task InserirUnidadeAsync(UnidadeInfo unidade)
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
                     string query = "INSERT INTO DBUnidades (Descricao) VALUES (@Descricao)";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@Descricao", unidade.Descricao);
-                    cmd.ExecuteNonQuery();
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Descricao", unidade.Descricao);
+                        await cmd.ExecuteNonQueryAsync();
+                    }
                 }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao inserir unidade: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao inserir unidade: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao inserir unidade: " + ex.Message, ex);
             }
         }
 
-        public void ExcluirUnidade(int IDUnidade)
+        public async Task ExcluirUnidadeAsync(int idUnidade)
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
                     string query = "DELETE FROM DBUnidades WHERE IDUnidade = @IDUnidade";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@IDUnidade", IDUnidade);
-                    cmd.ExecuteNonQuery();
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@IDUnidade", idUnidade);
+                        await cmd.ExecuteNonQueryAsync();
+                    }
                 }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao excluir unidade: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao excluir unidade: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao excluir unidade: " + ex.Message, ex);
             }
         }
     }

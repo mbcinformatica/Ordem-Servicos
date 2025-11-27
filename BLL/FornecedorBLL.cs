@@ -1,35 +1,42 @@
 ﻿using OrdemServicos.DAL;
 using OrdemServicos.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.BLL
 {
     public class FornecedorBLL
     {
-        public List<FornecedorInfo> Listar()
+        private readonly FornecedorDAL fornecedorDAL;
+
+        public FornecedorBLL()
         {
-            FornecedorDAL fornecedorDAL = new FornecedorDAL();
-            return fornecedorDAL.Listar();
+            fornecedorDAL = new FornecedorDAL();
         }
-        public FornecedorInfo GetFornecedor(int IDFornecedor)
+
+        public async Task<List<FornecedorInfo>> ListarAsync()
         {
-            FornecedorDAL fornecedorDAL = new FornecedorDAL();
-            return fornecedorDAL.GetFornecedor(IDFornecedor);
+            return await fornecedorDAL.ListarAsync();
         }
-        public void AtualizarFornecedor(FornecedorInfo Fornecedor)
+
+        public async Task<FornecedorInfo> GetFornecedorAsync(int idFornecedor)
         {
-            FornecedorDAL fornecedorDAL = new FornecedorDAL();
-            fornecedorDAL.AtualizarFornecedor(Fornecedor);
+            return await fornecedorDAL.GetFornecedorAsync(idFornecedor);
         }
-        public void InserirFornecedor(FornecedorInfo Fornecedor)
+
+        public async Task AtualizarFornecedorAsync(FornecedorInfo fornecedor)
         {
-            FornecedorDAL fornecedorDAL = new FornecedorDAL();
-            fornecedorDAL.InserirFornecedor(Fornecedor);
+            await fornecedorDAL.AtualizarFornecedorAsync(fornecedor);
         }
-        public void ExcluirFornecedor(int IdFornecedor)
+
+        public async Task InserirFornecedorAsync(FornecedorInfo fornecedor)
         {
-            FornecedorDAL fornecedorDAL = new FornecedorDAL();
-            fornecedorDAL.ExcluirFornecedor(IdFornecedor);
+            await fornecedorDAL.InserirFornecedorAsync(fornecedor);
+        }
+
+        public async Task ExcluirFornecedorAsync(int idFornecedor)
+        {
+            await fornecedorDAL.ExcluirFornecedorAsync(idFornecedor);
         }
     }
 }

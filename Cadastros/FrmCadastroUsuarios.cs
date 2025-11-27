@@ -12,6 +12,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OrdemServicos
@@ -102,7 +103,7 @@ namespace OrdemServicos
             listViewUsuario.Invalidate(); // Redesenhar ListView para atualizar a cor do cabeçalho
             txtPesquisaListView.Focus();
         }
-        public class ListViewItemComparer : IComparer
+        private class ListViewItemComparer : IComparer
         {
             private int col;
             private bool ascending;
@@ -214,6 +215,98 @@ namespace OrdemServicos
                 e.Graphics.DrawString(e.SubItem.Text, e.SubItem.Font, Brushes.Black, e.Bounds, sf);
             }
         }
+        public override async Task CarregarRegistros()
+        {
+            DesabilitarCamposDoFormulario();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
+            listViewUsuario.Items.Clear();
+            listViewUsuario.Columns.Clear();
+            InitializeListView(); // Adicionar colunas novamente, caso necessário
+
+            try
+            {
+                UsuarioBLL usuarioBLL = new UsuarioBLL();
+                List<UsuarioInfo> usuarios = usuarioBLL.Listar();
+                foreach (UsuarioInfo usuario in usuarios)
+                {
+                    ListViewItem item = new ListViewItem(usuario.IDUsuario.ToString());
+                    item.SubItems.Add(usuario.Nome);
+                    item.SubItems.Add(usuario.Login);
+                    item.SubItems.Add(usuario.Endereco);
+                    item.SubItems.Add(usuario.Numero);
+                    item.SubItems.Add(usuario.Bairro);
+                    item.SubItems.Add(usuario.Municipio);
+                    item.SubItems.Add(usuario.UF);
+                    item.SubItems.Add(StringUtils.FormatCEP(usuario.Cep));
+                    item.SubItems.Add(StringUtils.FormatPhoneNumber(usuario.Fone_1));
+                    item.SubItems.Add(StringUtils.FormatPhoneNumber(usuario.Fone_2));
+                    item.SubItems.Add(usuario.Email);
+                    item.SubItems.Add(usuario.DataCadastro.ToString("dd/MM/yyyy"));
+
+                    if (usuario.Imagem != null && usuario.Imagem.Length > 0)
+                    {
+                        using (MemoryStream ms = new MemoryStream(usuario.Imagem))
+                        {
+                            Image imgImagemUsuario = Image.FromStream(ms);
+                        }
+                    }
+                    listViewUsuario.Items.Add(item);
+                }
+
+                listaOriginalItens = listViewUsuario.Items.Cast<ListViewItem>().ToList();
+                lbTotalRegistros.Text = "Total de Registros..:  " + listViewUsuario.Items.Count;
+                sortColumn = 1;
+                sortAscending = true;
+                listViewUsuario.Sort();
+                listViewUsuario.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
+                ajustaLarguraCabecalho(listViewUsuario);
+                tabControlUsuarios.SelectedTab = tabDadosUsuario;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar registros: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            LimparCampos();
+        }
+        private void ListViewUsuarios_Click(object sender, EventArgs e)
+        {
+            escPressed = false;
+            if (listViewUsuario.SelectedItems.Count > 0)
+            {
+                ListViewItem item = listViewUsuario.SelectedItems[0];
+                txtIDUsuario.Text = item.SubItems[0].Text;
+                txtNome.Text = item.SubItems[1].Text;
+                txtLogin.Text = item.SubItems[2].Text;
+                txtEndereco.Text = item.SubItems[3].Text;
+                txtNumero.Text = item.SubItems[4].Text;
+                txtBairro.Text = item.SubItems[5].Text;
+                txtMunicipio.Text = item.SubItems[6].Text;
+                txtUF.Text = item.SubItems[7].Text;
+                txtCep.Text = item.SubItems[8].Text;
+                txtFone_1.Text = item.SubItems[9].Text;
+                txtFone_2.Text = item.SubItems[10].Text;
+                txtEmail.Text = item.SubItems[11].Text;
+                txtDataCadastro.Text = item.SubItems[12].Text;
+                // Exibir a imagem no PictureBox
+                UsuarioBLL usuarioBLL = new UsuarioBLL();
+                UsuarioInfo usuario = usuarioBLL.GetUsuario(Convert.ToInt32(item.SubItems[0].Text));
+                if (usuario.Imagem != null && usuario.Imagem.Length > 0)
+                {
+                    using (MemoryStream ms = new MemoryStream(usuario.Imagem))
+                    {
+                        imgImagemUsuario.Image?.Dispose();
+                        imgImagemUsuario.Image = Image.FromStream(ms);
+                        imgImagemUsuario.SizeMode = PictureBoxSizeMode.StretchImage;
+                    }
+                }
+                else
+                {
+                    imgImagemUsuario.Image = null;
+                }
+                EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
+            }
+        }
         private void CarregaKey()
         {
             controlesKeyPress.AddRange(new Control[] {
@@ -322,15 +415,17 @@ namespace OrdemServicos
             };
             EventosUtils.AdicionarToolTips(this, controlToolTipPairs, tlpDicas);
         }
-        public override void ExecutaFuncaoEvento(Control control)
+        public override async void ExecutaFuncaoEventoAsync(Control control)
         {
             if (control == txtNome && bNovo)
             {
-                DBSetupBLL dbSetupBLL = new DBSetupBLL();
+                var dbSetupBLL = new DBSetupBLL();
                 string nome = txtNome.Text;
-                if (dbSetupBLL.VerificarSeCadastrado(nome, "DBUsuarios", "Nome"))
+
+                if (await dbSetupBLL.VerificarSeCadastradoAsync(nome, "DBUsuarios", "Nome")) // ✅ chamada assíncrona
                 {
-                    MessageBox.Show("Usuário já cadastrado. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Usuário já cadastrado. Favor verificar!",
+                                    "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtNome.Clear();
                     txtNome.Focus();
                     return;
@@ -341,21 +436,22 @@ namespace OrdemServicos
                 string senha = control.Text;
                 if (senha.Length < 6)
                 {
-                    MessageBox.Show("A Senha deve Conter no Mínimo Seis Caracter. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("A Senha deve conter no mínimo seis caracteres. Favor verificar!",
+                                    "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtSenha.Clear();
                     txtSenha.Focus();
                     return;
                 }
             }
-
             else if (control == txtLogin && bNovo)
             {
-                DBSetupBLL dbSetupBLL = new DBSetupBLL();
+                var dbSetupBLL = new DBSetupBLL();
                 string login = txtLogin.Text;
-                // Verifica se o Login já está cadastrado
-                if (dbSetupBLL.VerificarSeCadastrado(login, "DBUsuarios", "Login"))
+
+                if (await dbSetupBLL.VerificarSeCadastradoAsync(login, "DBUsuarios", "Login")) // ✅ chamada assíncrona
                 {
-                    MessageBox.Show("Login já cadastrado. Favor verificar!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Login já cadastrado. Favor verificar!",
+                                    "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     txtLogin.Clear();
                     txtLogin.Focus();
                     return;
@@ -372,14 +468,15 @@ namespace OrdemServicos
             {
                 if (txtSenha.Text != txtConfirmaSenha.Text)
                 {
-                    MessageBox.Show("As senhas não Coincidem.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("As senhas não coincidem.",
+                                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtConfirmaSenha.Focus();
                 }
             }
             else if (control == txtCep && !string.IsNullOrEmpty(txtCep.Text))
             {
                 string cep = StringUtils.SemFormatacao(txtCep.Text);
-                PesquisaCep(cep);
+                await PesquisaCepAsync(cep); // ✅ se PesquisaCep tiver versão assíncrona
                 control.Text = StringUtils.FormatCEP(cep);
             }
         }
@@ -428,96 +525,6 @@ namespace OrdemServicos
             txtFone_2.TabIndex = 11;
             txtEmail.TabIndex = 12;
             btnSalvar.TabIndex = 13;
-        }
-        public override void CarregarRegistros()
-        {
-            DesabilitarCamposDoFormulario();
-            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
-            listViewUsuario.Items.Clear();
-            listViewUsuario.Columns.Clear();
-            InitializeListView(); // Adicionar colunas novamente, caso necessário
-
-            try
-            {
-                UsuarioBLL usuarioBLL = new UsuarioBLL();
-                List<UsuarioInfo> usuarios = usuarioBLL.Listar();
-                foreach (UsuarioInfo usuario in usuarios)
-                {
-                    ListViewItem item = new ListViewItem(usuario.IDUsuario.ToString());
-                    item.SubItems.Add(usuario.Nome);
-                    item.SubItems.Add(usuario.Login);
-                    item.SubItems.Add(usuario.Endereco);
-                    item.SubItems.Add(usuario.Numero);
-                    item.SubItems.Add(usuario.Bairro);
-                    item.SubItems.Add(usuario.Municipio);
-                    item.SubItems.Add(usuario.UF);
-                    item.SubItems.Add(StringUtils.FormatCEP(usuario.Cep));
-                    item.SubItems.Add(StringUtils.FormatPhoneNumber(usuario.Fone_1));
-                    item.SubItems.Add(StringUtils.FormatPhoneNumber(usuario.Fone_2));
-                    item.SubItems.Add(usuario.Email);
-                    item.SubItems.Add(usuario.DataCadastro.ToString("dd/MM/yyyy"));
-
-                    if (usuario.Imagem != null && usuario.Imagem.Length > 0)
-                    {
-                        using (MemoryStream ms = new MemoryStream(usuario.Imagem))
-                        {
-                            Image imgImagemUsuario = Image.FromStream(ms);
-                        }
-                    }
-                    listViewUsuario.Items.Add(item);
-                }
-
-                listaOriginalItens = listViewUsuario.Items.Cast<ListViewItem>().ToList();
-                lbTotalRegistros.Text = "Total de Registros..:  " + listViewUsuario.Items.Count;
-                sortColumn = 1;
-                sortAscending = true;
-                listViewUsuario.Sort();
-                listViewUsuario.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
-                ajustaLarguraCabecalho(listViewUsuario);
-                tabControlUsuarios.SelectedTab = tabDadosUsuario;
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao carregar registros: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            LimparCampos();
-        }
-        private void ListViewUsuarios_Click(object sender, EventArgs e)
-        {
-            escPressed = false;
-            if (listViewUsuario.SelectedItems.Count > 0)
-            {
-                ListViewItem item = listViewUsuario.SelectedItems[0];
-                txtIDUsuario.Text = item.SubItems[0].Text;
-                txtNome.Text = item.SubItems[1].Text;
-                txtLogin.Text = item.SubItems[2].Text;
-                txtEndereco.Text = item.SubItems[3].Text;
-                txtNumero.Text = item.SubItems[4].Text;
-                txtBairro.Text = item.SubItems[5].Text;
-                txtMunicipio.Text = item.SubItems[6].Text;
-                txtUF.Text = item.SubItems[7].Text;
-                txtCep.Text = item.SubItems[8].Text;
-                txtFone_1.Text = item.SubItems[9].Text;
-                txtFone_2.Text = item.SubItems[10].Text;
-                txtEmail.Text = item.SubItems[11].Text;
-                txtDataCadastro.Text = item.SubItems[12].Text;
-                // Exibir a imagem no PictureBox
-                UsuarioBLL usuarioBLL = new UsuarioBLL();
-                UsuarioInfo usuario = usuarioBLL.GetUsuario(Convert.ToInt32(item.SubItems[0].Text));
-                if (usuario.Imagem != null && usuario.Imagem.Length > 0)
-                {
-                    using (MemoryStream ms = new MemoryStream(usuario.Imagem))
-                    {
-                        imgImagemUsuario.Image = Image.FromStream(ms);
-                    }
-                }
-                else
-                {
-                    imgImagemUsuario.Image = null;
-                }
-                EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
-            }
         }
         private void btnNovo_Click(object sender, EventArgs e)
         {
@@ -769,30 +776,43 @@ namespace OrdemServicos
             }
 
         }
-        private async void PesquisaCep(String Cep)
+        private async Task PesquisaCepAsync(string cepInput)
         {
-            if (!string.IsNullOrEmpty(Cep))
+            if (string.IsNullOrWhiteSpace(cepInput))
+                return;
+
+            try
             {
-                string cep = StringUtils.SemFormatacao(Cep);
-                var resultado = await StringUtils.BuscarCEP(cep);
+                string cep = StringUtils.SemFormatacao(cepInput);
+                var resultado = await StringUtils.BuscarCEP(cep); // ✅ chamada assíncrona
 
                 if (!string.IsNullOrEmpty(resultado))
                 {
                     dynamic dados = JObject.Parse(resultado);
+
                     txtEndereco.Text = dados.logradouro ?? "";
+
                     if (string.IsNullOrEmpty(txtNumero.Text))
                     {
-                        txtNumero.Clear();
+                        txtNumero.Text = "S/N"; // ✅ mais útil que apenas limpar
                     }
+
                     txtBairro.Text = dados.bairro ?? "";
                     txtMunicipio.Text = dados.localidade ?? "";
                     txtUF.Text = dados.uf ?? "";
                 }
                 else
                 {
-                    MessageBox.Show("CEP não encontrado ou erro ao buscar o CEP.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("CEP não encontrado ou erro ao buscar o CEP.",
+                                    "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao consultar CEP: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             txtEndereco.Focus();
         }
         private void btnInserirImagem_Click(object sender, EventArgs e)

@@ -12,7 +12,7 @@ namespace OrdemServicos
 {
     public partial class frmLogin : BaseForm
     {
-        private static readonly string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
+        private static readonly string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
 
 		private (Control, string)[] camposObrigatorios;
         private int nTentativasLogin = 0;
@@ -65,7 +65,7 @@ namespace OrdemServicos
 
             EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
         }
-        public override void ExecutaFuncaoEvento(Control control)
+        public override void ExecutaFuncaoEventoAsync(Control control)
         {
             if (control == txtLogin)
             {

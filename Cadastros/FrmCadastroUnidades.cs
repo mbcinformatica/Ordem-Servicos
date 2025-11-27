@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace OrdemServicos
 {
@@ -81,7 +82,7 @@ namespace OrdemServicos
 			listViewUnidades.Invalidate(); // Redesenhar ListView para atualizar a cor do cabeçalho
 			txtPesquisaListView.Focus();
 		}
-		public class ListViewItemComparer : IComparer
+		private class ListViewItemComparer : IComparer
 		{
 			private int col;
 			private bool ascending;
@@ -233,7 +234,7 @@ namespace OrdemServicos
 			txtPesquisaListView.Focus();
 
 		}
-		public override void ExecutaFuncaoEvento( Control control )
+		public override void ExecutaFuncaoEventoAsync( Control control )
 		{
 			if (control == txtDescricao)
 			{
@@ -263,40 +264,44 @@ namespace OrdemServicos
 			txtDescricao.TabIndex = 0;
 			btnSalvar.TabIndex = 1;
 		}
-		public override void CarregarRegistros()
-		{
-			DesabilitarCamposDoFormulario();
-			EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
-			listViewUnidades.Items.Clear();
-			listViewUnidades.Columns.Clear();
-			InitializeListView();
-			try
-			{
-				UnidadeBLL marcaBLL = new UnidadeBLL();
-				List<UnidadeInfo> unidades = marcaBLL.Listar();
-				foreach (UnidadeInfo marca in unidades)
-				{
-					ListViewItem item = new ListViewItem(marca.IDUnidade.ToString());
-					item.SubItems.Add(marca.Descricao);
-					listViewUnidades.Items.Add(item);
-				}
+        public override async Task CarregarRegistros()
+        {
+            DesabilitarCamposDoFormulario();
+            EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
+            listViewUnidades.Items.Clear();
+            listViewUnidades.Columns.Clear();
+            InitializeListView();
 
-				listaOriginalItens = listViewUnidades.Items.Cast<ListViewItem>().ToList();
-				lbTotalRegistros.Text = "Total de Registros: " + listViewUnidades.Items.Count;
-				sortColumn = 1;
-				sortAscending = true;
-				listViewUnidades.Sort();
-				listViewUnidades.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
-				tabControlUnidades.SelectedTab = tabDadosUnidade;
+            try
+            {
+                var unidadeBLL = new UnidadeBLL();
+                var unidades = await unidadeBLL.ListarAsync(); // ✅ chamada assíncrona
 
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-			LimparCampos();
+                foreach (var unidade in unidades)
+                {
+                    var item = new ListViewItem(unidade.IDUnidade.ToString());
+                    item.SubItems.Add(unidade.Descricao);
+                    listViewUnidades.Items.Add(item);
+                }
+
+                listaOriginalItens = listViewUnidades.Items.Cast<ListViewItem>().ToList();
+                lbTotalRegistros.Text = "Total de Registros: " + listViewUnidades.Items.Count;
+
+                sortColumn = 1;
+                sortAscending = true;
+                listViewUnidades.Sort();
+                listViewUnidades.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
+
+                tabControlUnidades.SelectedTab = tabDadosUnidade;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            LimparCampos();
         }
-		private void ListViewUnidades_Click( object sender, EventArgs e )
+        private void ListViewUnidades_Click( object sender, EventArgs e )
 		{
 			escPressed = false;
 			if (listViewUnidades.SelectedItems.Count > 0)
@@ -315,62 +320,70 @@ namespace OrdemServicos
 			bNovo = true;
 			HabilitarCamposDoFormulario("Novo");
 		}
-		private void btnSalvar_Click( object sender, EventArgs e )
-		{
-			UnidadeBLL marcaBLL = new UnidadeBLL();
-			// Verificar se algum campo obrigatório está vazio
-			if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
-			{
-				MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private async void btnSalvar_Click(object sender, EventArgs e)
+        {
+            var unidadeBLL = new UnidadeBLL();
 
-				return;
-			}
-			bool isAtualizacao = false;
-			if (!string.IsNullOrEmpty(txtIDUnidade.Text))
-			{
-				int idUnidade = Convert.ToInt32(txtIDUnidade.Text);
-				isAtualizacao = marcaBLL.GetUnidade(idUnidade) != null;
-			}
-			if (!isAtualizacao)
-			{
-				DialogResult result = MessageBox.Show("Tem Certeza que Deseja Incluir Esse Unidade?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-				if (result == DialogResult.Yes)
-				{
-					UnidadeInfo marca = new UnidadeInfo
-					{
-						Descricao = txtDescricao.Text,
-					};
-					InserirUnidade(marca);
-				}
-			}
-			else
-			{
-				DialogResult result = MessageBox.Show("Tem Certeza que Deseja Salvar as Alterações Realizadas?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-				if (result == DialogResult.Yes)
-				{
-					UnidadeInfo marca = new UnidadeInfo
-					{
-						IDUnidade = int.Parse(txtIDUnidade.Text),
-						Descricao = txtDescricao.Text,
-					};
-					AtualizarUnidade(marca);
-				}
-			}
-			CarregarRegistros();
-		}
-		private void btnAlterar_Click( object sender, EventArgs e )
+            // Verificar se algum campo obrigatório está vazio
+            if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
+            {
+                MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.",
+                                "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            bool isAtualizacao = false;
+            if (!string.IsNullOrEmpty(txtIDUnidade.Text))
+            {
+                int idUnidade = Convert.ToInt32(txtIDUnidade.Text);
+                isAtualizacao = await unidadeBLL.GetUnidadeAsync(idUnidade) != null; // ✅ chamada assíncrona
+            }
+
+            if (!isAtualizacao)
+            {
+                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Incluir Essa Unidade?",
+                                                      "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    var unidade = new UnidadeInfo
+                    {
+                        Descricao = txtDescricao.Text,
+                    };
+
+                    await InserirUnidadeAsync(unidade); // ✅ chamada assíncrona
+                }
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Salvar as Alterações Realizadas?",
+                                                      "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    var unidade = new UnidadeInfo
+                    {
+                        IDUnidade = int.Parse(txtIDUnidade.Text),
+                        Descricao = txtDescricao.Text,
+                    };
+
+                    await AtualizarUnidadeAsync(unidade); // ✅ chamada assíncrona
+                }
+            }
+
+            await CarregarRegistros(); // ✅ chamada assíncrona
+        }
+        private void btnAlterar_Click( object sender, EventArgs e )
 		{
 			EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
 			HabilitarCamposDoFormulario("Alterar");
 		}
-		private void btnExcluir_Click( object sender, EventArgs e )
+        private async void btnExcluir_ClickAsync( object sender, EventArgs e )
 		{
 			DialogResult result = MessageBox.Show("Tem Certeza que Deseja Excluir Esse Unidade?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			if (result == DialogResult.Yes)
 			{
 				if (int.TryParse(txtIDUnidade.Text, out int marcaID))
 				{
-					ExcluirUnidade(marcaID);
+					await ExcluirUnidadeAsync(marcaID);
 				}
 				else
 				{
@@ -428,44 +441,53 @@ namespace OrdemServicos
 			txtPesquisaListView.Clear();
 			bNovo = false;
 		}
-		static void InserirUnidade( UnidadeInfo Unidade )
-		{
-			try
-			{
-				UnidadeBLL UnidadeBLL = new UnidadeBLL();
-				UnidadeBLL.InserirUnidade(Unidade);
-				MessageBox.Show("Unidade Inserido com Sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
-		static void AtualizarUnidade( UnidadeInfo Unidade )
-		{
-			try
-			{
-				UnidadeBLL UnidadeBLL = new UnidadeBLL();
-				UnidadeBLL.AtualizarUnidade(Unidade);
-				MessageBox.Show("Unidade Atualizado com Sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
-		static void ExcluirUnidade( int idUnidade )
-		{
-			try
-			{
-				UnidadeBLL UnidadeBLL = new UnidadeBLL();
-				UnidadeBLL.ExcluirUnidade(idUnidade);
-				MessageBox.Show("Unidade Excluído com Sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
-	}
+        static async Task InserirUnidadeAsync(UnidadeInfo unidade)
+        {
+            try
+            {
+                var unidadeBLL = new UnidadeBLL();
+                await unidadeBLL.InserirUnidadeAsync(unidade); // ✅ chamada assíncrona
+                MessageBox.Show("Unidade inserida com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        static async Task AtualizarUnidadeAsync(UnidadeInfo unidade)
+        {
+            try
+            {
+                var unidadeBLL = new UnidadeBLL();
+                await unidadeBLL.AtualizarUnidadeAsync(unidade); // ✅ chamada assíncrona
+                MessageBox.Show("Unidade atualizada com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        static async Task ExcluirUnidadeAsync(int idUnidade)
+        {
+            try
+            {
+                var unidadeBLL = new UnidadeBLL();
+                await unidadeBLL.ExcluirUnidadeAsync(idUnidade); // ✅ chamada assíncrona
+                MessageBox.Show("Unidade excluída com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+    }
 }

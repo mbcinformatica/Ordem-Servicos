@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace OrdemServicos
 {
@@ -33,7 +34,7 @@ namespace OrdemServicos
             Paint += new PaintEventHandler(BaseForm_Paint);
             InitializeTabControl(tabControlModelos);
             erpProvider = new ErrorProvider();
-            ConfigurarComboBoxMarcas();
+            ConfigurarComboBox(cmbMarca);
             ConfigurarTextBox();
             CarregaKey();
             ConfigurarTabIndexControles();
@@ -54,6 +55,7 @@ namespace OrdemServicos
             listViewModelos.Columns.Add("  DESCRIÇÃO", 1000, HorizontalAlignment.Left);
             // Adicionar evento de clique no cabeçalho da coluna
             listViewModelos.ColumnClick += new ColumnClickEventHandler(ListViewModelos_ColumnClick);
+            listViewModelos.SelectedIndexChanged += ListViewModelos_SelectedIndexChanged;
         }
         private void ListViewModelos_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -86,7 +88,7 @@ namespace OrdemServicos
             listViewModelos.Invalidate(); // Redesenhar ListView para atualizar a cor do cabeçalho
             txtPesquisaListView.Focus();
         }
-        public class ListViewItemComparer : IComparer
+        private class ListViewItemComparer : IComparer
         {
             private int col;
             private bool ascending;
@@ -237,7 +239,7 @@ namespace OrdemServicos
             // Inicializar eventos para os controles
             EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
-            listViewModelos.Click += ListViewModelos_Click;
+            listViewModelos.SelectedIndexChanged += ListViewModelos_SelectedIndexChanged;
 
             // Focar no btnNovo ao iniciar
             txtPesquisaListView.Focus();
@@ -249,56 +251,66 @@ namespace OrdemServicos
             txtDescricao.TabIndex = 1;
             btnSalvar.TabIndex = 2;
         }
-        private bool MarcaExiste(string descricao)
+        private async Task<bool> MarcaExisteAsync(string descricao)
         {
-            MarcaBLL marcaBLL = new MarcaBLL();
-            List<MarcaInfo> marcas = marcaBLL.Listar();
+            var marcaBLL = new MarcaBLL();
+            var marcas = await marcaBLL.ListarAsync(); // ✅ chamada assíncrona
             return marcas.Any(m => m.Descricao.Equals(descricao, StringComparison.OrdinalIgnoreCase));
         }
-        private void ConfigurarComboBoxMarcas()
-        {
-            cmbMarca.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbMarca.AutoCompleteSource = AutoCompleteSource.ListItems;
-        }
-        public override void ExecutaFuncaoEvento(Control control)
+        public override async void ExecutaFuncaoEventoAsync(Control control)
         {
             if (control == cmbMarca)
             {
                 string marcaDigitada = cmbMarca.Text.ToUpper(); // Converte para maiúsculas
                 cmbMarca.Text = marcaDigitada; // Atualiza o texto no ComboBox
-                if (!MarcaExiste(marcaDigitada) && !string.IsNullOrEmpty(marcaDigitada))
+
+                if (!string.IsNullOrEmpty(marcaDigitada))
                 {
-                    try
+                    if (!await MarcaExisteAsync(marcaDigitada)) // ✅ chamada assíncrona
                     {
-                        DialogResult result = MessageBox.Show($"A Marca '{marcaDigitada}' não Existe. Deseja Cadastrá-la?", "Marca não Encontrada", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                        if (result == DialogResult.Yes)
+                        try
                         {
-                            // Abre o formulário frmMarcas
-                            frmMarcas frm = new frmMarcas();
-                            frm.ShowDialog();
-                            MarcaBLL marcaBLL = new MarcaBLL();
-                            List<MarcaInfo> marcas = marcaBLL.Listar()
-                                .OrderBy(m => m.Descricao?.ToUpperInvariant())
-                                .ToList();
-                            cmbMarca.DataSource = marcas;
-                            cmbMarca.DisplayMember = "Descricao";
-                            cmbMarca.ValueMember = "IDMarca";
+                            DialogResult result = MessageBox.Show(
+                                $"A Marca '{marcaDigitada}' não Existe. Deseja Cadastrá-la?",
+                                "Marca não Encontrada",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Information);
+
+                            if (result == DialogResult.Yes)
+                            {
+                                // Abre o formulário frmMarcas
+                                using (frmMarcas frm = new frmMarcas())
+                                {
+                                    frm.ShowDialog();
+                                }
+
+                                var marcaBLL = new MarcaBLL();
+                                var marcas = (await marcaBLL.ListarAsync()) // ✅ chamada assíncrona
+                                    .OrderBy(m => m.Descricao?.ToUpperInvariant())
+                                    .ToList();
+
+                                cmbMarca.DataSource = marcas;
+                                cmbMarca.DisplayMember = "Descricao";
+                                cmbMarca.ValueMember = "IDMarca";
+                            }
                         }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                            "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+
+                        cmbMarca.Text = string.Empty;
+                        cmbMarca.Focus();
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    cmbMarca.Text = string.Empty;
-                    cmbMarca.Focus();
                 }
-                if (string.IsNullOrEmpty(marcaDigitada))
+                else
                 {
-                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("O preenchimento desse campo é obrigatório.",
+                                    "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     cmbMarca.Focus();
                 }
             }
-
         }
         private void ConfigurarTextBox()
         {
@@ -317,7 +329,7 @@ namespace OrdemServicos
             };
             EventosUtils.AjustarCamposTexto(controlesCampos, "DBModelos");
         }
-        public override void CarregarRegistros()
+        public override async Task CarregarRegistros()
         {
             DesabilitarCamposDoFormulario();
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
@@ -326,8 +338,8 @@ namespace OrdemServicos
             InitializeListView();
             try
             {
-                ModeloBLL modeloBLL = new ModeloBLL();
-                List<ModeloInfo> modelos = modeloBLL.Listar();
+                var modeloBLL = new ModeloBLL();
+                var modelos = (await modeloBLL.ListarAsync());
                 foreach (ModeloInfo modelo in modelos)
                 {
                     ListViewItem item = new ListViewItem(modelo.IDModelo.ToString());
@@ -344,8 +356,9 @@ namespace OrdemServicos
                 listViewModelos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
                 tabControlModelos.SelectedTab = tabDadosModelo;
 
-                MarcaBLL marcaBLL = new MarcaBLL();
-                List<MarcaInfo> marcas = marcaBLL.Listar()
+                // 🔠 Carregar marcas ordenadas
+                var marcaBLL = new MarcaBLL();
+                var marcas = (await marcaBLL.ListarAsync()) // ✅ assíncrono
                     .OrderBy(m => m.Descricao?.ToUpperInvariant())
                     .ToList();
                 cmbMarca.DataSource = marcas;
@@ -358,7 +371,8 @@ namespace OrdemServicos
             }
             LimparCampos();
         }
-        private void ListViewModelos_Click(object sender, EventArgs e)
+        private async void ListViewModelos_SelectedIndexChanged(object sender, EventArgs e)
+
         {
             escPressed = false; // Reseta a variável de controle
             try
@@ -368,8 +382,8 @@ namespace OrdemServicos
                     ListViewItem item = listViewModelos.SelectedItems[0];
                     txtIDModelo.Text = item.SubItems[0].Text;
                     string marcaNome = item.SubItems[1].Text; // Índice da coluna da marca
-                    MarcaBLL marcaBLL = new MarcaBLL();
-                    List<MarcaInfo> marcas = marcaBLL.Listar();
+                    var marcaBLL = new MarcaBLL();
+                    var marcas = (await marcaBLL.ListarAsync()); // ✅ assíncrono
                     MarcaInfo marca = marcas.FirstOrDefault(m => m.Descricao == marcaNome);
                     if (marca != null)
                     {
@@ -392,63 +406,72 @@ namespace OrdemServicos
             bNovo = true;
             HabilitarCamposDoFormulario("Novo");
         }
-        private void btnSalvar_Click(object sender, EventArgs e)
+        private async void btnSalvar_Click(object sender, EventArgs e)
         {
-            ModeloBLL modeloBLL = new ModeloBLL();
+            var modeloBLL = new ModeloBLL();
+
             // Verificar se algum campo obrigatório está vazio
             if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
             {
-                MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.",
+                                "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
             bool isAtualizacao = false;
             if (!string.IsNullOrEmpty(txtIDModelo.Text))
             {
                 int idModelo = Convert.ToInt32(txtIDModelo.Text);
-                isAtualizacao = modeloBLL.GetModelo(idModelo) != null;
+                isAtualizacao = await modeloBLL.GetModeloAsync(idModelo) != null; // ✅ chamada assíncrona
             }
+
             if (!isAtualizacao)
             {
-                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Incluir Esse Modelo?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Incluir Esse Modelo?",
+                                                      "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    ModeloInfo modelo = new ModeloInfo
+                    var modelo = new ModeloInfo
                     {
                         IDMarca = Convert.ToInt32(cmbMarca.SelectedValue),
                         Descricao = txtDescricao.Text,
                     };
-                    InserirModelo(modelo);
+
+                    await InserirModeloAsync(modelo); // ✅ chamada assíncrona
                 }
             }
             else
             {
-                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Salvar as Alterações Realizadas?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Salvar as Alterações Realizadas?",
+                                                      "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
-                    ModeloInfo modelo = new ModeloInfo
+                    var modelo = new ModeloInfo
                     {
                         IDModelo = int.Parse(txtIDModelo.Text),
                         IDMarca = Convert.ToInt32(cmbMarca.SelectedValue),
                         Descricao = txtDescricao.Text,
                     };
-                    AtualizarModelo(modelo);
+
+                    await AtualizarModeloAsync(modelo); // ✅ chamada assíncrona
                 }
             }
-            CarregarRegistros();
+
+            await CarregarRegistros(); // ✅ chamada assíncrona
         }
         private void btnAlterar_Click(object sender, EventArgs e)
         {
             EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
             HabilitarCamposDoFormulario("Alterar");
         }
-        private void btnExcluir_Click(object sender, EventArgs e)
+        private async void btnExcluir_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Tem Certeza que Deseja Excluir Esse Modelo?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 if (int.TryParse(txtIDModelo.Text, out int modeloID))
                 {
-                    ExcluirModelo(modeloID);
+                   await ExcluirModeloAsync(modeloID);
                 }
                 else
                 {
@@ -508,44 +531,53 @@ namespace OrdemServicos
             txtPesquisaListView.Clear();
             bNovo = false;
         }
-        static void InserirModelo(ModeloInfo Modelo)
+        static async Task InserirModeloAsync(ModeloInfo modelo)
         {
             try
             {
-                ModeloBLL ModeloBLL = new ModeloBLL();
-                ModeloBLL.InserirModelo(Modelo);
-                MessageBox.Show("Modelo Inserido com Sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var modeloBLL = new ModeloBLL();
+                await modeloBLL.InserirModeloAsync(modelo); // ✅ chamada assíncrona
+                MessageBox.Show("Modelo inserido com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        static void AtualizarModelo(ModeloInfo Modelo)
+
+        static async Task AtualizarModeloAsync(ModeloInfo modelo)
         {
             try
             {
-                ModeloBLL ModeloBLL = new ModeloBLL();
-                ModeloBLL.AtualizarModelo(Modelo);
-                MessageBox.Show("Modelo Atualizado com Sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var modeloBLL = new ModeloBLL();
+                await modeloBLL.AtualizarModeloAsync(modelo); // ✅ chamada assíncrona
+                MessageBox.Show("Modelo atualizado com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        static void ExcluirModelo(int idModelo)
+
+        static async Task ExcluirModeloAsync(int idModelo)
         {
             try
             {
-                ModeloBLL ModeloBLL = new ModeloBLL();
-                ModeloBLL.ExcluirModelo(idModelo);
-                MessageBox.Show("Modelo Excluído com Sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var modeloBLL = new ModeloBLL();
+                await modeloBLL.ExcluirModeloAsync(idModelo); // ✅ chamada assíncrona
+                MessageBox.Show("Modelo excluído com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
     }
 }

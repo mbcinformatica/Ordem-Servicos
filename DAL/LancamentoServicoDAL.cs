@@ -3,49 +3,47 @@ using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace OrdemServicos.DAL
 {
     public class LancamentoServicoDAL
     {
         private readonly string connectionString;
+
         public LancamentoServicoDAL()
         {
-            try
-            {
-                connectionString = ConfigurationManager.AppSettings["ConnectionString"];
-            }
-            catch (ConfigurationErrorsException ex)
-            {
-                MessageBox.Show("Erro ao carregar configuração do banco: " + ex.Message,
-                                "Erro de Configuração", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            connectionString = ConfigurationManager.AppSettings["ConnectionString"];
         }
 
-        public List<LancamentoServicoInfo> Listar()
+        public async Task<List<LancamentoServicoInfo>> ListarAsync()
         {
-            List<LancamentoServicoInfo> LancamentoServicosList = new List<LancamentoServicoInfo>();
+            var lancamentosList = new List<LancamentoServicoInfo>();
+
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
+
                     string query = @"
-                        SELECT ls.IDOrdenServico, ls.DataEmissao, ls.DataConclusao, c.Nome_RazaoSocial AS Cliente, 
-                               m.Descricao AS Marca, p.Descricao AS Produto, ls.NumeroSerie, ls.DescricaoDefeito,
+                        SELECT ls.IDOrdenServico, ls.DataEmissao, ls.DataConclusao, 
+                               c.Nome_RazaoSocial AS Cliente, 
+                               m.Descricao AS Marca, 
+                               p.Descricao AS Produto, 
+                               ls.NumeroSerie, ls.DescricaoDefeito,
                                ls.ValorTotalServico, ls.ValorTotalMaterial, ls.Imagem 
                         FROM DBLancamentoServicos ls
                         JOIN DBClientes c ON ls.IDCliente = c.IDCliente
                         JOIN DBMarcas m ON ls.IDMarca = m.IDMarca
                         JOIN DBProdutos p ON ls.IDProduto = p.IDProduto";
 
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    using (var cmd = new MySqlCommand(query, conn))
+                    using (var reader = await cmd.ExecuteReaderAsync())
                     {
-                        while (reader.Read())
+                        while (await reader.ReadAsync())
                         {
-                            LancamentoServicoInfo lancamentoServico = new LancamentoServicoInfo
+                            var lancamento = new LancamentoServicoInfo
                             {
                                 IDOrdenServico = Convert.ToInt32(reader["IDOrdenServico"]),
                                 DataEmissao = reader["DataEmissao"] != DBNull.Value ? Convert.ToDateTime(reader["DataEmissao"]) : DateTime.MinValue,
@@ -59,78 +57,72 @@ namespace OrdemServicos.DAL
                                 ValorTotalMaterial = Convert.ToDecimal(reader["ValorTotalMaterial"]),
                                 Imagem = reader["Imagem"] != DBNull.Value ? (byte[])reader["Imagem"] : null
                             };
-                            LancamentoServicosList.Add(lancamentoServico);
+                            lancamentosList.Add(lancamento);
                         }
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao listar lançamentos de serviço: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao listar lançamentos de serviço: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao listar lançamentos de serviço: " + ex.Message, ex);
             }
 
-            return LancamentoServicosList;
+            return lancamentosList;
         }
 
-        public LancamentoServicoInfo GetLancamentoServico(int idOrdenServico)
+        public async Task<LancamentoServicoInfo> GetLancamentoServicoAsync(int idOrdenServico)
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
+
                     string query = "SELECT * FROM DBLancamentoServicos WHERE IDOrdenServico = @IDOrdenServico";
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@IDOrdenServico", idOrdenServico);
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+
+                    using (var cmd = new MySqlCommand(query, conn))
                     {
-                        if (reader.Read())
+                        cmd.Parameters.AddWithValue("@IDOrdenServico", idOrdenServico);
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
                         {
-                            return new LancamentoServicoInfo
+                            if (await reader.ReadAsync())
                             {
-                                IDOrdenServico = Convert.ToInt32(reader["IDOrdenServico"]),
-                                DataEmissao = reader["DataEmissao"] != DBNull.Value ? Convert.ToDateTime(reader["DataEmissao"]) : DateTime.MinValue,
-                                DataConclusao = reader["DataConclusao"] != DBNull.Value ? Convert.ToDateTime(reader["DataConclusao"]) : DateTime.MinValue,
-                                IDCliente = Convert.ToInt32(reader["IDCliente"]),
-                                IDMarca = Convert.ToInt32(reader["IDMarca"]),
-                                IDProduto = Convert.ToInt32(reader["IDProduto"]),
-                                NumeroSerie = reader["NumeroSerie"].ToString(),
-                                DescricaoDefeito = reader["DescricaoDefeito"].ToString(),
-                                ValorTotalServico = Convert.ToDecimal(reader["ValorTotalServico"]),
-                                ValorTotalMaterial = Convert.ToDecimal(reader["ValorTotalMaterial"]),
-                                Imagem = reader["Imagem"] != DBNull.Value ? (byte[])reader["Imagem"] : null
-                            };
+                                return new LancamentoServicoInfo
+                                {
+                                    IDOrdenServico = Convert.ToInt32(reader["IDOrdenServico"]),
+                                    DataEmissao = reader["DataEmissao"] != DBNull.Value ? Convert.ToDateTime(reader["DataEmissao"]) : DateTime.MinValue,
+                                    DataConclusao = reader["DataConclusao"] != DBNull.Value ? Convert.ToDateTime(reader["DataConclusao"]) : DateTime.MinValue,
+                                    IDCliente = Convert.ToInt32(reader["IDCliente"]),
+                                    IDMarca = Convert.ToInt32(reader["IDMarca"]),
+                                    IDProduto = Convert.ToInt32(reader["IDProduto"]),
+                                    NumeroSerie = reader["NumeroSerie"].ToString(),
+                                    DescricaoDefeito = reader["DescricaoDefeito"].ToString(),
+                                    ValorTotalServico = Convert.ToDecimal(reader["ValorTotalServico"]),
+                                    ValorTotalMaterial = Convert.ToDecimal(reader["ValorTotalMaterial"]),
+                                    Imagem = reader["Imagem"] != DBNull.Value ? (byte[])reader["Imagem"] : null
+                                };
+                            }
                         }
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao buscar lançamento de serviço: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao buscar lançamento de serviço: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao buscar lançamento de serviço: " + ex.Message, ex);
             }
 
             return null;
         }
 
-        public void AtualizarLancamentoServico(LancamentoServicoInfo lancamentoServico)
+        public async Task AtualizarLancamentoServicoAsync(LancamentoServicoInfo lancamento)
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
+
                     string query = @"
                         UPDATE DBLancamentoServicos 
                         SET DataEmissao = @DataEmissao,
@@ -145,102 +137,88 @@ namespace OrdemServicos.DAL
                             Imagem = @Imagem 
                         WHERE IDOrdenServico = @IDOrdenServico";
 
-                    MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@IDOrdenServico", lancamentoServico.IDOrdenServico);
-                    cmd.Parameters.AddWithValue("@DataEmissao", lancamentoServico.DataEmissao);
-                    cmd.Parameters.AddWithValue("@DataConclusao", lancamentoServico.DataConclusao);
-                    cmd.Parameters.AddWithValue("@IDCliente", lancamentoServico.IDCliente);
-                    cmd.Parameters.AddWithValue("@IDMarca", lancamentoServico.IDMarca);
-                    cmd.Parameters.AddWithValue("@IDProduto", lancamentoServico.IDProduto);
-                    cmd.Parameters.AddWithValue("@NumeroSerie", lancamentoServico.NumeroSerie);
-                    cmd.Parameters.AddWithValue("@DescricaoDefeito", lancamentoServico.DescricaoDefeito);
-                    cmd.Parameters.AddWithValue("@ValorTotalServico", lancamentoServico.ValorTotalServico);
-                    cmd.Parameters.AddWithValue("@ValorTotalMaterial", lancamentoServico.ValorTotalMaterial);
-                    cmd.Parameters.AddWithValue("@Imagem", lancamentoServico.Imagem ?? (object)DBNull.Value);
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao atualizar lançamento de serviço: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro inesperado ao atualizar lançamento de serviço: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        public void InserirLancamentoServico(LancamentoServicoInfo lancamentoServico)
-        {
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
-                {
-                    conn.Open();
-                    string query = @"
-                INSERT INTO DBLancamentoServicos 
-                (DataEmissao, DataConclusao, IDCliente, IDMarca, IDProduto, NumeroSerie, DescricaoDefeito, ValorTotalServico, ValorTotalMaterial, Imagem)
-                VALUES 
-                (@DataEmissao, @DataConclusao, @IDCliente, @IDMarca, @IDProduto, @NumeroSerie, @DescricaoDefeito, @ValorTotalServico, @ValorTotalMaterial, @Imagem)";
-
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    using (var cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@DataEmissao", lancamentoServico.DataEmissao);
-                        cmd.Parameters.AddWithValue("@DataConclusao", lancamentoServico.DataConclusao);
-                        cmd.Parameters.AddWithValue("@IDCliente", lancamentoServico.IDCliente);
-                        cmd.Parameters.AddWithValue("@IDMarca", lancamentoServico.IDMarca);
-                        cmd.Parameters.AddWithValue("@IDProduto", lancamentoServico.IDProduto);
-                        cmd.Parameters.AddWithValue("@NumeroSerie", lancamentoServico.NumeroSerie);
-                        cmd.Parameters.AddWithValue("@DescricaoDefeito", lancamentoServico.DescricaoDefeito);
-                        cmd.Parameters.AddWithValue("@ValorTotalServico", lancamentoServico.ValorTotalServico);
-                        cmd.Parameters.AddWithValue("@ValorTotalMaterial", lancamentoServico.ValorTotalMaterial);
-                        cmd.Parameters.AddWithValue("@Imagem", lancamentoServico.Imagem ?? (object)DBNull.Value);
+                        cmd.Parameters.AddWithValue("@IDOrdenServico", lancamento.IDOrdenServico);
+                        cmd.Parameters.AddWithValue("@DataEmissao", lancamento.DataEmissao);
+                        cmd.Parameters.AddWithValue("@DataConclusao", lancamento.DataConclusao);
+                        cmd.Parameters.AddWithValue("@IDCliente", lancamento.IDCliente);
+                        cmd.Parameters.AddWithValue("@IDMarca", lancamento.IDMarca);
+                        cmd.Parameters.AddWithValue("@IDProduto", lancamento.IDProduto);
+                        cmd.Parameters.AddWithValue("@NumeroSerie", lancamento.NumeroSerie);
+                        cmd.Parameters.AddWithValue("@DescricaoDefeito", lancamento.DescricaoDefeito);
+                        cmd.Parameters.AddWithValue("@ValorTotalServico", lancamento.ValorTotalServico);
+                        cmd.Parameters.AddWithValue("@ValorTotalMaterial", lancamento.ValorTotalMaterial);
+                        cmd.Parameters.AddWithValue("@Imagem", lancamento.Imagem ?? (object)DBNull.Value);
 
-                        cmd.ExecuteNonQuery();
+                        await cmd.ExecuteNonQueryAsync();
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao inserir lançamento de serviço: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao inserir lançamento de serviço: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao atualizar lançamento de serviço: " + ex.Message, ex);
             }
         }
 
-        public void ExcluirLancamentoServico(int idOrdenServico)
+        public async Task InserirLancamentoServicoAsync(LancamentoServicoInfo lancamento)
         {
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                using (var conn = new MySqlConnection(connectionString))
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
+
+                    string query = @"
+                        INSERT INTO DBLancamentoServicos 
+                        (DataEmissao, DataConclusao, IDCliente, IDMarca, IDProduto, NumeroSerie, DescricaoDefeito, ValorTotalServico, ValorTotalMaterial, Imagem)
+                        VALUES 
+                        (@DataEmissao, @DataConclusao, @IDCliente, @IDMarca, @IDProduto, @NumeroSerie, @DescricaoDefeito, @ValorTotalServico, @ValorTotalMaterial, @Imagem)";
+
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@DataEmissao", lancamento.DataEmissao);
+                        cmd.Parameters.AddWithValue("@DataConclusao", lancamento.DataConclusao);
+                        cmd.Parameters.AddWithValue("@IDCliente", lancamento.IDCliente);
+                        cmd.Parameters.AddWithValue("@IDMarca", lancamento.IDMarca);
+                        cmd.Parameters.AddWithValue("@IDProduto", lancamento.IDProduto);
+                        cmd.Parameters.AddWithValue("@NumeroSerie", lancamento.NumeroSerie);
+                        cmd.Parameters.AddWithValue("@DescricaoDefeito", lancamento.DescricaoDefeito);
+                        cmd.Parameters.AddWithValue("@ValorTotalServico", lancamento.ValorTotalServico);
+                        cmd.Parameters.AddWithValue("@ValorTotalMaterial", lancamento.ValorTotalMaterial);
+                        cmd.Parameters.AddWithValue("@Imagem", lancamento.Imagem ?? (object)DBNull.Value);
+
+                        await cmd.ExecuteNonQueryAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao inserir lançamento de serviço: " + ex.Message, ex);
+            }
+        }
+
+        public async Task ExcluirLancamentoServicoAsync(int idOrdenServico)
+        {
+            try
+            {
+                using (var conn = new MySqlConnection(connectionString))
+                {
+                    await conn.OpenAsync();
+
                     string query = "DELETE FROM DBLancamentoServicos WHERE IDOrdenServico = @IDOrdenServico";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+
+                    using (var cmd = new MySqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@IDOrdenServico", idOrdenServico);
-                        cmd.ExecuteNonQuery();
+                        await cmd.ExecuteNonQueryAsync();
                     }
                 }
             }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show("Erro MySQL ao excluir lançamento de serviço: " + ex.Message,
-                                "Erro de Banco", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro inesperado ao excluir lançamento de serviço: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new Exception("Erro ao excluir lançamento de serviço: " + ex.Message, ex);
             }
         }
-
     }
 }

@@ -235,13 +235,13 @@
             // pnlBotoes
             // 
             this.pnlBotoes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlBotoes.Controls.Add(this.btnFechar);
             this.pnlBotoes.Controls.Add(this.btnSalvar);
             this.pnlBotoes.Controls.Add(this.btnAlterar);
             this.pnlBotoes.Controls.Add(this.btnExcluir);
             this.pnlBotoes.Controls.Add(this.btnNovo);
-            this.pnlBotoes.Controls.Add(this.btnCancelar);
             this.pnlBotoes.Controls.Add(this.lbTotalRegistros);
+            this.pnlBotoes.Controls.Add(this.btnFechar);
+            this.pnlBotoes.Controls.Add(this.btnCancelar);
             this.pnlBotoes.Location = new System.Drawing.Point(18, 573);
             this.pnlBotoes.Margin = new System.Windows.Forms.Padding(4);
             this.pnlBotoes.Name = "pnlBotoes";
@@ -401,7 +401,6 @@
             this.tabDadosProduto.Size = new System.Drawing.Size(1415, 249);
             this.tabDadosProduto.TabIndex = 0;
             this.tabDadosProduto.Text = "Dados do Produto";
-            this.tabDadosProduto.Click += new System.EventHandler(this.tabDadosProduto_Click);
             // 
             // btnExcluirImagem
             // 

@@ -290,7 +290,7 @@ namespace OrdemServicos.Utils
                         }
                         else if (customTag.TagFormato == "FormataCep")
                         {
-                            form.ExecutaFuncaoEvento(maskedTextBox);
+                            form.ExecutaFuncaoEventoAsync(maskedTextBox);
                         }
                         else if (customTag.TagFormato == "FormataFone")
                         {
@@ -298,7 +298,7 @@ namespace OrdemServicos.Utils
                         }
                         else if (customTag.TagFormato == "FormataCpfCnpj")
                         {
-                            form.ExecutaFuncaoEvento(maskedTextBox);
+                            form.ExecutaFuncaoEventoAsync(maskedTextBox);
                         }
 
                     }
@@ -321,7 +321,7 @@ namespace OrdemServicos.Utils
                             }
                         }
                     }
-                    form.ExecutaFuncaoEvento(textBox);
+                    form.ExecutaFuncaoEventoAsync(textBox);
                 }
             }
             else if (sender is ComboBox comboBox)
@@ -329,7 +329,7 @@ namespace OrdemServicos.Utils
                 form.ControleAnterior = comboBox;
                 if (comboBox == nomeControles)
                 {
-                    form.ExecutaFuncaoEvento(comboBox);
+                    form.ExecutaFuncaoEventoAsync(comboBox);
                 }
             }
             else if (sender is DateTimePicker dateTimePicker)
@@ -373,23 +373,19 @@ namespace OrdemServicos.Utils
 
                 if (item != null && subItem != null)
                 {
-                    // Recupera o índice da coluna atual
                     int colunaIndex = item.SubItems.IndexOf(subItem);
-
-                    // Garante que o texto completo da célula seja usado
                     string textoCompleto = item.SubItems[colunaIndex].Text;
 
-                    // Evita mostrar o mesmo tooltip repetidamente
-                    if (textoCompleto != form.ultimoTextoTooltip)
+                    // ✅ Força quebra de linha visual no ToolTip
+                    string textoFormatado = textoCompleto.Replace(" ", "\u00A0"); // evita quebra por espaço
+                    if (textoFormatado != form.ultimoTextoTooltip)
                     {
-                        form.tlpListViewCelula.Show(
-                            textoCompleto,
-                            listView,
-                            e.Location.X + 15,
-                            e.Location.Y + 15,
-                            5000 // tempo de exibição
-                        );
-                        form.ultimoTextoTooltip = textoCompleto;
+                        form.tlpListViewCelula.UseFading = true;
+                        form.tlpListViewCelula.UseAnimation = true;
+                        form.tlpListViewCelula.IsBalloon = true;
+                        form.tlpListViewCelula.ToolTipTitle = "Conteúdo da célula";
+                        form.tlpListViewCelula.Show(textoFormatado, listView, e.Location.X + 15, e.Location.Y + 15, 5000);
+                        form.ultimoTextoTooltip = textoFormatado;
                     }
                 }
                 else

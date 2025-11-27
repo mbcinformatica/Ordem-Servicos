@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace OrdemServicos
 {
@@ -76,7 +77,7 @@ namespace OrdemServicos
 			listViewMarcas.Invalidate(); // Redesenhar ListView para atualizar a cor do cabeçalho
 			txtPesquisaListView.Focus();
 		}
-		public class ListViewItemComparer : IComparer
+		private class ListViewItemComparer : IComparer
 		{
 			private int col;
 			private bool ascending;
@@ -225,7 +226,7 @@ namespace OrdemServicos
 			// Focar no btnNovo ao iniciar
 			txtPesquisaListView.Focus();
 		}
-		public override void ExecutaFuncaoEvento( Control control )
+		public override void ExecutaFuncaoEventoAsync( Control control )
 		{
 			if (control == txtDescricao)
 			{
@@ -255,18 +256,18 @@ namespace OrdemServicos
 			txtDescricao.TabIndex = 0;
 			btnSalvar.TabIndex = 1;
 		}
-		public override void CarregarRegistros()
-		{
-			DesabilitarCamposDoFormulario();
+        public override async Task CarregarRegistros()
+        {
+            DesabilitarCamposDoFormulario();
 			EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
 			listViewMarcas.Items.Clear();
 			listViewMarcas.Columns.Clear();
 			InitializeListView();
 			try
 			{
-				MarcaBLL marcaBLL = new MarcaBLL();
-				List<MarcaInfo> marcas = marcaBLL.Listar();
-				foreach (MarcaInfo marca in marcas)
+                var marcaBLL = new MarcaBLL();
+                var marcas = await marcaBLL.ListarAsync();
+                foreach (MarcaInfo marca in marcas)
 				{
 					ListViewItem item = new ListViewItem(marca.IDMarca.ToString());
 					item.SubItems.Add(marca.Descricao);
@@ -306,69 +307,77 @@ namespace OrdemServicos
 			bNovo = true;
 			HabilitarCamposDoFormulario("Novo");
 		}
-		private void btnSalvar_Click( object sender, EventArgs e )
-		{
-			MarcaBLL marcaBLL = new MarcaBLL();
-			// Verificar se algum campo obrigatório está vazio
-			if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
-			{
-				MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        private async void btnSalvar_Click(object sender, EventArgs e)
+        {
+            var marcaBLL = new MarcaBLL();
 
-				return;
-			}
-			bool isAtualizacao = false;
-			if (!string.IsNullOrEmpty(txtIDMarca.Text))
-			{
-				int idMarca = Convert.ToInt32(txtIDMarca.Text);
-				isAtualizacao = marcaBLL.GetMarca(idMarca) != null;
-			}
-			if (!isAtualizacao)
-			{
-				DialogResult result = MessageBox.Show("Tem Certeza que Deseja Incluir Esse Marca?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-				if (result == DialogResult.Yes)
-				{
-					MarcaInfo marca = new MarcaInfo
-					{
-						Descricao = txtDescricao.Text,
-					};
-					InserirMarca(marca);
-				}
-			}
-			else
-			{
-				DialogResult result = MessageBox.Show("Tem Certeza que Deseja Salvar as Alterações Realizadas?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-				if (result == DialogResult.Yes)
-				{
-					MarcaInfo marca = new MarcaInfo
-					{
-						IDMarca = int.Parse(txtIDMarca.Text),
-						Descricao = txtDescricao.Text,
-					};
-					AtualizarMarca(marca);
-				}
-			}
-			CarregarRegistros();
-		}
-		private void btnAlterar_Click( object sender, EventArgs e )
+            // Verificar se algum campo obrigatório está vazio
+            if (!ValidarCamposObrigatorios(camposObrigatorios, erpProvider))
+            {
+                MessageBox.Show("Favor, Preencha Todos os Campos Obrigatórios.",
+                                "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            bool isAtualizacao = false;
+            if (!string.IsNullOrEmpty(txtIDMarca.Text))
+            {
+                int idMarca = Convert.ToInt32(txtIDMarca.Text);
+                isAtualizacao = await marcaBLL.GetMarcaAsync(idMarca) != null; // ✅ chamada assíncrona
+            }
+
+            if (!isAtualizacao)
+            {
+                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Incluir Essa Marca?",
+                                                      "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    var marca = new MarcaInfo
+                    {
+                        Descricao = txtDescricao.Text,
+                    };
+
+                    await InserirMarcaAsync(marca); // ✅ chamada assíncrona
+                }
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show("Tem Certeza que Deseja Salvar as Alterações Realizadas?",
+                                                      "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    var marca = new MarcaInfo
+                    {
+                        IDMarca = int.Parse(txtIDMarca.Text),
+                        Descricao = txtDescricao.Text,
+                    };
+
+                    await AtualizarMarcaAsync(marca); // ✅ chamada assíncrona
+                }
+            }
+
+            CarregarRegistros(); // ✅ chamada assíncrona
+        }
+        private void btnAlterar_Click( object sender, EventArgs e )
 		{
 			EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
 			HabilitarCamposDoFormulario("Alterar");
 		}
-		private void btnExcluir_Click( object sender, EventArgs e )
+		private async void btnExcluir_Click( object sender, EventArgs e )
 		{
 			DialogResult result = MessageBox.Show("Tem Certeza que Deseja Excluir Esse Marca?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			if (result == DialogResult.Yes)
 			{
 				if (int.TryParse(txtIDMarca.Text, out int marcaID))
 				{
-					ExcluirMarca(marcaID);
+					ExcluirMarcaAsync(marcaID);
 				}
 				else
 				{
 					MessageBox.Show("ID inválido. Por favor, insira um número inteiro.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
-			CarregarRegistros();
+			await CarregarRegistros();
 			EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
 		}
 		private void btnFechar_Click( object sender, EventArgs e )
@@ -419,44 +428,50 @@ namespace OrdemServicos
 			txtPesquisaListView.Clear();
 			bNovo = false;
 		}
-		static void InserirMarca( MarcaInfo Marca )
-		{
-			try
-			{
-				MarcaBLL MarcaBLL = new MarcaBLL();
-				MarcaBLL.InserirMarca(Marca);
-				MessageBox.Show("Marca Inserido com Sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
-		static void AtualizarMarca( MarcaInfo Marca )
-		{
-			try
-			{
-				MarcaBLL MarcaBLL = new MarcaBLL();
-				MarcaBLL.AtualizarMarca(Marca);
-				MessageBox.Show("Marca Atualizado com Sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
-		static void ExcluirMarca( int idMarca )
-		{
-			try
-			{
-				MarcaBLL MarcaBLL = new MarcaBLL();
-				MarcaBLL.ExcluirMarca(idMarca);
-				MessageBox.Show("Marca Excluído com Sucesso!", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-	}
+        static async Task InserirMarcaAsync(MarcaInfo marca)
+        {
+            try
+            {
+                var marcaBLL = new MarcaBLL();
+                await marcaBLL.InserirMarcaAsync(marca); // ✅ chamada assíncrona
+                MessageBox.Show("Marca inserida com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        static async Task AtualizarMarcaAsync(MarcaInfo marca)
+        {
+            try
+            {
+                var marcaBLL = new MarcaBLL();
+                await marcaBLL.AtualizarMarcaAsync(marca); // ✅ chamada assíncrona
+                MessageBox.Show("Marca atualizada com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        static async Task ExcluirMarcaAsync(int idMarca)
+        {
+            try
+            {
+                var marcaBLL = new MarcaBLL();
+                await marcaBLL.ExcluirMarcaAsync(idMarca); // ✅ chamada assíncrona
+                MessageBox.Show("Marca excluída com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Não foi possível estabelecer conexão com o BD: " + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
