@@ -1,79 +1,79 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Config>
 	<!-- Configurações Efeitos Degrade -->
-	<GradientStartColor>FFE0E0E0</GradientStartColor>
-	<GradientEndColor>FFFFFFFF</GradientEndColor>
+	<GradientStartColor>FF000000</GradientStartColor>
+	<GradientEndColor>FF3A3A3D</GradientEndColor>
 
 	<!-- Configurações dos Formulários -->
-	<FormBackgroundColor>FFFFFFFF</FormBackgroundColor>
+	<FormBackgroundColor>FF1E1E1E</FormBackgroundColor>
 	<FormFontFamily>Segoe UI</FormFontFamily>
 	<FormFontSize>12</FormFontSize>
-	<FormFontStyle>Bold</FormFontStyle>
+	<FormFontStyle>Bold</FormFontStyle>	
 
 	<!-- Configurações do MenuStrip -->
-	<MenuStripBackgroundColor>FFFFFFFF</MenuStripBackgroundColor>
-	<GradientMenuStartColor>FFE0E0E0</GradientMenuStartColor>
-	<GradientMenuEndColor>FFFFFFFF</GradientMenuEndColor>
+	<MenuStripBackgroundColor>FF1E1E1E</MenuStripBackgroundColor>
+	<GradientMenuStartColor>FF000000</GradientMenuStartColor>
+	<GradientMenuEndColor>FF3A3A3D</GradientMenuEndColor>
+	<MenuStripFontColor>FFFFFFFF</MenuStripFontColor>
 	<MenuStripFontFamily>Segoe UI</MenuStripFontFamily>
 	<MenuStripFontSize>12</MenuStripFontSize>
 	<MenuStripFontStyle>Bold</MenuStripFontStyle>
 
 	<!-- Configurações dos TextBox -->
-	<TextBoxBackgroundColor>FFFFFFFF</TextBoxBackgroundColor>
-	<TextBoxFontColor>FF000000</TextBoxFontColor>
+	<TextBoxBackgroundColor>FF2D2D30</TextBoxBackgroundColor>
+	<TextBoxFontColor>FFFFFFFF</TextBoxFontColor>
 	<TextBoxBorderStyle>FixedSingle</TextBoxBorderStyle>
 	<TextBoxFontFamily>Segoe UI</TextBoxFontFamily>
 	<TextBoxFontSize>12</TextBoxFontSize>
 	<TextBoxFontStyle>Regular</TextBoxFontStyle>
 
 	<!-- Configurações do MaskedTextBox -->
-	<MaskedTextBoxBackgroundColor>FFFFFFFF</MaskedTextBoxBackgroundColor>
-	<MaskedTextBoxFontColor>FF000000</MaskedTextBoxFontColor>
+	<MaskedTextBoxBackgroundColor>FF2D2D30</MaskedTextBoxBackgroundColor>
+	<MaskedTextBoxFontColor>FFFFFFFF</MaskedTextBoxFontColor>
 	<MaskedTextBoxBorderStyle>FixedSingle</MaskedTextBoxBorderStyle>
 	<MaskedTextBoxFontFamily>Segoe UI</MaskedTextBoxFontFamily>
 	<MaskedTextBoxFontSize>12</MaskedTextBoxFontSize>
 	<MaskedTextBoxFontStyle>Regular</MaskedTextBoxFontStyle>
 
 	<!-- Configurações dos Botões -->
-	<ButtonBackgroundColor>FF4682B4</ButtonBackgroundColor>
+	<ButtonBackgroundColor>FF3A3A3D</ButtonBackgroundColor>
 	<ButtonFontColor>FFFFFFFF</ButtonFontColor>
 	<ButtonAutoSize>false</ButtonAutoSize>
 	<ButtonAppearance>
-		<BorderColor>FFB0C4DE</BorderColor>
+		<BorderColor>FF505050</BorderColor>
 		<MouseDownBackColor>FF1E90FF</MouseDownBackColor>
-		<MouseOverBackColor>FF87CEFA</MouseOverBackColor>
+		<MouseOverBackColor>FF4682B4</MouseOverBackColor>
 	</ButtonAppearance>
 	<ButtonFontFamily>Segoe UI</ButtonFontFamily>
 	<ButtonFontSize>12</ButtonFontSize>
 	<ButtonFontStyle>Bold</ButtonFontStyle>
 
 	<!-- Configurações das Label -->
-	<LabelBackgroundColor>00FFFFFF</LabelBackgroundColor>
-	<LabelFontColor>FF000000</LabelFontColor>
+	<LabelBackgroundColor>FF2D2D30</LabelBackgroundColor>
+	<LabelFontColor>FFFFFFFF</LabelFontColor>
 	<LabelAutoSize>true</LabelAutoSize>
 	<LabelFontFamily>Segoe UI</LabelFontFamily>
 	<LabelFontSize>12</LabelFontSize>
 	<LabelFontStyle>Bold</LabelFontStyle>
 
 	<!-- Configurações do LinkLabel -->
-	<LinkLabelBackgroundColor>FFF5F5F5</LinkLabelBackgroundColor>
 	<LinkLabelActiveLinkColor>FF1E90FF</LinkLabelActiveLinkColor>
-	<LinkLabelLinkColor>FF0000FF</LinkLabelLinkColor>
-	<LinkLabelVisitedLinkColor>FF800080</LinkLabelVisitedLinkColor>
+	<LinkLabelLinkColor>FF87CEFA</LinkLabelLinkColor>
+	<LinkLabelVisitedLinkColor>FFB0C4DE</LinkLabelVisitedLinkColor>
 	<LinkLabelFontFamily>Segoe UI</LinkLabelFontFamily>
 	<LinkLabelFontSize>12</LinkLabelFontSize>
 	<LinkLabelFontStyle>Underline</LinkLabelFontStyle>
 
 	<!-- Configurações dos Panel -->
-	<PanelBackgroundColor>FFF5F5F5</PanelBackgroundColor>
+	<PanelBackgroundColor>FF2D2D30</PanelBackgroundColor>
 	<PanelBorderStyle>Fixed3D</PanelBorderStyle>
 	<PanelFontFamily>Segoe UI</PanelFontFamily>
 	<PanelFontSize>12</PanelFontSize>
 	<PanelFontStyle>Bold</PanelFontStyle>
 
 	<!-- Configurações do ListView -->
-	<ListViewBackColor>FFF8F8F8</ListViewBackColor>
-	<ListViewForeColor>FF000000</ListViewForeColor>
+	<ListViewBackColor>FF2D2D30</ListViewBackColor>
+	<ListViewForeColor>FFFFFFFF</ListViewForeColor>
 	<ListViewFullRowSelect>true</ListViewFullRowSelect>
 	<ListViewGridLines>true</ListViewGridLines>
 	<ListViewHideSelection>false</ListViewHideSelection>
@@ -82,16 +82,16 @@
 	<ListViewFontStyle>Bold</ListViewFontStyle>
 
 	<!-- Configurações do ComboBox -->
-	<ComboBoxBackColor>FFFFFFFF</ComboBoxBackColor>
-	<ComboBoxForeColor>FF000000</ComboBoxForeColor>
+	<ComboBoxBackColor>FF2D2D30</ComboBoxBackColor>
+	<ComboBoxForeColor>FFFFFFFF</ComboBoxForeColor>
 	<ComboBoxDropDownStyle>DropDownList</ComboBoxDropDownStyle>
 	<ComboBoxFontFamily>Segoe UI</ComboBoxFontFamily>
 	<ComboBoxFontSize>12</ComboBoxFontSize>
 	<ComboBoxFontStyle>Regular</ComboBoxFontStyle>
 
-	<!-- Configurações do ToolStripMenuItem -->
-	<ToolStripMenuItemBackColor>FFF0F0F0</ToolStripMenuItemBackColor>
-	<ToolStripMenuItemForeColor>FF000000</ToolStripMenuItemForeColor>
+	<!-- ToolStripMenuItem -->
+	<ToolStripMenuItemBackColor>FF2D2D30</ToolStripMenuItemBackColor>
+	<ToolStripMenuItemForeColor>FFFFFFFF</ToolStripMenuItemForeColor>
 	<ToolStripMenuItemFontFamily>Segoe UI</ToolStripMenuItemFontFamily>
 	<ToolStripMenuItemFontSize>12</ToolStripMenuItemFontSize>
 	<ToolStripMenuItemFontStyle>Regular</ToolStripMenuItemFontStyle>
@@ -102,15 +102,15 @@
 	<TabControlFontStyle>Regular</TabControlFontStyle>
 
 	<!-- Configurações do TabPage -->
-	<TabPageBackColor>FFE0FFFF</TabPageBackColor>
-	<TabPageForeColor>FF0000FF</TabPageForeColor>
+	<TabPageBackColor>FF2D2D30</TabPageBackColor>
+	<TabPageForeColor>FFFFFFFF</TabPageForeColor>
 	<TabPageBorderStyle>Fixed3D</TabPageBorderStyle>
 	<TabPageFontFamily>Segoe UI</TabPageFontFamily>
 	<TabPageFontSize>12</TabPageFontSize>
 	<TabPageFontStyle>Bold</TabPageFontStyle>
 
 	<!-- Configurações do ProgressBar -->
-	<ProgressBarBackColor>FFE0FFFF</ProgressBarBackColor>
-	<ProgressBarForeColor>FF0000FF</ProgressBarForeColor>
-	<ProgressBarStyle>Continuous</ProgressBarStyle>
+	<ProgressBarBackColor>FF2D2D30</ProgressBarBackColor>
+	<ProgressBarForeColor>FF1E90FF</ProgressBarForeColor>
+    <ProgressBarStyle>Continuous</ProgressBarStyle>
 </Config>

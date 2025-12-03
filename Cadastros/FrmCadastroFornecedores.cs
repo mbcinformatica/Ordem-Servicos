@@ -40,7 +40,7 @@ namespace OrdemServicos
         public frmFornecedores()
         {
             InitializeComponent();
-            LoadConfig();
+//            LoadConfig();
             Paint += new System.Windows.Forms.PaintEventHandler(BaseForm_Paint);
             InitializeTabControl(tabControlFornecedores);
             erpProvider = new ErrorProvider();

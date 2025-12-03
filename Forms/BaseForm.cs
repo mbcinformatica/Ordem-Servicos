@@ -4,10 +4,10 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Windows.Forms;
-using System.Xml.Linq;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace OrdemServicos.Forms
 {
@@ -16,9 +16,12 @@ namespace OrdemServicos.Forms
         // 🎨 Estilo visual - Gradientes e cores
         protected Color gradientStartColor { get; set; }
         protected Color gradientEndColor { get; set; }
-        protected Color menuStripBackgroundColor { get; set; }
-        protected Color gradientMenuEndColor { get; set; }
-        protected Color menuStripFontColor { get; set; }
+
+        // 📝 Formulário
+        protected Color formBackgroundColor { get; set; }
+        protected string formFontFamily { get; set; }
+        protected float formFontSize { get; set; }
+        protected FontStyle formFontStyle { get; set; }
 
         // 📝 TextBox
         protected Color textBoxBackgroundColor { get; set; }
@@ -27,21 +30,25 @@ namespace OrdemServicos.Forms
         protected string textBoxFontFamily { get; set; }
         protected float textBoxFontSize { get; set; }
         protected FontStyle textBoxFontStyle { get; set; }
-        protected int textBoxMarginLeft { get; set; }
-        protected int textBoxMarginTop { get; set; }
-        protected int textBoxMarginRight { get; set; }
-        protected int textBoxMarginBottom { get; set; }
+
+        // 🔢 MaskedTextBox
+        protected Color maskedTextBoxBackgroundColor { get; set; }
+        protected Color maskedTextBoxFontColor { get; set; }
+        protected BorderStyle maskedTextBoxBorderStyle { get; set; }
+        protected string maskedTextBoxFontFamily { get; set; }
+        protected float maskedTextBoxFontSize { get; set; }
+        protected FontStyle maskedTextBoxFontStyle { get; set; }
 
         // 🔘 Button
         public Color buttonBackgroundColor { get; set; }
         public Color buttonFontColor { get; set; }
-        protected bool buttonAutoSize { get; set; }
         protected Color buttonBorderColor { get; set; }
         protected Color buttonMouseDownBackColor { get; set; }
         protected Color buttonMouseOverBackColor { get; set; }
         protected string buttonFontFamily { get; set; }
         protected float buttonFontSize { get; set; }
         protected FontStyle buttonFontStyle { get; set; }
+        protected bool buttonAutoSize { get; set; }
 
         // 🏷️ Label
         protected Color labelBackgroundColor { get; set; }
@@ -50,13 +57,73 @@ namespace OrdemServicos.Forms
         protected string labelFontFamily { get; set; }
         protected float labelFontSize { get; set; }
         protected FontStyle labelFontStyle { get; set; }
-        protected int labelMarginLeft { get; set; }
-        protected int labelMarginTop { get; set; }
-        protected int labelMarginRight { get; set; }
-        protected int labelMarginBottom { get; set; }
+
+        // 🔗 LinkLabel
+        protected Color linkLabelBackgroundColor { get; set; }
+        protected Color linkLabelActiveLinkColor { get; set; }
+        protected Color linkLabelLinkColor { get; set; }
+        protected Color linkLabelVisitedLinkColor { get; set; }
+        protected string linkLabelFontFamily { get; set; }
+        protected float linkLabelFontSize { get; set; }
+        protected FontStyle linkLabelFontStyle { get; set; }
 
         // 📦 Panel
         protected Color panelBackgroundColor { get; set; }
+        protected BorderStyle panelBorderStyle { get; set; }
+        protected string panelFontFamily { get; set; }
+        protected float panelFontSize { get; set; }
+        protected FontStyle panelFontStyle { get; set; }
+
+        // 📋 ListView
+        protected Color listViewBackColor { get; set; }
+        protected Color listViewForeColor { get; set; }
+        protected bool listViewFullRowSelect { get; set; }
+        protected bool listViewGridLines { get; set; }
+        protected bool listViewHideSelection { get; set; }
+        protected string listViewFontFamily { get; set; }
+        protected float listViewFontSize { get; set; }
+        protected FontStyle listViewFontStyle { get; set; }
+
+        // 🔽 ComboBox
+        protected Color comboBoxBackColor { get; set; }
+        protected Color comboBoxForeColor { get; set; }
+        protected ComboBoxStyle comboBoxDropDownStyle { get; set; }
+        protected string comboBoxFontFamily { get; set; }
+        protected float comboBoxFontSize { get; set; }
+        protected FontStyle comboBoxFontStyle { get; set; }
+
+        // 📑 ToolStripMenuItem
+        protected Color toolStripMenuItemBackColor { get; set; }
+        protected Color toolStripMenuItemForeColor { get; set; }
+        protected string toolStripMenuItemFontFamily { get; set; }
+        protected float toolStripMenuItemFontSize { get; set; }
+        protected FontStyle toolStripMenuItemFontStyle { get; set; }
+
+        //  MenuStrip
+        protected Color menuStripBackgroundColor { get; set; }
+        protected Color gradientMenuStartColor { get; set; }
+        protected Color gradientMenuEndColor { get; set; }
+        protected string menuStripFontFamily { get; set; }
+        protected float menuStripFontSize { get; set; }
+        protected FontStyle menuStripFontStyle { get; set; }
+
+        // 📂 TabControl
+        protected string tabControlFontFamily { get; set; }
+        protected float tabControlFontSize { get; set; }
+        protected FontStyle tabControlFontStyle { get; set; }
+
+        // 📂 TabPage
+        protected Color tabPageBackColor { get; set; }
+        protected Color tabPageForeColor { get; set; }
+        protected BorderStyle tabPageBorderStyle { get; set; }
+        protected string tabPageFontFamily { get; set; }
+        protected float tabPageFontSize { get; set; }
+        protected FontStyle tabPageFontStyle { get; set; }
+
+        // 📊 ProgressBar
+        protected Color progressBarBackColor { get; set; }
+        protected Color progressBarForeColor { get; set; }
+        protected ProgressBarStyle progressBarStyle { get; set; }
 
         // ⚙️ Estado e controle de formulário
         public DateTime dataEmissaoControl { get; set; }
@@ -70,7 +137,6 @@ namespace OrdemServicos.Forms
         public static string UsuarioLogado { get; set; }
 
         // 📌 Métodos virtuais
-
         public virtual async Task CarregarRegistros() { }
         public virtual void LimparCampos() { }
         public virtual void ExecutaFuncaoEventoAsync(Control control) { }
@@ -79,7 +145,11 @@ namespace OrdemServicos.Forms
         public ToolTip tlpListViewCelula = new ToolTip();
         public string ultimoTextoTooltip = "";
 
-        protected void LoadConfig() 
+        private static string temaAtual = "config.xml";
+        private static bool configCarregada = false;
+        private static XDocument configGlobal;
+
+        protected void LoadConfig()
         {
             CarregaDadosControles("config.xml");
         }
@@ -92,9 +162,7 @@ namespace OrdemServicos.Forms
                     textBox.BackColor = textBoxBackgroundColor;
                     textBox.ForeColor = textBoxFontColor;
                     textBox.BorderStyle = textBoxBorderStyle;
-                    textBox.Margin = new Padding(textBoxMarginLeft, textBoxMarginTop, textBoxMarginRight, textBoxMarginBottom);
 
-                    // Verificar se a tag do formulário é diferente de "naoAplicar"
                     if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
                     {
                         textBox.Font = new Font(textBoxFontFamily, textBoxFontSize, textBoxFontStyle);
@@ -102,25 +170,24 @@ namespace OrdemServicos.Forms
                 }
                 else if (control is MaskedTextBox maskedTextBox)
                 {
-                    maskedTextBox.BackColor = textBoxBackgroundColor;
-                    maskedTextBox.ForeColor = textBoxFontColor;
-                    maskedTextBox.BorderStyle = textBoxBorderStyle;
+                    maskedTextBox.BackColor = maskedTextBoxBackgroundColor;
+                    maskedTextBox.ForeColor = maskedTextBoxFontColor;
+                    maskedTextBox.BorderStyle = maskedTextBoxBorderStyle;
 
-                    // Verificar se a tag do formulário é diferente de "naoAplicar"
                     if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
                     {
-                        maskedTextBox.Font = new Font(textBoxFontFamily, textBoxFontSize, textBoxFontStyle);
+                        maskedTextBox.Font = new Font(maskedTextBoxFontFamily, maskedTextBoxFontSize, maskedTextBoxFontStyle);
                     }
                 }
                 else if (control is ComboBox comboBox)
                 {
-                    comboBox.BackColor = textBoxBackgroundColor;
-                    comboBox.ForeColor = textBoxFontColor;
+                    comboBox.BackColor = comboBoxBackColor;
+                    comboBox.ForeColor = comboBoxForeColor;
+                    comboBox.DropDownStyle = comboBoxDropDownStyle;
 
-                    // Verificar se a tag do formulário é diferente de "naoAplicar"
                     if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
                     {
-                        comboBox.Font = new Font(textBoxFontFamily, textBoxFontSize, textBoxFontStyle);
+                        comboBox.Font = new Font(comboBoxFontFamily, comboBoxFontSize, comboBoxFontStyle);
                     }
                 }
                 else if (control is Label label)
@@ -128,58 +195,136 @@ namespace OrdemServicos.Forms
                     string tag = label.Tag?.ToString();
                     label.BackColor = labelBackgroundColor;
 
-                    // Verificar se a tag do formulário é diferente de "naoAplicar"
-                    if (tag != "naoAplicar"  && tag != "naoAplicarSize")
+                    if (tag != "naoAplicar" && tag != "naoAplicarSize")
                     {
                         label.ForeColor = labelFontColor;
-                        label.Margin = new Padding(labelMarginLeft, labelMarginTop, labelMarginRight, labelMarginBottom);
                         label.Font = new Font(labelFontFamily, labelFontSize, labelFontStyle);
                         label.AutoSize = labelAutoSize;
                     }
-                    // Verificar se a tag do controle Label é "naoAplicar"
                     else if (tag == "naoAplicarAutoSize")
                     {
                         label.AutoSize = false;
+                    }
+                }
+                else if (control is LinkLabel linkLabel)
+                {
+                    linkLabel.ActiveLinkColor = linkLabelActiveLinkColor;
+                    linkLabel.LinkColor = linkLabelLinkColor;
+                    linkLabel.VisitedLinkColor = linkLabelVisitedLinkColor;
+                    linkLabel.BackColor = linkLabelBackgroundColor;
+                    if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
+                    {
+                        linkLabel.Font = new Font(linkLabelFontFamily, linkLabelFontSize, linkLabelFontStyle);
                     }
                 }
                 else if (control is Button button)
                 {
                     button.BackColor = buttonBackgroundColor;
                     button.ForeColor = buttonFontColor;
-                    button.Cursor = Cursors.Hand;
-
-                    // Verificar se a tag do formulário é diferente de "naoAplicar"
+                    button.AutoSize = buttonAutoSize;
+                    // Fonte do botão
                     if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
                     {
                         button.Font = new Font(buttonFontFamily, buttonFontSize, buttonFontStyle);
                     }
+                    // Configura aparência Flat para aplicar cores de interação
+                    button.FlatStyle = FlatStyle.Flat;
+                    button.FlatAppearance.BorderColor = buttonBorderColor;
+                    button.FlatAppearance.MouseOverBackColor = buttonMouseOverBackColor;
+                    button.FlatAppearance.MouseDownBackColor = buttonMouseDownBackColor;
                 }
+
                 else if (control is Panel panel)
                 {
                     panel.BackColor = panelBackgroundColor;
-                    // Aplicar configurações aos controles dentro do Panel
+                    panel.BorderStyle = panelBorderStyle;
+
+                    if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
+                    {
+                        panel.Font = new Font(panelFontFamily, panelFontSize, panelFontStyle);
+                    }
+
                     ApplyConfigToControls(panel.Controls, config);
                 }
                 else if (control is TabControl tabControl)
                 {
+                    // aplica fonte no TabControl
+                    tabControl.Font = new Font(tabControlFontFamily, tabControlFontSize, tabControlFontStyle);
+
                     foreach (TabPage tabPage in tabControl.TabPages)
                     {
+                        // aplica estilo em cada TabPage
+                        tabPage.BackColor = tabPageBackColor;
+                        tabPage.ForeColor = tabPageForeColor;
+                        tabPage.BorderStyle = tabPageBorderStyle;
+                        tabPage.Font = new Font(tabPageFontFamily, tabPageFontSize, tabPageFontStyle);
+
+                        // aplica configuração nos controles internos da TabPage
                         ApplyConfigToControls(tabPage.Controls, config);
                     }
                 }
+
                 else if (control is MenuStrip menuStrip)
                 {
+                    // Renderer com degradê
                     menuStrip.Renderer = new GradientMenuRenderer(this);
-                    menuStrip.ForeColor = menuStripFontColor;
+
+                    // Aplica estilo no MenuStrip
+                    menuStrip.BackColor = menuStripBackgroundColor;
+                    menuStrip.Font = new Font(menuStripFontFamily, menuStripFontSize, menuStripFontStyle);
+
+                    // Aplica estilo nos itens e subitens
+                    foreach (ToolStripItem item in menuStrip.Items)
+                    {
+                        if (item is ToolStripMenuItem menuItem)
+                        {
+                            menuItem.BackColor = toolStripMenuItemBackColor;
+                            menuItem.ForeColor = toolStripMenuItemForeColor;
+                            menuItem.Font = new Font(toolStripMenuItemFontFamily, toolStripMenuItemFontSize, toolStripMenuItemFontStyle);
+
+                            // Subitens
+                            foreach (ToolStripItem subItem in menuItem.DropDownItems)
+                            {
+                                if (subItem is ToolStripMenuItem subMenuItem)
+                                {
+                                    subMenuItem.BackColor = toolStripMenuItemBackColor;
+                                    subMenuItem.ForeColor = toolStripMenuItemForeColor;
+                                    subMenuItem.Font = new Font(toolStripMenuItemFontFamily, toolStripMenuItemFontSize, toolStripMenuItemFontStyle);
+
+                                    // Sub-subitens
+                                    foreach (ToolStripItem subSubItem in subMenuItem.DropDownItems)
+                                    {
+                                        if (subSubItem is ToolStripMenuItem subSubMenuItem)
+                                        {
+                                            subSubMenuItem.BackColor = toolStripMenuItemBackColor;
+                                            subSubMenuItem.ForeColor = toolStripMenuItemForeColor;
+                                            subSubMenuItem.Font = new Font(toolStripMenuItemFontFamily, toolStripMenuItemFontSize, toolStripMenuItemFontStyle);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 else if (control is ListView listView)
                 {
-  //                  tlpListViewCelula.InitialDelay = 100;     // Aparece quase instantaneamente
-  //                  tlpListViewCelula.ReshowDelay = 50;       // Reaparece rapidamente ao mover o mouse
-  //                  tlpListViewCelula.AutoPopDelay = 3000;    // Some após 3s
+                    listView.BackColor = listViewBackColor;
+                    listView.ForeColor = listViewForeColor;
+                    listView.FullRowSelect = listViewFullRowSelect;
+                    listView.GridLines = listViewGridLines;
+                    listView.HideSelection = listViewHideSelection;
+                    listView.Font = new Font(listViewFontFamily, listViewFontSize, listViewFontStyle);
+
+                    // Exemplo de tooltip customizado
                     tlpListViewCelula.ShowAlways = true;
                     tlpListViewCelula.OwnerDraw = true;
                     tlpListViewCelula.Draw += tlpListViewCelula_Draw;
+                }
+                else if (control is ProgressBar progressBar)
+                {
+                    progressBar.BackColor = progressBarBackColor;
+                    progressBar.ForeColor = progressBarForeColor;
+                    progressBar.Style = progressBarStyle;
                 }
             }
         }
@@ -278,10 +423,55 @@ namespace OrdemServicos.Forms
         }
         private class GradientMenuRenderer : ToolStripProfessionalRenderer
         {
-            private BaseForm baseForm;
+            private readonly BaseForm baseForm;
+
             public GradientMenuRenderer(BaseForm form)
             {
                 baseForm = form;
+            }
+
+            // Fundo do MenuStrip
+            protected override void OnRenderToolStripBackground(ToolStripRenderEventArgs e)
+            {
+                using (LinearGradientBrush brush = new LinearGradientBrush(
+                    e.AffectedBounds,
+                    baseForm.gradientMenuStartColor,
+                    baseForm.gradientMenuEndColor,
+                    LinearGradientMode.Vertical))
+                {
+                    e.Graphics.FillRectangle(brush, e.AffectedBounds);
+                }
+            }
+
+            // Fundo dos itens do MenuStrip com efeito hover
+            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+            {
+                Rectangle rect = new Rectangle(Point.Empty, e.Item.Size);
+
+                Color startColor;
+                Color endColor;
+
+                if (e.Item.Selected || e.Item.Pressed)
+                {
+                    // Efeito hover: usa cores de destaque
+                    startColor = baseForm.buttonMouseOverBackColor;
+                    endColor = baseForm.buttonMouseDownBackColor;
+                }
+                else
+                {
+                    // Normal: mesmo degradê do MenuStrip
+                    startColor = baseForm.gradientMenuStartColor;
+                    endColor = baseForm.gradientMenuEndColor;
+                }
+
+                using (LinearGradientBrush brush = new LinearGradientBrush(
+                    rect,
+                    startColor,
+                    endColor,
+                    LinearGradientMode.Vertical))
+                {
+                    e.Graphics.FillRectangle(brush, rect);
+                }
             }
         }
         protected void ValidarControle(object sender, System.ComponentModel.CancelEventArgs e, string campo, ErrorProvider errorProvider)
@@ -457,47 +647,127 @@ namespace OrdemServicos.Forms
                 string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "XML", fileName);
                 XDocument config = XDocument.Load(configPath);
 
+                //  Gradiente
                 gradientStartColor = ConvertHexToColor(config.Root.Element("GradientStartColor").Value);
                 gradientEndColor = ConvertHexToColor(config.Root.Element("GradientEndColor").Value);
 
-                menuStripBackgroundColor = ConvertHexToColor(config.Root.Element("MenuStripBackgroundColor").Value);
-                gradientMenuEndColor = ConvertHexToColor(config.Root.Element("GradientMenuEndColor").Value);
-                menuStripFontColor = ConvertHexToColor(config.Root.Element("MenuStripFontColor").Value);
+                // Form
+                formBackgroundColor = ConvertHexToColor(config.Root.Element("FormBackgroundColor").Value);
+                formFontFamily = config.Root.Element("FormFontFamily").Value;
+                formFontSize = float.Parse(config.Root.Element("FormFontSize").Value);
+                formFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("FormFontStyle").Value);
 
+                // MenuStrip
+                menuStripBackgroundColor = ConvertHexToColor(config.Root.Element("MenuStripBackgroundColor").Value);
+                gradientMenuStartColor = ConvertHexToColor(config.Root.Element("GradientMenuStartColor").Value);
+                gradientMenuEndColor = ConvertHexToColor(config.Root.Element("GradientMenuEndColor").Value);
+                menuStripFontFamily = config.Root.Element("MenuStripFontFamily").Value;
+                menuStripFontSize = float.Parse(config.Root.Element("MenuStripFontSize").Value);
+                menuStripFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("MenuStripFontStyle").Value);
+
+                // TextBox
                 textBoxBackgroundColor = ConvertHexToColor(config.Root.Element("TextBoxBackgroundColor").Value);
                 textBoxFontColor = ConvertHexToColor(config.Root.Element("TextBoxFontColor").Value);
                 textBoxBorderStyle = (BorderStyle)Enum.Parse(typeof(BorderStyle), config.Root.Element("TextBoxBorderStyle").Value);
                 textBoxFontFamily = config.Root.Element("TextBoxFontFamily").Value;
                 textBoxFontSize = float.Parse(config.Root.Element("TextBoxFontSize").Value);
                 textBoxFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("TextBoxFontStyle").Value);
-                textBoxMarginLeft = int.Parse(config.Root.Element("TextBoxMarginLeft").Value);
-                textBoxMarginTop = int.Parse(config.Root.Element("TextBoxMarginTop").Value);
-                textBoxMarginRight = int.Parse(config.Root.Element("TextBoxMarginRight").Value);
-                textBoxMarginBottom = int.Parse(config.Root.Element("TextBoxMarginBottom").Value);
+   
+                // MaskedTextBox
+                maskedTextBoxBackgroundColor = ConvertHexToColor(config.Root.Element("MaskedTextBoxBackgroundColor").Value);
+                maskedTextBoxFontColor = ConvertHexToColor(config.Root.Element("MaskedTextBoxFontColor").Value);
+                maskedTextBoxBorderStyle = (BorderStyle)Enum.Parse(typeof(BorderStyle), config.Root.Element("MaskedTextBoxBorderStyle").Value);
+                maskedTextBoxFontFamily = config.Root.Element("MaskedTextBoxFontFamily").Value;
+                maskedTextBoxFontSize = float.Parse(config.Root.Element("MaskedTextBoxFontSize").Value);
+                maskedTextBoxFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("MaskedTextBoxFontStyle").Value);
 
+                // Botão
                 buttonBackgroundColor = ConvertHexToColor(config.Root.Element("ButtonBackgroundColor").Value);
                 buttonFontColor = ConvertHexToColor(config.Root.Element("ButtonFontColor").Value);
                 buttonAutoSize = bool.Parse(config.Root.Element("ButtonAutoSize").Value);
-                buttonBorderColor = ConvertHexToColor(config.Root.Element("ButtonAppearance").Element("BorderColor").Value);
-                buttonMouseDownBackColor = ConvertHexToColor(config.Root.Element("ButtonAppearance").Element("MouseDownBackColor").Value);
-                buttonMouseOverBackColor = ConvertHexToColor(config.Root.Element("ButtonAppearance").Element("MouseOverBackColor").Value);
-                // buttonCursor = (Cursors)Enum.Parse(typeof(Cursor), config.Root.Element("ButtonCursor").Value);
+                var buttonAppearance = config.Root.Element("ButtonAppearance");
+                if (buttonAppearance != null)
+                {
+                    buttonBorderColor = ConvertHexToColor(buttonAppearance.Element("BorderColor").Value);
+                    buttonMouseDownBackColor = ConvertHexToColor(buttonAppearance.Element("MouseDownBackColor").Value);
+                    buttonMouseOverBackColor = ConvertHexToColor(buttonAppearance.Element("MouseOverBackColor").Value);
+                }
                 buttonFontFamily = config.Root.Element("ButtonFontFamily").Value;
                 buttonFontSize = float.Parse(config.Root.Element("ButtonFontSize").Value);
                 buttonFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("ButtonFontStyle").Value);
 
+                // Label
                 labelBackgroundColor = ConvertHexToColor(config.Root.Element("LabelBackgroundColor").Value);
                 labelFontColor = ConvertHexToColor(config.Root.Element("LabelFontColor").Value);
                 labelAutoSize = bool.Parse(config.Root.Element("LabelAutoSize").Value);
                 labelFontFamily = config.Root.Element("LabelFontFamily").Value;
                 labelFontSize = float.Parse(config.Root.Element("LabelFontSize").Value);
                 labelFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("LabelFontStyle").Value);
-                labelMarginLeft = int.Parse(config.Root.Element("LabelMarginLeft").Value);
-                labelMarginTop = int.Parse(config.Root.Element("LabelMarginTop").Value);
-                labelMarginRight = int.Parse(config.Root.Element("LabelMarginRight").Value);
-                labelMarginBottom = int.Parse(config.Root.Element("LabelMarginBottom").Value);
+      
+                // LinkLabel
+                linkLabelBackgroundColor = ConvertHexToColor(config.Root.Element("LinkLabelBackgroundColor").Value);
+                linkLabelActiveLinkColor = ConvertHexToColor(config.Root.Element("LinkLabelActiveLinkColor").Value);
+                linkLabelLinkColor = ConvertHexToColor(config.Root.Element("LinkLabelLinkColor").Value);
+                linkLabelVisitedLinkColor = ConvertHexToColor(config.Root.Element("LinkLabelVisitedLinkColor").Value);
+                linkLabelFontFamily = config.Root.Element("LinkLabelFontFamily").Value;
+                linkLabelFontSize = float.Parse(config.Root.Element("LinkLabelFontSize").Value);
+                linkLabelFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("LinkLabelFontStyle").Value);
 
+                // Panel
                 panelBackgroundColor = ConvertHexToColor(config.Root.Element("PanelBackgroundColor").Value);
+                panelBorderStyle = (BorderStyle)Enum.Parse(typeof(BorderStyle), config.Root.Element("PanelBorderStyle").Value);
+                panelFontFamily = config.Root.Element("PanelFontFamily").Value;
+                panelFontSize = float.Parse(config.Root.Element("PanelFontSize").Value);
+                panelFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("PanelFontStyle").Value);
+
+                // ListView
+                listViewBackColor = ConvertHexToColor(config.Root.Element("ListViewBackColor").Value);
+                listViewForeColor = ConvertHexToColor(config.Root.Element("ListViewForeColor").Value);
+                listViewFullRowSelect = bool.Parse(config.Root.Element("ListViewFullRowSelect").Value);
+                listViewGridLines = bool.Parse(config.Root.Element("ListViewGridLines").Value);
+                listViewHideSelection = bool.Parse(config.Root.Element("ListViewHideSelection").Value);
+                listViewFontFamily = config.Root.Element("ListViewFontFamily").Value;
+                listViewFontSize = float.Parse(config.Root.Element("ListViewFontSize").Value);
+                listViewFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("ListViewFontStyle").Value);
+
+                // ComboBox
+                comboBoxBackColor = ConvertHexToColor(config.Root.Element("ComboBoxBackColor").Value);
+                comboBoxForeColor = ConvertHexToColor(config.Root.Element("ComboBoxForeColor").Value);
+                var dropDownStr = config.Root.Element("ComboBoxDropDownStyle")?.Value ?? "DropDown";
+                if (!Enum.TryParse(dropDownStr, true, out ComboBoxStyle parsedStyle))
+                    parsedStyle = ComboBoxStyle.DropDown;
+                comboBoxDropDownStyle = parsedStyle;
+                comboBoxFontFamily = config.Root.Element("ComboBoxFontFamily").Value;
+                comboBoxFontSize = float.Parse(config.Root.Element("ComboBoxFontSize").Value);
+                comboBoxFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("ComboBoxFontStyle").Value);
+     
+                // ToolStripMenuItem
+                toolStripMenuItemBackColor = ConvertHexToColor(config.Root.Element("ToolStripMenuItemBackColor").Value);
+                toolStripMenuItemForeColor = ConvertHexToColor(config.Root.Element("ToolStripMenuItemForeColor").Value);
+                toolStripMenuItemFontFamily = config.Root.Element("ToolStripMenuItemFontFamily").Value;
+                toolStripMenuItemFontSize = float.Parse(config.Root.Element("ToolStripMenuItemFontSize").Value);
+                toolStripMenuItemFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("ToolStripMenuItemFontStyle").Value);
+
+                // TabControl
+                tabControlFontFamily = config.Root.Element("TabControlFontFamily").Value;
+                tabControlFontSize = float.Parse(config.Root.Element("TabControlFontSize").Value);
+                tabControlFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("TabControlFontStyle").Value);
+
+
+                // TabPage
+                tabPageBackColor = ConvertHexToColor(config.Root.Element("TabPageBackColor").Value);
+                tabPageForeColor = ConvertHexToColor(config.Root.Element("TabPageForeColor").Value);
+                tabPageBorderStyle = (BorderStyle)Enum.Parse(typeof(BorderStyle), config.Root.Element("TabPageBorderStyle").Value);
+                tabPageFontFamily = config.Root.Element("TabPageFontFamily").Value;
+                tabPageFontSize = float.Parse(config.Root.Element("TabPageFontSize").Value);
+                tabPageFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("TabPageFontStyle").Value);
+
+                // ProgressBar
+                progressBarBackColor = ConvertHexToColor(config.Root.Element("ProgressBarBackColor").Value);
+                progressBarForeColor = ConvertHexToColor(config.Root.Element("ProgressBarForeColor").Value);
+                progressBarStyle = (ProgressBarStyle)Enum.Parse(typeof(ProgressBarStyle), config.Root.Element("ProgressBarStyle").Value);
+
+                // Aplica nos controles
                 ApplyConfigToControls(Controls, config);
             }
             catch (Exception ex)
@@ -507,18 +777,21 @@ namespace OrdemServicos.Forms
         }
         protected Color ConvertHexToColor(string hex)
         {
-            // Remove any leading '#' characters
-            hex = hex.Replace("#", "");
-
-            // Ensure the hex string is valid
-            if (hex.Length == 6 || hex.Length == 8)
+            try
             {
-                int argb = int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
-                return Color.FromArgb(argb);
+                if (hex.Length == 8)
+                {
+                    byte a = Convert.ToByte(hex.Substring(0, 2), 16);
+                    byte r = Convert.ToByte(hex.Substring(2, 2), 16);
+                    byte g = Convert.ToByte(hex.Substring(4, 2), 16);
+                    byte b = Convert.ToByte(hex.Substring(6, 2), 16);
+                    return Color.FromArgb(a, r, g, b);
+                }
+                return Color.Black; // fallback
             }
-            else
+            catch
             {
-                throw new ArgumentException("Invalid hex color format");
+                return Color.Black; // fallback em caso de erro
             }
         }
         protected byte[] ImageToByteArray(Image image)
@@ -587,7 +860,7 @@ namespace OrdemServicos.Forms
                 listView.AutoResizeColumn(i, ColumnHeaderAutoResizeStyle.HeaderSize);
                 int larguraCabecalho = listView.Columns[i].Width + 20;
 
-                listView.Columns[i].Width  = Math.Max(larguraConteudo, larguraCabecalho);
+                listView.Columns[i].Width = Math.Max(larguraConteudo, larguraCabecalho);
             }
 
             listView.Columns[listView.Columns.Count - 1].Width = -2;

@@ -494,6 +494,9 @@
     <EmbeddedResource Include="Configuracao\FrmConfigFormulario.resx">
       <DependentUpon>FrmConfigFormulario.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -564,6 +567,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="XML\temaClaro.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="XML\temaEscuro.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\CadeadoAberto.png" />
     <None Include="Resources\CadeadoFechado.png" />
     <None Include="Resources\Cancelar24X24.png" />
@@ -591,7 +600,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="XML\configpadrao.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

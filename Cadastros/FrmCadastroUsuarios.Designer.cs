@@ -115,8 +115,10 @@
             // 
             // listViewUsuario
             // 
+            this.listViewUsuario.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.listViewUsuario.CausesValidation = false;
             this.listViewUsuario.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listViewUsuario.ForeColor = System.Drawing.Color.Black;
             this.listViewUsuario.FullRowSelect = true;
             this.listViewUsuario.GridLines = true;
             this.listViewUsuario.HideSelection = false;
@@ -130,6 +132,7 @@
             // 
             // pnlBotoes
             // 
+            this.pnlBotoes.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.pnlBotoes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pnlBotoes.Controls.Add(this.btnFechar);
             this.pnlBotoes.Controls.Add(this.btnSalvar);
@@ -138,7 +141,8 @@
             this.pnlBotoes.Controls.Add(this.btnNovo);
             this.pnlBotoes.Controls.Add(this.lbTotalRegistros);
             this.pnlBotoes.Controls.Add(this.btnCancelar);
-            this.pnlBotoes.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlBotoes.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlBotoes.ForeColor = System.Drawing.Color.Black;
             this.pnlBotoes.Location = new System.Drawing.Point(18, 573);
             this.pnlBotoes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pnlBotoes.Name = "pnlBotoes";
@@ -212,9 +216,13 @@
             // 
             // btnNovo
             // 
-            this.btnNovo.AutoSize = true;
+            this.btnNovo.BackColor = System.Drawing.Color.DimGray;
             this.btnNovo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNovo.FlatAppearance.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnNovo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DodgerBlue;
+            this.btnNovo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.SteelBlue;
             this.btnNovo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNovo.ForeColor = System.Drawing.Color.White;
             this.btnNovo.Image = ((System.Drawing.Image)(resources.GetObject("btnNovo.Image")));
             this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnNovo.Location = new System.Drawing.Point(739, 5);
@@ -607,8 +615,10 @@
             // 
             // txtNome
             // 
+            this.txtNome.BackColor = System.Drawing.Color.White;
             this.txtNome.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtNome.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNome.ForeColor = System.Drawing.Color.Black;
             this.txtNome.Location = new System.Drawing.Point(10, 30);
             this.txtNome.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtNome.Name = "txtNome";
@@ -619,7 +629,9 @@
             // lbNome
             // 
             this.lbNome.AutoSize = true;
+            this.lbNome.BackColor = System.Drawing.Color.Transparent;
             this.lbNome.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbNome.ForeColor = System.Drawing.Color.Black;
             this.lbNome.Location = new System.Drawing.Point(10, 10);
             this.lbNome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbNome.Name = "lbNome";

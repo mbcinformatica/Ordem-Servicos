@@ -28,15 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // BaseForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(868, 438);
+            this.Name = "BaseForm";
             this.Text = "BaseForm";
-
-            // Associa o evento Paint ao método BaseForm_Paint
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BaseForm_Paint);
+            this.ResumeLayout(false);
+
         }
 
-        #endregion
-    }
+		#endregion
+	}
 }

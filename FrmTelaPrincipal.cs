@@ -13,14 +13,18 @@ namespace OrdemServicos
 {
     public partial class frmTelaPrincipal : BaseForm
     {
-        //      private readonly string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
         public bool vCloseSistema;
+
 
         public frmTelaPrincipal()
         {
             InitializeComponent();
-            Paint += new PaintEventHandler(BaseForm_Paint);
-            Load += frmTelaPrincipal_Load;
+
+            // ✅ aplica pintura base
+            this.Paint += new PaintEventHandler(BaseForm_Paint);
+
+            // ✅ evento de carregamento
+            this.Load += frmTelaPrincipal_Load;
             LoadConfig();
 
             // ✅ inicia oculto
@@ -30,31 +34,35 @@ namespace OrdemServicos
         }
         private async void frmTelaPrincipal_Load(object sender, EventArgs e)
         {
+            // ✅ O tema já é carregado automaticamente pelo BaseForm.OnLoad
+            // Não precisa chamar LoadConfig aqui
 
-            // Verifica login
+            // ✅ verifica login
             bool loginOK = await VerificaLoginAsync();
-            vCloseSistema = false;
             if (!loginOK)
             {
-                // ✅ Evita manipular o formulário após encerramento
                 BeginInvoke(new Action(() => Application.Exit()));
                 return;
             }
 
             AbrirFormularioLogin();
-            if (vCloseSistema) 
+
+            // ✅ se login foi concluído corretamente
+            if (vCloseSistema)
             {
-                this.Text += $" {BaseForm.UsuarioLogado}";
+                this.Text = $"Sistema - Usuário: {BaseForm.UsuarioLogado}";
                 this.Visible = true;
                 this.ShowInTaskbar = true;
                 this.WindowState = FormWindowState.Normal;
-                // Define tamanho e posição
+
+                // ✅ define tamanho e posição centralizada
                 Width = (int)(Screen.PrimaryScreen.WorkingArea.Width * 0.8);
                 Height = (int)(Screen.PrimaryScreen.WorkingArea.Height * 0.8);
                 StartPosition = FormStartPosition.Manual;
                 Location = new Point(
-                   (Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
-                   (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2);
+                    (Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
+                    (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2
+                );
             }
         }
         private async Task<bool> VerificaLoginAsync()

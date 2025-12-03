@@ -1,5 +1,6 @@
 ﻿using OrdemServicos.Forms;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -10,11 +11,17 @@ namespace OrdemServicos
 {
     public partial class frmConfigFormulario : BaseForm
     {
-        private bool salvaConfigPadrao;
+        private bool salvaConfigPadrao = false;
+        private bool salvaConfigTemaClaro = false;
+        private bool salvaConfigTemaEscuro = false;
+
         public frmConfigFormulario()
         {
             InitializeComponent();
+
+            // ✅ Carrega último tema usado
             LoadConfig();
+
             Paint += new PaintEventHandler(BaseForm_Paint);
             erpProvider = new ErrorProvider();
             CarregaControlesFormulario();
@@ -28,8 +35,8 @@ namespace OrdemServicos
             CentralizarControlesHorizontalmenteNoPanel(pnlExemplosConfiguracaoAlterada, lbConfiguracaoAlterada);
 
             // Definindo o tamanho e a posição dos Panels
-            Size panelSize = new Size(388, 192); // Exemplo de tamanho
-            Point panelLocation = new Point(692, 16); // Exemplo de posição
+            Size panelSize = new Size(580, 256); // Exemplo de tamanho
+            Point panelLocation = new Point(838, 23); // Exemplo de posição
 
             pnlOpcaoFormulario.Size = panelSize;
             pnlOpcaoFormulario.Location = panelLocation;
@@ -80,7 +87,19 @@ namespace OrdemServicos
             pnlOpcaoBotoes.Visible = false;
             pnlOpcaoDescricao.Visible = true;
         }
-        private void lnkConfiguracaoPadrao_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LnkConfiguracaoTemaClaro_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            salvaConfigTemaClaro = true;
+            btnSalvarSair_Click(sender, e);
+            salvaConfigTemaClaro = false;
+        }
+        private void LnkConfiguracaoTemaEscuro_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            salvaConfigTemaEscuro = true;
+            btnSalvarSair_Click(sender, e);
+            salvaConfigTemaEscuro = false;
+        }
+        private void LnkConfiguracaoPadrao_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             salvaConfigPadrao = true;
             btnSalvarSair_Click(sender, e);
@@ -102,27 +121,33 @@ namespace OrdemServicos
         }
         private void lnkOpcaoCorFundoMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            mnsStripExemploAlterado.Visible = false;
-            cldCores.Color = menuStripBackgroundColor;
+            cldCores.Color = gradientMenuStartColor;
             if (cldCores.ShowDialog() == DialogResult.OK)
             {
-                menuStripBackgroundColor = cldCores.Color;
+                gradientMenuStartColor = cldCores.Color;
                 MessageBox.Show("Escolha a segunda cor para fazer um efeito gradiente", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (cldCores.ShowDialog() == DialogResult.OK)
                 {
                     gradientMenuEndColor = cldCores.Color;
                 }
                 mnsStripExemploAlterado.Visible = true;
+                ApplyGradientColors();
+
             }
         }
         private void lnkOpcaoCorFonteMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            mnsStripExemploAlterado.Visible = false;
-            cldCores.Color = menuStripFontColor;
+            
+            cldCores.Color = toolStripMenuItemForeColor;
             if (cldCores.ShowDialog() == DialogResult.OK)
             {
-                menuStripFontColor = cldCores.Color;
+                toolStripMenuItemForeColor = cldCores.Color;
+                toolStriExemploAlterado1.ForeColor = toolStripMenuItemForeColor;
+                toolStriExemploAlterado2.ForeColor = toolStripMenuItemForeColor;
+                toolStriExemploAlterado3.ForeColor = toolStripMenuItemForeColor;
+                toolStriExemploAlterado4.ForeColor = toolStripMenuItemForeColor;
                 mnsStripExemploAlterado.Visible = true;
+                ApplyGradientColors();
             }
         }
         private void lnkOpcaoCorFundoDescricao_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -233,94 +258,215 @@ namespace OrdemServicos
         }
         private void btnSalvarSair_Click(object sender, EventArgs e)
         {
-            // Exibe uma mensagem de confirmação ao usuário
-            DialogResult confirmResult = MessageBox.Show("Deseja realmente salvar as alterações?", "Confirmar Alterações", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (confirmResult == DialogResult.Yes)
+            DialogResult confirmResult = MessageBox.Show(
+                "Deseja realmente salvar as alterações?",
+                "Confirmar Alterações",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirmResult != DialogResult.Yes)
+                return;
+
+            try
             {
-                try
+                if (salvaConfigTemaClaro)
                 {
-                    if (salvaConfigPadrao)
-                    {
-                        CarregaDadosControles("configpadrao.xml");
-                    }
-                    // Define o caminho do arquivo de configuração
-                    string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "XML", "config.xml");
-
-                    // Carrega o documento XML de configuração
-                    XDocument config;
-                    using (var stream = File.OpenRead(configPath))
-                    {
-                        config = XDocument.Load(stream);
-                    }
-
-                    // Atualiza os valores no documento XML
-                    config.Root.Element("MenuStripBackgroundColor").Value = menuStripBackgroundColor.ToArgb().ToString("X");
-                    config.Root.Element("GradientMenuEndColor").Value = gradientMenuEndColor.ToArgb().ToString("X");
-                    config.Root.Element("MenuStripFontColor").Value = menuStripFontColor.ToArgb().ToString("X");
-
-                    config.Root.Element("TextBoxBackgroundColor").Value = textBoxBackgroundColor.ToArgb().ToString("X");
-                    config.Root.Element("TextBoxFontColor").Value = textBoxFontColor.ToArgb().ToString("X");
-                    config.Root.Element("TextBoxBorderStyle").Value = textBoxBorderStyle.ToString();
-                    config.Root.Element("TextBoxFontFamily").Value = textBoxFontFamily;
-                    config.Root.Element("TextBoxFontSize").Value = textBoxFontSize.ToString();
-                    config.Root.Element("TextBoxFontStyle").Value = textBoxFontStyle.ToString();
-                    config.Root.Element("TextBoxMarginLeft").Value = textBoxMarginLeft.ToString();
-                    config.Root.Element("TextBoxMarginTop").Value = textBoxMarginTop.ToString();
-                    config.Root.Element("TextBoxMarginRight").Value = textBoxMarginRight.ToString();
-                    config.Root.Element("TextBoxMarginBottom").Value = textBoxMarginBottom.ToString();
-
-                    config.Root.Element("ButtonBackgroundColor").Value = buttonBackgroundColor.ToArgb().ToString("X");
-                    config.Root.Element("ButtonFontColor").Value = buttonFontColor.ToArgb().ToString("X");
-                    config.Root.Element("ButtonAutoSize").Value = buttonAutoSize.ToString();
-                    config.Root.Element("ButtonAppearance").Element("BorderColor").Value = buttonBorderColor.ToArgb().ToString("X");
-                    config.Root.Element("ButtonAppearance").Element("MouseDownBackColor").Value = buttonMouseDownBackColor.ToArgb().ToString("X");
-                    config.Root.Element("ButtonAppearance").Element("MouseOverBackColor").Value = buttonMouseOverBackColor.ToArgb().ToString("X");
-                    config.Root.Element("ButtonFontFamily").Value = buttonFontFamily;
-                    config.Root.Element("ButtonFontSize").Value = buttonFontSize.ToString();
-                    config.Root.Element("ButtonFontStyle").Value = buttonFontStyle.ToString();
-
-                    config.Root.Element("LabelBackgroundColor").Value = labelBackgroundColor.ToArgb().ToString("X");
-                    config.Root.Element("LabelFontColor").Value = labelFontColor.ToArgb().ToString("X");
-                    config.Root.Element("LabelAutoSize").Value = labelAutoSize.ToString();
-                    config.Root.Element("LabelFontFamily").Value = labelFontFamily;
-                    config.Root.Element("LabelFontSize").Value = labelFontSize.ToString();
-                    config.Root.Element("LabelFontStyle").Value = labelFontStyle.ToString();
-                    config.Root.Element("LabelMarginLeft").Value = labelMarginLeft.ToString();
-                    config.Root.Element("LabelMarginTop").Value = labelMarginTop.ToString();
-                    config.Root.Element("LabelMarginRight").Value = labelMarginRight.ToString();
-                    config.Root.Element("LabelMarginBottom").Value = labelMarginBottom.ToString();
-
-                    config.Root.Element("PanelBackgroundColor").Value = panelBackgroundColor.ToArgb().ToString("X");
-
-                    config.Root.Element("GradientStartColor").Value = gradientStartColor.ToArgb().ToString("X");
-                    config.Root.Element("GradientEndColor").Value = gradientEndColor.ToArgb().ToString("X");
-
-                    // Salva o documento XML atualizado
-                    using (var stream = File.OpenWrite(configPath))
-                    {
-                        config.Save(stream);
-                    }
-
-                    // Exibe uma mensagem de confirmação para reiniciar o sistema
-                    DialogResult restartResult = MessageBox.Show("As configurações foram salvas. O sistema precisa ser reiniciado para aplicar as alterações. Deseja reiniciar agora?", "Reiniciar Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (restartResult == DialogResult.Yes)
-                    {
-                        Application.Exit();
-                    }
-                    else
-                    {
-                        Close();
-                    }
+                    // ✅ Carrega valores do tema claro e salva no config.xml
+                    CarregaDadosControles("temaClaro.xml");
                 }
-                catch (Exception ex)
+                else if (salvaConfigTemaEscuro)
                 {
-                    // Exibe uma mensagem de erro caso ocorra uma exceção
-                    MessageBox.Show($"Erro ao salvar o arquivo de configuração: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CarregaDadosControles("temaEscuro.xml");
                 }
+                else if (salvaConfigPadrao)
+                {
+                    CarregaDadosControles("configpadrao.xml");
+                }
+                // Define o caminho do arquivo de configuração
+                string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "XML", "config.xml");
 
-                // Recarrega os controles do formulário
-                CarregaControlesFormulario();
+                SalvarConfiguracoesPersonalizadas(configPath);
+
+                // Exibe uma mensagem de confirmação para reiniciar o sistema
+                DialogResult restartResult = MessageBox.Show("As configurações foram salvas. O sistema precisa ser reiniciado para aplicar as alterações. Deseja reiniciar agora?", "Reiniciar Sistema", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (restartResult == DialogResult.Yes)
+                {
+                    Application.Exit();
+                }
+                else
+                {
+                    Close();
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao salvar o arquivo de configuração: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            // ✅ Recarrega os controles do formulário atual
+            CarregaControlesFormulario();
+        }
+        private void SalvarConfiguracoesPersonalizadas(string configPath)
+        {
+            // Carrega ou cria o documento base
+            XDocument config;
+            if (File.Exists(configPath))
+                config = XDocument.Load(configPath);
+            else
+                config = new XDocument(new XElement("Config"));
+
+            var root = config.Root ?? new XElement("Config");
+
+            // Helper: define valor do elemento, criando se não existir
+            void SetValue(string elementName, string value)
+            {
+                var el = root.Element(elementName);
+                if (el == null)
+                {
+                    el = new XElement(elementName);
+                    root.Add(el);
+                }
+                el.Value = value ?? string.Empty;
+            }
+
+            // Helper: ARGB em 8 dígitos
+            string HEX(Color c) => c.ToArgb().ToString("X8");
+
+            // 🎨 Efeito Gradiente
+            SetValue("GradientStartColor", HEX(gradientStartColor));
+            SetValue("GradientEndColor", HEX(gradientEndColor));
+
+            // Form
+            SetValue("FormBackgroundColor", HEX(formBackgroundColor));
+            SetValue("FormFontFamily", formFontFamily);
+            SetValue("FormFontSize", (formFontSize <= 0 ? 12 : formFontSize).ToString());
+            SetValue("FormFontStyle", formFontStyle.ToString());
+
+            // 📋 MenuStrip
+            SetValue("MenuStripBackgroundColor", HEX(menuStripBackgroundColor));
+            SetValue("GradientMenuStartColor", HEX(gradientMenuStartColor));
+            SetValue("GradientMenuEndColor", HEX(gradientMenuEndColor));
+            SetValue("MenuStripFontFamily", menuStripFontFamily);
+            SetValue("MenuStripFontSize", (menuStripFontSize <= 0 ? 12 : menuStripFontSize).ToString());
+            SetValue("MenuStripFontStyle", menuStripFontStyle.ToString());
+
+            // 📝 TextBox
+            SetValue("TextBoxBackgroundColor", HEX(textBoxBackgroundColor));
+            SetValue("TextBoxFontColor", HEX(textBoxFontColor));
+            SetValue("TextBoxBorderStyle", textBoxBorderStyle.ToString());
+            SetValue("TextBoxFontFamily", textBoxFontFamily);
+            SetValue("TextBoxFontSize", (textBoxFontSize <= 0 ? 12 : textBoxFontSize).ToString());
+            SetValue("TextBoxFontStyle", textBoxFontStyle.ToString());
+
+            // 🔢 MaskedTextBox
+            SetValue("MaskedTextBoxBackgroundColor", HEX(maskedTextBoxBackgroundColor));
+            SetValue("MaskedTextBoxFontColor", HEX(maskedTextBoxFontColor));
+            SetValue("MaskedTextBoxBorderStyle", maskedTextBoxBorderStyle.ToString());
+            SetValue("MaskedTextBoxFontFamily", maskedTextBoxFontFamily);
+            SetValue("MaskedTextBoxFontSize", (maskedTextBoxFontSize <= 0 ? 12 : maskedTextBoxFontSize).ToString());
+            SetValue("MaskedTextBoxFontStyle", maskedTextBoxFontStyle.ToString());
+
+            // 🔘 Button
+            SetValue("ButtonBackgroundColor", HEX(buttonBackgroundColor));
+            SetValue("ButtonFontColor", HEX(buttonFontColor));
+            SetValue("ButtonAutoSize", buttonAutoSize.ToString());
+            SetValue("ButtonFontFamily", buttonFontFamily);
+            SetValue("ButtonFontSize", (buttonFontSize <= 0 ? 12 : buttonFontSize).ToString());
+            SetValue("ButtonFontStyle", buttonFontStyle.ToString());
+
+            var buttonAppearance = root.Element("ButtonAppearance");
+            if (buttonAppearance == null)
+            {
+                buttonAppearance = new XElement("ButtonAppearance");
+                root.Add(buttonAppearance);
+            }
+            void SetButtonAppearance(string childName, string value)
+            {
+                var child = buttonAppearance.Element(childName);
+                if (child == null)
+                {
+                    child = new XElement(childName);
+                    buttonAppearance.Add(child);
+                }
+                child.Value = value ?? string.Empty;
+            }
+            SetButtonAppearance("BorderColor", HEX(buttonBorderColor));
+            SetButtonAppearance("MouseDownBackColor", HEX(buttonMouseDownBackColor));
+            SetButtonAppearance("MouseOverBackColor", HEX(buttonMouseOverBackColor));
+
+            // 🏷️ Label
+            SetValue("LabelBackgroundColor", HEX(labelBackgroundColor));
+            SetValue("LabelFontColor", HEX(labelFontColor));
+            SetValue("LabelAutoSize", labelAutoSize.ToString());
+            SetValue("LabelFontFamily", labelFontFamily);
+            SetValue("LabelFontSize", (labelFontSize <= 0 ? 12 : labelFontSize).ToString());
+            SetValue("LabelFontStyle", labelFontStyle.ToString());
+
+            // 🔗 LinkLabel
+            SetValue("LinkLabelBackgroundColor", HEX(linkLabelBackgroundColor));
+            SetValue("LinkLabelActiveLinkColor", HEX(linkLabelActiveLinkColor));
+            SetValue("LinkLabelLinkColor", HEX(linkLabelLinkColor));
+            SetValue("LinkLabelVisitedLinkColor", HEX(linkLabelVisitedLinkColor));
+            SetValue("LinkLabelFontFamily", linkLabelFontFamily);
+            SetValue("LinkLabelFontSize", (linkLabelFontSize <= 0 ? 12 : linkLabelFontSize).ToString());
+            SetValue("LinkLabelFontStyle", linkLabelFontStyle.ToString());
+
+            // 📦 Panel
+            SetValue("PanelBackgroundColor", HEX(panelBackgroundColor));
+            SetValue("PanelBorderStyle", panelBorderStyle.ToString());
+            SetValue("PanelFontFamily", panelFontFamily);
+            SetValue("PanelFontSize", (panelFontSize <= 0 ? 12 : panelFontSize).ToString());
+            SetValue("PanelFontStyle", panelFontStyle.ToString());
+
+            // 📋 ListView
+            SetValue("ListViewBackColor", HEX(listViewBackColor));
+            SetValue("ListViewForeColor", HEX(listViewForeColor));
+            SetValue("ListViewFullRowSelect", listViewFullRowSelect.ToString());
+            SetValue("ListViewGridLines", listViewGridLines.ToString());
+            SetValue("ListViewHideSelection", listViewHideSelection.ToString());
+            SetValue("ListViewFontFamily", listViewFontFamily);
+            SetValue("ListViewFontSize", (listViewFontSize <= 0 ? 12 : listViewFontSize).ToString());
+            SetValue("ListViewFontStyle", listViewFontStyle.ToString());
+
+            // 🔽 ComboBox
+            SetValue("ComboBoxBackColor", HEX(comboBoxBackColor));
+            SetValue("ComboBoxForeColor", HEX(comboBoxForeColor));
+            SetValue("ComboBoxDropDownStyle", comboBoxDropDownStyle.ToString());
+            SetValue("ComboBoxFontFamily", comboBoxFontFamily);
+            SetValue("ComboBoxFontSize", (comboBoxFontSize <= 0 ? 12 : comboBoxFontSize).ToString());
+            SetValue("ComboBoxFontStyle", comboBoxFontStyle.ToString());
+
+            // 📑 ToolStripMenuItem
+            SetValue("ToolStripMenuItemBackColor", HEX(toolStripMenuItemBackColor));
+            SetValue("ToolStripMenuItemForeColor", HEX(toolStripMenuItemForeColor));
+            SetValue("ToolStripMenuItemFontFamily", toolStripMenuItemFontFamily);
+            SetValue("ToolStripMenuItemFontSize", (toolStripMenuItemFontSize <= 0 ? 12 : toolStripMenuItemFontSize).ToString());
+            SetValue("ToolStripMenuItemFontStyle", toolStripMenuItemFontStyle.ToString());
+
+            // 📂 TabControl
+             SetValue("TabControlFontFamily", tabControlFontFamily);
+            SetValue("TabControlFontSize", (tabControlFontSize <= 0 ? 12 : tabControlFontSize).ToString());
+            SetValue("TabControlFontStyle", tabControlFontStyle.ToString());
+
+            // 📂 TabPage
+            SetValue("TabPageBackColor", HEX(tabPageBackColor));
+            SetValue("TabPageForeColor", HEX(tabPageForeColor));
+            SetValue("TabPageBorderStyle", tabPageBorderStyle.ToString());
+            SetValue("TabPageFontFamily", tabPageFontFamily);
+            SetValue("TabPageFontSize", (tabPageFontSize <= 0 ? 12 : tabPageFontSize).ToString());
+            SetValue("TabPageFontStyle", tabPageFontStyle.ToString());
+
+            // 📊 ProgressBar
+            SetValue("ProgressBarBackColor", HEX(progressBarBackColor));
+            SetValue("ProgressBarForeColor", HEX(progressBarForeColor));
+            SetValue("ProgressBarStyle", progressBarStyle.ToString());
+
+            // Garante que root esteja no documento antes de salvar
+            if (config.Root == null)
+                config.Add(root);
+
+            // ✅ Salva o documento XML atualizado
+            config.Save(configPath);
         }
         private void btnCancelarSair_Click(object sender, EventArgs e)
         {
@@ -352,5 +498,5 @@ namespace OrdemServicos
                 controle.Location = new Point(x, y);
             }
         }
-    }
+	}
 }
