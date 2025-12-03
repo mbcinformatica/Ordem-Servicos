@@ -13,16 +13,11 @@ namespace OrdemServicos
 {
     public partial class frmTelaPrincipal : BaseForm
     {
-  //      private readonly string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
+        //      private readonly string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
+        public bool vCloseSistema;
+
         public frmTelaPrincipal()
         {
-            /*
-            InitializeComponent();
-            Paint += new PaintEventHandler(BaseForm_Paint);
-            Load += frmTelaPrincipal_Load;
-            LoadConfig();
-            */
-
             InitializeComponent();
             Paint += new PaintEventHandler(BaseForm_Paint);
             Load += frmTelaPrincipal_Load;
@@ -36,21 +31,24 @@ namespace OrdemServicos
         private async void frmTelaPrincipal_Load(object sender, EventArgs e)
         {
 
-            // ✅ Verifica login
-            if (!await VerificaLoginAsync())
+            // Verifica login
+            bool loginOK = await VerificaLoginAsync();
+            vCloseSistema = false;
+            if (!loginOK)
             {
-                Application.Exit();
+                // ✅ Evita manipular o formulário após encerramento
+                BeginInvoke(new Action(() => Application.Exit()));
+                return;
             }
-            else
-            {
-                AbrirFormularioLogin();
-                this.Text = this.Text + $" {BaseForm.UsuarioLogado}";
 
-                // ✅ só mostra se login OK
+            AbrirFormularioLogin();
+            if (vCloseSistema) 
+            {
+                this.Text += $" {BaseForm.UsuarioLogado}";
                 this.Visible = true;
                 this.ShowInTaskbar = true;
                 this.WindowState = FormWindowState.Normal;
-                // tamanho e posição já podem ser definidos aqui
+                // Define tamanho e posição
                 Width = (int)(Screen.PrimaryScreen.WorkingArea.Width * 0.8);
                 Height = (int)(Screen.PrimaryScreen.WorkingArea.Height * 0.8);
                 StartPosition = FormStartPosition.Manual;
@@ -82,10 +80,10 @@ namespace OrdemServicos
                         }
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
-                    MessageBox.Show("Erro ao Conectar ao Banco de Dados: " + ex.Message,
-                                    "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    string mensagem = "Erro de Conexão.\n\nNão foi Posivel Conectar ao Banco de Dados.";
+                    MessageBox.Show(mensagem, "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return false;
                 }
             }
@@ -104,6 +102,8 @@ namespace OrdemServicos
             // Ajusta a localização para ficar abaixo do menu do formulário principal
             formularioLogin.StartPosition = FormStartPosition.CenterScreen;
             formularioLogin.ShowDialog();
+            vCloseSistema = formularioLogin.vCloseSistema;
+
         }
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
         {

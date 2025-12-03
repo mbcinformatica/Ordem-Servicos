@@ -23,6 +23,7 @@ namespace OrdemServicos
         private List<Control> controlesMouseMove = new List<Control>();
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
+        public bool vCloseSistema;
 
         public frmLogin()
         {
@@ -36,6 +37,8 @@ namespace OrdemServicos
             ConfigurarTextBox();
             CarregaKey();
             LimparCampos();
+            vCloseSistema = false;
+
         }
         private void CarregaKey()
         {
@@ -114,17 +117,20 @@ namespace OrdemServicos
         }
         private void btnLogin_Click(object sender, EventArgs e)
         {
-
             if (ValidarCredenciais())
             {
-                Close();
+                // ✅ Login válido
+                vCloseSistema = true;
+                this.DialogResult = DialogResult.OK;
+                this.Close();
                 return;
             }
 
             nTentativasLogin++;
             if (nTentativasLogin >= 4)
             {
-                MessageBox.Show("Número Máximo de Tentativas Atingido. O Programa Será Fechado.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Número Máximo de Tentativas Atingido. O Programa Será Fechado.",
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
             else

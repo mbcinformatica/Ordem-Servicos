@@ -54,10 +54,8 @@ namespace OrdemServicos.DAL
                 }
                 catch
                 {
-//                    throw new Exception("Erro ao conectar ou configurar o banco de dados: " + ex.Message, ex);
-                    MessageBox.Show("Erro ao Conectar ao Banco de Dados, Favor Configurar o Banco de Dados:  ",
-                                    "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                    string mensagem = "Erro de Conexão.\n\nNão foi Posivel Conectar ao Banco de Dados.\nFavor Configurar o Banco de Dados: ";
+                    MessageBox.Show(mensagem, "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     // Abre o formulário de configuração
 
                     frmConfigDB FrmConfigDB = new frmConfigDB();

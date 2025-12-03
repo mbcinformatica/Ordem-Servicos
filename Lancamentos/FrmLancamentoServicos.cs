@@ -38,9 +38,9 @@ namespace OrdemServicos
             Paint += new System.Windows.Forms.PaintEventHandler(BaseForm_Paint);
             InitializeTabControl(tabControlOrdenServico); // Chama o método para inicializar o TabControl
             erpProvider = new ErrorProvider();
-            ConfigurarComboBoxMarcas();
-            ConfigurarComboBoxClientes();
-            ConfigurarComboBoxProdutos();
+            ConfigurarComboBox(cmbMarca);
+            ConfigurarComboBox(cmbCliente);
+            ConfigurarComboBox(cmbProduto);
             CarregarRegistros();
             ConfigurarTextBox();
             ConfigurarTabIndexControles();
@@ -329,8 +329,6 @@ namespace OrdemServicos
             EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
 
             // Associar eventos SelectedIndexChanged e Click
-            cmbProduto.SelectedIndexChanged += cmbProduto_SelectedIndexChanged;
-            cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
             listViewLancamentoServicos.Click += ListViewLancamentoServicos_SelectedIndexChanged;
 
             // Focar no btnNovo ao iniciar
@@ -528,51 +526,6 @@ namespace OrdemServicos
             {
                 MessageBox.Show("Erro ao carregar dados do lançamento: " + ex.Message,
                                 "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private void ConfigurarComboBoxClientes()
-        {
-            cmbCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbCliente.AutoCompleteSource = AutoCompleteSource.ListItems;
-        }
-        private void ConfigurarComboBoxMarcas()
-        {
-            cmbMarca.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbMarca.AutoCompleteSource = AutoCompleteSource.ListItems;
-        }
-        private void ConfigurarComboBoxProdutos()
-        {
-            cmbProduto.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            cmbProduto.AutoCompleteSource = AutoCompleteSource.ListItems;
-
-        }
-        private void CmbMarca_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbMarca.SelectedValue != null)
-            {
-                int idMarca = Convert.ToInt32(cmbMarca.SelectedValue);
-                CarregarProdutosPorMarcaAsync(idMarca);
-            }
-        }
-        private void cmbProduto_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbProduto.SelectedValue != null)
-            {
-                ProdutoInfo produtoSelecionado = cmbProduto.SelectedItem as ProdutoInfo;
-                if (produtoSelecionado != null)
-                {
-                    if (produtoSelecionado.Imagem != null)
-                    {
-                        using (var ms = new System.IO.MemoryStream(produtoSelecionado.Imagem))
-                        {
-                            imgImagemProduto.Image = Image.FromStream(ms);
-                        }
-                    }
-                    else
-                    {
-                        imgImagemProduto.Image = null;
-                    }
-                }
             }
         }
         public override async void ExecutaFuncaoEventoAsync(Control control)
@@ -941,6 +894,5 @@ namespace OrdemServicos
                                 "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-    }
+	}
 }

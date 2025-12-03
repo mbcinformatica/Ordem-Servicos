@@ -694,7 +694,7 @@ namespace OrdemServicos
                         if (result == DialogResult.Yes)
                         {
                             // Abre o formulário frmProdutos
-                            frmProdutos frm = new frmProdutos();
+                            frmModelos frm = new frmModelos();
                             frm.ShowDialog();
                             if (cmbMarca.SelectedValue != null)
                             {
@@ -730,14 +730,6 @@ namespace OrdemServicos
                 }
             }
 
-        }
-        private void CmbMarca_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cmbMarca.SelectedValue != null)
-            {
-                int idMarca = Convert.ToInt32(cmbMarca.SelectedValue);
-                CarregarModelosPorMarcaAsync(idMarca);
-            }
         }
         private async Task<bool> FornecedorExisteAsync(string nome_RazaoSocial)
         {
@@ -843,7 +835,7 @@ namespace OrdemServicos
 
                 if (result == DialogResult.Yes)
                 {
-                    await produtoBLL.InserirProdutoAsync(produto); // ✅ chamada assíncrona
+                    InserirProdutoAsync(produto); // ✅ chamada assíncrona
                 }
             }
             else
@@ -859,7 +851,7 @@ namespace OrdemServicos
 
                 if (result == DialogResult.Yes)
                 {
-                    await produtoBLL.AtualizarProdutoAsync(produto); // ✅ chamada assíncrona
+         AtualizarProdutoAsync(produto); // ✅ chamada assíncrona
                 }
             }
 
