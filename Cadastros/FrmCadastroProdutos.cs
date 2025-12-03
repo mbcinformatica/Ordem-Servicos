@@ -1,5 +1,6 @@
 ﻿using AForge.Video;
 using AForge.Video.DirectShow;
+using Google.Protobuf.WellKnownTypes;
 using OrdemServicos.BLL;
 using OrdemServicos.DAL;
 using OrdemServicos.Forms;
@@ -83,6 +84,7 @@ namespace OrdemServicos
 
             listViewProdutos.ColumnClick += ListViewProdutos_ColumnClick;
             listViewProdutos.SelectedIndexChanged += ListViewProdutos_SelectedIndexChanged;
+            cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
         }
         private async void ListViewProdutos_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -340,10 +342,10 @@ namespace OrdemServicos
         {
             // Controles que disparam KeyPress
             controlesKeyPress.AddRange(new Control[] {
-                txtPrecoCompra,
-                txtPrecoVenda,
-                txtEstoqueAtual,
-                txtEstoqueMinimo
+                cmbFornecedor,
+                cmbMarca,
+                cmbModelo,
+                cmbUnidade
              });
 
             // Controles que disparam Leave
@@ -363,11 +365,11 @@ namespace OrdemServicos
             controlesEnter.AddRange(new Control[] {
                 txtIDProdutoInterno,
                 txtIDProdutoFabricante,
-                txtDescricao,
                 cmbFornecedor,
                 cmbMarca,
                 cmbModelo,
                 cmbUnidade,
+                txtDescricao,
                 txtPrecoCompra,
                 txtPrecoVenda,
                 txtEstoqueAtual,
@@ -390,11 +392,11 @@ namespace OrdemServicos
             controlesKeyDown.AddRange(new Control[] {
                 txtIDProdutoInterno,
                 txtIDProdutoFabricante,
-                txtDescricao,
                 cmbFornecedor,
                 cmbMarca,
                 cmbModelo,
                 cmbUnidade,
+                txtDescricao,
                 txtPrecoCompra,
                 txtPrecoVenda,
                 txtEstoqueAtual,
@@ -448,6 +450,7 @@ namespace OrdemServicos
 
             // Melhor usar SelectedIndexChanged em vez de Click
             listViewProdutos.SelectedIndexChanged += ListViewProdutos_SelectedIndexChanged;
+            cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
 
             // Foco inicial
             if (txtPesquisaListView != null)
@@ -492,10 +495,10 @@ namespace OrdemServicos
         {
             txtIDProdutoInterno.TabIndex = 0;
             txtIDProdutoFabricante.TabIndex = 1;
-            txtDescricao.TabIndex = 2;
-            cmbFornecedor.TabIndex = 3;
-            cmbMarca.TabIndex = 4;
-            cmbModelo.TabIndex = 5;
+            cmbFornecedor.TabIndex = 2;
+            cmbMarca.TabIndex = 3;
+            cmbModelo.TabIndex = 4;
+            txtDescricao.TabIndex = 5;
             cmbUnidade.TabIndex = 6;
             txtPrecoCompra.TabIndex = 7;
             txtPrecoVenda.TabIndex = 8;
@@ -508,7 +511,10 @@ namespace OrdemServicos
         {
             DesabilitarCamposDoFormulario();
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
+
             listViewProdutos.Items.Clear();
+            listViewProdutos.Columns.Clear();
+
             InitializeListView();
 
             try
@@ -545,26 +551,14 @@ namespace OrdemServicos
                     listViewProdutos.Items.Add(item);
                 }
 
-                // Ajuste automático das colunas
-                foreach (ColumnHeader column in listViewProdutos.Columns)
-                {
-                    column.AutoResize(ColumnHeaderAutoResizeStyle.HeaderSize);
-                    int headerWidth = TextRenderer.MeasureText(column.Text, listViewProdutos.Font).Width + 20;
-                    column.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
-                    if (column.Width < headerWidth)
-                    {
-                        column.Width = headerWidth;
-                    }
-                }
-
                 listaOriginalItens = listViewProdutos.Items.Cast<ListViewItem>().ToList();
-                lbTotalRegistros.Text = "Total de Registros: " + listViewProdutos.Items.Count;
+                lbTotalRegistros.Text = $"Total de Registros..: {listViewProdutos.Items.Count}";
 
-                sortColumn = 3;
+                // Ordenação inicial
+                sortColumn = 3; 
                 sortAscending = true;
                 listViewProdutos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
                 listViewProdutos.Sort();
-                listViewProdutos.Columns[sortColumn].Width = listViewProdutos.Columns[sortColumn].Width;
 
                 // 🔠 Carregar fornecedores ordenados
                 var fornecedorBLL = new FornecedorBLL();
@@ -593,6 +587,7 @@ namespace OrdemServicos
                 cmbUnidade.DisplayMember = "Descricao";
                 cmbUnidade.ValueMember = "IDUnidade";
 
+                ajustaLarguraCabecalho(listViewProdutos);
                 tabControlProdutos.SelectedTab = tabDadosProduto;
             }
             catch (Exception ex)
@@ -638,44 +633,58 @@ namespace OrdemServicos
                 }
                 if (string.IsNullOrEmpty(fornecedorDigitado))
                 {
-                    MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    cmbFornecedor.Focus();
+                   MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   cmbFornecedor.Focus();
                 }
             }
             else if (control == cmbMarca)
             {
                 string marcaDigitada = cmbMarca.Text.ToUpper(); // Converte para maiúsculas
                 cmbMarca.Text = marcaDigitada; // Atualiza o texto no ComboBox
+
                 if (!await MarcaExisteAsync(marcaDigitada) && !string.IsNullOrEmpty(marcaDigitada))
                 {
                     try
                     {
-                        DialogResult result = MessageBox.Show($"A Marca '{marcaDigitada}' não Existe. Deseja Cadastrá-la?", "Marca não Encontrada", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        DialogResult result = MessageBox.Show(
+                            $"A Marca '{marcaDigitada}' não Existe. Deseja Cadastrá-la?",
+                            "Marca não Encontrada",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Information);
+
                         if (result == DialogResult.Yes)
                         {
                             // Abre o formulário frmMarcas
                             frmMarcas frm = new frmMarcas();
                             frm.ShowDialog();
 
-                            // Carregar marcas no ComboBox
+                            // Recarrega marcas
                             var marcaBLL = new MarcaBLL();
                             var marcas = (await marcaBLL.ListarAsync())
                                 .OrderBy(m => m.Descricao?.ToUpperInvariant())
                                 .ToList();
+
                             cmbMarca.DataSource = marcas;
                             cmbMarca.DisplayMember = "Descricao";
                             cmbMarca.ValueMember = "IDMarca";
 
+                            // ✅ Carrega modelos da marca recém-cadastrada
+                            if (cmbMarca.SelectedValue != null)
+                            {
+                                await CarregarModelosPorMarcaAsync(Convert.ToInt32(cmbMarca.SelectedValue));
+                            }
                         }
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+
                     cmbMarca.Text = string.Empty;
                     cmbMarca.Focus();
                 }
-                if (string.IsNullOrEmpty(marcaDigitada))
+
+                if (string.IsNullOrEmpty(marcaDigitada) && !string.IsNullOrEmpty(cmbFornecedor.Text))
                 {
                     MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     cmbMarca.Focus();
@@ -686,34 +695,38 @@ namespace OrdemServicos
                 string modeloDigitado = cmbModelo.Text.ToUpper(); // Converte para maiúsculas
                 cmbModelo.Text = modeloDigitado; // Atualiza o texto no ComboBox
                 int idMarca = Convert.ToInt32(cmbMarca.SelectedValue); // Método para obter o ID da marca selecionada
+
                 if (!await ModeloExisteAsync(idMarca, modeloDigitado) && modeloDigitado != string.Empty && idMarca != 0)
                 {
                     try
                     {
-                        DialogResult result = MessageBox.Show($"O Modelo '{modeloDigitado}' não Existe para a Marca Selecionada. Deseja Cadastrá-lo?", "Modelo não Encontrado", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        DialogResult result = MessageBox.Show(
+                            $"O Modelo '{modeloDigitado}' não Existe para a Marca Selecionada. Deseja Cadastrá-lo?",
+                            "Modelo não Encontrado",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Information);
+
                         if (result == DialogResult.Yes)
                         {
-                            // Abre o formulário frmProdutos
+                            // Abre o formulário frmModelos
                             frmModelos frm = new frmModelos();
                             frm.ShowDialog();
+
                             if (cmbMarca.SelectedValue != null)
                             {
-                                int idmarca = Convert.ToInt32(cmbMarca.SelectedValue);
-                                CarregarModelosPorMarcaAsync(idmarca);
+                                await CarregarModelosPorMarcaAsync(Convert.ToInt32(cmbMarca.SelectedValue));
                             }
-                        }
-                        else
-                        {
-                            cmbModelo.Text = string.Empty;
-                            cmbModelo.Focus();
                         }
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    cmbModelo.Text = string.Empty;
+                    cmbModelo.Focus();
                 }
-                if (modeloDigitado == string.Empty || idMarca == 0)
+
+                if (string.IsNullOrEmpty(modeloDigitado) && !string.IsNullOrEmpty(cmbMarca.Text))
                 {
                     MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     cmbModelo.Focus();
@@ -723,13 +736,19 @@ namespace OrdemServicos
             {
                 string unidadeDigitado = cmbUnidade.Text.ToUpper(); // Converte para maiúsculas
                 cmbUnidade.Text = unidadeDigitado; // Atualiza o texto no ComboBox
-                if (unidadeDigitado == string.Empty)
+                if (string.IsNullOrEmpty(unidadeDigitado) && !string.IsNullOrEmpty(cmbModelo.Text))
                 {
                     MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     cmbUnidade.Focus();
                 }
             }
-
+        }
+        private async void CmbMarca_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbMarca.SelectedValue is int idMarca)
+            {
+                await CarregarModelosPorMarcaAsync(idMarca);
+            }
         }
         private async Task<bool> FornecedorExisteAsync(string nome_RazaoSocial)
         {
@@ -835,7 +854,7 @@ namespace OrdemServicos
 
                 if (result == DialogResult.Yes)
                 {
-                    InserirProdutoAsync(produto); // ✅ chamada assíncrona
+                   InserirProdutoAsync(produto); // ✅ chamada assíncrona
                 }
             }
             else
@@ -851,7 +870,7 @@ namespace OrdemServicos
 
                 if (result == DialogResult.Yes)
                 {
-         AtualizarProdutoAsync(produto); // ✅ chamada assíncrona
+                      AtualizarProdutoAsync(produto); // ✅ chamada assíncrona
                 }
             }
 
@@ -949,10 +968,10 @@ namespace OrdemServicos
             cmbMarca.SelectedIndex = -1;
             cmbModelo.SelectedIndex = -1;
             cmbUnidade.SelectedIndex = -1;
-            txtPrecoCompra.Clear();
-            txtPrecoVenda.Clear();
-            txtEstoqueAtual.Clear();
-            txtEstoqueMinimo.Clear();
+            txtPrecoCompra.Text = StringUtils.FormatValorMoeda("0");
+            txtPrecoVenda.Text = StringUtils.FormatValorMoeda("0");
+            txtEstoqueAtual.Text = StringUtils.FormatValorUnidade("0"); ;
+            txtEstoqueMinimo.Text = StringUtils.FormatValorUnidade("0"); ;
             txtDataUltimaCompra.Clear();
             txtGarantia.Clear();
             imgImagemProduto.Image = null;

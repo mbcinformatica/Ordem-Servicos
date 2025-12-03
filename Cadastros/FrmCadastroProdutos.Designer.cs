@@ -43,11 +43,11 @@
             this.txtIDProdutoFabricante = new System.Windows.Forms.TextBox();
             this.lbCodigoFabricante = new System.Windows.Forms.Label();
             this.pnlBotoes = new System.Windows.Forms.Panel();
-            this.btnFechar = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.btnAlterar = new System.Windows.Forms.Button();
             this.btnExcluir = new System.Windows.Forms.Button();
             this.btnNovo = new System.Windows.Forms.Button();
+            this.btnFechar = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.tabControlProdutos = new System.Windows.Forms.TabControl();
             this.tabDadosProduto = new System.Windows.Forms.TabPage();
@@ -59,7 +59,6 @@
             this.lbModeloProduto = new System.Windows.Forms.Label();
             this.cmbModelo = new System.Windows.Forms.ComboBox();
             this.imgImagemProduto = new System.Windows.Forms.PictureBox();
-            this.cmbFornecedor = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lbtxtEstoqueAtual = new System.Windows.Forms.Label();
             this.txtEstoqueMinimo = new System.Windows.Forms.MaskedTextBox();
@@ -72,13 +71,14 @@
             this.txtPrecoCompra = new System.Windows.Forms.MaskedTextBox();
             this.cmbMarca = new System.Windows.Forms.ComboBox();
             this.lbMarcaProduto = new System.Windows.Forms.Label();
-            this.lbFornecedor = new System.Windows.Forms.Label();
             this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.lbNumeroSerie = new System.Windows.Forms.Label();
             this.txtDataUltimaCompra = new System.Windows.Forms.TextBox();
             this.lbDataUltimaCompra = new System.Windows.Forms.Label();
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
+            this.cmbFornecedor = new System.Windows.Forms.ComboBox();
+            this.lbFornecedor = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.tabControlProdutos.SuspendLayout();
@@ -172,7 +172,7 @@
             // 
             this.lbDescricao.AutoSize = true;
             this.lbDescricao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbDescricao.Location = new System.Drawing.Point(463, 10);
+            this.lbDescricao.Location = new System.Drawing.Point(569, 73);
             this.lbDescricao.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbDescricao.Name = "lbDescricao";
             this.lbDescricao.Size = new System.Drawing.Size(89, 19);
@@ -200,10 +200,10 @@
             this.txtDescricao.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtDescricao.Enabled = false;
             this.txtDescricao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescricao.Location = new System.Drawing.Point(463, 30);
+            this.txtDescricao.Location = new System.Drawing.Point(569, 93);
             this.txtDescricao.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(555, 26);
+            this.txtDescricao.Size = new System.Drawing.Size(468, 26);
             this.txtDescricao.TabIndex = 65;
             // 
             // txtIDProdutoFabricante
@@ -214,7 +214,7 @@
             this.txtIDProdutoFabricante.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtIDProdutoFabricante.Enabled = false;
             this.txtIDProdutoFabricante.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIDProdutoFabricante.Location = new System.Drawing.Point(234, 30);
+            this.txtIDProdutoFabricante.Location = new System.Drawing.Point(236, 30);
             this.txtIDProdutoFabricante.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtIDProdutoFabricante.Name = "txtIDProdutoFabricante";
             this.txtIDProdutoFabricante.Size = new System.Drawing.Size(192, 26);
@@ -247,22 +247,6 @@
             this.pnlBotoes.Name = "pnlBotoes";
             this.pnlBotoes.Size = new System.Drawing.Size(1423, 61);
             this.pnlBotoes.TabIndex = 68;
-            // 
-            // btnFechar
-            // 
-            this.btnFechar.AutoSize = true;
-            this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
-            this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFechar.Location = new System.Drawing.Point(1269, 3);
-            this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
-            this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(126, 51);
-            this.btnFechar.TabIndex = 69;
-            this.btnFechar.Text = "     Fechar";
-            this.btnFechar.UseVisualStyleBackColor = false;
-            this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
             // 
             // btnSalvar
             // 
@@ -329,6 +313,22 @@
             this.btnNovo.UseVisualStyleBackColor = false;
             this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
             // 
+            // btnFechar
+            // 
+            this.btnFechar.AutoSize = true;
+            this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
+            this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFechar.Location = new System.Drawing.Point(1269, 3);
+            this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFechar.Name = "btnFechar";
+            this.btnFechar.Size = new System.Drawing.Size(126, 51);
+            this.btnFechar.TabIndex = 69;
+            this.btnFechar.Text = "     Fechar";
+            this.btnFechar.UseVisualStyleBackColor = false;
+            this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
+            // 
             // btnCancelar
             // 
             this.btnCancelar.AutoSize = true;
@@ -361,6 +361,8 @@
             // tabDadosProduto
             // 
             this.tabDadosProduto.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabDadosProduto.Controls.Add(this.cmbFornecedor);
+            this.tabDadosProduto.Controls.Add(this.lbFornecedor);
             this.tabDadosProduto.Controls.Add(this.btnExcluirImagem);
             this.tabDadosProduto.Controls.Add(this.btnInserirImagem);
             this.tabDadosProduto.Controls.Add(this.txtGarantia);
@@ -372,7 +374,6 @@
             this.tabDadosProduto.Controls.Add(this.lbModeloProduto);
             this.tabDadosProduto.Controls.Add(this.cmbModelo);
             this.tabDadosProduto.Controls.Add(this.imgImagemProduto);
-            this.tabDadosProduto.Controls.Add(this.cmbFornecedor);
             this.tabDadosProduto.Controls.Add(this.label1);
             this.tabDadosProduto.Controls.Add(this.lbtxtEstoqueAtual);
             this.tabDadosProduto.Controls.Add(this.txtEstoqueMinimo);
@@ -385,7 +386,6 @@
             this.tabDadosProduto.Controls.Add(this.txtPrecoCompra);
             this.tabDadosProduto.Controls.Add(this.cmbMarca);
             this.tabDadosProduto.Controls.Add(this.lbMarcaProduto);
-            this.tabDadosProduto.Controls.Add(this.lbFornecedor);
             this.tabDadosProduto.Controls.Add(this.txtDescricao);
             this.tabDadosProduto.Controls.Add(this.txtIDProdutoFabricante);
             this.tabDadosProduto.Controls.Add(this.lbDescricao);
@@ -442,17 +442,17 @@
             this.txtGarantia.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtGarantia.Enabled = false;
             this.txtGarantia.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtGarantia.Location = new System.Drawing.Point(854, 152);
+            this.txtGarantia.Location = new System.Drawing.Point(851, 152);
             this.txtGarantia.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtGarantia.Name = "txtGarantia";
-            this.txtGarantia.Size = new System.Drawing.Size(164, 26);
+            this.txtGarantia.Size = new System.Drawing.Size(183, 26);
             this.txtGarantia.TabIndex = 94;
             // 
             // lbGarantia
             // 
             this.lbGarantia.AutoSize = true;
             this.lbGarantia.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbGarantia.Location = new System.Drawing.Point(850, 132);
+            this.lbGarantia.Location = new System.Drawing.Point(851, 132);
             this.lbGarantia.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbGarantia.Name = "lbGarantia";
             this.lbGarantia.Size = new System.Drawing.Size(81, 19);
@@ -474,7 +474,7 @@
             // 
             this.lbModeloProduto.AutoSize = true;
             this.lbModeloProduto.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbModeloProduto.Location = new System.Drawing.Point(720, 71);
+            this.lbModeloProduto.Location = new System.Drawing.Point(230, 70);
             this.lbModeloProduto.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbModeloProduto.Name = "lbModeloProduto";
             this.lbModeloProduto.Size = new System.Drawing.Size(74, 19);
@@ -486,7 +486,7 @@
             this.cmbModelo.BackColor = System.Drawing.Color.White;
             this.cmbModelo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbModelo.FormattingEnabled = true;
-            this.cmbModelo.Location = new System.Drawing.Point(720, 91);
+            this.cmbModelo.Location = new System.Drawing.Point(237, 92);
             this.cmbModelo.Margin = new System.Windows.Forms.Padding(4);
             this.cmbModelo.Name = "cmbModelo";
             this.cmbModelo.Size = new System.Drawing.Size(297, 27);
@@ -504,17 +504,6 @@
             this.imgImagemProduto.TabStop = false;
             this.tlpDicas.SetToolTip(this.imgImagemProduto, "Realiza Pesquisa desse Produto na Internet");
             this.imgImagemProduto.Click += new System.EventHandler(this.imgImagemProduto_Click);
-            // 
-            // cmbFornecedor
-            // 
-            this.cmbFornecedor.BackColor = System.Drawing.Color.White;
-            this.cmbFornecedor.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbFornecedor.FormattingEnabled = true;
-            this.cmbFornecedor.Location = new System.Drawing.Point(10, 91);
-            this.cmbFornecedor.Margin = new System.Windows.Forms.Padding(4);
-            this.cmbFornecedor.Name = "cmbFornecedor";
-            this.cmbFornecedor.Size = new System.Drawing.Size(419, 27);
-            this.cmbFornecedor.TabIndex = 88;
             // 
             // label1
             // 
@@ -639,33 +628,22 @@
             this.cmbMarca.BackColor = System.Drawing.Color.White;
             this.cmbMarca.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMarca.FormattingEnabled = true;
-            this.cmbMarca.Location = new System.Drawing.Point(463, 91);
+            this.cmbMarca.Location = new System.Drawing.Point(10, 91);
             this.cmbMarca.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMarca.Name = "cmbMarca";
-            this.cmbMarca.Size = new System.Drawing.Size(225, 27);
+            this.cmbMarca.Size = new System.Drawing.Size(192, 27);
             this.cmbMarca.TabIndex = 76;
             // 
             // lbMarcaProduto
             // 
             this.lbMarcaProduto.AutoSize = true;
             this.lbMarcaProduto.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbMarcaProduto.Location = new System.Drawing.Point(463, 71);
+            this.lbMarcaProduto.Location = new System.Drawing.Point(10, 69);
             this.lbMarcaProduto.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbMarcaProduto.Name = "lbMarcaProduto";
             this.lbMarcaProduto.Size = new System.Drawing.Size(67, 19);
             this.lbMarcaProduto.TabIndex = 72;
             this.lbMarcaProduto.Text = "Marca..:";
-            // 
-            // lbFornecedor
-            // 
-            this.lbFornecedor.AutoSize = true;
-            this.lbFornecedor.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbFornecedor.Location = new System.Drawing.Point(10, 71);
-            this.lbFornecedor.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.lbFornecedor.Name = "lbFornecedor";
-            this.lbFornecedor.Size = new System.Drawing.Size(97, 19);
-            this.lbFornecedor.TabIndex = 69;
-            this.lbFornecedor.Text = "Fornecedor..:";
             // 
             // tabInformacoesAdicionais
             // 
@@ -734,6 +712,28 @@
             this.lbDataUltimaCompra.TabIndex = 68;
             this.lbDataUltimaCompra.Text = "Ultima Compra..:";
             // 
+            // cmbFornecedor
+            // 
+            this.cmbFornecedor.BackColor = System.Drawing.Color.White;
+            this.cmbFornecedor.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbFornecedor.FormattingEnabled = true;
+            this.cmbFornecedor.Location = new System.Drawing.Point(462, 30);
+            this.cmbFornecedor.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbFornecedor.Name = "cmbFornecedor";
+            this.cmbFornecedor.Size = new System.Drawing.Size(574, 27);
+            this.cmbFornecedor.TabIndex = 160;
+            // 
+            // lbFornecedor
+            // 
+            this.lbFornecedor.AutoSize = true;
+            this.lbFornecedor.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbFornecedor.Location = new System.Drawing.Point(463, 10);
+            this.lbFornecedor.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.lbFornecedor.Name = "lbFornecedor";
+            this.lbFornecedor.Size = new System.Drawing.Size(97, 19);
+            this.lbFornecedor.TabIndex = 159;
+            this.lbFornecedor.Text = "Fornecedor..:";
+            // 
             // frmProdutos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -780,7 +780,6 @@
         private System.Windows.Forms.TabControl tabControlProdutos;
         private System.Windows.Forms.TabPage tabDadosProduto;
         private System.Windows.Forms.TabPage tabInformacoesAdicionais;
-        private System.Windows.Forms.Label lbFornecedor;
         private System.Windows.Forms.Label lbModeloProduto;
         private System.Windows.Forms.Label lbMarcaProduto;
         private System.Windows.Forms.ComboBox cmbMarca;
@@ -795,7 +794,6 @@
         private System.Windows.Forms.ComboBox cmbUnidade;
         private System.Windows.Forms.Label lbUnidade;
         private System.Windows.Forms.Label lblValorVenda;
-        private System.Windows.Forms.ComboBox cmbFornecedor;
         private System.Windows.Forms.TextBox txtDataUltimaCompra;
         private System.Windows.Forms.Label lbDataUltimaCompra;
         private System.Windows.Forms.Label lbImagemProduto;
@@ -813,5 +811,7 @@
 		private System.Windows.Forms.Button btnExcluir;
 		private System.Windows.Forms.Button btnNovo;
 		private System.Windows.Forms.Button btnCancelar;
+		private System.Windows.Forms.ComboBox cmbFornecedor;
+		private System.Windows.Forms.Label lbFornecedor;
 	}
 }

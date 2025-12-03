@@ -289,6 +289,8 @@ namespace OrdemServicos
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
 
             listViewClientes.Items.Clear(); // limpa apenas os itens
+            listViewClientes.Columns.Clear();
+
             btnCarregaArquivoCnpj.Enabled = true;
             btnCarregaArquivoCpf.Enabled = true;
 

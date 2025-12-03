@@ -72,6 +72,7 @@ namespace OrdemServicos
 
             listViewLancamentoServicos.ColumnClick += ListViewLancamentoServico_ColumnClick;
             listViewLancamentoServicos.SelectedIndexChanged += ListViewLancamentoServicos_SelectedIndexChanged;
+            cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
         }
         private void ListViewLancamentoServico_ColumnClick(object sender, ColumnClickEventArgs e)
         {
@@ -330,6 +331,7 @@ namespace OrdemServicos
 
             // Associar eventos SelectedIndexChanged e Click
             listViewLancamentoServicos.Click += ListViewLancamentoServicos_SelectedIndexChanged;
+            cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
 
             // Focar no btnNovo ao iniciar
             txtPesquisaListView.Focus();
@@ -572,36 +574,50 @@ namespace OrdemServicos
             {
                 string marcaDigitada = cmbMarca.Text.ToUpper(); // Converte para maiúsculas
                 cmbMarca.Text = marcaDigitada; // Atualiza o texto no ComboBox
+
                 if (!await MarcaExisteAsync(marcaDigitada) && !string.IsNullOrEmpty(marcaDigitada))
                 {
                     try
                     {
-                        DialogResult result = MessageBox.Show($"A Marca '{marcaDigitada}' não Existe. Deseja Cadastrá-la?", "Marca não Encontrada", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        DialogResult result = MessageBox.Show(
+                            $"A Marca '{marcaDigitada}' não Existe. Deseja Cadastrá-la?",
+                            "Marca não Encontrada",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Information);
+
                         if (result == DialogResult.Yes)
                         {
                             // Abre o formulário frmMarcas
                             frmMarcas frm = new frmMarcas();
                             frm.ShowDialog();
 
-                            // Carregar marcas no ComboBox
+                            // Recarrega marcas
                             var marcaBLL = new MarcaBLL();
                             var marcas = (await marcaBLL.ListarAsync())
                                 .OrderBy(m => m.Descricao?.ToUpperInvariant())
                                 .ToList();
+
                             cmbMarca.DataSource = marcas;
                             cmbMarca.DisplayMember = "Descricao";
                             cmbMarca.ValueMember = "IDMarca";
 
+                            // ✅ Carrega modelos da marca recém-cadastrada
+                            if (cmbMarca.SelectedValue != null)
+                            {
+                                await CarregarProdutosPorMarcaAsync(Convert.ToInt32(cmbMarca.SelectedValue));
+                            }
                         }
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+
                     cmbMarca.Text = string.Empty;
                     cmbMarca.Focus();
                 }
-                if (string.IsNullOrEmpty(marcaDigitada))
+
+                if (string.IsNullOrEmpty(marcaDigitada) && !string.IsNullOrEmpty(cmbCliente.Text))
                 {
                     MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     cmbMarca.Focus();
@@ -628,22 +644,26 @@ namespace OrdemServicos
                                 CarregarProdutosPorMarcaAsync(idmarca);
                             }
                         }
-                        else
-                        {
-                            cmbProduto.Text = string.Empty;
-                            cmbProduto.Focus();
-                        }
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Não foi Possível Estabelecer Conexão com o BD: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    cmbProduto.Text = string.Empty;
+                    cmbProduto.Focus();
                 }
-                if (produtoDigitado == string.Empty || idMarca == 0)
+                if (string.IsNullOrEmpty(produtoDigitado) && !string.IsNullOrEmpty(cmbMarca.Text))
                 {
                     MessageBox.Show("O Preenchimento Desse Campo é Obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     cmbProduto.Focus();
                 }
+            }
+        }
+        private async void CmbMarca_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbMarca.SelectedValue is int idMarca)
+            {
+                await CarregarProdutosPorMarcaAsync(idMarca);
             }
         }
         private async Task<bool> ClienteExisteAsync(string nome_RazaoSocial)

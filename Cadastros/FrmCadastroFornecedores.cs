@@ -451,6 +451,7 @@ namespace OrdemServicos
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
 
             listViewFornecedores.Items.Clear(); // limpa apenas os itens
+            listViewFornecedores.Columns.Clear(); // limpa apenas os itens
             btnCarregaArquivoCnpj.Enabled = true;
             btnCarregaArquivoCpf.Enabled = true;
 
@@ -556,7 +557,7 @@ namespace OrdemServicos
                 DialogResult result = DialogResult.Yes; // ✅ pode usar MessageBox se quiser confirmação
                 if (result == DialogResult.Yes)
                 {
-                    await fornecedorBLL.InserirFornecedorAsync(fornecedor); // ✅ chamada assíncrona
+                InserirFornecedorAsync(fornecedor); // ✅ chamada assíncrona
                 }
             }
             else
@@ -572,7 +573,7 @@ namespace OrdemServicos
 
                 if (result == DialogResult.Yes)
                 {
-                    await fornecedorBLL.AtualizarFornecedorAsync(fornecedor); // ✅ chamada assíncrona
+                    AtualizarFornecedorAsync(fornecedor); // ✅ chamada assíncrona
                 }
             }
 
