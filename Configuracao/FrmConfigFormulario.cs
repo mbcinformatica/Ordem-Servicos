@@ -137,7 +137,7 @@ namespace OrdemServicos
         }
         private void lnkOpcaoCorFonteMenu_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            
+
             cldCores.Color = toolStripMenuItemForeColor;
             if (cldCores.ShowDialog() == DialogResult.OK)
             {
@@ -182,10 +182,12 @@ namespace OrdemServicos
             if (ftdFontes.ShowDialog() == DialogResult.OK)
             {
                 labelFontFamily = ftdFontes.Font.FontFamily.Name;
+                labelFontSize = ftdFontes.Font.Size;
+                labelFontStyle = ftdFontes.Font.Style;
                 lblDescricaoAlterada.Font = new Font(
-                    ftdFontes.Font.FontFamily,
-                    ftdFontes.Font.Size,
-                    ftdFontes.Font.Style
+                    labelFontFamily,
+                    labelFontSize,
+                    labelFontStyle
                 );
                 lblDescricaoAlterada.Visible = true;
             }
@@ -215,6 +217,8 @@ namespace OrdemServicos
             if (ftdFontes.ShowDialog() == DialogResult.OK)
             {
                 textBoxFontFamily = ftdFontes.Font.FontFamily.Name;
+                textBoxFontSize = ftdFontes.Font.Size;
+                textBoxFontStyle = ftdFontes.Font.Style;
                 txtExemploAlterada.Font = new Font(
                     ftdFontes.Font.FontFamily,
                     ftdFontes.Font.Size,
@@ -248,6 +252,8 @@ namespace OrdemServicos
             if (ftdFontes.ShowDialog() == DialogResult.OK)
             {
                 buttonFontFamily = ftdFontes.Font.FontFamily.Name;
+                buttonFontSize = ftdFontes.Font.Size;
+                buttonFontStyle = ftdFontes.Font.Style;
                 btnExemploAlterada.Font = new Font(
                     ftdFontes.Font.FontFamily,
                     ftdFontes.Font.Size,
@@ -344,6 +350,7 @@ namespace OrdemServicos
 
             // 📋 MenuStrip
             SetValue("MenuStripBackgroundColor", HEX(menuStripBackgroundColor));
+            SetValue("MenuStripFontColor", HEX(menuStripFontColor));
             SetValue("GradientMenuStartColor", HEX(gradientMenuStartColor));
             SetValue("GradientMenuEndColor", HEX(gradientMenuEndColor));
             SetValue("MenuStripFontFamily", menuStripFontFamily);
@@ -403,7 +410,6 @@ namespace OrdemServicos
             SetValue("LabelFontStyle", labelFontStyle.ToString());
 
             // 🔗 LinkLabel
-            SetValue("LinkLabelBackgroundColor", HEX(linkLabelBackgroundColor));
             SetValue("LinkLabelActiveLinkColor", HEX(linkLabelActiveLinkColor));
             SetValue("LinkLabelLinkColor", HEX(linkLabelLinkColor));
             SetValue("LinkLabelVisitedLinkColor", HEX(linkLabelVisitedLinkColor));
@@ -444,7 +450,7 @@ namespace OrdemServicos
             SetValue("ToolStripMenuItemFontStyle", toolStripMenuItemFontStyle.ToString());
 
             // 📂 TabControl
-             SetValue("TabControlFontFamily", tabControlFontFamily);
+            SetValue("TabControlFontFamily", tabControlFontFamily);
             SetValue("TabControlFontSize", (tabControlFontSize <= 0 ? 12 : tabControlFontSize).ToString());
             SetValue("TabControlFontStyle", tabControlFontStyle.ToString());
 
@@ -498,5 +504,5 @@ namespace OrdemServicos
                 controle.Location = new Point(x, y);
             }
         }
-	}
+    }
 }

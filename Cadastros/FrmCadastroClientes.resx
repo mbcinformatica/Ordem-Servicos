@@ -117,20 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="tlpListViewCelula.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
   <metadata name="erpProvider.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>68, 47</value>
+    <value>161, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>99</value>
   </metadata>
   <metadata name="tlpDicas.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>198, 49</value>
+    <value>276, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnCarregaArquivoCnpj.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAB05JREFUSEsllnlQVFcWxvv/zEwStazJojGjJiWJmjFJxQRjSgQXbBWi4paoo9aU
+        vAAADrwBlbxySQAAB05JREFUSEsllnlQVFcWxvv/zEwStazJojGjJiWJmjFJxQRjSgQXbBWi4paoo9aU
         0aQyMxl1YtToZCoS0ShCA203dLM0I4tdotIKKMjStDRbAyICSkRQQESUtfffnNdT3efe9+5773xnud85
         V4VnGPxO8Pnk78OFDyd+fP7AEuMyeGUNv4h7BLyP5UE3eB4Cg7Iu7zjlO58XD255V3QFxB0QFX6PfCA3
         XplF0bjPxah3VK49+F3KLAb4ROn4b6KvkaFbZhosMdy6Hs9gRxmMPREQ5VsPXp8zAOAXxR7vWGBNpRjm
@@ -167,7 +170,7 @@
   <data name="btnCarregaArquivoCpf.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wAAADsABataJCQAAB05JREFUSEsllnlQVFcWxvv/zEwStazJojGjJiWJmjFJxQRjSgQXbBWi4paoo9aU
+        vAAADrwBlbxySQAAB05JREFUSEsllnlQVFcWxvv/zEwStazJojGjJiWJmjFJxQRjSgQXbBWi4paoo9aU
         0aQyMxl1YtToZCoS0ShCA203dLM0I4tdotIKKMjStDRbAyICSkRQQESUtfffnNdT3efe9+5773xnud85
         V4VnGPxO8Pnk78OFDyd+fP7AEuMyeGUNv4h7BLyP5UE3eB4Cg7Iu7zjlO58XD255V3QFxB0QFX6PfCA3
         XplF0bjPxah3VK49+F3KLAb4ROn4b6KvkaFbZhosMdy6Hs9gRxmMPREQ5VsPXp8zAOAXxR7vWGBNpRjm
@@ -4171,7 +4174,4 @@
         APABAADwAAAA8AAAAPgAAAD4AAAA+AAAAPgfAAD//wAA
 </value>
   </data>
-  <metadata name="tlpListViewCelula.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>294, 49</value>
-  </metadata>
 </root>

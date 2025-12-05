@@ -12,6 +12,7 @@
 
 	<!-- Configurações do MenuStrip -->
 	<MenuStripBackgroundColor>FF1E1E1E</MenuStripBackgroundColor>
+	<MenuStripFontColor>FF000000</MenuStripFontColor>
 	<GradientMenuStartColor>FF000000</GradientMenuStartColor>
 	<GradientMenuEndColor>FF3A3A3D</GradientMenuEndColor>
 	<MenuStripFontColor>FFFFFFFF</MenuStripFontColor>
@@ -57,9 +58,9 @@
 	<LabelFontStyle>Bold</LabelFontStyle>
 
 	<!-- Configurações do LinkLabel -->
-	<LinkLabelActiveLinkColor>FF1E90FF</LinkLabelActiveLinkColor>
-	<LinkLabelLinkColor>FF87CEFA</LinkLabelLinkColor>
-	<LinkLabelVisitedLinkColor>FFB0C4DE</LinkLabelVisitedLinkColor>
+	<LinkLabelActiveLinkColor>FF2D2D30</LinkLabelActiveLinkColor>
+	<LinkLabelLinkColor>FF3A3A3D</LinkLabelLinkColor>
+	<LinkLabelVisitedLinkColor>FFFFFFFF</LinkLabelVisitedLinkColor>
 	<LinkLabelFontFamily>Segoe UI</LinkLabelFontFamily>
 	<LinkLabelFontSize>12</LinkLabelFontSize>
 	<LinkLabelFontStyle>Underline</LinkLabelFontStyle>

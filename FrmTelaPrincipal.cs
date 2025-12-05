@@ -15,17 +15,15 @@ namespace OrdemServicos
     {
         public bool vCloseSistema;
 
-
-        public frmTelaPrincipal()
+    public frmTelaPrincipal()
         {
             InitializeComponent();
-
+            LoadConfig();
             // ✅ aplica pintura base
             this.Paint += new PaintEventHandler(BaseForm_Paint);
 
             // ✅ evento de carregamento
             this.Load += frmTelaPrincipal_Load;
-            LoadConfig();
 
             // ✅ inicia oculto
             this.WindowState = FormWindowState.Minimized;
@@ -34,10 +32,6 @@ namespace OrdemServicos
         }
         private async void frmTelaPrincipal_Load(object sender, EventArgs e)
         {
-            // ✅ O tema já é carregado automaticamente pelo BaseForm.OnLoad
-            // Não precisa chamar LoadConfig aqui
-
-            // ✅ verifica login
             bool loginOK = await VerificaLoginAsync();
             if (!loginOK)
             {
@@ -63,6 +57,16 @@ namespace OrdemServicos
                     (Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
                     (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2
                 );
+
+                // ✅ aplica escala proporcional baseada em resolução 1920x1080
+                float escalaX = (float)Screen.PrimaryScreen.WorkingArea.Width / 1920f;
+                float escalaY = (float)Screen.PrimaryScreen.WorkingArea.Height / 1080f;
+                this.Scale(new SizeF(escalaX, escalaY));
+
+                // ✅ garante que controles internos se ajustem
+                this.AutoScaleMode = AutoScaleMode.Font;
+                this.Scale(new SizeF(escalaX, escalaY)); // escala proporcional
+
             }
         }
         private async Task<bool> VerificaLoginAsync()
@@ -494,5 +498,19 @@ namespace OrdemServicos
             LimparRelatoriosPDF();
             base.OnFormClosing(e);
         }
+		private void testeToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+            AbrirCadaClientesFormulaio();
+
+        }
+        private void AbrirCadaClientesFormulaio()
+        {
+            frmCadaclientes FrmCadaclientes = new frmCadaclientes();
+            frmCadaclientes formularioFrmCadaclientes = FrmCadaclientes;
+
+            formularioFrmCadaclientes.StartPosition = FormStartPosition.CenterScreen;
+            formularioFrmCadaclientes.ShowDialog();
+        }
+
     }
 }

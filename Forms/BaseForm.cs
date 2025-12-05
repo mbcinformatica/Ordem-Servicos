@@ -59,7 +59,6 @@ namespace OrdemServicos.Forms
         protected FontStyle labelFontStyle { get; set; }
 
         // 🔗 LinkLabel
-        protected Color linkLabelBackgroundColor { get; set; }
         protected Color linkLabelActiveLinkColor { get; set; }
         protected Color linkLabelLinkColor { get; set; }
         protected Color linkLabelVisitedLinkColor { get; set; }
@@ -101,6 +100,7 @@ namespace OrdemServicos.Forms
 
         //  MenuStrip
         protected Color menuStripBackgroundColor { get; set; }
+        protected Color menuStripFontColor  { get; set; }
         protected Color gradientMenuStartColor { get; set; }
         protected Color gradientMenuEndColor { get; set; }
         protected string menuStripFontFamily { get; set; }
@@ -211,7 +211,6 @@ namespace OrdemServicos.Forms
                     linkLabel.ActiveLinkColor = linkLabelActiveLinkColor;
                     linkLabel.LinkColor = linkLabelLinkColor;
                     linkLabel.VisitedLinkColor = linkLabelVisitedLinkColor;
-                    linkLabel.BackColor = linkLabelBackgroundColor;
                     if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
                     {
                         linkLabel.Font = new Font(linkLabelFontFamily, linkLabelFontSize, linkLabelFontStyle);
@@ -266,12 +265,11 @@ namespace OrdemServicos.Forms
 
                 else if (control is MenuStrip menuStrip)
                 {
-                    // Renderer com degradê
-                    menuStrip.Renderer = new GradientMenuRenderer(this);
-
-                    // Aplica estilo no MenuStrip
-                    menuStrip.BackColor = menuStripBackgroundColor;
+                    // Aplica fonte e cor no MenuStrip
                     menuStrip.Font = new Font(menuStripFontFamily, menuStripFontSize, menuStripFontStyle);
+                    menuStrip.BackColor = menuStripBackgroundColor;
+                    menuStrip.ForeColor = menuStripFontColor;
+                    menuStrip.Dock = DockStyle.Top; // garante que fique no topo
 
                     // Aplica estilo nos itens e subitens
                     foreach (ToolStripItem item in menuStrip.Items)
@@ -659,6 +657,7 @@ namespace OrdemServicos.Forms
 
                 // MenuStrip
                 menuStripBackgroundColor = ConvertHexToColor(config.Root.Element("MenuStripBackgroundColor").Value);
+                menuStripFontColor = ConvertHexToColor(config.Root.Element("MenuStripFontColor").Value);
                 gradientMenuStartColor = ConvertHexToColor(config.Root.Element("GradientMenuStartColor").Value);
                 gradientMenuEndColor = ConvertHexToColor(config.Root.Element("GradientMenuEndColor").Value);
                 menuStripFontFamily = config.Root.Element("MenuStripFontFamily").Value;
@@ -705,7 +704,6 @@ namespace OrdemServicos.Forms
                 labelFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("LabelFontStyle").Value);
       
                 // LinkLabel
-                linkLabelBackgroundColor = ConvertHexToColor(config.Root.Element("LinkLabelBackgroundColor").Value);
                 linkLabelActiveLinkColor = ConvertHexToColor(config.Root.Element("LinkLabelActiveLinkColor").Value);
                 linkLabelLinkColor = ConvertHexToColor(config.Root.Element("LinkLabelLinkColor").Value);
                 linkLabelVisitedLinkColor = ConvertHexToColor(config.Root.Element("LinkLabelVisitedLinkColor").Value);

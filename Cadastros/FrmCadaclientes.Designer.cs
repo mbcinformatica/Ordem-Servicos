@@ -1,53 +1,42 @@
-﻿using System.Windows.Forms;
-
-namespace OrdemServicos
+﻿namespace OrdemServicos
 {
-    partial class frmClientes
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class frmCadaclientes
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose( bool disposing )
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClientes));
-            this.listViewClientes = new System.Windows.Forms.ListView();
-            this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.txtIDCliente = new System.Windows.Forms.TextBox();
-            this.pnlBotoes = new System.Windows.Forms.Panel();
-            this.btnSalvar = new System.Windows.Forms.Button();
-            this.btnAlterar = new System.Windows.Forms.Button();
-            this.btnExcluir = new System.Windows.Forms.Button();
-            this.btnNovo = new System.Windows.Forms.Button();
-            this.lbTotalRegistros = new System.Windows.Forms.Label();
-            this.btnFechar = new System.Windows.Forms.Button();
-            this.btnCancelar = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmCadaclientes));
+            this.tableLayoutCadastro = new System.Windows.Forms.TableLayoutPanel();
             this.tabControlClientes = new System.Windows.Forms.TabControl();
             this.tabDadosClientes = new System.Windows.Forms.TabPage();
             this.progressBarCNPJs = new System.Windows.Forms.ProgressBar();
             this.lblProgressoCNPJs = new System.Windows.Forms.Label();
             this.lblEmail = new System.Windows.Forms.Label();
+            this.txtIDCliente = new System.Windows.Forms.TextBox();
             this.txtPesquisaListView = new System.Windows.Forms.TextBox();
             this.lbContato = new System.Windows.Forms.Label();
             this.txtUF = new System.Windows.Forms.TextBox();
@@ -80,187 +69,58 @@ namespace OrdemServicos
             this.btnCarregaArquivoCnpj = new System.Windows.Forms.Button();
             this.btnCarregaArquivoCpf = new System.Windows.Forms.Button();
             this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
+            this.tableLayoutListView = new System.Windows.Forms.TableLayoutPanel();
+            this.listViewClientes = new System.Windows.Forms.ListView();
+            this.tableLayoutBotao = new System.Windows.Forms.TableLayoutPanel();
+            this.btnExcluir = new System.Windows.Forms.Button();
+            this.btnSalvar = new System.Windows.Forms.Button();
+            this.btnAlterar = new System.Windows.Forms.Button();
+            this.btnNovo = new System.Windows.Forms.Button();
+            this.lbTotalRegistros = new System.Windows.Forms.Label();
+            this.btnFechar = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
+            this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
-            this.pnlBotoes.SuspendLayout();
+            this.tableLayoutCadastro.SuspendLayout();
             this.tabControlClientes.SuspendLayout();
             this.tabDadosClientes.SuspendLayout();
+            this.tableLayoutListView.SuspendLayout();
+            this.tableLayoutBotao.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.SuspendLayout();
             // 
-            // listViewClientes
+            // tableLayoutCadastro
             // 
-            this.listViewClientes.CausesValidation = false;
-            this.listViewClientes.FullRowSelect = true;
-            this.listViewClientes.GridLines = true;
-            this.listViewClientes.HideSelection = false;
-            this.listViewClientes.Location = new System.Drawing.Point(18, 290);
-            this.listViewClientes.Margin = new System.Windows.Forms.Padding(4);
-            this.listViewClientes.Name = "listViewClientes";
-            this.listViewClientes.Size = new System.Drawing.Size(1423, 276);
-            this.listViewClientes.TabIndex = 18;
-            this.listViewClientes.UseCompatibleStateImageBehavior = false;
-            this.listViewClientes.View = System.Windows.Forms.View.Details;
-            // 
-            // erpProvider
-            // 
-            this.erpProvider.ContainerControl = this;
-            // 
-            // txtIDCliente
-            // 
-            this.txtIDCliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIDCliente.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIDCliente.Location = new System.Drawing.Point(1363, 210);
-            this.txtIDCliente.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.txtIDCliente.Name = "txtIDCliente";
-            this.txtIDCliente.Size = new System.Drawing.Size(29, 22);
-            this.txtIDCliente.TabIndex = 13;
-            this.txtIDCliente.Text = " ";
-            this.txtIDCliente.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtIDCliente.Visible = false;
-            // 
-            // pnlBotoes
-            // 
-            this.pnlBotoes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlBotoes.Controls.Add(this.btnSalvar);
-            this.pnlBotoes.Controls.Add(this.btnAlterar);
-            this.pnlBotoes.Controls.Add(this.btnExcluir);
-            this.pnlBotoes.Controls.Add(this.btnNovo);
-            this.pnlBotoes.Controls.Add(this.lbTotalRegistros);
-            this.pnlBotoes.Controls.Add(this.btnFechar);
-            this.pnlBotoes.Controls.Add(this.btnCancelar);
-            this.pnlBotoes.Location = new System.Drawing.Point(18, 573);
-            this.pnlBotoes.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlBotoes.Name = "pnlBotoes";
-            this.pnlBotoes.Size = new System.Drawing.Size(1423, 61);
-            this.pnlBotoes.TabIndex = 97;
-            // 
-            // btnSalvar
-            // 
-            this.btnSalvar.AutoSize = true;
-            this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSalvar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
-            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvar.Location = new System.Drawing.Point(1007, 3);
-            this.btnSalvar.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(126, 51);
-            this.btnSalvar.TabIndex = 67;
-            this.btnSalvar.Text = "      Salvar";
-            this.btnSalvar.UseVisualStyleBackColor = false;
-            this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
-            // 
-            // btnAlterar
-            // 
-            this.btnAlterar.AutoSize = true;
-            this.btnAlterar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAlterar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAlterar.Image = ((System.Drawing.Image)(resources.GetObject("btnAlterar.Image")));
-            this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAlterar.Location = new System.Drawing.Point(873, 3);
-            this.btnAlterar.Margin = new System.Windows.Forms.Padding(4);
-            this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(126, 51);
-            this.btnAlterar.TabIndex = 66;
-            this.btnAlterar.Tag = "";
-            this.btnAlterar.Text = "       Alterar";
-            this.btnAlterar.UseVisualStyleBackColor = false;
-            this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
-            // 
-            // btnExcluir
-            // 
-            this.btnExcluir.AutoSize = true;
-            this.btnExcluir.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnExcluir.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExcluir.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluir.Image")));
-            this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExcluir.Location = new System.Drawing.Point(1140, 3);
-            this.btnExcluir.Margin = new System.Windows.Forms.Padding(4);
-            this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(126, 51);
-            this.btnExcluir.TabIndex = 68;
-            this.btnExcluir.Text = "     Excluir";
-            this.btnExcluir.UseVisualStyleBackColor = false;
-            this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
-            // 
-            // btnNovo
-            // 
-            this.btnNovo.AutoSize = true;
-            this.btnNovo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnNovo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNovo.Image = ((System.Drawing.Image)(resources.GetObject("btnNovo.Image")));
-            this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNovo.Location = new System.Drawing.Point(739, 3);
-            this.btnNovo.Margin = new System.Windows.Forms.Padding(4);
-            this.btnNovo.Name = "btnNovo";
-            this.btnNovo.Size = new System.Drawing.Size(126, 51);
-            this.btnNovo.TabIndex = 65;
-            this.btnNovo.Text = "     Novo";
-            this.btnNovo.UseVisualStyleBackColor = false;
-            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
-            // 
-            // lbTotalRegistros
-            // 
-            this.lbTotalRegistros.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lbTotalRegistros.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lbTotalRegistros.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lbTotalRegistros.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbTotalRegistros.Location = new System.Drawing.Point(10, 8);
-            this.lbTotalRegistros.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.lbTotalRegistros.Name = "lbTotalRegistros";
-            this.lbTotalRegistros.Size = new System.Drawing.Size(401, 42);
-            this.lbTotalRegistros.TabIndex = 58;
-            this.lbTotalRegistros.Tag = "naoAplicar";
-            this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // btnFechar
-            // 
-            this.btnFechar.AutoSize = true;
-            this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
-            this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFechar.Location = new System.Drawing.Point(1274, 3);
-            this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
-            this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(126, 51);
-            this.btnFechar.TabIndex = 69;
-            this.btnFechar.Text = "     Fechar";
-            this.btnFechar.UseVisualStyleBackColor = false;
-            this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.AutoSize = true;
-            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
-            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(1274, 3);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(127, 51);
-            this.btnCancelar.TabIndex = 70;
-            this.btnCancelar.Text = "     Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = false;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.tableLayoutCadastro.AutoSize = true;
+            this.tableLayoutCadastro.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.tableLayoutCadastro.ColumnCount = 1;
+            this.tableLayoutCadastro.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutCadastro.Controls.Add(this.tabControlClientes, 0, 0);
+            this.tableLayoutCadastro.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutCadastro.Name = "tableLayoutCadastro";
+            this.tableLayoutCadastro.RowCount = 1;
+            this.tableLayoutCadastro.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutCadastro.Size = new System.Drawing.Size(1461, 289);
+            this.tableLayoutCadastro.TabIndex = 0;
             // 
             // tabControlClientes
             // 
+            this.tabControlClientes.Appearance = System.Windows.Forms.TabAppearance.Buttons;
             this.tabControlClientes.Controls.Add(this.tabDadosClientes);
             this.tabControlClientes.Controls.Add(this.tabInformacoesAdicionais);
             this.tabControlClientes.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tabControlClientes.ItemSize = new System.Drawing.Size(109, 20);
-            this.tabControlClientes.Location = new System.Drawing.Point(18, 4);
+            this.tabControlClientes.Location = new System.Drawing.Point(4, 4);
             this.tabControlClientes.Margin = new System.Windows.Forms.Padding(4);
             this.tabControlClientes.Multiline = true;
             this.tabControlClientes.Name = "tabControlClientes";
             this.tabControlClientes.SelectedIndex = 0;
-            this.tabControlClientes.Size = new System.Drawing.Size(1423, 281);
-            this.tabControlClientes.TabIndex = 98;
+            this.tabControlClientes.Size = new System.Drawing.Size(1453, 281);
+            this.tabControlClientes.TabIndex = 99;
             // 
             // tabDadosClientes
             // 
+            this.tabDadosClientes.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.tabDadosClientes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.tabDadosClientes.Controls.Add(this.progressBarCNPJs);
             this.tabDadosClientes.Controls.Add(this.lblProgressoCNPJs);
@@ -300,10 +160,10 @@ namespace OrdemServicos
             this.tabDadosClientes.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabDadosClientes.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabDadosClientes.Location = new System.Drawing.Point(4, 24);
-            this.tabDadosClientes.Margin = new System.Windows.Forms.Padding(4);
+            this.tabDadosClientes.Margin = new System.Windows.Forms.Padding(0);
             this.tabDadosClientes.Name = "tabDadosClientes";
             this.tabDadosClientes.Padding = new System.Windows.Forms.Padding(4);
-            this.tabDadosClientes.Size = new System.Drawing.Size(1415, 253);
+            this.tabDadosClientes.Size = new System.Drawing.Size(1445, 253);
             this.tabDadosClientes.TabIndex = 0;
             this.tabDadosClientes.Text = "   Dados do Cliente   ";
             // 
@@ -342,9 +202,20 @@ namespace OrdemServicos
             this.lblEmail.Location = new System.Drawing.Point(782, 132);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(69, 19);
+            this.lblEmail.Size = new System.Drawing.Size(0, 19);
             this.lblEmail.TabIndex = 118;
-            this.lblEmail.Text = "E-Mail..:";
+            // 
+            // txtIDCliente
+            // 
+            this.txtIDCliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIDCliente.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIDCliente.Location = new System.Drawing.Point(1363, 210);
+            this.txtIDCliente.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.txtIDCliente.Name = "txtIDCliente";
+            this.txtIDCliente.Size = new System.Drawing.Size(29, 22);
+            this.txtIDCliente.TabIndex = 13;
+            this.txtIDCliente.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtIDCliente.Visible = false;
             // 
             // txtPesquisaListView
             // 
@@ -357,7 +228,6 @@ namespace OrdemServicos
             this.txtPesquisaListView.Name = "txtPesquisaListView";
             this.txtPesquisaListView.Size = new System.Drawing.Size(431, 26);
             this.txtPesquisaListView.TabIndex = 119;
-            this.txtPesquisaListView.TextChanged += new System.EventHandler(this.txtPesquisaListView_TextChanged);
             // 
             // lbContato
             // 
@@ -366,9 +236,8 @@ namespace OrdemServicos
             this.lbContato.Location = new System.Drawing.Point(10, 132);
             this.lbContato.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbContato.Name = "lbContato";
-            this.lbContato.Size = new System.Drawing.Size(75, 19);
+            this.lbContato.Size = new System.Drawing.Size(0, 19);
             this.lbContato.TabIndex = 117;
-            this.lbContato.Text = "Contato..:";
             // 
             // txtUF
             // 
@@ -401,9 +270,8 @@ namespace OrdemServicos
             this.lblPesquisaListView.Location = new System.Drawing.Point(10, 190);
             this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblPesquisaListView.Name = "lblPesquisaListView";
-            this.lblPesquisaListView.Size = new System.Drawing.Size(133, 19);
+            this.lblPesquisaListView.Size = new System.Drawing.Size(0, 19);
             this.lblPesquisaListView.TabIndex = 120;
-            this.lblPesquisaListView.Text = "Pesquisa Cliente..:";
             // 
             // txtEmail
             // 
@@ -422,9 +290,8 @@ namespace OrdemServicos
             this.lbUF.Location = new System.Drawing.Point(1342, 71);
             this.lbUF.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbUF.Name = "lbUF";
-            this.lbUF.Size = new System.Drawing.Size(41, 19);
+            this.lbUF.Size = new System.Drawing.Size(0, 19);
             this.lbUF.TabIndex = 116;
-            this.lbUF.Text = "UF..:";
             // 
             // txtMunicipio
             // 
@@ -444,9 +311,8 @@ namespace OrdemServicos
             this.lbMunicipio.Location = new System.Drawing.Point(896, 71);
             this.lbMunicipio.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbMunicipio.Name = "lbMunicipio";
-            this.lbMunicipio.Size = new System.Drawing.Size(89, 19);
+            this.lbMunicipio.Size = new System.Drawing.Size(0, 19);
             this.lbMunicipio.TabIndex = 115;
-            this.lbMunicipio.Text = "Municipio..:";
             // 
             // txtBairro
             // 
@@ -466,9 +332,8 @@ namespace OrdemServicos
             this.lbBairro.Location = new System.Drawing.Point(597, 71);
             this.lbBairro.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbBairro.Name = "lbBairro";
-            this.lbBairro.Size = new System.Drawing.Size(65, 19);
+            this.lbBairro.Size = new System.Drawing.Size(0, 19);
             this.lbBairro.TabIndex = 114;
-            this.lbBairro.Text = "Bairro..:";
             // 
             // txtNumero
             // 
@@ -490,9 +355,8 @@ namespace OrdemServicos
             this.lbNumero.Location = new System.Drawing.Point(473, 71);
             this.lbNumero.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbNumero.Name = "lbNumero";
-            this.lbNumero.Size = new System.Drawing.Size(76, 19);
+            this.lbNumero.Size = new System.Drawing.Size(0, 19);
             this.lbNumero.TabIndex = 113;
-            this.lbNumero.Text = "Numero..:";
             // 
             // txtEndereco
             // 
@@ -512,9 +376,8 @@ namespace OrdemServicos
             this.lbEndereco.Location = new System.Drawing.Point(10, 71);
             this.lbEndereco.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbEndereco.Name = "lbEndereco";
-            this.lbEndereco.Size = new System.Drawing.Size(85, 19);
+            this.lbEndereco.Size = new System.Drawing.Size(0, 19);
             this.lbEndereco.TabIndex = 112;
-            this.lbEndereco.Text = "Endereço..:";
             // 
             // rdbCnpj
             // 
@@ -561,9 +424,8 @@ namespace OrdemServicos
             this.lbFone_2.Location = new System.Drawing.Point(627, 132);
             this.lbFone_2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFone_2.Name = "lbFone_2";
-            this.lbFone_2.Size = new System.Drawing.Size(51, 19);
+            this.lbFone_2.Size = new System.Drawing.Size(0, 19);
             this.lbFone_2.TabIndex = 109;
-            this.lbFone_2.Text = "Fixo..:";
             // 
             // txtFone_1
             // 
@@ -584,9 +446,8 @@ namespace OrdemServicos
             this.lbFone_1.Location = new System.Drawing.Point(473, 132);
             this.lbFone_1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFone_1.Name = "lbFone_1";
-            this.lbFone_1.Size = new System.Drawing.Size(70, 19);
+            this.lbFone_1.Size = new System.Drawing.Size(0, 19);
             this.lbFone_1.TabIndex = 108;
-            this.lbFone_1.Text = "Celular..:";
             // 
             // txtCep
             // 
@@ -609,9 +470,8 @@ namespace OrdemServicos
             this.lbCep.Location = new System.Drawing.Point(1295, 10);
             this.lbCep.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbCep.Name = "lbCep";
-            this.lbCep.Size = new System.Drawing.Size(49, 19);
+            this.lbCep.Size = new System.Drawing.Size(0, 19);
             this.lbCep.TabIndex = 103;
-            this.lbCep.Text = "Cep..:";
             // 
             // txtDataCadastro
             // 
@@ -632,9 +492,8 @@ namespace OrdemServicos
             this.lbDataCadastro.Location = new System.Drawing.Point(1107, 10);
             this.lbDataCadastro.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbDataCadastro.Name = "lbDataCadastro";
-            this.lbDataCadastro.Size = new System.Drawing.Size(120, 19);
+            this.lbDataCadastro.Size = new System.Drawing.Size(0, 19);
             this.lbDataCadastro.TabIndex = 100;
-            this.lbDataCadastro.Text = "Data Cadastro..:";
             // 
             // txtNome_RazaoSocial
             // 
@@ -646,7 +505,6 @@ namespace OrdemServicos
             this.txtNome_RazaoSocial.Name = "txtNome_RazaoSocial";
             this.txtNome_RazaoSocial.Size = new System.Drawing.Size(682, 26);
             this.txtNome_RazaoSocial.TabIndex = 93;
-            this.tlpDicas.SetToolTip(this.txtNome_RazaoSocial, "Favor informar o Nome do Cliente");
             // 
             // lbNomeRazaoSocial
             // 
@@ -655,9 +513,8 @@ namespace OrdemServicos
             this.lbNomeRazaoSocial.Location = new System.Drawing.Point(377, 10);
             this.lbNomeRazaoSocial.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbNomeRazaoSocial.Name = "lbNomeRazaoSocial";
-            this.lbNomeRazaoSocial.Size = new System.Drawing.Size(152, 19);
+            this.lbNomeRazaoSocial.Size = new System.Drawing.Size(0, 19);
             this.lbNomeRazaoSocial.TabIndex = 98;
-            this.lbNomeRazaoSocial.Text = "Nome/Razão Social..:";
             // 
             // txtCpf_Cnpj
             // 
@@ -679,9 +536,8 @@ namespace OrdemServicos
             this.lbCpfCnpj.Location = new System.Drawing.Point(175, 10);
             this.lbCpfCnpj.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbCpfCnpj.Name = "lbCpfCnpj";
-            this.lbCpfCnpj.Size = new System.Drawing.Size(81, 19);
+            this.lbCpfCnpj.Size = new System.Drawing.Size(0, 19);
             this.lbCpfCnpj.TabIndex = 95;
-            this.lbCpfCnpj.Text = "Cpf/Cnpj..:";
             // 
             // btnCarregaArquivoCnpj
             // 
@@ -696,7 +552,6 @@ namespace OrdemServicos
             this.btnCarregaArquivoCnpj.TabIndex = 121;
             this.btnCarregaArquivoCnpj.Text = "Carregar Arquivo CNPJ";
             this.btnCarregaArquivoCnpj.UseVisualStyleBackColor = false;
-            this.btnCarregaArquivoCnpj.Click += new System.EventHandler(this.btnCarregaArquivoCnpj_Click);
             // 
             // btnCarregaArquivoCpf
             // 
@@ -712,7 +567,6 @@ namespace OrdemServicos
             this.btnCarregaArquivoCpf.TabIndex = 122;
             this.btnCarregaArquivoCpf.Text = "Carregar Arquivo CPF";
             this.btnCarregaArquivoCpf.UseVisualStyleBackColor = false;
-            this.btnCarregaArquivoCpf.Click += new System.EventHandler(this.btnCarregaArquivoCpf_Click);
             // 
             // tabInformacoesAdicionais
             // 
@@ -723,86 +577,253 @@ namespace OrdemServicos
             this.tabInformacoesAdicionais.Margin = new System.Windows.Forms.Padding(4);
             this.tabInformacoesAdicionais.Name = "tabInformacoesAdicionais";
             this.tabInformacoesAdicionais.Padding = new System.Windows.Forms.Padding(4);
-            this.tabInformacoesAdicionais.Size = new System.Drawing.Size(1415, 253);
+            this.tabInformacoesAdicionais.Size = new System.Drawing.Size(1445, 253);
             this.tabInformacoesAdicionais.TabIndex = 1;
             this.tabInformacoesAdicionais.Text = "   Informações Adicionais   ";
             // 
-            // frmClientes
+            // tableLayoutListView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.tableLayoutListView.AutoScroll = true;
+            this.tableLayoutListView.AutoSize = true;
+            this.tableLayoutListView.ColumnCount = 1;
+            this.tableLayoutListView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutListView.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutListView.Controls.Add(this.listViewClientes, 0, 0);
+            this.tableLayoutListView.Location = new System.Drawing.Point(0, 280);
+            this.tableLayoutListView.Name = "tableLayoutListView";
+            this.tableLayoutListView.RowCount = 1;
+            this.tableLayoutListView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutListView.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutListView.Size = new System.Drawing.Size(1461, 296);
+            this.tableLayoutListView.TabIndex = 1;
+            // 
+            // listViewClientes
+            // 
+            this.listViewClientes.CausesValidation = false;
+            this.listViewClientes.FullRowSelect = true;
+            this.listViewClientes.GridLines = true;
+            this.listViewClientes.HideSelection = false;
+            this.listViewClientes.Location = new System.Drawing.Point(4, 4);
+            this.listViewClientes.Margin = new System.Windows.Forms.Padding(4);
+            this.listViewClientes.Name = "listViewClientes";
+            this.listViewClientes.Size = new System.Drawing.Size(1453, 288);
+            this.listViewClientes.TabIndex = 19;
+            this.listViewClientes.UseCompatibleStateImageBehavior = false;
+            this.listViewClientes.View = System.Windows.Forms.View.Details;
+            // 
+            // tableLayoutBotao
+            // 
+            this.tableLayoutBotao.AutoSize = true;
+            this.tableLayoutBotao.ColumnCount = 8;
+            this.tableLayoutBotao.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.44248F));
+            this.tableLayoutBotao.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.55752F));
+            this.tableLayoutBotao.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tableLayoutBotao.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tableLayoutBotao.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tableLayoutBotao.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tableLayoutBotao.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
+            this.tableLayoutBotao.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutBotao.Controls.Add(this.btnExcluir, 5, 0);
+            this.tableLayoutBotao.Controls.Add(this.btnSalvar, 4, 0);
+            this.tableLayoutBotao.Controls.Add(this.btnAlterar, 3, 0);
+            this.tableLayoutBotao.Controls.Add(this.btnNovo, 2, 0);
+            this.tableLayoutBotao.Controls.Add(this.lbTotalRegistros, 0, 0);
+            this.tableLayoutBotao.Controls.Add(this.btnFechar, 6, 0);
+            this.tableLayoutBotao.Controls.Add(this.btnCancelar, 1, 0);
+            this.tableLayoutBotao.Location = new System.Drawing.Point(0, 582);
+            this.tableLayoutBotao.Name = "tableLayoutBotao";
+            this.tableLayoutBotao.RowCount = 1;
+            this.tableLayoutBotao.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutBotao.Size = new System.Drawing.Size(1461, 61);
+            this.tableLayoutBotao.TabIndex = 3;
+            // 
+            // btnExcluir
+            // 
+            this.btnExcluir.AutoSize = true;
+            this.btnExcluir.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExcluir.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExcluir.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluir.Image")));
+            this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExcluir.Location = new System.Drawing.Point(1185, 4);
+            this.btnExcluir.Margin = new System.Windows.Forms.Padding(4);
+            this.btnExcluir.Name = "btnExcluir";
+            this.btnExcluir.Size = new System.Drawing.Size(122, 51);
+            this.btnExcluir.TabIndex = 71;
+            this.btnExcluir.Text = "     Excluir";
+            this.btnExcluir.UseVisualStyleBackColor = false;
+            // 
+            // btnSalvar
+            // 
+            this.btnSalvar.AutoSize = true;
+            this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSalvar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
+            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSalvar.Location = new System.Drawing.Point(1055, 4);
+            this.btnSalvar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSalvar.Name = "btnSalvar";
+            this.btnSalvar.Size = new System.Drawing.Size(122, 51);
+            this.btnSalvar.TabIndex = 72;
+            this.btnSalvar.Text = "      Salvar";
+            this.btnSalvar.UseVisualStyleBackColor = false;
+            // 
+            // btnAlterar
+            // 
+            this.btnAlterar.AutoSize = true;
+            this.btnAlterar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAlterar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAlterar.Image = ((System.Drawing.Image)(resources.GetObject("btnAlterar.Image")));
+            this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnAlterar.Location = new System.Drawing.Point(925, 4);
+            this.btnAlterar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAlterar.Name = "btnAlterar";
+            this.btnAlterar.Size = new System.Drawing.Size(122, 51);
+            this.btnAlterar.TabIndex = 73;
+            this.btnAlterar.Tag = "";
+            this.btnAlterar.Text = "       Alterar";
+            this.btnAlterar.UseVisualStyleBackColor = false;
+            // 
+            // btnNovo
+            // 
+            this.btnNovo.AutoSize = true;
+            this.btnNovo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnNovo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNovo.Image = ((System.Drawing.Image)(resources.GetObject("btnNovo.Image")));
+            this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNovo.Location = new System.Drawing.Point(795, 4);
+            this.btnNovo.Margin = new System.Windows.Forms.Padding(4);
+            this.btnNovo.Name = "btnNovo";
+            this.btnNovo.Size = new System.Drawing.Size(122, 51);
+            this.btnNovo.TabIndex = 74;
+            this.btnNovo.Text = "     Novo";
+            this.btnNovo.UseVisualStyleBackColor = false;
+            // 
+            // lbTotalRegistros
+            // 
+            this.lbTotalRegistros.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lbTotalRegistros.Cursor = System.Windows.Forms.Cursors.Default;
+            this.lbTotalRegistros.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lbTotalRegistros.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lbTotalRegistros.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbTotalRegistros.Location = new System.Drawing.Point(17, 0);
+            this.lbTotalRegistros.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.lbTotalRegistros.Name = "lbTotalRegistros";
+            this.lbTotalRegistros.Size = new System.Drawing.Size(377, 61);
+            this.lbTotalRegistros.TabIndex = 75;
+            this.lbTotalRegistros.Tag = "naoAplicar";
+            this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // btnFechar
+            // 
+            this.btnFechar.AutoSize = true;
+            this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
+            this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFechar.Location = new System.Drawing.Point(1315, 4);
+            this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFechar.Name = "btnFechar";
+            this.btnFechar.Size = new System.Drawing.Size(122, 51);
+            this.btnFechar.TabIndex = 70;
+            this.btnFechar.Text = "     Fechar";
+            this.btnFechar.UseVisualStyleBackColor = false;
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.AutoSize = true;
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
+            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelar.Location = new System.Drawing.Point(660, 4);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(127, 53);
+            this.btnCancelar.TabIndex = 76;
+            this.btnCancelar.Text = "     Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = false;
+            // 
+            // erpProvider
+            // 
+            this.erpProvider.ContainerControl = this;
+            // 
+            // frmCadaclientes
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1461, 640);
-            this.ControlBox = false;
-            this.Controls.Add(this.tabControlClientes);
-            this.Controls.Add(this.pnlBotoes);
-            this.Controls.Add(this.listViewClientes);
-            this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.Name = "frmClientes";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Cadastro de Clientes";
-            ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();
-            this.pnlBotoes.ResumeLayout(false);
-            this.pnlBotoes.PerformLayout();
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.ClientSize = new System.Drawing.Size(1461, 645);
+            this.Controls.Add(this.tableLayoutBotao);
+            this.Controls.Add(this.tableLayoutListView);
+            this.Controls.Add(this.tableLayoutCadastro);
+            this.Name = "frmCadaclientes";
+            this.Text = "FrmCadaclientes";
+            this.tableLayoutCadastro.ResumeLayout(false);
             this.tabControlClientes.ResumeLayout(false);
             this.tabDadosClientes.ResumeLayout(false);
             this.tabDadosClientes.PerformLayout();
+            this.tableLayoutListView.ResumeLayout(false);
+            this.tableLayoutBotao.ResumeLayout(false);
+            this.tableLayoutBotao.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
-        }
+		}
 
-        #endregion
-        private System.Windows.Forms.ListView listViewClientes;
-        private System.Windows.Forms.ErrorProvider erpProvider;
-        private System.Windows.Forms.TextBox txtIDCliente;
-        private System.Windows.Forms.Panel pnlBotoes;
-        private System.Windows.Forms.Label lbTotalRegistros;
-        private System.Windows.Forms.TabControl tabControlClientes;
-        private System.Windows.Forms.TabPage tabDadosClientes;
-        private System.Windows.Forms.TabPage tabInformacoesAdicionais;
-        private System.Windows.Forms.Label lblEmail;
-        private System.Windows.Forms.TextBox txtPesquisaListView;
-        private System.Windows.Forms.Label lbContato;
-        private System.Windows.Forms.TextBox txtUF;
-        private System.Windows.Forms.TextBox txtContato;
-        private System.Windows.Forms.Label lblPesquisaListView;
-        private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.Label lbUF;
-        private System.Windows.Forms.TextBox txtMunicipio;
-        private System.Windows.Forms.Label lbMunicipio;
-        private System.Windows.Forms.TextBox txtBairro;
-        private System.Windows.Forms.Label lbBairro;
-        private System.Windows.Forms.TextBox txtNumero;
-        private System.Windows.Forms.Label lbNumero;
-        private System.Windows.Forms.TextBox txtEndereco;
-        private System.Windows.Forms.Label lbEndereco;
-        private System.Windows.Forms.RadioButton rdbCnpj;
-        private System.Windows.Forms.RadioButton rdbCpf;
-        private System.Windows.Forms.MaskedTextBox txtFone_2;
-        private System.Windows.Forms.Label lbFone_2;
-        private System.Windows.Forms.MaskedTextBox txtFone_1;
-        private System.Windows.Forms.Label lbFone_1;
-        private System.Windows.Forms.MaskedTextBox txtCep;
-        private System.Windows.Forms.Label lbCep;
-        private System.Windows.Forms.TextBox txtDataCadastro;
-        private System.Windows.Forms.Label lbDataCadastro;
-        private System.Windows.Forms.TextBox txtNome_RazaoSocial;
-        private System.Windows.Forms.Label lbNomeRazaoSocial;
-        private System.Windows.Forms.MaskedTextBox txtCpf_Cnpj;
-        private System.Windows.Forms.Label lbCpfCnpj;
-        private System.Windows.Forms.ToolTip tlpDicas;
-		private System.Windows.Forms.Button btnSalvar;
-		private System.Windows.Forms.Button btnAlterar;
-		private System.Windows.Forms.Button btnExcluir;
-		private System.Windows.Forms.Button btnNovo;
-		private System.Windows.Forms.Button btnFechar;
-		private System.Windows.Forms.Button btnCancelar;
-		private System.Windows.Forms.Button btnCarregaArquivoCnpj;
+		#endregion
+
+		private System.Windows.Forms.TableLayoutPanel tableLayoutCadastro;
+		private System.Windows.Forms.TabControl tabControlClientes;
+		private System.Windows.Forms.TabPage tabInformacoesAdicionais;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutListView;
+		private System.Windows.Forms.ListView listViewClientes;
+		private System.Windows.Forms.TabPage tabDadosClientes;
 		private System.Windows.Forms.ProgressBar progressBarCNPJs;
 		private System.Windows.Forms.Label lblProgressoCNPJs;
+		private System.Windows.Forms.Label lblEmail;
+		private System.Windows.Forms.TextBox txtIDCliente;
+		private System.Windows.Forms.TextBox txtPesquisaListView;
+		private System.Windows.Forms.Label lbContato;
+		private System.Windows.Forms.TextBox txtUF;
+		private System.Windows.Forms.TextBox txtContato;
+		private System.Windows.Forms.Label lblPesquisaListView;
+		private System.Windows.Forms.TextBox txtEmail;
+		private System.Windows.Forms.Label lbUF;
+		private System.Windows.Forms.TextBox txtMunicipio;
+		private System.Windows.Forms.Label lbMunicipio;
+		private System.Windows.Forms.TextBox txtBairro;
+		private System.Windows.Forms.Label lbBairro;
+		private System.Windows.Forms.TextBox txtNumero;
+		private System.Windows.Forms.Label lbNumero;
+		private System.Windows.Forms.TextBox txtEndereco;
+		private System.Windows.Forms.Label lbEndereco;
+		private System.Windows.Forms.RadioButton rdbCnpj;
+		private System.Windows.Forms.RadioButton rdbCpf;
+		private System.Windows.Forms.MaskedTextBox txtFone_2;
+		private System.Windows.Forms.Label lbFone_2;
+		private System.Windows.Forms.MaskedTextBox txtFone_1;
+		private System.Windows.Forms.Label lbFone_1;
+		private System.Windows.Forms.MaskedTextBox txtCep;
+		private System.Windows.Forms.Label lbCep;
+		private System.Windows.Forms.TextBox txtDataCadastro;
+		private System.Windows.Forms.Label lbDataCadastro;
+		private System.Windows.Forms.TextBox txtNome_RazaoSocial;
+		private System.Windows.Forms.Label lbNomeRazaoSocial;
+		private System.Windows.Forms.MaskedTextBox txtCpf_Cnpj;
+		private System.Windows.Forms.Label lbCpfCnpj;
+		private System.Windows.Forms.Button btnCarregaArquivoCnpj;
 		private System.Windows.Forms.Button btnCarregaArquivoCpf;
-//		private System.Windows.Forms.ToolTip tlpListViewCelula;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutBotao;
+		private System.Windows.Forms.Button btnFechar;
+		private System.Windows.Forms.Button btnExcluir;
+		private System.Windows.Forms.Button btnSalvar;
+		private System.Windows.Forms.Button btnAlterar;
+		private System.Windows.Forms.Button btnNovo;
+		private System.Windows.Forms.Label lbTotalRegistros;
+		private System.Windows.Forms.ErrorProvider erpProvider;
+		private System.Windows.Forms.ToolTip tlpDicas;
+		private System.Windows.Forms.Button btnCancelar;
 	}
 }
