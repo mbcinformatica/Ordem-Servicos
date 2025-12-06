@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.MenuStrip mnSMenu;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTelaPrincipal));
-            this.mnSMenu = new System.Windows.Forms.MenuStrip();
             this.cadastrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,25 +49,34 @@
             this.cadastroDeUsuáriosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configuracoesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.formularioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.conexãoDBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnSMenu.SuspendLayout();
+            mnSMenu = new System.Windows.Forms.MenuStrip();
+            mnSMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnSMenu
             // 
-            this.mnSMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.mnSMenu.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mnSMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            mnSMenu.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar;
+            mnSMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            mnSMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            mnSMenu.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            mnSMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cadastrosToolStripMenuItem,
             this.lancamentosToolStripMenuItem,
             this.relatoriosToolStripMenuItem,
             this.configuracoesToolStripMenuItem,
             this.sairToolStripMenuItem});
-            this.mnSMenu.Location = new System.Drawing.Point(0, 0);
-            this.mnSMenu.Name = "mnSMenu";
-            this.mnSMenu.Size = new System.Drawing.Size(1248, 27);
-            this.mnSMenu.TabIndex = 0;
-            this.mnSMenu.Text = "mnSMenu";
+            mnSMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            mnSMenu.Location = new System.Drawing.Point(0, 0);
+            mnSMenu.MdiWindowListItem = this.relatoriosToolStripMenuItem;
+            mnSMenu.Name = "mnSMenu";
+            mnSMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            mnSMenu.ShowItemToolTips = true;
+            mnSMenu.Size = new System.Drawing.Size(1248, 27);
+            mnSMenu.Stretch = false;
+            mnSMenu.TabIndex = 0;
+            mnSMenu.Text = "mnSMenu";
             // 
             // cadastrosToolStripMenuItem
             // 
@@ -206,7 +215,8 @@
             // configuracoesToolStripMenuItem
             // 
             this.configuracoesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.formularioToolStripMenuItem});
+            this.formularioToolStripMenuItem,
+            this.conexãoDBToolStripMenuItem});
             this.configuracoesToolStripMenuItem.Name = "configuracoesToolStripMenuItem";
             this.configuracoesToolStripMenuItem.Size = new System.Drawing.Size(117, 23);
             this.configuracoesToolStripMenuItem.Text = "Con&figurações";
@@ -214,9 +224,16 @@
             // formularioToolStripMenuItem
             // 
             this.formularioToolStripMenuItem.Name = "formularioToolStripMenuItem";
-            this.formularioToolStripMenuItem.Size = new System.Drawing.Size(151, 24);
+            this.formularioToolStripMenuItem.Size = new System.Drawing.Size(164, 24);
             this.formularioToolStripMenuItem.Text = "Formulario";
             this.formularioToolStripMenuItem.Click += new System.EventHandler(this.formularioToolStripMenuItem_Click);
+            // 
+            // conexãoDBToolStripMenuItem
+            // 
+            this.conexãoDBToolStripMenuItem.Name = "conexãoDBToolStripMenuItem";
+            this.conexãoDBToolStripMenuItem.Size = new System.Drawing.Size(164, 24);
+            this.conexãoDBToolStripMenuItem.Text = "Conexão DB";
+            this.conexãoDBToolStripMenuItem.Click += new System.EventHandler(this.conexãoDBToolStripMenuItem_Click);
             // 
             // sairToolStripMenuItem
             // 
@@ -229,22 +246,20 @@
             // 
             this.ClientSize = new System.Drawing.Size(1248, 603);
             this.ControlBox = false;
-            this.Controls.Add(this.mnSMenu);
+            this.Controls.Add(mnSMenu);
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.mnSMenu;
+            this.MainMenuStrip = mnSMenu;
             this.Name = "frmTelaPrincipal";
             this.Text = "Sistema Orden Serviços  -  Usuário Logado..: ";
-            this.mnSMenu.ResumeLayout(false);
-            this.mnSMenu.PerformLayout();
+            mnSMenu.ResumeLayout(false);
+            mnSMenu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip mnSMenu;
         private System.Windows.Forms.ToolStripMenuItem cadastrosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fornecedoresToolStripMenuItem;
@@ -265,6 +280,7 @@
         private System.Windows.Forms.ToolStripMenuItem formularioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem categoriaDeServiçosToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem testeToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem conexãoDBToolStripMenuItem;
 	}
 }
 

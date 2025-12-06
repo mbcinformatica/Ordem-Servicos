@@ -461,6 +461,7 @@
     <Compile Include="Relatorios\RelatorioUsuarios.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Utils\EventosUtils.cs" />
+    <Compile Include="Utils\ListViewUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />
     <EmbeddedResource Include="Cadastros\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

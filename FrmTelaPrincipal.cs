@@ -511,6 +511,18 @@ namespace OrdemServicos
             formularioFrmCadaclientes.StartPosition = FormStartPosition.CenterScreen;
             formularioFrmCadaclientes.ShowDialog();
         }
+        private void conexãoDBToolStripMenuItem_Click( object sender, EventArgs e )
+		{
+            AbrirFormularioConexaoDB();
+        }
+        private void AbrirFormularioConexaoDB()
+        {
+            frmConfigDB FrmConfigDB = new frmConfigDB();
+            frmConfigDB formulariofrmConfigDB = FrmConfigDB;
+
+            formulariofrmConfigDB.StartPosition = FormStartPosition.CenterScreen;
+            formulariofrmConfigDB.ShowDialog();
+        }
 
     }
 }

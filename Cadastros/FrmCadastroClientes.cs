@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static OrdemServicos.DAL.PesquisaWebDAL;
 using static OrdemServicos.Model.PesquisaWebInfo;
+using static OrdemServicos.Utils.ListViewUtils;
 
 namespace OrdemServicos
 {
@@ -52,14 +53,14 @@ namespace OrdemServicos
         }
         private void InitializeListView()
         {
-
-            // Configurar a ListView
-            listViewClientes.View = View.Details;
-            listViewClientes.FullRowSelect = true;
-            listViewClientes.OwnerDraw = true; // Permitir desenho personalizado
-            listViewClientes.DrawColumnHeader += new DrawListViewColumnHeaderEventHandler(listViewClientes_DrawColumnHeader);
-            listViewClientes.DrawItem += new DrawListViewItemEventHandler(listViewClientes_DrawItem);
-            listViewClientes.DrawSubItem += new DrawListViewSubItemEventHandler(listViewClientes_DrawSubItem);
+            // Configuração inicial usando a classe utilitária
+            ListViewUtils.ConfigurarListView(
+                listViewClientes,
+                ListViewClientes_ColumnClick,
+                listViewClientes_DrawColumnHeader,
+                listViewClientes_DrawItem,
+                listViewClientes_DrawSubItem
+            );
 
             // Adicionar colunas
             listViewClientes.Columns.Add("ID", 50, HorizontalAlignment.Right);
@@ -78,10 +79,7 @@ namespace OrdemServicos
             listViewClientes.Columns.Add("EMAIL", 300, HorizontalAlignment.Left);
 
             var colDataCadastro = listViewClientes.Columns.Add("DATA CADASTRO", 120, HorizontalAlignment.Right);
-            colDataCadastro.Width = -2; // auto-size
-
-            listViewClientes.ColumnClick += ListViewClientes_ColumnClick;
-            listViewClientes.SelectedIndexChanged += ListViewClientes_SelectedIndexChanged;
+            colDataCadastro.Width = 120;
         }
         private void ListViewClientes_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -113,9 +111,7 @@ namespace OrdemServicos
         {
             // Permitir apenas cliques nas colunas "CPF/CNPJ" (index 2) e "NOME/RAZÃO SOCIAL" (index 3)
             if (e.Column != 2 && e.Column != 3)
-            {
                 return; // Ignorar cliques em outras colunas
-            }
 
             // Atualizar a coluna anteriormente ordenada antes de mudar a coluna atual
             int oldSortColumn = sortColumn;
@@ -133,155 +129,41 @@ namespace OrdemServicos
 
             // Forçar redesenho da coluna anterior
             if (oldSortColumn != -1)
-            {
                 listViewClientes.Columns[oldSortColumn].Width = listViewClientes.Columns[oldSortColumn].Width;
-            }
 
-            listViewClientes.ListViewItemSorter = new ListViewItemComparer(e.Column, sortAscending);
+            // Usar o comparador parametrizado
+            listViewClientes.ListViewItemSorter = new ListViewItemComparer(
+                e.Column,
+                sortAscending,
+                new[] { "ID", "CEP", "NUMERO", "CELULAR", "FIXO" },   // colunas numéricas
+                new[] { "DATA CADASTRO" },                            // colunas de data
+                new string[] { },                                     // colunas monetárias
+                new string[] { }                                      // colunas percentuais
+            );
+
             listViewClientes.Sort();
 
             // Forçar redesenho da nova coluna
             listViewClientes.Columns[sortColumn].Width = listViewClientes.Columns[sortColumn].Width;
             listViewClientes.Invalidate(); // Redesenhar ListView para atualizar a cor do cabeçalho
+
             txtPesquisaListView.Focus();
-        }
-        private class ListViewItemComparer : IComparer
-        {
-            private readonly int col;
-            private readonly bool ascending;
-            private readonly HashSet<string> numericColumns = new HashSet<string>
-    {
-        "ID", "CEP", "NUMERO", "CELULAR", "FIXO"
-    };
-
-            public ListViewItemComparer(int column, bool ascending)
-            {
-                col = column;
-                this.ascending = ascending;
-            }
-
-            public int Compare(object x, object y)
-            {
-                var itemX = (ListViewItem)x;
-                var itemY = (ListViewItem)y;
-
-                string valX = itemX.SubItems[col].Text;
-                string valY = itemY.SubItems[col].Text;
-
-                string colName = itemX.ListView.Columns[col].Text.Trim().ToUpper();
-                int result;
-
-                if (numericColumns.Contains(colName))
-                {
-                    if (decimal.TryParse(valX, out decimal numX) && decimal.TryParse(valY, out decimal numY))
-                        result = numX.CompareTo(numY);
-                    else
-                        result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
-                }
-                else if (colName == "DATA CADASTRO")
-                {
-                    if (DateTime.TryParse(valX, out DateTime dtX) && DateTime.TryParse(valY, out DateTime dtY))
-                        result = dtX.CompareTo(dtY);
-                    else
-                        result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
-                }
-                else
-                {
-                    result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
-                }
-
-                return ascending ? result : -result;
-            }
         }
         private void listViewClientes_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
-            string[] centerColumnList = new string[] { "ID", "PESSOA", "CPF/CNPJ", "UF", "CEP", "NUMERO", "CELULAR", "FIXO", "DATA CADASTRO" };
-            Color headerBackColor = e.ColumnIndex == sortColumn ? clickedHeaderBackColor : defaultHeaderBackColor;
-
-            using (SolidBrush backBrush = new SolidBrush(headerBackColor))
-            {
-                e.Graphics.FillRectangle(backBrush, e.Bounds);
-            }
-
-            using (StringFormat sf = new StringFormat())
-            {
-                sf.LineAlignment = StringAlignment.Center;
-                sf.FormatFlags = StringFormatFlags.NoWrap; // Adiciona esta linha para evitar quebra de linha
-
-                if (centerColumnList.Contains(e.Header.Text))
-                {
-                    sf.Alignment = StringAlignment.Center; // Alinhar cabeçalhos numéricos no centro
-                }
-                else
-                {
-                    sf.Alignment = StringAlignment.Near; // Alinhar cabeçalhos de texto à esquerda
-                }
-
-                // Definir a fonte em negrito
-                using (Font headerFont = new Font(e.Font, FontStyle.Bold))
-                {
-                    e.Graphics.DrawString(e.Header.Text, headerFont, Brushes.Black, e.Bounds, sf);
-                }
-
-                using (Pen gridLinePen = new Pen(Color.Black, 2)) // Define a cor e a espessura das linhas do cabeçalho
-                {
-                    e.Graphics.DrawRectangle(gridLinePen, e.Bounds);
-                }
-            }
+            ListViewUtils.DesenharCabecalho(e, sortColumn, Color.DarkTurquoise, Color.CadetBlue);
         }
         private void listViewClientes_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
-            // Alternar cores das linhas
-            if (e.ItemIndex % 2 == 0)
-            {
-                e.Item.BackColor = Color.White;
-            }
-            else
-            {
-                e.Item.BackColor = Color.LightBlue;
-            }
-            e.DrawDefault = true;
+            ListViewUtils.DesenharItem(e);
         }
         private void listViewClientes_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
         {
-            using (StringFormat sf = new StringFormat())
-            {
-                if (listViewClientes.Columns[e.ColumnIndex].Text == "ID" || listViewClientes.Columns[e.ColumnIndex].Text == "PESSOA" ||
-                    listViewClientes.Columns[e.ColumnIndex].Text == "CPF/CNPJ" || listViewClientes.Columns[e.ColumnIndex].Text == "UF" ||
-                    listViewClientes.Columns[e.ColumnIndex].Text == "CEP" || listViewClientes.Columns[e.ColumnIndex].Text == "NUMERO" ||
-                    listViewClientes.Columns[e.ColumnIndex].Text == "CELULAR" || listViewClientes.Columns[e.ColumnIndex].Text == "FIXO" ||
-                    listViewClientes.Columns[e.ColumnIndex].Text == "DATA CADASTRO")
-                {
-                    sf.Alignment = StringAlignment.Far; // Alinhar conteúdo numérico à direita
-                }
-                else
-                {
-                    sf.Alignment = StringAlignment.Near; // Alinhar conteúdo de texto à esquerda
-                }
-                sf.LineAlignment = StringAlignment.Center;
-                e.Graphics.DrawString(e.SubItem.Text, e.SubItem.Font, Brushes.Black, e.Bounds, sf);
-            }
+            ListViewUtils.DesenharSubItem(e, listViewClientes);
         }
         private void txtPesquisaListView_TextChanged(object sender, EventArgs e)
         {
-            PesquisarListView(txtPesquisaListView.Text, listViewClientes, sortColumn);
-        }
-        private void PesquisarListView(string texto, ListView listView, int coluna)
-        {
-            listView.BeginUpdate();
-            var itemsVisiveis = new List<ListViewItem>();
-
-            foreach (ListViewItem item in listaOriginalItens)
-            {
-                string valorCelula = item.SubItems[coluna].Text;
-
-                if (string.IsNullOrEmpty(texto) || valorCelula.StartsWith(texto, StringComparison.OrdinalIgnoreCase))
-                    itemsVisiveis.Add(item);
-            }
-
-            listView.Items.Clear();
-            listView.Items.AddRange(itemsVisiveis.ToArray());
-            listView.EndUpdate();
+            ListViewUtils.PesquisarListView(txtPesquisaListView.Text, listViewClientes, sortColumn, listaOriginalItens);
         }
         public override async Task CarregarRegistros()
         {
@@ -289,7 +171,6 @@ namespace OrdemServicos
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
 
             listViewClientes.Items.Clear(); // limpa apenas os itens
-            listViewClientes.Columns.Clear();
 
             btnCarregaArquivoCnpj.Enabled = true;
             btnCarregaArquivoCpf.Enabled = true;
@@ -335,10 +216,19 @@ namespace OrdemServicos
                 // Ordenação inicial
                 sortColumn = 3; // Nome/Razão Social
                 sortAscending = true;
-                listViewClientes.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
+                listViewClientes.ListViewItemSorter = new ListViewItemComparer(
+                    sortColumn,
+                    sortAscending,
+                    new[] { "ID", "CEP", "NUMERO", "CELULAR", "FIXO" },   // numéricos
+                    new[] { "DATA CADASTRO" },                            // datas
+                    new string[] { },                                     // monetários
+                    new string[] { }                                      // percentuais
+                );
                 listViewClientes.Sort();
 
-                ajustaLarguraCabecalho(listViewClientes);
+                // Ajustar largura das colunas automaticamente
+                listViewClientes.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
                 tabControlClientes.SelectedTab = tabDadosClientes;
             }
             catch (Exception ex)

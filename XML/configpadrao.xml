@@ -6,7 +6,7 @@
 
 	<!-- Configurações dos Formulários -->
 	<FormBackgroundColor>FFFFFFFF</FormBackgroundColor>
-	<FormFontFamily>Segoe UI</FormFontFamily>
+	<FormFontFamily>Times New Roman</FormFontFamily>
 	<FormFontSize>12</FormFontSize>
 	<FormFontStyle>Bold</FormFontStyle>
 
@@ -15,7 +15,7 @@
 	<MenuStripFontColor>FF000000</MenuStripFontColor>
 	<GradientMenuStartColor>FFE0E0E0</GradientMenuStartColor>
 	<GradientMenuEndColor>FFFFFFFF</GradientMenuEndColor>
-	<MenuStripFontFamily>Segoe UI</MenuStripFontFamily>
+	<MenuStripFontFamily>Times New Roman</MenuStripFontFamily>
 	<MenuStripFontSize>12</MenuStripFontSize>
 	<MenuStripFontStyle>Bold</MenuStripFontStyle>
 
@@ -23,17 +23,17 @@
 	<TextBoxBackgroundColor>FFFFFFFF</TextBoxBackgroundColor>
 	<TextBoxFontColor>FF000000</TextBoxFontColor>
 	<TextBoxBorderStyle>FixedSingle</TextBoxBorderStyle>
-	<TextBoxFontFamily>Segoe UI</TextBoxFontFamily>
+	<TextBoxFontFamily>Times New Roman</TextBoxFontFamily>
 	<TextBoxFontSize>12</TextBoxFontSize>
-	<TextBoxFontStyle>Regular</TextBoxFontStyle>
+	<TextBoxFontStyle>Bold</TextBoxFontStyle>
 
 	<!-- Configurações do MaskedTextBox -->
 	<MaskedTextBoxBackgroundColor>FFFFFFFF</MaskedTextBoxBackgroundColor>
 	<MaskedTextBoxFontColor>FF000000</MaskedTextBoxFontColor>
 	<MaskedTextBoxBorderStyle>FixedSingle</MaskedTextBoxBorderStyle>
-	<MaskedTextBoxFontFamily>Segoe UI</MaskedTextBoxFontFamily>
+	<MaskedTextBoxFontFamily>Times New Roman</MaskedTextBoxFontFamily>
 	<MaskedTextBoxFontSize>12</MaskedTextBoxFontSize>
-	<MaskedTextBoxFontStyle>Regular</MaskedTextBoxFontStyle>
+	<MaskedTextBoxFontStyle>Bold</MaskedTextBoxFontStyle>
 
 	<!-- Configurações dos Botões -->
 	<ButtonBackgroundColor>FF4682B4</ButtonBackgroundColor>
@@ -44,7 +44,7 @@
 		<MouseDownBackColor>FF1E90FF</MouseDownBackColor>
 		<MouseOverBackColor>FF87CEFA</MouseOverBackColor>
 	</ButtonAppearance>
-	<ButtonFontFamily>Segoe UI</ButtonFontFamily>
+	<ButtonFontFamily>Times New Roman</ButtonFontFamily>
 	<ButtonFontSize>12</ButtonFontSize>
 	<ButtonFontStyle>Bold</ButtonFontStyle>
 
@@ -52,7 +52,7 @@
 	<LabelBackgroundColor>00FFFFFF</LabelBackgroundColor>
 	<LabelFontColor>FF000000</LabelFontColor>
 	<LabelAutoSize>true</LabelAutoSize>
-	<LabelFontFamily>Segoe UI</LabelFontFamily>
+	<LabelFontFamily>Times New Roman</LabelFontFamily>
 	<LabelFontSize>12</LabelFontSize>
 	<LabelFontStyle>Bold</LabelFontStyle>
 
@@ -60,14 +60,14 @@
 	<LinkLabelActiveLinkColor>FF1E90FF</LinkLabelActiveLinkColor>
 	<LinkLabelLinkColor>FF0000FF</LinkLabelLinkColor>
 	<LinkLabelVisitedLinkColor>FF800080</LinkLabelVisitedLinkColor>
-	<LinkLabelFontFamily>Segoe UI</LinkLabelFontFamily>
+	<LinkLabelFontFamily>Times New Roman</LinkLabelFontFamily>
 	<LinkLabelFontSize>12</LinkLabelFontSize>
 	<LinkLabelFontStyle>Underline</LinkLabelFontStyle>
 
 	<!-- Configurações dos Panel -->
 	<PanelBackgroundColor>FFF5F5F5</PanelBackgroundColor>
 	<PanelBorderStyle>Fixed3D</PanelBorderStyle>
-	<PanelFontFamily>Segoe UI</PanelFontFamily>
+	<PanelFontFamily>Times New Roman</PanelFontFamily>
 	<PanelFontSize>12</PanelFontSize>
 	<PanelFontStyle>Bold</PanelFontStyle>
 
@@ -77,7 +77,7 @@
 	<ListViewFullRowSelect>true</ListViewFullRowSelect>
 	<ListViewGridLines>true</ListViewGridLines>
 	<ListViewHideSelection>false</ListViewHideSelection>
-	<ListViewFontFamily>Segoe UI</ListViewFontFamily>
+	<ListViewFontFamily>Times New Roman</ListViewFontFamily>
 	<ListViewFontSize>12</ListViewFontSize>
 	<ListViewFontStyle>Bold</ListViewFontStyle>
 
@@ -85,27 +85,27 @@
 	<ComboBoxBackColor>FFFFFFFF</ComboBoxBackColor>
 	<ComboBoxForeColor>FF000000</ComboBoxForeColor>
 	<ComboBoxDropDownStyle>DropDownList</ComboBoxDropDownStyle>
-	<ComboBoxFontFamily>Segoe UI</ComboBoxFontFamily>
+	<ComboBoxFontFamily>Times New Roman</ComboBoxFontFamily>
 	<ComboBoxFontSize>12</ComboBoxFontSize>
-	<ComboBoxFontStyle>Regular</ComboBoxFontStyle>
+	<ComboBoxFontStyle>Bold</ComboBoxFontStyle>
 
 	<!-- Configurações do ToolStripMenuItem -->
 	<ToolStripMenuItemBackColor>FFF0F0F0</ToolStripMenuItemBackColor>
 	<ToolStripMenuItemForeColor>FF000000</ToolStripMenuItemForeColor>
-	<ToolStripMenuItemFontFamily>Segoe UI</ToolStripMenuItemFontFamily>
+	<ToolStripMenuItemFontFamily>Times New Roman</ToolStripMenuItemFontFamily>
 	<ToolStripMenuItemFontSize>12</ToolStripMenuItemFontSize>
-	<ToolStripMenuItemFontStyle>Regular</ToolStripMenuItemFontStyle>
+	<ToolStripMenuItemFontStyle>Bold</ToolStripMenuItemFontStyle>
 
 	<!-- Configurações do TabControl -->
-	<TabControlFontFamily>Segoe UI</TabControlFontFamily>
+	<TabControlFontFamily>Times New Roman</TabControlFontFamily>
 	<TabControlFontSize>12</TabControlFontSize>
-	<TabControlFontStyle>Regular</TabControlFontStyle>
+	<TabControlFontStyle>Bold</TabControlFontStyle>
 
 	<!-- Configurações do TabPage -->
 	<TabPageBackColor>FFE0FFFF</TabPageBackColor>
 	<TabPageForeColor>FF0000FF</TabPageForeColor>
 	<TabPageBorderStyle>Fixed3D</TabPageBorderStyle>
-	<TabPageFontFamily>Segoe UI</TabPageFontFamily>
+	<TabPageFontFamily>Times New Roman</TabPageFontFamily>
 	<TabPageFontSize>12</TabPageFontSize>
 	<TabPageFontStyle>Bold</TabPageFontStyle>
 

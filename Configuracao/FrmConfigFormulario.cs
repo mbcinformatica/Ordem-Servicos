@@ -357,6 +357,14 @@ namespace OrdemServicos
             SetValue("MenuStripFontSize", (menuStripFontSize <= 0 ? 12 : menuStripFontSize).ToString());
             SetValue("MenuStripFontStyle", menuStripFontStyle.ToString());
 
+            // 📑 ToolStripMenuItem
+            SetValue("ToolStripMenuItemBackColor", HEX(toolStripMenuItemBackColor));
+            SetValue("ToolStripMenuItemForeColor", HEX(toolStripMenuItemForeColor));
+            SetValue("ToolStripMenuItemFontFamily", toolStripMenuItemFontFamily);
+            SetValue("ToolStripMenuItemFontSize", (toolStripMenuItemFontSize <= 0 ? 12 : toolStripMenuItemFontSize).ToString());
+            SetValue("ToolStripMenuItemFontStyle", toolStripMenuItemFontStyle.ToString());
+
+
             // 📝 TextBox
             SetValue("TextBoxBackgroundColor", HEX(textBoxBackgroundColor));
             SetValue("TextBoxFontColor", HEX(textBoxFontColor));
@@ -372,6 +380,7 @@ namespace OrdemServicos
             SetValue("MaskedTextBoxFontFamily", maskedTextBoxFontFamily);
             SetValue("MaskedTextBoxFontSize", (maskedTextBoxFontSize <= 0 ? 12 : maskedTextBoxFontSize).ToString());
             SetValue("MaskedTextBoxFontStyle", maskedTextBoxFontStyle.ToString());
+
 
             // 🔘 Button
             SetValue("ButtonBackgroundColor", HEX(buttonBackgroundColor));
@@ -441,13 +450,6 @@ namespace OrdemServicos
             SetValue("ComboBoxFontFamily", comboBoxFontFamily);
             SetValue("ComboBoxFontSize", (comboBoxFontSize <= 0 ? 12 : comboBoxFontSize).ToString());
             SetValue("ComboBoxFontStyle", comboBoxFontStyle.ToString());
-
-            // 📑 ToolStripMenuItem
-            SetValue("ToolStripMenuItemBackColor", HEX(toolStripMenuItemBackColor));
-            SetValue("ToolStripMenuItemForeColor", HEX(toolStripMenuItemForeColor));
-            SetValue("ToolStripMenuItemFontFamily", toolStripMenuItemFontFamily);
-            SetValue("ToolStripMenuItemFontSize", (toolStripMenuItemFontSize <= 0 ? 12 : toolStripMenuItemFontSize).ToString());
-            SetValue("ToolStripMenuItemFontStyle", toolStripMenuItemFontStyle.ToString());
 
             // 📂 TabControl
             SetValue("TabControlFontFamily", tabControlFontFamily);
