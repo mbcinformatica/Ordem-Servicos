@@ -8,5 +8,10 @@ namespace OrdemServicos.Cadastros
         {
             InitializeComponent();
         }
-    }
+
+		private void lnkOpcaoCorFundoCabecalho_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
+		{
+
+		}
+	}
 }

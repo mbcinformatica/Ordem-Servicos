@@ -12,7 +12,7 @@ namespace OrdemServicos
 {
     public partial class frmConfigDB : BaseForm
     {
-        private string connectionString = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
+        private string connectionString = ConfigurationManager.AppSettings["connectionString"];
         private string connectionStringWithoutDatabase = ConfigurationManager.AppSettings["ConnectionStringWithoutDatabase"];
         private (Control, string)[] camposObrigatorios;
         private List<Control> controlesKeyPress = new List<Control>();
@@ -100,11 +100,11 @@ namespace OrdemServicos
         private new void LimparCampos()
         {
             // Carrega valores atuais do App.config
-            txtServidor.Text = ExtrairValor("Server", ConfigurationManager.AppSettings["ConnectionString"]);
-            txtPorta.Text = ExtrairValor("Port", ConfigurationManager.AppSettings["ConnectionString"]);
-            txtUsuario.Text = ExtrairValor("Uid", ConfigurationManager.AppSettings["ConnectionString"]);
-            txtSenha.Text = ExtrairValor("Pwd", ConfigurationManager.AppSettings["ConnectionString"]);
-            txtBanco.Text = ExtrairValor("Database", ConfigurationManager.AppSettings["ConnectionString"]);
+            txtServidor.Text = ExtrairValor("Server", ConfigurationManager.AppSettings["connectionString"]);
+            txtPorta.Text = ExtrairValor("Port", ConfigurationManager.AppSettings["connectionString"]);
+            txtUsuario.Text = ExtrairValor("Uid", ConfigurationManager.AppSettings["connectionString"]);
+            txtSenha.Text = ExtrairValor("Pwd", ConfigurationManager.AppSettings["connectionString"]);
+            txtBanco.Text = ExtrairValor("Database", ConfigurationManager.AppSettings["connectionString"]);
         }
         private string ExtrairValor(string chave, string connStr)
         {

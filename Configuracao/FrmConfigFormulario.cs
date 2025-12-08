@@ -11,7 +11,7 @@ namespace OrdemServicos
 {
     public partial class frmConfigFormulario : BaseForm
     {
-        private bool salvaConfigPadrao = false;
+        private bool salvaConfigTemaPadrao = false;
         private bool salvaConfigTemaClaro = false;
         private bool salvaConfigTemaEscuro = false;
 
@@ -28,36 +28,42 @@ namespace OrdemServicos
         }
         private void CarregaControlesFormulario()
         {
-            // Exemplo de uso
-            CentralizarControlesHorizontalmenteNoPanel(pnlExemplosAtual, btnExemploAtual, lblDescricaoAtual, txtExemploAtual);
-            CentralizarControlesHorizontalmenteNoPanel(pnlExemplosAlterado, btnExemploAlterada, lblDescricaoAlterada, txtExemploAlterada);
-            CentralizarControlesHorizontalmenteNoPanel(pnlExemplosConfiguracaoAtual, lbConfiguracaoAtual);
+            
             CentralizarControlesHorizontalmenteNoPanel(pnlExemplosConfiguracaoAlterada, lbConfiguracaoAlterada);
 
             // Definindo o tamanho e a posição dos Panels
-            Size panelSize = new Size(580, 256); // Exemplo de tamanho
-            Point panelLocation = new Point(838, 23); // Exemplo de posição
+            Size panelSize = new Size(354, 169); // Exemplo de tamanho
+            Point panelLocation = new Point(692, 31); // Exemplo de posição
 
             pnlOpcaoFormulario.Size = panelSize;
             pnlOpcaoFormulario.Location = panelLocation;
             pnlOpcaoFormulario.Visible = false;
 
+            pnlOpcaoDescricao.Size = panelSize;
+            pnlOpcaoDescricao.Location = panelLocation;
+            pnlOpcaoDescricao.Visible = false;
+
             pnlOpcaoCampos.Size = panelSize;
             pnlOpcaoCampos.Location = panelLocation;
             pnlOpcaoCampos.Visible = false;
+
+            pnlOpcaoListView.Size = panelSize;
+            pnlOpcaoListView.Location = panelLocation;
+            pnlOpcaoListView.Visible = false;
 
             pnlOpcaoBotoes.Size = panelSize;
             pnlOpcaoBotoes.Location = panelLocation;
             pnlOpcaoBotoes.Visible = false;
 
-            pnlOpcaoDescricao.Size = panelSize;
-            pnlOpcaoDescricao.Location = panelLocation;
-            pnlOpcaoDescricao.Visible = false;
+            pnlOpcaoTemas.Size = panelSize;
+            pnlOpcaoTemas.Location = panelLocation;
+            pnlOpcaoTemas.Visible = false;
 
             btnExemploAlterada.Visible = false;
             lblDescricaoAlterada.Visible = false;
             txtExemploAlterada.Visible = false;
             mnsStripExemploAlterado.Visible = false;
+
         }
         private void lnkConfiguracaoCampos_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -65,6 +71,8 @@ namespace OrdemServicos
             pnlOpcaoCampos.Visible = true;
             pnlOpcaoBotoes.Visible = false;
             pnlOpcaoDescricao.Visible = false;
+            pnlOpcaoTemas.Visible = false;
+            pnlOpcaoListView.Visible = false;
         }
         private void lnkConfiguracaoFormulario_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -72,6 +80,18 @@ namespace OrdemServicos
             pnlOpcaoCampos.Visible = false;
             pnlOpcaoBotoes.Visible = false;
             pnlOpcaoDescricao.Visible = false;
+            pnlOpcaoTemas.Visible = false;
+            pnlOpcaoListView.Visible = false;
+
+        }
+        private void lnkConfiguracaoTemas_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            pnlOpcaoFormulario.Visible = false;
+            pnlOpcaoCampos.Visible = false;
+            pnlOpcaoBotoes.Visible = false;
+            pnlOpcaoDescricao.Visible = false;
+            pnlOpcaoTemas.Visible = true;
+            pnlOpcaoListView.Visible = false;
         }
         private void lnkConfiguracaoBotoes_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -79,6 +99,8 @@ namespace OrdemServicos
             pnlOpcaoCampos.Visible = false;
             pnlOpcaoBotoes.Visible = true;
             pnlOpcaoDescricao.Visible = false;
+            pnlOpcaoTemas.Visible = false;
+            pnlOpcaoListView.Visible = false;
         }
         private void lnkConfiguracaoRotuloCampos_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -86,24 +108,17 @@ namespace OrdemServicos
             pnlOpcaoCampos.Visible = false;
             pnlOpcaoBotoes.Visible = false;
             pnlOpcaoDescricao.Visible = true;
+            pnlOpcaoTemas.Visible = false;
+            pnlOpcaoListView.Visible = false;
         }
-        private void LnkConfiguracaoTemaClaro_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lnkConfiguracaoListView_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            salvaConfigTemaClaro = true;
-            btnSalvarSair_Click(sender, e);
-            salvaConfigTemaClaro = false;
-        }
-        private void LnkConfiguracaoTemaEscuro_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            salvaConfigTemaEscuro = true;
-            btnSalvarSair_Click(sender, e);
-            salvaConfigTemaEscuro = false;
-        }
-        private void LnkConfiguracaoPadrao_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            salvaConfigPadrao = true;
-            btnSalvarSair_Click(sender, e);
-            salvaConfigPadrao = false;
+            pnlOpcaoFormulario.Visible = false;
+            pnlOpcaoCampos.Visible = false;
+            pnlOpcaoBotoes.Visible = false;
+            pnlOpcaoDescricao.Visible = false;
+            pnlOpcaoTemas.Visible = true;
+            pnlOpcaoListView.Visible = false;
         }
         private void lnkOpcaoCorFormulario_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -284,7 +299,7 @@ namespace OrdemServicos
                 {
                     CarregaDadosControles("temaEscuro.xml");
                 }
-                else if (salvaConfigPadrao)
+                else if (salvaConfigTemaPadrao)
                 {
                     CarregaDadosControles("configpadrao.xml");
                 }
@@ -443,6 +458,18 @@ namespace OrdemServicos
             SetValue("ListViewFontSize", (listViewFontSize <= 0 ? 12 : listViewFontSize).ToString());
             SetValue("ListViewFontStyle", listViewFontStyle.ToString());
 
+            // ListView Cabeçalho
+            SetValue("ListViewHeaderDefaultColor", HEX(listViewHeaderDefaultColor));
+            SetValue("ListViewHeaderSelectedColor", HEX(listViewHeaderSelectedColor));
+            SetValue("ListViewHeaderFontFamily", listViewHeaderFontFamily);
+            SetValue("ListViewHeaderFontSize", (listViewHeaderFontSize <= 0 ? 12 : listViewHeaderFontSize).ToString());
+            SetValue("ListViewHeaderFontStyle", listViewHeaderFontStyle.ToString());
+
+            // ListView Itens
+            SetValue("ListViewItemBackColorEven", HEX(listViewItemBackColorEven));
+            SetValue("ListViewItemBackColorOdd", HEX(listViewItemBackColorOdd));
+            SetValue("ListViewItemFontColor", HEX(listViewItemFontColor));
+
             // 🔽 ComboBox
             SetValue("ComboBoxBackColor", HEX(comboBoxBackColor));
             SetValue("ComboBoxForeColor", HEX(comboBoxForeColor));
@@ -506,5 +533,23 @@ namespace OrdemServicos
                 controle.Location = new Point(x, y);
             }
         }
-    }
+		private void lnkOpcaoTemaClaro_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
+		{
+            salvaConfigTemaClaro = true;
+            btnSalvarSair_Click(sender, e);
+            salvaConfigTemaClaro = false;
+        }
+		private void lnkOpcaoTemaEscuro_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
+		{
+            salvaConfigTemaEscuro = true;
+            btnSalvarSair_Click(sender, e);
+            salvaConfigTemaEscuro = false;
+        }
+		private void lnkOpcaoTemaPadrao_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
+		{
+            salvaConfigTemaPadrao = true;
+            btnSalvarSair_Click(sender, e);
+            salvaConfigTemaPadrao = false;
+        }
+	}
 }

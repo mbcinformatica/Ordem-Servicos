@@ -13,8 +13,7 @@ namespace OrdemServicos.Utils
         public static void ConfigurarListView(ListView listView,
             ColumnClickEventHandler columnClickHandler,
             DrawListViewColumnHeaderEventHandler headerHandler,
-            DrawListViewItemEventHandler itemHandler,
-            DrawListViewSubItemEventHandler subItemHandler)
+            DrawListViewItemEventHandler itemHandler)
         {
             listView.View = View.Details;
             listView.FullRowSelect = true;
@@ -22,9 +21,9 @@ namespace OrdemServicos.Utils
 
             listView.DrawColumnHeader += headerHandler;
             listView.DrawItem += itemHandler;
-            listView.DrawSubItem += subItemHandler;
             listView.ColumnClick += columnClickHandler;
         }
+
         // Comparador para ordenação
         public class ListViewItemComparer : IComparer
         {
@@ -58,7 +57,6 @@ namespace OrdemServicos.Utils
                 this.moneyColumns = new HashSet<string>(moneyColumns.Select(c => c.Trim().ToUpper()));
                 this.percentColumns = new HashSet<string>(percentColumns.Select(c => c.Trim().ToUpper()));
             }
-
             public int Compare(object x, object y)
             {
                 var itemX = (ListViewItem)x;
@@ -114,7 +112,56 @@ namespace OrdemServicos.Utils
                 return ascending ? result : -result;
             }
         }
-        // Pesquisa
+        public static void HandleColumnClick(
+            ListView listView,
+            ColumnClickEventArgs e,
+            ref int sortColumn,
+            ref bool sortAscending,
+            IEnumerable<string> numericColumns,
+            IEnumerable<string> dateColumns,
+            IEnumerable<string> moneyColumns,
+            IEnumerable<string> percentColumns,
+            TextBox txtPesquisa = null,
+            int[] allowedColumns = null)
+        {
+            // Se houver restrição de colunas permitidas
+            if (allowedColumns != null && !allowedColumns.Contains(e.Column))
+                return;
+
+            int oldSortColumn = sortColumn;
+            if (e.Column == sortColumn)
+            {
+                sortAscending = !sortAscending; // alterna ordem
+            }
+            else
+            {
+                sortColumn = e.Column;
+                sortAscending = true;
+            }
+
+            // Forçar redesenho da coluna anterior
+            if (oldSortColumn != -1)
+                listView.Columns[oldSortColumn].Width = listView.Columns[oldSortColumn].Width;
+
+            // Comparador parametrizado
+            listView.ListViewItemSorter = new ListViewItemComparer(
+                e.Column,
+                sortAscending,
+                numericColumns,
+                dateColumns,
+                moneyColumns,
+                percentColumns
+            );
+
+            listView.Sort();
+
+            // Forçar redesenho da nova coluna
+            listView.Columns[sortColumn].Width = listView.Columns[sortColumn].Width;
+            listView.Invalidate();
+
+            // Foco no campo de pesquisa
+            txtPesquisa?.Focus();
+        }
         public static void PesquisarListView(string texto, ListView listView, int coluna, List<ListViewItem> listaOriginalItens)
         {
             listView.BeginUpdate();
@@ -131,11 +178,17 @@ namespace OrdemServicos.Utils
             listView.Items.AddRange(itemsVisiveis.ToArray());
             listView.EndUpdate();
         }
-        // Desenho do cabeçalho
-        public static void DesenharCabecalho(DrawListViewColumnHeaderEventArgs e, int sortColumn,
-            Color defaultColor, Color clickedColor)
+        public static void DesenharCabecalho(
+            DrawListViewColumnHeaderEventArgs e,
+            int sortColumn,
+            Color defaultColor,
+            Color clickedColor,
+            string fontFamily,
+            float fontSize,
+            FontStyle fontStyle,
+            string[] centerColumnList // agora é parâmetro
+        )
         {
-            string[] centerColumnList = { "ID", "PESSOA", "CPF/CNPJ", "UF", "CEP", "NUMERO", "CELULAR", "FIXO", "DATA CADASTRO" };
             Color headerBackColor = e.ColumnIndex == sortColumn ? clickedColor : defaultColor;
 
             using (SolidBrush backBrush = new SolidBrush(headerBackColor))
@@ -145,34 +198,21 @@ namespace OrdemServicos.Utils
             {
                 sf.LineAlignment = StringAlignment.Center;
                 sf.FormatFlags = StringFormatFlags.NoWrap;
-                sf.Alignment = centerColumnList.Contains(e.Header.Text) ? StringAlignment.Center : StringAlignment.Near;
+                sf.Alignment = centerColumnList.Contains(e.Header.Text)
+                    ? StringAlignment.Center
+                    : StringAlignment.Near;
 
-                using (Font headerFont = new Font(e.Font, FontStyle.Bold))
+                using (Font headerFont = new Font(fontFamily, fontSize, fontStyle))
                     e.Graphics.DrawString(e.Header.Text, headerFont, Brushes.Black, e.Bounds, sf);
 
                 using (Pen gridLinePen = new Pen(Color.Black, 2))
                     e.Graphics.DrawRectangle(gridLinePen, e.Bounds);
             }
         }
-        // Desenho das linhas
-        public static void DesenharItem(DrawListViewItemEventArgs e)
+        public static void DesenharItem(DrawListViewItemEventArgs e, Color evenColor, Color oddColor)
         {
-            e.Item.BackColor = e.ItemIndex % 2 == 0 ? Color.White : Color.LightBlue;
+            e.Item.BackColor = e.ItemIndex % 2 == 0 ? evenColor : oddColor;
             e.DrawDefault = true;
-        }
-        // Desenho das células
-        public static void DesenharSubItem(DrawListViewSubItemEventArgs e, ListView listView)
-        {
-            using (StringFormat sf = new StringFormat())
-            {
-                string[] rightAlignColumns = { "ID", "PESSOA", "CPF/CNPJ", "UF", "CEP", "NUMERO", "CELULAR", "FIXO", "DATA CADASTRO" };
-                sf.Alignment = rightAlignColumns.Contains(listView.Columns[e.ColumnIndex].Text)
-                    ? StringAlignment.Far
-                    : StringAlignment.Near;
-                sf.LineAlignment = StringAlignment.Center;
-
-                e.Graphics.DrawString(e.SubItem.Text, e.SubItem.Font, Brushes.Black, e.Bounds, sf);
-            }
         }
     }
 }

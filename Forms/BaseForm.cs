@@ -83,6 +83,18 @@ namespace OrdemServicos.Forms
         protected float listViewFontSize { get; set; }
         protected FontStyle listViewFontStyle { get; set; }
 
+        // 📋 ListView Cabeçalho
+        protected Color listViewHeaderDefaultColor { get; set; }
+        protected Color listViewHeaderSelectedColor { get; set; }
+        protected string listViewHeaderFontFamily { get; set; }
+        protected float listViewHeaderFontSize { get; set; }
+        protected FontStyle listViewHeaderFontStyle { get; set; }
+
+        // 📋 ListView Items
+        protected Color listViewItemBackColorEven { get; set; }   // linhas pares
+        protected Color listViewItemBackColorOdd { get; set; }    // linhas ímpares
+        protected Color listViewItemFontColor { get; set; }       // cor do texto das células
+
         // 🔽 ComboBox
         protected Color comboBoxBackColor { get; set; }
         protected Color comboBoxForeColor { get; set; }
@@ -232,7 +244,6 @@ namespace OrdemServicos.Forms
                     button.FlatAppearance.MouseOverBackColor = buttonMouseOverBackColor;
                     button.FlatAppearance.MouseDownBackColor = buttonMouseDownBackColor;
                 }
-
                 else if (control is Panel panel)
                 {
                     panel.BackColor = panelBackgroundColor;
@@ -262,7 +273,6 @@ namespace OrdemServicos.Forms
                         ApplyConfigToControls(tabPage.Controls, config);
                     }
                 }
-
                 else if (control is MenuStrip menuStrip)
                 {
                     // Aplica fonte e cor no MenuStrip
@@ -727,6 +737,18 @@ namespace OrdemServicos.Forms
                 listViewFontFamily = config.Root.Element("ListViewFontFamily").Value;
                 listViewFontSize = float.Parse(config.Root.Element("ListViewFontSize").Value);
                 listViewFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("ListViewFontStyle").Value);
+
+                // ListView Cabeçalho
+                listViewHeaderDefaultColor = ConvertHexToColor(config.Root.Element("ListViewHeaderDefaultColor").Value);
+                listViewHeaderSelectedColor = ConvertHexToColor(config.Root.Element("ListViewHeaderSelectedColor").Value);
+                listViewHeaderFontFamily = config.Root.Element("ListViewHeaderFontFamily").Value;
+                listViewHeaderFontSize = float.Parse(config.Root.Element("ListViewHeaderFontSize").Value);
+                listViewHeaderFontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), config.Root.Element("ListViewHeaderFontStyle").Value);
+
+                // ListView Itens
+                listViewItemBackColorEven = ConvertHexToColor(config.Root.Element("ListViewItemBackColorEven").Value);
+                listViewItemBackColorOdd = ConvertHexToColor(config.Root.Element("ListViewItemBackColorOdd").Value);
+                listViewItemFontColor = ConvertHexToColor(config.Root.Element("ListViewItemFontColor").Value);
 
                 // ComboBox
                 comboBoxBackColor = ConvertHexToColor(config.Root.Element("ComboBoxBackColor").Value);

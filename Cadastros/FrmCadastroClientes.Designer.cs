@@ -34,6 +34,7 @@ namespace OrdemServicos
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmClientes));
             this.listViewClientes = new System.Windows.Forms.ListView();
             this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnCancelaImportacao = new System.Windows.Forms.Button();
             this.txtIDCliente = new System.Windows.Forms.TextBox();
             this.pnlBotoes = new System.Windows.Forms.Panel();
             this.btnSalvar = new System.Windows.Forms.Button();
@@ -104,6 +105,26 @@ namespace OrdemServicos
             // erpProvider
             // 
             this.erpProvider.ContainerControl = this;
+            // 
+            // btnCancelaImportacao
+            // 
+            this.btnCancelaImportacao.AutoSize = true;
+            this.btnCancelaImportacao.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelaImportacao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.erpProvider.SetIconAlignment(this.btnCancelaImportacao, System.Windows.Forms.ErrorIconAlignment.MiddleLeft);
+            this.btnCancelaImportacao.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelaImportacao.Image")));
+            this.btnCancelaImportacao.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCancelaImportacao.Location = new System.Drawing.Point(363, 188);
+            this.btnCancelaImportacao.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelaImportacao.Name = "btnCancelaImportacao";
+            this.btnCancelaImportacao.Size = new System.Drawing.Size(648, 53);
+            this.btnCancelaImportacao.TabIndex = 123;
+            this.btnCancelaImportacao.Text = "    Cancelar Importação";
+            this.btnCancelaImportacao.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelaImportacao.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCancelaImportacao.UseVisualStyleBackColor = false;
+            this.btnCancelaImportacao.Visible = false;
+            this.btnCancelaImportacao.Click += new System.EventHandler(this.btnCancelaImportacao_Click);
             // 
             // txtIDCliente
             // 
@@ -262,6 +283,7 @@ namespace OrdemServicos
             // tabDadosClientes
             // 
             this.tabDadosClientes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.tabDadosClientes.Controls.Add(this.btnCancelaImportacao);
             this.tabDadosClientes.Controls.Add(this.progressBarCNPJs);
             this.tabDadosClientes.Controls.Add(this.lblProgressoCNPJs);
             this.tabDadosClientes.Controls.Add(this.lblEmail);
@@ -803,6 +825,7 @@ namespace OrdemServicos
 		private System.Windows.Forms.ProgressBar progressBarCNPJs;
 		private System.Windows.Forms.Label lblProgressoCNPJs;
 		private System.Windows.Forms.Button btnCarregaArquivoCpf;
-//		private System.Windows.Forms.ToolTip tlpListViewCelula;
+		private Button btnCancelaImportacao;
+		//		private System.Windows.Forms.ToolTip tlpListViewCelula;
 	}
 }

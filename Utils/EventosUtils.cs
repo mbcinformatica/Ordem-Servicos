@@ -205,6 +205,10 @@ namespace OrdemServicos.Utils
                 {
                     form.ControleAnterior?.Focus();
                 }
+                else if (customTag != null && customTag.TagAction == "LimparCampos")
+                {
+                    form.ExecutaFuncaoEventoAsync(textBox);
+                }
                 else
                 {
                     form.ControleAnterior = textBox;

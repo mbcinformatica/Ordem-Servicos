@@ -973,7 +973,7 @@ namespace OrdemServicos
                         lblProgressoCNPJs.Enabled = true;
                         lblProgressoCNPJs.BackColor = Color.Azure;
                         lblProgressoCNPJs.ForeColor = Color.Red;
-                        lblProgressoCNPJs.Font = new Font("Times New Roman", 16F, FontStyle.Regular);
+                        lblProgressoCNPJs.Font = new Font("Times New Roman", 16F, FontStyle.Bold);
                         lblProgressoCNPJs.AutoSize = false;
                         leituraAutomaticaAtiva = true;
 

@@ -81,6 +81,18 @@
 	<ListViewFontSize>12</ListViewFontSize>
 	<ListViewFontStyle>Bold</ListViewFontStyle>
 
+	<!-- Configurações do Cabeçalho da ListView -->
+	<ListViewHeaderDefaultColor>FFE0E0E0</ListViewHeaderDefaultColor>
+	<ListViewHeaderSelectedColor>FF4682B4</ListViewHeaderSelectedColor>
+	<ListViewHeaderFontFamily>Times New Roman</ListViewHeaderFontFamily>
+	<ListViewHeaderFontSize>12</ListViewHeaderFontSize>
+	<ListViewHeaderFontStyle>Bold</ListViewHeaderFontStyle>
+
+	<!-- Configurações dos Itens da ListView -->
+	<ListViewItemBackColorEven>FFFFFFFF</ListViewItemBackColorEven>
+	<ListViewItemBackColorOdd>FFADD8E6</ListViewItemBackColorOdd>
+	<ListViewItemFontColor>FF000000</ListViewItemFontColor>	
+	
 	<!-- Configurações do ComboBox -->
 	<ComboBoxBackColor>FFFFFFFF</ComboBoxBackColor>
 	<ComboBoxForeColor>FF000000</ComboBoxForeColor>

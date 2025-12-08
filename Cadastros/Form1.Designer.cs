@@ -28,768 +28,727 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
-            this.imgImagemProduto = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.lbNumeroSerie = new System.Windows.Forms.Label();
-            this.txtDataUltimaCompra = new System.Windows.Forms.TextBox();
-            this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
-            this.lbDataUltimaCompra = new System.Windows.Forms.Label();
-            this.txtIDProduto = new System.Windows.Forms.TextBox();
-            this.btnExcluirImagem = new System.Windows.Forms.Button();
-            this.btnInserirImagem = new System.Windows.Forms.Button();
-            this.txtGarantia = new System.Windows.Forms.TextBox();
-            this.lbTotalRegistros = new System.Windows.Forms.Label();
-            this.tabControlProdutos = new System.Windows.Forms.TabControl();
-            this.tabDadosProduto = new System.Windows.Forms.TabPage();
-            this.lbGarantia = new System.Windows.Forms.Label();
-            this.txtPesquisaListView = new System.Windows.Forms.TextBox();
-            this.lblPesquisaListView = new System.Windows.Forms.Label();
-            this.lbImagemProduto = new System.Windows.Forms.Label();
-            this.lbModeloProduto = new System.Windows.Forms.Label();
-            this.cmbModelo = new System.Windows.Forms.ComboBox();
-            this.cmbFornecedor = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lbtxtEstoqueAtual = new System.Windows.Forms.Label();
-            this.txtEstoqueMinimo = new System.Windows.Forms.MaskedTextBox();
-            this.txtEstoqueAtual = new System.Windows.Forms.MaskedTextBox();
-            this.cmbUnidade = new System.Windows.Forms.ComboBox();
-            this.lbUnidade = new System.Windows.Forms.Label();
-            this.lblValorVenda = new System.Windows.Forms.Label();
-            this.lblValorCompra = new System.Windows.Forms.Label();
-            this.txtPrecoVenda = new System.Windows.Forms.MaskedTextBox();
-            this.txtPrecoCompra = new System.Windows.Forms.MaskedTextBox();
-            this.cmbMarca = new System.Windows.Forms.ComboBox();
-            this.lbMarcaProduto = new System.Windows.Forms.Label();
-            this.lbFornecedor = new System.Windows.Forms.Label();
-            this.txtDescricao = new System.Windows.Forms.TextBox();
-            this.txtIDProdutoFabricante = new System.Windows.Forms.TextBox();
-            this.lbDescricao = new System.Windows.Forms.Label();
-            this.lbCodigoFabricante = new System.Windows.Forms.Label();
-            this.lbCodigoIntProduto = new System.Windows.Forms.Label();
-            this.txtIDProdutoInterno = new System.Windows.Forms.TextBox();
-            this.listViewProdutos = new System.Windows.Forms.ListView();
-            this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.pnlBotoes = new System.Windows.Forms.Panel();
-            this.btnCancelar = new System.Windows.Forms.Button();
-            this.btnSalvar = new System.Windows.Forms.Button();
-            this.btnAlterar = new System.Windows.Forms.Button();
-            this.btnExcluir = new System.Windows.Forms.Button();
-            this.btnNovo = new System.Windows.Forms.Button();
-            this.btnFechar = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.imgImagemProduto)).BeginInit();
-            this.tabInformacoesAdicionais.SuspendLayout();
-            this.tabControlProdutos.SuspendLayout();
-            this.tabDadosProduto.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
-            this.pnlBotoes.SuspendLayout();
+            this.pnlOpcaoConfiguracao = new System.Windows.Forms.Panel();
+            this.lnkConfiguracaoListView = new System.Windows.Forms.LinkLabel();
+            this.lnkConfiguracaoTemas = new System.Windows.Forms.LinkLabel();
+            this.lnkConfiguracaoBotões = new System.Windows.Forms.LinkLabel();
+            this.lnkConfiguracaoFormulario = new System.Windows.Forms.LinkLabel();
+            this.lnkConfiguracaoCampos = new System.Windows.Forms.LinkLabel();
+            this.lnkConfiguracaoRotuloCampos = new System.Windows.Forms.LinkLabel();
+            this.pnlExemplosAlterado = new System.Windows.Forms.Panel();
+            this.btnExemploAlterada = new System.Windows.Forms.Button();
+            this.txtExemploAlterada = new System.Windows.Forms.TextBox();
+            this.lblDescricaoAlterada = new System.Windows.Forms.Label();
+            this.mnsStripExemploAlterado = new System.Windows.Forms.MenuStrip();
+            this.toolStriExemploAlterado1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStriExemploAlterado2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStriExemploAlterado3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStriExemploAlterado4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.listViewClientes = new System.Windows.Forms.ListView();
+            this.pnlOpcaoTemas = new System.Windows.Forms.Panel();
+            this.lnkOpcaoTemaEscuro = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoTemaPadrao = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoTemaClaro = new System.Windows.Forms.LinkLabel();
+            this.pnlOpcaoFormulario = new System.Windows.Forms.Panel();
+            this.lnkOpcaoCorFonteMenu = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoCorFundoMenu = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoCorFormulario = new System.Windows.Forms.LinkLabel();
+            this.pnlOpcaoCampos = new System.Windows.Forms.Panel();
+            this.lnkOpcaoFonteBotao = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoCorFonteBotao = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoCorFundoBotao = new System.Windows.Forms.LinkLabel();
+            this.pnlOpcaoListView = new System.Windows.Forms.Panel();
+            this.lnkOpcaoCorFundoLinha2 = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoCorFundoLinha1 = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoCorFundoColunaSelecionada = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoCorFundoCabecalho = new System.Windows.Forms.LinkLabel();
+            this.pnlOpcaoDescricao = new System.Windows.Forms.Panel();
+            this.lnkOpcaoCorFundoDescricaoTransparente = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoFonteDescricao = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoCorFonteDescricao = new System.Windows.Forms.LinkLabel();
+            this.lnkOpcaoCorFundoDescricao = new System.Windows.Forms.LinkLabel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.pnlOpcaoConfiguracao.SuspendLayout();
+            this.pnlExemplosAlterado.SuspendLayout();
+            this.mnsStripExemploAlterado.SuspendLayout();
+            this.pnlOpcaoTemas.SuspendLayout();
+            this.pnlOpcaoFormulario.SuspendLayout();
+            this.pnlOpcaoCampos.SuspendLayout();
+            this.pnlOpcaoListView.SuspendLayout();
+            this.pnlOpcaoDescricao.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // imgImagemProduto
-            // 
-            this.imgImagemProduto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgImagemProduto.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.imgImagemProduto.Location = new System.Drawing.Point(824, 24);
-            this.imgImagemProduto.Name = "imgImagemProduto";
-            this.imgImagemProduto.Size = new System.Drawing.Size(136, 160);
-            this.imgImagemProduto.TabIndex = 89;
-            this.imgImagemProduto.TabStop = false;
-            this.tlpDicas.SetToolTip(this.imgImagemProduto, "Realiza Pesquisa desse Produto na Internet");
-            // 
-            // textBox1
-            // 
-            this.textBox1.AccessibleDescription = "";
-            this.textBox1.AccessibleName = "";
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBox1.Enabled = false;
-            this.textBox1.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(8, 24);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(149, 22);
-            this.textBox1.TabIndex = 71;
-            // 
-            // lbNumeroSerie
-            // 
-            this.lbNumeroSerie.AutoSize = true;
-            this.lbNumeroSerie.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbNumeroSerie.Location = new System.Drawing.Point(8, 8);
-            this.lbNumeroSerie.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbNumeroSerie.Name = "lbNumeroSerie";
-            this.lbNumeroSerie.Size = new System.Drawing.Size(107, 15);
-            this.lbNumeroSerie.TabIndex = 70;
-            this.lbNumeroSerie.Text = "Numero de Série..:";
-            // 
-            // txtDataUltimaCompra
-            // 
-            this.txtDataUltimaCompra.AccessibleDescription = "";
-            this.txtDataUltimaCompra.AccessibleName = "";
-            this.txtDataUltimaCompra.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDataUltimaCompra.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtDataUltimaCompra.Enabled = false;
-            this.txtDataUltimaCompra.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDataUltimaCompra.Location = new System.Drawing.Point(936, 160);
-            this.txtDataUltimaCompra.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtDataUltimaCompra.Name = "txtDataUltimaCompra";
-            this.txtDataUltimaCompra.Size = new System.Drawing.Size(149, 22);
-            this.txtDataUltimaCompra.TabIndex = 69;
-            // 
-            // tabInformacoesAdicionais
-            // 
-            this.tabInformacoesAdicionais.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabInformacoesAdicionais.Controls.Add(this.textBox1);
-            this.tabInformacoesAdicionais.Controls.Add(this.lbNumeroSerie);
-            this.tabInformacoesAdicionais.Controls.Add(this.txtDataUltimaCompra);
-            this.tabInformacoesAdicionais.Controls.Add(this.lbDataUltimaCompra);
-            this.tabInformacoesAdicionais.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tabInformacoesAdicionais.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabInformacoesAdicionais.Location = new System.Drawing.Point(4, 22);
-            this.tabInformacoesAdicionais.Name = "tabInformacoesAdicionais";
-            this.tabInformacoesAdicionais.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInformacoesAdicionais.Size = new System.Drawing.Size(1100, 196);
-            this.tabInformacoesAdicionais.TabIndex = 1;
-            this.tabInformacoesAdicionais.Text = "  Informações Adicionais";
-            // 
-            // lbDataUltimaCompra
-            // 
-            this.lbDataUltimaCompra.AutoSize = true;
-            this.lbDataUltimaCompra.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbDataUltimaCompra.Location = new System.Drawing.Point(936, 144);
-            this.lbDataUltimaCompra.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbDataUltimaCompra.Name = "lbDataUltimaCompra";
-            this.lbDataUltimaCompra.Size = new System.Drawing.Size(98, 15);
-            this.lbDataUltimaCompra.TabIndex = 68;
-            this.lbDataUltimaCompra.Text = "Ultima Compra..:";
-            // 
-            // txtIDProduto
-            // 
-            this.txtIDProduto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIDProduto.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIDProduto.Location = new System.Drawing.Point(1060, 164);
-            this.txtIDProduto.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtIDProduto.Name = "txtIDProduto";
-            this.txtIDProduto.Size = new System.Drawing.Size(23, 22);
-            this.txtIDProduto.TabIndex = 59;
-            this.txtIDProduto.Text = " ";
-            this.txtIDProduto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtIDProduto.Visible = false;
-            // 
-            // btnExcluirImagem
-            // 
-            this.btnExcluirImagem.AutoSize = true;
-            this.btnExcluirImagem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnExcluirImagem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExcluirImagem.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluirImagem.Image")));
-            this.btnExcluirImagem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExcluirImagem.Location = new System.Drawing.Point(976, 80);
-            this.btnExcluirImagem.Name = "btnExcluirImagem";
-            this.btnExcluirImagem.Size = new System.Drawing.Size(98, 40);
-            this.btnExcluirImagem.TabIndex = 158;
-            this.btnExcluirImagem.Text = "     Excluir";
-            this.btnExcluirImagem.UseVisualStyleBackColor = false;
-            // 
-            // btnInserirImagem
-            // 
-            this.btnInserirImagem.AutoSize = true;
-            this.btnInserirImagem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnInserirImagem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInserirImagem.Image = ((System.Drawing.Image)(resources.GetObject("btnInserirImagem.Image")));
-            this.btnInserirImagem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnInserirImagem.Location = new System.Drawing.Point(976, 32);
-            this.btnInserirImagem.Name = "btnInserirImagem";
-            this.btnInserirImagem.Size = new System.Drawing.Size(98, 40);
-            this.btnInserirImagem.TabIndex = 157;
-            this.btnInserirImagem.Text = "     Inserir";
-            this.btnInserirImagem.UseVisualStyleBackColor = false;
-            // 
-            // txtGarantia
-            // 
-            this.txtGarantia.AccessibleDescription = "";
-            this.txtGarantia.AccessibleName = "";
-            this.txtGarantia.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtGarantia.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtGarantia.Enabled = false;
-            this.txtGarantia.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtGarantia.Location = new System.Drawing.Point(664, 120);
-            this.txtGarantia.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtGarantia.Name = "txtGarantia";
-            this.txtGarantia.Size = new System.Drawing.Size(128, 22);
-            this.txtGarantia.TabIndex = 94;
-            // 
-            // lbTotalRegistros
-            // 
-            this.lbTotalRegistros.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.lbTotalRegistros.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lbTotalRegistros.Cursor = System.Windows.Forms.Cursors.Default;
-            this.lbTotalRegistros.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.erpProvider.SetIconAlignment(this.lbTotalRegistros, System.Windows.Forms.ErrorIconAlignment.TopLeft);
-            this.lbTotalRegistros.Location = new System.Drawing.Point(8, 6);
-            this.lbTotalRegistros.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbTotalRegistros.Name = "lbTotalRegistros";
-            this.lbTotalRegistros.Size = new System.Drawing.Size(312, 33);
-            this.lbTotalRegistros.TabIndex = 58;
-            this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tabControlProdutos
-            // 
-            this.tabControlProdutos.Controls.Add(this.tabDadosProduto);
-            this.tabControlProdutos.Controls.Add(this.tabInformacoesAdicionais);
-            this.tabControlProdutos.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.tabControlProdutos.Location = new System.Drawing.Point(14, 3);
-            this.tabControlProdutos.Multiline = true;
-            this.tabControlProdutos.Name = "tabControlProdutos";
-            this.tabControlProdutos.SelectedIndex = 0;
-            this.tabControlProdutos.Size = new System.Drawing.Size(1108, 222);
-            this.tabControlProdutos.TabIndex = 73;
-            // 
-            // tabDadosProduto
-            // 
-            this.tabDadosProduto.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.tabDadosProduto.Controls.Add(this.btnExcluirImagem);
-            this.tabDadosProduto.Controls.Add(this.btnInserirImagem);
-            this.tabDadosProduto.Controls.Add(this.txtIDProduto);
-            this.tabDadosProduto.Controls.Add(this.txtGarantia);
-            this.tabDadosProduto.Controls.Add(this.lbGarantia);
-            this.tabDadosProduto.Controls.Add(this.txtPesquisaListView);
-            this.tabDadosProduto.Controls.Add(this.lblPesquisaListView);
-            this.tabDadosProduto.Controls.Add(this.lbImagemProduto);
-            this.tabDadosProduto.Controls.Add(this.lbModeloProduto);
-            this.tabDadosProduto.Controls.Add(this.cmbModelo);
-            this.tabDadosProduto.Controls.Add(this.imgImagemProduto);
-            this.tabDadosProduto.Controls.Add(this.cmbFornecedor);
-            this.tabDadosProduto.Controls.Add(this.label1);
-            this.tabDadosProduto.Controls.Add(this.lbtxtEstoqueAtual);
-            this.tabDadosProduto.Controls.Add(this.txtEstoqueMinimo);
-            this.tabDadosProduto.Controls.Add(this.txtEstoqueAtual);
-            this.tabDadosProduto.Controls.Add(this.cmbUnidade);
-            this.tabDadosProduto.Controls.Add(this.lbUnidade);
-            this.tabDadosProduto.Controls.Add(this.lblValorVenda);
-            this.tabDadosProduto.Controls.Add(this.lblValorCompra);
-            this.tabDadosProduto.Controls.Add(this.txtPrecoVenda);
-            this.tabDadosProduto.Controls.Add(this.txtPrecoCompra);
-            this.tabDadosProduto.Controls.Add(this.cmbMarca);
-            this.tabDadosProduto.Controls.Add(this.lbMarcaProduto);
-            this.tabDadosProduto.Controls.Add(this.lbFornecedor);
-            this.tabDadosProduto.Controls.Add(this.txtDescricao);
-            this.tabDadosProduto.Controls.Add(this.txtIDProdutoFabricante);
-            this.tabDadosProduto.Controls.Add(this.lbDescricao);
-            this.tabDadosProduto.Controls.Add(this.lbCodigoFabricante);
-            this.tabDadosProduto.Controls.Add(this.lbCodigoIntProduto);
-            this.tabDadosProduto.Controls.Add(this.txtIDProdutoInterno);
-            this.tabDadosProduto.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tabDadosProduto.Font = new System.Drawing.Font("Times New Roman", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabDadosProduto.Location = new System.Drawing.Point(4, 22);
-            this.tabDadosProduto.Name = "tabDadosProduto";
-            this.tabDadosProduto.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDadosProduto.Size = new System.Drawing.Size(1100, 196);
-            this.tabDadosProduto.TabIndex = 0;
-            this.tabDadosProduto.Text = "Dados do Produto";
-            // 
-            // lbGarantia
-            // 
-            this.lbGarantia.AutoSize = true;
-            this.lbGarantia.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbGarantia.Location = new System.Drawing.Point(661, 104);
-            this.lbGarantia.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbGarantia.Name = "lbGarantia";
-            this.lbGarantia.Size = new System.Drawing.Size(64, 15);
-            this.lbGarantia.TabIndex = 93;
-            this.lbGarantia.Text = "Garantia..:";
-            // 
-            // txtPesquisaListView
-            // 
-            this.txtPesquisaListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPesquisaListView.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtPesquisaListView.Enabled = false;
-            this.txtPesquisaListView.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPesquisaListView.Location = new System.Drawing.Point(8, 166);
-            this.txtPesquisaListView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtPesquisaListView.Name = "txtPesquisaListView";
-            this.txtPesquisaListView.Size = new System.Drawing.Size(328, 22);
-            this.txtPesquisaListView.TabIndex = 56;
-            // 
-            // lblPesquisaListView
-            // 
-            this.lblPesquisaListView.AutoSize = true;
-            this.lblPesquisaListView.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPesquisaListView.Location = new System.Drawing.Point(8, 150);
-            this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblPesquisaListView.Name = "lblPesquisaListView";
-            this.lblPesquisaListView.Size = new System.Drawing.Size(107, 15);
-            this.lblPesquisaListView.TabIndex = 57;
-            this.lblPesquisaListView.Text = "Pesquisa Produto..:";
-            // 
-            // lbImagemProduto
-            // 
-            this.lbImagemProduto.AutoSize = true;
-            this.lbImagemProduto.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbImagemProduto.Location = new System.Drawing.Point(840, 8);
-            this.lbImagemProduto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbImagemProduto.Name = "lbImagemProduto";
-            this.lbImagemProduto.Size = new System.Drawing.Size(103, 15);
-            this.lbImagemProduto.TabIndex = 90;
-            this.lbImagemProduto.Text = "Imagem Produto..:";
-            // 
-            // lbModeloProduto
-            // 
-            this.lbModeloProduto.AutoSize = true;
-            this.lbModeloProduto.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbModeloProduto.Location = new System.Drawing.Point(560, 56);
-            this.lbModeloProduto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbModeloProduto.Name = "lbModeloProduto";
-            this.lbModeloProduto.Size = new System.Drawing.Size(56, 15);
-            this.lbModeloProduto.TabIndex = 74;
-            this.lbModeloProduto.Text = "Modelo..:";
-            // 
-            // cmbModelo
-            // 
-            this.cmbModelo.BackColor = System.Drawing.Color.White;
-            this.cmbModelo.FormattingEnabled = true;
-            this.cmbModelo.Location = new System.Drawing.Point(560, 72);
-            this.cmbModelo.Name = "cmbModelo";
-            this.cmbModelo.Size = new System.Drawing.Size(232, 23);
-            this.cmbModelo.TabIndex = 77;
-            // 
-            // cmbFornecedor
-            // 
-            this.cmbFornecedor.BackColor = System.Drawing.Color.White;
-            this.cmbFornecedor.FormattingEnabled = true;
-            this.cmbFornecedor.Location = new System.Drawing.Point(8, 72);
-            this.cmbFornecedor.Name = "cmbFornecedor";
-            this.cmbFornecedor.Size = new System.Drawing.Size(327, 23);
-            this.cmbFornecedor.TabIndex = 88;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(544, 104);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 15);
-            this.label1.TabIndex = 87;
-            this.label1.Text = "Estoque Minino..:";
-            // 
-            // lbtxtEstoqueAtual
-            // 
-            this.lbtxtEstoqueAtual.AutoSize = true;
-            this.lbtxtEstoqueAtual.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbtxtEstoqueAtual.Location = new System.Drawing.Point(424, 104);
-            this.lbtxtEstoqueAtual.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbtxtEstoqueAtual.Name = "lbtxtEstoqueAtual";
-            this.lbtxtEstoqueAtual.Size = new System.Drawing.Size(89, 15);
-            this.lbtxtEstoqueAtual.TabIndex = 86;
-            this.lbtxtEstoqueAtual.Text = "Estoque Atual..:";
-            // 
-            // txtEstoqueMinimo
-            // 
-            this.txtEstoqueMinimo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtEstoqueMinimo.Culture = new System.Globalization.CultureInfo("");
-            this.txtEstoqueMinimo.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEstoqueMinimo.Location = new System.Drawing.Point(544, 120);
-            this.txtEstoqueMinimo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtEstoqueMinimo.Name = "txtEstoqueMinimo";
-            this.txtEstoqueMinimo.Size = new System.Drawing.Size(96, 22);
-            this.txtEstoqueMinimo.TabIndex = 85;
-            this.txtEstoqueMinimo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtEstoqueMinimo.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            // 
-            // txtEstoqueAtual
-            // 
-            this.txtEstoqueAtual.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtEstoqueAtual.Culture = new System.Globalization.CultureInfo("");
-            this.txtEstoqueAtual.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtEstoqueAtual.Location = new System.Drawing.Point(424, 120);
-            this.txtEstoqueAtual.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtEstoqueAtual.Name = "txtEstoqueAtual";
-            this.txtEstoqueAtual.Size = new System.Drawing.Size(96, 22);
-            this.txtEstoqueAtual.TabIndex = 84;
-            this.txtEstoqueAtual.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtEstoqueAtual.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            // 
-            // cmbUnidade
-            // 
-            this.cmbUnidade.BackColor = System.Drawing.Color.White;
-            this.cmbUnidade.FormattingEnabled = true;
-            this.cmbUnidade.Location = new System.Drawing.Point(8, 120);
-            this.cmbUnidade.Name = "cmbUnidade";
-            this.cmbUnidade.Size = new System.Drawing.Size(152, 23);
-            this.cmbUnidade.TabIndex = 83;
-            // 
-            // lbUnidade
-            // 
-            this.lbUnidade.AutoSize = true;
-            this.lbUnidade.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbUnidade.Location = new System.Drawing.Point(8, 104);
-            this.lbUnidade.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbUnidade.Name = "lbUnidade";
-            this.lbUnidade.Size = new System.Drawing.Size(60, 15);
-            this.lbUnidade.TabIndex = 82;
-            this.lbUnidade.Text = "Unidade..:";
-            // 
-            // lblValorVenda
-            // 
-            this.lblValorVenda.AutoSize = true;
-            this.lblValorVenda.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValorVenda.Location = new System.Drawing.Point(304, 104);
-            this.lblValorVenda.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblValorVenda.Name = "lblValorVenda";
-            this.lblValorVenda.Size = new System.Drawing.Size(80, 15);
-            this.lblValorVenda.TabIndex = 81;
-            this.lblValorVenda.Text = "Valor Venda..:";
-            // 
-            // lblValorCompra
-            // 
-            this.lblValorCompra.AutoSize = true;
-            this.lblValorCompra.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblValorCompra.Location = new System.Drawing.Point(184, 104);
-            this.lblValorCompra.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblValorCompra.Name = "lblValorCompra";
-            this.lblValorCompra.Size = new System.Drawing.Size(90, 15);
-            this.lblValorCompra.TabIndex = 80;
-            this.lblValorCompra.Text = "Valor Compra..:";
-            // 
-            // txtPrecoVenda
-            // 
-            this.txtPrecoVenda.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPrecoVenda.Culture = new System.Globalization.CultureInfo("");
-            this.txtPrecoVenda.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoVenda.Location = new System.Drawing.Point(304, 120);
-            this.txtPrecoVenda.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtPrecoVenda.Name = "txtPrecoVenda";
-            this.txtPrecoVenda.Size = new System.Drawing.Size(96, 22);
-            this.txtPrecoVenda.TabIndex = 79;
-            this.txtPrecoVenda.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtPrecoVenda.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            // 
-            // txtPrecoCompra
-            // 
-            this.txtPrecoCompra.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPrecoCompra.Culture = new System.Globalization.CultureInfo("");
-            this.txtPrecoCompra.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPrecoCompra.Location = new System.Drawing.Point(184, 120);
-            this.txtPrecoCompra.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtPrecoCompra.Name = "txtPrecoCompra";
-            this.txtPrecoCompra.Size = new System.Drawing.Size(96, 22);
-            this.txtPrecoCompra.TabIndex = 78;
-            this.txtPrecoCompra.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtPrecoCompra.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
-            // 
-            // cmbMarca
-            // 
-            this.cmbMarca.BackColor = System.Drawing.Color.White;
-            this.cmbMarca.FormattingEnabled = true;
-            this.cmbMarca.Location = new System.Drawing.Point(360, 72);
-            this.cmbMarca.Name = "cmbMarca";
-            this.cmbMarca.Size = new System.Drawing.Size(176, 23);
-            this.cmbMarca.TabIndex = 76;
-            // 
-            // lbMarcaProduto
-            // 
-            this.lbMarcaProduto.AutoSize = true;
-            this.lbMarcaProduto.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbMarcaProduto.Location = new System.Drawing.Point(360, 56);
-            this.lbMarcaProduto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbMarcaProduto.Name = "lbMarcaProduto";
-            this.lbMarcaProduto.Size = new System.Drawing.Size(50, 15);
-            this.lbMarcaProduto.TabIndex = 72;
-            this.lbMarcaProduto.Text = "Marca..:";
-            // 
-            // lbFornecedor
-            // 
-            this.lbFornecedor.AutoSize = true;
-            this.lbFornecedor.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbFornecedor.Location = new System.Drawing.Point(8, 56);
-            this.lbFornecedor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbFornecedor.Name = "lbFornecedor";
-            this.lbFornecedor.Size = new System.Drawing.Size(75, 15);
-            this.lbFornecedor.TabIndex = 69;
-            this.lbFornecedor.Text = "Fornecedor..:";
-            // 
-            // txtDescricao
-            // 
-            this.txtDescricao.AccessibleDescription = "";
-            this.txtDescricao.AccessibleName = "";
-            this.txtDescricao.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDescricao.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtDescricao.Enabled = false;
-            this.txtDescricao.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDescricao.Location = new System.Drawing.Point(360, 24);
-            this.txtDescricao.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtDescricao.Name = "txtDescricao";
-            this.txtDescricao.Size = new System.Drawing.Size(432, 22);
-            this.txtDescricao.TabIndex = 65;
-            // 
-            // txtIDProdutoFabricante
-            // 
-            this.txtIDProdutoFabricante.AccessibleDescription = "";
-            this.txtIDProdutoFabricante.AccessibleName = "";
-            this.txtIDProdutoFabricante.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIDProdutoFabricante.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtIDProdutoFabricante.Enabled = false;
-            this.txtIDProdutoFabricante.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIDProdutoFabricante.Location = new System.Drawing.Point(182, 24);
-            this.txtIDProdutoFabricante.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtIDProdutoFabricante.Name = "txtIDProdutoFabricante";
-            this.txtIDProdutoFabricante.Size = new System.Drawing.Size(150, 22);
-            this.txtIDProdutoFabricante.TabIndex = 67;
-            this.txtIDProdutoFabricante.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // lbDescricao
-            // 
-            this.lbDescricao.AutoSize = true;
-            this.lbDescricao.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbDescricao.Location = new System.Drawing.Point(360, 8);
-            this.lbDescricao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbDescricao.Name = "lbDescricao";
-            this.lbDescricao.Size = new System.Drawing.Size(68, 15);
-            this.lbDescricao.TabIndex = 63;
-            this.lbDescricao.Text = "Descrição..:";
-            // 
-            // lbCodigoFabricante
-            // 
-            this.lbCodigoFabricante.AutoSize = true;
-            this.lbCodigoFabricante.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbCodigoFabricante.Location = new System.Drawing.Point(182, 8);
-            this.lbCodigoFabricante.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbCodigoFabricante.Name = "lbCodigoFabricante";
-            this.lbCodigoFabricante.Size = new System.Drawing.Size(113, 15);
-            this.lbCodigoFabricante.TabIndex = 66;
-            this.lbCodigoFabricante.Text = "Código Fabricante..:";
-            // 
-            // lbCodigoIntProduto
-            // 
-            this.lbCodigoIntProduto.AutoSize = true;
-            this.lbCodigoIntProduto.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbCodigoIntProduto.Location = new System.Drawing.Point(8, 8);
-            this.lbCodigoIntProduto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbCodigoIntProduto.Name = "lbCodigoIntProduto";
-            this.lbCodigoIntProduto.Size = new System.Drawing.Size(96, 15);
-            this.lbCodigoIntProduto.TabIndex = 61;
-            this.lbCodigoIntProduto.Text = "Código Interno..:";
-            // 
-            // txtIDProdutoInterno
-            // 
-            this.txtIDProdutoInterno.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIDProdutoInterno.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.txtIDProdutoInterno.Enabled = false;
-            this.txtIDProdutoInterno.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtIDProdutoInterno.Location = new System.Drawing.Point(8, 24);
-            this.txtIDProdutoInterno.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtIDProdutoInterno.Name = "txtIDProdutoInterno";
-            this.txtIDProdutoInterno.Size = new System.Drawing.Size(150, 22);
-            this.txtIDProdutoInterno.TabIndex = 64;
-            this.txtIDProdutoInterno.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // listViewProdutos
-            // 
-            this.listViewProdutos.CausesValidation = false;
-            this.listViewProdutos.FullRowSelect = true;
-            this.listViewProdutos.GridLines = true;
-            this.listViewProdutos.HideSelection = false;
-            this.listViewProdutos.Location = new System.Drawing.Point(14, 229);
-            this.listViewProdutos.Name = "listViewProdutos";
-            this.listViewProdutos.Size = new System.Drawing.Size(1108, 219);
-            this.listViewProdutos.TabIndex = 71;
-            this.listViewProdutos.UseCompatibleStateImageBehavior = false;
-            this.listViewProdutos.View = System.Windows.Forms.View.Details;
-            // 
-            // erpProvider
-            // 
-            this.erpProvider.ContainerControl = this;
-            // 
-            // pnlBotoes
-            // 
-            this.pnlBotoes.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pnlBotoes.Controls.Add(this.btnSalvar);
-            this.pnlBotoes.Controls.Add(this.btnAlterar);
-            this.pnlBotoes.Controls.Add(this.btnExcluir);
-            this.pnlBotoes.Controls.Add(this.btnNovo);
-            this.pnlBotoes.Controls.Add(this.btnFechar);
-            this.pnlBotoes.Controls.Add(this.button1);
-            this.pnlBotoes.Controls.Add(this.btnCancelar);
-            this.pnlBotoes.Controls.Add(this.lbTotalRegistros);
-            this.pnlBotoes.Location = new System.Drawing.Point(14, 452);
-            this.pnlBotoes.Name = "pnlBotoes";
-            this.pnlBotoes.Size = new System.Drawing.Size(1108, 49);
-            this.pnlBotoes.TabIndex = 72;
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.AutoSize = true;
-            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelar.Location = new System.Drawing.Point(400, 8);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(99, 40);
-            this.btnCancelar.TabIndex = 65;
-            this.btnCancelar.Text = "     Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = false;
-            // 
-            // btnSalvar
-            // 
-            this.btnSalvar.AutoSize = true;
-            this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSalvar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
-            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSalvar.Location = new System.Drawing.Point(784, 2);
-            this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(98, 40);
-            this.btnSalvar.TabIndex = 73;
-            this.btnSalvar.Text = "      Salvar";
-            this.btnSalvar.UseVisualStyleBackColor = false;
-            // 
-            // btnAlterar
-            // 
-            this.btnAlterar.AutoSize = true;
-            this.btnAlterar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAlterar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAlterar.Image = ((System.Drawing.Image)(resources.GetObject("btnAlterar.Image")));
-            this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnAlterar.Location = new System.Drawing.Point(680, 2);
-            this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(98, 40);
-            this.btnAlterar.TabIndex = 72;
-            this.btnAlterar.Tag = "";
-            this.btnAlterar.Text = "       Alterar";
-            this.btnAlterar.UseVisualStyleBackColor = false;
-            // 
-            // btnExcluir
-            // 
-            this.btnExcluir.AutoSize = true;
-            this.btnExcluir.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnExcluir.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnExcluir.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluir.Image")));
-            this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExcluir.Location = new System.Drawing.Point(888, 2);
-            this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(98, 40);
-            this.btnExcluir.TabIndex = 74;
-            this.btnExcluir.Text = "     Excluir";
-            this.btnExcluir.UseVisualStyleBackColor = false;
-            // 
-            // btnNovo
-            // 
-            this.btnNovo.AutoSize = true;
-            this.btnNovo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnNovo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNovo.Image = ((System.Drawing.Image)(resources.GetObject("btnNovo.Image")));
-            this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnNovo.Location = new System.Drawing.Point(576, 2);
-            this.btnNovo.Name = "btnNovo";
-            this.btnNovo.Size = new System.Drawing.Size(98, 40);
-            this.btnNovo.TabIndex = 71;
-            this.btnNovo.Text = "     Novo";
-            this.btnNovo.UseVisualStyleBackColor = false;
-            // 
-            // btnFechar
-            // 
-            this.btnFechar.AutoSize = true;
-            this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
-            this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFechar.Location = new System.Drawing.Point(992, 2);
-            this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(98, 40);
-            this.btnFechar.TabIndex = 75;
-            this.btnFechar.Text = "     Fechar";
-            this.btnFechar.UseVisualStyleBackColor = false;
-            // 
-            // button1
-            // 
-            this.button1.AutoSize = true;
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(992, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 40);
-            this.button1.TabIndex = 76;
-            this.button1.Text = "     Cancelar";
-            this.button1.UseVisualStyleBackColor = false;
+            // pnlOpcaoConfiguracao
+            // 
+            this.pnlOpcaoConfiguracao.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlOpcaoConfiguracao.Controls.Add(this.lnkConfiguracaoListView);
+            this.pnlOpcaoConfiguracao.Controls.Add(this.lnkConfiguracaoTemas);
+            this.pnlOpcaoConfiguracao.Controls.Add(this.lnkConfiguracaoBotões);
+            this.pnlOpcaoConfiguracao.Controls.Add(this.lnkConfiguracaoFormulario);
+            this.pnlOpcaoConfiguracao.Controls.Add(this.lnkConfiguracaoCampos);
+            this.pnlOpcaoConfiguracao.Controls.Add(this.lnkConfiguracaoRotuloCampos);
+            this.pnlOpcaoConfiguracao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlOpcaoConfiguracao.Location = new System.Drawing.Point(45, 49);
+            this.pnlOpcaoConfiguracao.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlOpcaoConfiguracao.Name = "pnlOpcaoConfiguracao";
+            this.pnlOpcaoConfiguracao.Size = new System.Drawing.Size(447, 237);
+            this.pnlOpcaoConfiguracao.TabIndex = 1;
+            // 
+            // lnkConfiguracaoListView
+            // 
+            this.lnkConfiguracaoListView.AutoSize = true;
+            this.lnkConfiguracaoListView.BackColor = System.Drawing.Color.Transparent;
+            this.lnkConfiguracaoListView.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkConfiguracaoListView.LinkColor = System.Drawing.Color.Black;
+            this.lnkConfiguracaoListView.Location = new System.Drawing.Point(27, 122);
+            this.lnkConfiguracaoListView.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkConfiguracaoListView.Name = "lnkConfiguracaoListView";
+            this.lnkConfiguracaoListView.Size = new System.Drawing.Size(365, 19);
+            this.lnkConfiguracaoListView.TabIndex = 9;
+            this.lnkConfiguracaoListView.TabStop = true;
+            this.lnkConfiguracaoListView.Text = "Configuração do Painel de Visualização dos Registros";
+            // 
+            // lnkConfiguracaoTemas
+            // 
+            this.lnkConfiguracaoTemas.AutoSize = true;
+            this.lnkConfiguracaoTemas.BackColor = System.Drawing.Color.Transparent;
+            this.lnkConfiguracaoTemas.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkConfiguracaoTemas.LinkColor = System.Drawing.Color.Black;
+            this.lnkConfiguracaoTemas.Location = new System.Drawing.Point(27, 188);
+            this.lnkConfiguracaoTemas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkConfiguracaoTemas.Name = "lnkConfiguracaoTemas";
+            this.lnkConfiguracaoTemas.Size = new System.Drawing.Size(166, 19);
+            this.lnkConfiguracaoTemas.TabIndex = 8;
+            this.lnkConfiguracaoTemas.TabStop = true;
+            this.lnkConfiguracaoTemas.Text = "Configuração de Temas";
+            // 
+            // lnkConfiguracaoBotões
+            // 
+            this.lnkConfiguracaoBotões.AutoSize = true;
+            this.lnkConfiguracaoBotões.BackColor = System.Drawing.Color.Transparent;
+            this.lnkConfiguracaoBotões.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkConfiguracaoBotões.LinkColor = System.Drawing.Color.Black;
+            this.lnkConfiguracaoBotões.Location = new System.Drawing.Point(27, 154);
+            this.lnkConfiguracaoBotões.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkConfiguracaoBotões.Name = "lnkConfiguracaoBotões";
+            this.lnkConfiguracaoBotões.Size = new System.Drawing.Size(176, 19);
+            this.lnkConfiguracaoBotões.TabIndex = 4;
+            this.lnkConfiguracaoBotões.TabStop = true;
+            this.lnkConfiguracaoBotões.Text = "Configuração dos Botões";
+            // 
+            // lnkConfiguracaoFormulario
+            // 
+            this.lnkConfiguracaoFormulario.AutoSize = true;
+            this.lnkConfiguracaoFormulario.BackColor = System.Drawing.Color.Transparent;
+            this.lnkConfiguracaoFormulario.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkConfiguracaoFormulario.LinkColor = System.Drawing.Color.Black;
+            this.lnkConfiguracaoFormulario.Location = new System.Drawing.Point(27, 16);
+            this.lnkConfiguracaoFormulario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkConfiguracaoFormulario.Name = "lnkConfiguracaoFormulario";
+            this.lnkConfiguracaoFormulario.Size = new System.Drawing.Size(209, 19);
+            this.lnkConfiguracaoFormulario.TabIndex = 1;
+            this.lnkConfiguracaoFormulario.TabStop = true;
+            this.lnkConfiguracaoFormulario.Text = "Configuração dos Formulários";
+            // 
+            // lnkConfiguracaoCampos
+            // 
+            this.lnkConfiguracaoCampos.AutoSize = true;
+            this.lnkConfiguracaoCampos.BackColor = System.Drawing.Color.Transparent;
+            this.lnkConfiguracaoCampos.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkConfiguracaoCampos.LinkColor = System.Drawing.Color.Black;
+            this.lnkConfiguracaoCampos.Location = new System.Drawing.Point(27, 84);
+            this.lnkConfiguracaoCampos.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkConfiguracaoCampos.Name = "lnkConfiguracaoCampos";
+            this.lnkConfiguracaoCampos.Size = new System.Drawing.Size(183, 19);
+            this.lnkConfiguracaoCampos.TabIndex = 3;
+            this.lnkConfiguracaoCampos.TabStop = true;
+            this.lnkConfiguracaoCampos.Text = "Configuração dos Campos";
+            // 
+            // lnkConfiguracaoRotuloCampos
+            // 
+            this.lnkConfiguracaoRotuloCampos.AutoSize = true;
+            this.lnkConfiguracaoRotuloCampos.BackColor = System.Drawing.Color.Transparent;
+            this.lnkConfiguracaoRotuloCampos.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkConfiguracaoRotuloCampos.LinkColor = System.Drawing.Color.Black;
+            this.lnkConfiguracaoRotuloCampos.Location = new System.Drawing.Point(27, 50);
+            this.lnkConfiguracaoRotuloCampos.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkConfiguracaoRotuloCampos.Name = "lnkConfiguracaoRotuloCampos";
+            this.lnkConfiguracaoRotuloCampos.Size = new System.Drawing.Size(296, 19);
+            this.lnkConfiguracaoRotuloCampos.TabIndex = 2;
+            this.lnkConfiguracaoRotuloCampos.TabStop = true;
+            this.lnkConfiguracaoRotuloCampos.Text = "Configuração das Descriçãoes dos Campos";
+            // 
+            // pnlExemplosAlterado
+            // 
+            this.pnlExemplosAlterado.AutoSize = true;
+            this.pnlExemplosAlterado.BackColor = System.Drawing.Color.Transparent;
+            this.pnlExemplosAlterado.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlExemplosAlterado.Controls.Add(this.listViewClientes);
+            this.pnlExemplosAlterado.Controls.Add(this.btnExemploAlterada);
+            this.pnlExemplosAlterado.Controls.Add(this.txtExemploAlterada);
+            this.pnlExemplosAlterado.Controls.Add(this.lblDescricaoAlterada);
+            this.pnlExemplosAlterado.Controls.Add(this.mnsStripExemploAlterado);
+            this.pnlExemplosAlterado.Location = new System.Drawing.Point(45, 342);
+            this.pnlExemplosAlterado.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlExemplosAlterado.Name = "pnlExemplosAlterado";
+            this.pnlExemplosAlterado.Size = new System.Drawing.Size(716, 339);
+            this.pnlExemplosAlterado.TabIndex = 81;
+            // 
+            // btnExemploAlterada
+            // 
+            this.btnExemploAlterada.AutoSize = true;
+            this.btnExemploAlterada.Location = new System.Drawing.Point(530, 50);
+            this.btnExemploAlterada.Margin = new System.Windows.Forms.Padding(4);
+            this.btnExemploAlterada.Name = "btnExemploAlterada";
+            this.btnExemploAlterada.Size = new System.Drawing.Size(171, 49);
+            this.btnExemploAlterada.TabIndex = 82;
+            this.btnExemploAlterada.Text = "Exemplo de Botão";
+            this.btnExemploAlterada.UseVisualStyleBackColor = false;
+            // 
+            // txtExemploAlterada
+            // 
+            this.txtExemploAlterada.Location = new System.Drawing.Point(224, 79);
+            this.txtExemploAlterada.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.txtExemploAlterada.Name = "txtExemploAlterada";
+            this.txtExemploAlterada.Size = new System.Drawing.Size(262, 20);
+            this.txtExemploAlterada.TabIndex = 59;
+            this.txtExemploAlterada.Text = "EXEMPLO DE CAMPO";
+            // 
+            // lblDescricaoAlterada
+            // 
+            this.lblDescricaoAlterada.AutoSize = true;
+            this.lblDescricaoAlterada.Location = new System.Drawing.Point(221, 62);
+            this.lblDescricaoAlterada.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblDescricaoAlterada.Name = "lblDescricaoAlterada";
+            this.lblDescricaoAlterada.Size = new System.Drawing.Size(125, 13);
+            this.lblDescricaoAlterada.TabIndex = 60;
+            this.lblDescricaoAlterada.Text = "Exemplo de Descrição...:";
+            this.lblDescricaoAlterada.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // mnsStripExemploAlterado
+            // 
+            this.mnsStripExemploAlterado.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStriExemploAlterado1});
+            this.mnsStripExemploAlterado.Location = new System.Drawing.Point(0, 0);
+            this.mnsStripExemploAlterado.Name = "mnsStripExemploAlterado";
+            this.mnsStripExemploAlterado.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.mnsStripExemploAlterado.Size = new System.Drawing.Size(712, 29);
+            this.mnsStripExemploAlterado.TabIndex = 84;
+            this.mnsStripExemploAlterado.Text = "menuStrip1";
+            // 
+            // toolStriExemploAlterado1
+            // 
+            this.toolStriExemploAlterado1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStriExemploAlterado2,
+            this.toolStriExemploAlterado3,
+            this.toolStriExemploAlterado4});
+            this.toolStriExemploAlterado1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.toolStriExemploAlterado1.Name = "toolStriExemploAlterado1";
+            this.toolStriExemploAlterado1.Size = new System.Drawing.Size(123, 23);
+            this.toolStriExemploAlterado1.Text = "Menu Exemplo";
+            // 
+            // toolStriExemploAlterado2
+            // 
+            this.toolStriExemploAlterado2.Name = "toolStriExemploAlterado2";
+            this.toolStriExemploAlterado2.Size = new System.Drawing.Size(183, 24);
+            this.toolStriExemploAlterado2.Text = "Opção Exemplo";
+            // 
+            // toolStriExemploAlterado3
+            // 
+            this.toolStriExemploAlterado3.Name = "toolStriExemploAlterado3";
+            this.toolStriExemploAlterado3.Size = new System.Drawing.Size(183, 24);
+            this.toolStriExemploAlterado3.Text = "Opção Exemplo";
+            // 
+            // toolStriExemploAlterado4
+            // 
+            this.toolStriExemploAlterado4.Name = "toolStriExemploAlterado4";
+            this.toolStriExemploAlterado4.Size = new System.Drawing.Size(183, 24);
+            this.toolStriExemploAlterado4.Text = "Opção Exemplo";
+            // 
+            // listViewClientes
+            // 
+            this.listViewClientes.CausesValidation = false;
+            this.listViewClientes.FullRowSelect = true;
+            this.listViewClientes.GridLines = true;
+            this.listViewClientes.HideSelection = false;
+            this.listViewClientes.Location = new System.Drawing.Point(7, 141);
+            this.listViewClientes.Margin = new System.Windows.Forms.Padding(4);
+            this.listViewClientes.Name = "listViewClientes";
+            this.listViewClientes.Size = new System.Drawing.Size(694, 190);
+            this.listViewClientes.TabIndex = 85;
+            this.listViewClientes.UseCompatibleStateImageBehavior = false;
+            this.listViewClientes.View = System.Windows.Forms.View.Details;
+            // 
+            // pnlOpcaoTemas
+            // 
+            this.pnlOpcaoTemas.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlOpcaoTemas.Controls.Add(this.lnkOpcaoTemaEscuro);
+            this.pnlOpcaoTemas.Controls.Add(this.lnkOpcaoTemaPadrao);
+            this.pnlOpcaoTemas.Controls.Add(this.lnkOpcaoTemaClaro);
+            this.pnlOpcaoTemas.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.pnlOpcaoTemas.Location = new System.Drawing.Point(526, 49);
+            this.pnlOpcaoTemas.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlOpcaoTemas.Name = "pnlOpcaoTemas";
+            this.pnlOpcaoTemas.Size = new System.Drawing.Size(354, 169);
+            this.pnlOpcaoTemas.TabIndex = 86;
+            this.pnlOpcaoTemas.Visible = false;
+            // 
+            // lnkOpcaoTemaEscuro
+            // 
+            this.lnkOpcaoTemaEscuro.AutoSize = true;
+            this.lnkOpcaoTemaEscuro.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoTemaEscuro.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoTemaEscuro.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoTemaEscuro.Location = new System.Drawing.Point(21, 47);
+            this.lnkOpcaoTemaEscuro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoTemaEscuro.Name = "lnkOpcaoTemaEscuro";
+            this.lnkOpcaoTemaEscuro.Size = new System.Drawing.Size(189, 19);
+            this.lnkOpcaoTemaEscuro.TabIndex = 10;
+            this.lnkOpcaoTemaEscuro.TabStop = true;
+            this.lnkOpcaoTemaEscuro.Text = "Configuração Tema Escuro";
+            // 
+            // lnkOpcaoTemaPadrao
+            // 
+            this.lnkOpcaoTemaPadrao.AutoSize = true;
+            this.lnkOpcaoTemaPadrao.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoTemaPadrao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoTemaPadrao.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoTemaPadrao.Location = new System.Drawing.Point(21, 81);
+            this.lnkOpcaoTemaPadrao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoTemaPadrao.Name = "lnkOpcaoTemaPadrao";
+            this.lnkOpcaoTemaPadrao.Size = new System.Drawing.Size(245, 19);
+            this.lnkOpcaoTemaPadrao.TabIndex = 9;
+            this.lnkOpcaoTemaPadrao.TabStop = true;
+            this.lnkOpcaoTemaPadrao.Text = "Configuração Padrão dos Controles";
+            // 
+            // lnkOpcaoTemaClaro
+            // 
+            this.lnkOpcaoTemaClaro.AutoSize = true;
+            this.lnkOpcaoTemaClaro.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoTemaClaro.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoTemaClaro.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoTemaClaro.Location = new System.Drawing.Point(21, 14);
+            this.lnkOpcaoTemaClaro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoTemaClaro.Name = "lnkOpcaoTemaClaro";
+            this.lnkOpcaoTemaClaro.Size = new System.Drawing.Size(180, 19);
+            this.lnkOpcaoTemaClaro.TabIndex = 8;
+            this.lnkOpcaoTemaClaro.TabStop = true;
+            this.lnkOpcaoTemaClaro.Text = "Configuração Tema Claro";
+            // 
+            // pnlOpcaoFormulario
+            // 
+            this.pnlOpcaoFormulario.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlOpcaoFormulario.Controls.Add(this.lnkOpcaoCorFonteMenu);
+            this.pnlOpcaoFormulario.Controls.Add(this.lnkOpcaoCorFundoMenu);
+            this.pnlOpcaoFormulario.Controls.Add(this.lnkOpcaoCorFormulario);
+            this.pnlOpcaoFormulario.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.pnlOpcaoFormulario.Location = new System.Drawing.Point(884, 49);
+            this.pnlOpcaoFormulario.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlOpcaoFormulario.Name = "pnlOpcaoFormulario";
+            this.pnlOpcaoFormulario.Size = new System.Drawing.Size(354, 169);
+            this.pnlOpcaoFormulario.TabIndex = 87;
+            this.pnlOpcaoFormulario.Visible = false;
+            // 
+            // lnkOpcaoCorFonteMenu
+            // 
+            this.lnkOpcaoCorFonteMenu.AutoSize = true;
+            this.lnkOpcaoCorFonteMenu.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFonteMenu.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFonteMenu.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFonteMenu.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFonteMenu.Location = new System.Drawing.Point(27, 93);
+            this.lnkOpcaoCorFonteMenu.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFonteMenu.Name = "lnkOpcaoCorFonteMenu";
+            this.lnkOpcaoCorFonteMenu.Size = new System.Drawing.Size(224, 19);
+            this.lnkOpcaoCorFonteMenu.TabIndex = 4;
+            this.lnkOpcaoCorFonteMenu.TabStop = true;
+            this.lnkOpcaoCorFonteMenu.Text = "Alterar a Cor da Fonte do Menu";
+            // 
+            // lnkOpcaoCorFundoMenu
+            // 
+            this.lnkOpcaoCorFundoMenu.AutoSize = true;
+            this.lnkOpcaoCorFundoMenu.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFundoMenu.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFundoMenu.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoMenu.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoMenu.Location = new System.Drawing.Point(27, 51);
+            this.lnkOpcaoCorFundoMenu.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFundoMenu.Name = "lnkOpcaoCorFundoMenu";
+            this.lnkOpcaoCorFundoMenu.Size = new System.Drawing.Size(227, 19);
+            this.lnkOpcaoCorFundoMenu.TabIndex = 3;
+            this.lnkOpcaoCorFundoMenu.TabStop = true;
+            this.lnkOpcaoCorFundoMenu.Text = "Alterar a Cor de Fundo do Menu";
+            // 
+            // lnkOpcaoCorFormulario
+            // 
+            this.lnkOpcaoCorFormulario.AutoSize = true;
+            this.lnkOpcaoCorFormulario.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFormulario.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFormulario.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFormulario.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFormulario.Location = new System.Drawing.Point(27, 16);
+            this.lnkOpcaoCorFormulario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFormulario.Name = "lnkOpcaoCorFormulario";
+            this.lnkOpcaoCorFormulario.Size = new System.Drawing.Size(195, 19);
+            this.lnkOpcaoCorFormulario.TabIndex = 2;
+            this.lnkOpcaoCorFormulario.TabStop = true;
+            this.lnkOpcaoCorFormulario.Text = "Alterar a Cor do Formulário";
+            // 
+            // pnlOpcaoCampos
+            // 
+            this.pnlOpcaoCampos.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlOpcaoCampos.Controls.Add(this.lnkOpcaoFonteBotao);
+            this.pnlOpcaoCampos.Controls.Add(this.lnkOpcaoCorFonteBotao);
+            this.pnlOpcaoCampos.Controls.Add(this.lnkOpcaoCorFundoBotao);
+            this.pnlOpcaoCampos.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.pnlOpcaoCampos.Location = new System.Drawing.Point(1179, 49);
+            this.pnlOpcaoCampos.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlOpcaoCampos.Name = "pnlOpcaoCampos";
+            this.pnlOpcaoCampos.Size = new System.Drawing.Size(354, 169);
+            this.pnlOpcaoCampos.TabIndex = 88;
+            this.pnlOpcaoCampos.Visible = false;
+            // 
+            // lnkOpcaoFonteBotao
+            // 
+            this.lnkOpcaoFonteBotao.AutoSize = true;
+            this.lnkOpcaoFonteBotao.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoFonteBotao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoFonteBotao.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoFonteBotao.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoFonteBotao.Location = new System.Drawing.Point(27, 86);
+            this.lnkOpcaoFonteBotao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoFonteBotao.Name = "lnkOpcaoFonteBotao";
+            this.lnkOpcaoFonteBotao.Size = new System.Drawing.Size(179, 19);
+            this.lnkOpcaoFonteBotao.TabIndex = 5;
+            this.lnkOpcaoFonteBotao.TabStop = true;
+            this.lnkOpcaoFonteBotao.Text = "Alterar a  Fonte do Botão";
+            // 
+            // lnkOpcaoCorFonteBotao
+            // 
+            this.lnkOpcaoCorFonteBotao.AutoSize = true;
+            this.lnkOpcaoCorFonteBotao.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFonteBotao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFonteBotao.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFonteBotao.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFonteBotao.Location = new System.Drawing.Point(27, 51);
+            this.lnkOpcaoCorFonteBotao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFonteBotao.Name = "lnkOpcaoCorFonteBotao";
+            this.lnkOpcaoCorFonteBotao.Size = new System.Drawing.Size(224, 19);
+            this.lnkOpcaoCorFonteBotao.TabIndex = 4;
+            this.lnkOpcaoCorFonteBotao.TabStop = true;
+            this.lnkOpcaoCorFonteBotao.Text = "Alterar a Cor da Fonte do Botão";
+            // 
+            // lnkOpcaoCorFundoBotao
+            // 
+            this.lnkOpcaoCorFundoBotao.AutoSize = true;
+            this.lnkOpcaoCorFundoBotao.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFundoBotao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFundoBotao.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoBotao.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoBotao.Location = new System.Drawing.Point(27, 16);
+            this.lnkOpcaoCorFundoBotao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFundoBotao.Name = "lnkOpcaoCorFundoBotao";
+            this.lnkOpcaoCorFundoBotao.Size = new System.Drawing.Size(227, 19);
+            this.lnkOpcaoCorFundoBotao.TabIndex = 3;
+            this.lnkOpcaoCorFundoBotao.TabStop = true;
+            this.lnkOpcaoCorFundoBotao.Text = "Alterar a Cor de Fundo do Botão";
+            // 
+            // pnlOpcaoListView
+            // 
+            this.pnlOpcaoListView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlOpcaoListView.Controls.Add(this.lnkOpcaoCorFundoLinha2);
+            this.pnlOpcaoListView.Controls.Add(this.lnkOpcaoCorFundoLinha1);
+            this.pnlOpcaoListView.Controls.Add(this.lnkOpcaoCorFundoColunaSelecionada);
+            this.pnlOpcaoListView.Controls.Add(this.lnkOpcaoCorFundoCabecalho);
+            this.pnlOpcaoListView.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.pnlOpcaoListView.Location = new System.Drawing.Point(799, 215);
+            this.pnlOpcaoListView.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlOpcaoListView.Name = "pnlOpcaoListView";
+            this.pnlOpcaoListView.Size = new System.Drawing.Size(354, 169);
+            this.pnlOpcaoListView.TabIndex = 89;
+            this.pnlOpcaoListView.Visible = false;
+            // 
+            // lnkOpcaoCorFundoLinha2
+            // 
+            this.lnkOpcaoCorFundoLinha2.AutoSize = true;
+            this.lnkOpcaoCorFundoLinha2.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFundoLinha2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFundoLinha2.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoLinha2.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoLinha2.Location = new System.Drawing.Point(27, 121);
+            this.lnkOpcaoCorFundoLinha2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFundoLinha2.Name = "lnkOpcaoCorFundoLinha2";
+            this.lnkOpcaoCorFundoLinha2.Size = new System.Drawing.Size(247, 19);
+            this.lnkOpcaoCorFundoLinha2.TabIndex = 6;
+            this.lnkOpcaoCorFundoLinha2.TabStop = true;
+            this.lnkOpcaoCorFundoLinha2.Text = "Alterar a Cor de Fundo do 2° Linha ";
+            // 
+            // lnkOpcaoCorFundoLinha1
+            // 
+            this.lnkOpcaoCorFundoLinha1.AutoSize = true;
+            this.lnkOpcaoCorFundoLinha1.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFundoLinha1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFundoLinha1.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoLinha1.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoLinha1.Location = new System.Drawing.Point(27, 86);
+            this.lnkOpcaoCorFundoLinha1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFundoLinha1.Name = "lnkOpcaoCorFundoLinha1";
+            this.lnkOpcaoCorFundoLinha1.Size = new System.Drawing.Size(247, 19);
+            this.lnkOpcaoCorFundoLinha1.TabIndex = 5;
+            this.lnkOpcaoCorFundoLinha1.TabStop = true;
+            this.lnkOpcaoCorFundoLinha1.Text = "Alterar a Cor de Fundo do 1° Linha ";
+            // 
+            // lnkOpcaoCorFundoColunaSelecionada
+            // 
+            this.lnkOpcaoCorFundoColunaSelecionada.AutoSize = true;
+            this.lnkOpcaoCorFundoColunaSelecionada.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFundoColunaSelecionada.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFundoColunaSelecionada.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoColunaSelecionada.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoColunaSelecionada.Location = new System.Drawing.Point(27, 51);
+            this.lnkOpcaoCorFundoColunaSelecionada.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFundoColunaSelecionada.Name = "lnkOpcaoCorFundoColunaSelecionada";
+            this.lnkOpcaoCorFundoColunaSelecionada.Size = new System.Drawing.Size(318, 19);
+            this.lnkOpcaoCorFundoColunaSelecionada.TabIndex = 4;
+            this.lnkOpcaoCorFundoColunaSelecionada.TabStop = true;
+            this.lnkOpcaoCorFundoColunaSelecionada.Text = "Alterar a Cor de Fundo da Coluna Selecionada";
+            // 
+            // lnkOpcaoCorFundoCabecalho
+            // 
+            this.lnkOpcaoCorFundoCabecalho.AutoSize = true;
+            this.lnkOpcaoCorFundoCabecalho.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFundoCabecalho.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFundoCabecalho.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoCabecalho.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoCabecalho.Location = new System.Drawing.Point(27, 16);
+            this.lnkOpcaoCorFundoCabecalho.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFundoCabecalho.Name = "lnkOpcaoCorFundoCabecalho";
+            this.lnkOpcaoCorFundoCabecalho.Size = new System.Drawing.Size(257, 19);
+            this.lnkOpcaoCorFundoCabecalho.TabIndex = 3;
+            this.lnkOpcaoCorFundoCabecalho.TabStop = true;
+            this.lnkOpcaoCorFundoCabecalho.Text = "Alterar a Cor de Fundo do Cabeçalho";
+            this.lnkOpcaoCorFundoCabecalho.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpcaoCorFundoCabecalho_LinkClicked);
+            // 
+            // pnlOpcaoDescricao
+            // 
+            this.pnlOpcaoDescricao.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlOpcaoDescricao.Controls.Add(this.lnkOpcaoCorFundoDescricaoTransparente);
+            this.pnlOpcaoDescricao.Controls.Add(this.lnkOpcaoFonteDescricao);
+            this.pnlOpcaoDescricao.Controls.Add(this.lnkOpcaoCorFonteDescricao);
+            this.pnlOpcaoDescricao.Controls.Add(this.lnkOpcaoCorFundoDescricao);
+            this.pnlOpcaoDescricao.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.pnlOpcaoDescricao.Location = new System.Drawing.Point(799, 423);
+            this.pnlOpcaoDescricao.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlOpcaoDescricao.Name = "pnlOpcaoDescricao";
+            this.pnlOpcaoDescricao.Size = new System.Drawing.Size(354, 169);
+            this.pnlOpcaoDescricao.TabIndex = 90;
+            this.pnlOpcaoDescricao.Visible = false;
+            // 
+            // lnkOpcaoCorFundoDescricaoTransparente
+            // 
+            this.lnkOpcaoCorFundoDescricaoTransparente.AutoSize = true;
+            this.lnkOpcaoCorFundoDescricaoTransparente.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFundoDescricaoTransparente.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFundoDescricaoTransparente.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoDescricaoTransparente.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoDescricaoTransparente.Location = new System.Drawing.Point(27, 122);
+            this.lnkOpcaoCorFundoDescricaoTransparente.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFundoDescricaoTransparente.Name = "lnkOpcaoCorFundoDescricaoTransparente";
+            this.lnkOpcaoCorFundoDescricaoTransparente.Size = new System.Drawing.Size(295, 19);
+            this.lnkOpcaoCorFundoDescricaoTransparente.TabIndex = 6;
+            this.lnkOpcaoCorFundoDescricaoTransparente.TabStop = true;
+            this.lnkOpcaoCorFundoDescricaoTransparente.Text = "Alterar a Cor de Fundo como Transparente";
+            // 
+            // lnkOpcaoFonteDescricao
+            // 
+            this.lnkOpcaoFonteDescricao.AutoSize = true;
+            this.lnkOpcaoFonteDescricao.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoFonteDescricao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoFonteDescricao.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoFonteDescricao.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoFonteDescricao.Location = new System.Drawing.Point(27, 86);
+            this.lnkOpcaoFonteDescricao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoFonteDescricao.Name = "lnkOpcaoFonteDescricao";
+            this.lnkOpcaoFonteDescricao.Size = new System.Drawing.Size(206, 19);
+            this.lnkOpcaoFonteDescricao.TabIndex = 5;
+            this.lnkOpcaoFonteDescricao.TabStop = true;
+            this.lnkOpcaoFonteDescricao.Text = "Alterar a  Fonte da Descrição";
+            // 
+            // lnkOpcaoCorFonteDescricao
+            // 
+            this.lnkOpcaoCorFonteDescricao.AutoSize = true;
+            this.lnkOpcaoCorFonteDescricao.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFonteDescricao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFonteDescricao.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFonteDescricao.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFonteDescricao.Location = new System.Drawing.Point(27, 51);
+            this.lnkOpcaoCorFonteDescricao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFonteDescricao.Name = "lnkOpcaoCorFonteDescricao";
+            this.lnkOpcaoCorFonteDescricao.Size = new System.Drawing.Size(251, 19);
+            this.lnkOpcaoCorFonteDescricao.TabIndex = 4;
+            this.lnkOpcaoCorFonteDescricao.TabStop = true;
+            this.lnkOpcaoCorFonteDescricao.Text = "Alterar a Cor da Fonte da Descrição";
+            // 
+            // lnkOpcaoCorFundoDescricao
+            // 
+            this.lnkOpcaoCorFundoDescricao.AutoSize = true;
+            this.lnkOpcaoCorFundoDescricao.BackColor = System.Drawing.Color.Transparent;
+            this.lnkOpcaoCorFundoDescricao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkOpcaoCorFundoDescricao.ForeColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoDescricao.LinkColor = System.Drawing.Color.Black;
+            this.lnkOpcaoCorFundoDescricao.Location = new System.Drawing.Point(27, 16);
+            this.lnkOpcaoCorFundoDescricao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lnkOpcaoCorFundoDescricao.Name = "lnkOpcaoCorFundoDescricao";
+            this.lnkOpcaoCorFundoDescricao.Size = new System.Drawing.Size(254, 19);
+            this.lnkOpcaoCorFundoDescricao.TabIndex = 3;
+            this.lnkOpcaoCorFundoDescricao.TabStop = true;
+            this.lnkOpcaoCorFundoDescricao.Text = "Alterar a Cor de Fundo da Descrição";
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Controls.Add(this.linkLabel1);
+            this.panel1.Controls.Add(this.linkLabel2);
+            this.panel1.Controls.Add(this.linkLabel3);
+            this.panel1.Font = new System.Drawing.Font("Times New Roman", 12F);
+            this.panel1.Location = new System.Drawing.Point(799, 631);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(354, 169);
+            this.panel1.TabIndex = 91;
+            this.panel1.Visible = false;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel1.ForeColor = System.Drawing.Color.Black;
+            this.linkLabel1.LinkColor = System.Drawing.Color.Black;
+            this.linkLabel1.Location = new System.Drawing.Point(27, 86);
+            this.linkLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(179, 19);
+            this.linkLabel1.TabIndex = 5;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Alterar a  Fonte do Botão";
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel2.ForeColor = System.Drawing.Color.Black;
+            this.linkLabel2.LinkColor = System.Drawing.Color.Black;
+            this.linkLabel2.Location = new System.Drawing.Point(27, 51);
+            this.linkLabel2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(224, 19);
+            this.linkLabel2.TabIndex = 4;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "Alterar a Cor da Fonte do Botão";
+            // 
+            // linkLabel3
+            // 
+            this.linkLabel3.AutoSize = true;
+            this.linkLabel3.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel3.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkLabel3.ForeColor = System.Drawing.Color.Black;
+            this.linkLabel3.LinkColor = System.Drawing.Color.Black;
+            this.linkLabel3.Location = new System.Drawing.Point(27, 16);
+            this.linkLabel3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.linkLabel3.Name = "linkLabel3";
+            this.linkLabel3.Size = new System.Drawing.Size(227, 19);
+            this.linkLabel3.TabIndex = 3;
+            this.linkLabel3.TabStop = true;
+            this.linkLabel3.Text = "Alterar a Cor de Fundo do Botão";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1136, 505);
-            this.Controls.Add(this.tabControlProdutos);
-            this.Controls.Add(this.listViewProdutos);
-            this.Controls.Add(this.pnlBotoes);
+            this.ClientSize = new System.Drawing.Size(1478, 815);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnlOpcaoDescricao);
+            this.Controls.Add(this.pnlOpcaoListView);
+            this.Controls.Add(this.pnlOpcaoCampos);
+            this.Controls.Add(this.pnlOpcaoFormulario);
+            this.Controls.Add(this.pnlOpcaoTemas);
+            this.Controls.Add(this.pnlExemplosAlterado);
+            this.Controls.Add(this.pnlOpcaoConfiguracao);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.imgImagemProduto)).EndInit();
-            this.tabInformacoesAdicionais.ResumeLayout(false);
-            this.tabInformacoesAdicionais.PerformLayout();
-            this.tabControlProdutos.ResumeLayout(false);
-            this.tabDadosProduto.ResumeLayout(false);
-            this.tabDadosProduto.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();
-            this.pnlBotoes.ResumeLayout(false);
-            this.pnlBotoes.PerformLayout();
+            this.pnlOpcaoConfiguracao.ResumeLayout(false);
+            this.pnlOpcaoConfiguracao.PerformLayout();
+            this.pnlExemplosAlterado.ResumeLayout(false);
+            this.pnlExemplosAlterado.PerformLayout();
+            this.mnsStripExemploAlterado.ResumeLayout(false);
+            this.mnsStripExemploAlterado.PerformLayout();
+            this.pnlOpcaoTemas.ResumeLayout(false);
+            this.pnlOpcaoTemas.PerformLayout();
+            this.pnlOpcaoFormulario.ResumeLayout(false);
+            this.pnlOpcaoFormulario.PerformLayout();
+            this.pnlOpcaoCampos.ResumeLayout(false);
+            this.pnlOpcaoCampos.PerformLayout();
+            this.pnlOpcaoListView.ResumeLayout(false);
+            this.pnlOpcaoListView.PerformLayout();
+            this.pnlOpcaoDescricao.ResumeLayout(false);
+            this.pnlOpcaoDescricao.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
-        #endregion
+		#endregion
 
-        private System.Windows.Forms.ToolTip tlpDicas;
-        private System.Windows.Forms.PictureBox imgImagemProduto;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label lbNumeroSerie;
-        private System.Windows.Forms.TextBox txtDataUltimaCompra;
-        private System.Windows.Forms.TabPage tabInformacoesAdicionais;
-        private System.Windows.Forms.Label lbDataUltimaCompra;
-        private System.Windows.Forms.TextBox txtIDProduto;
-        private System.Windows.Forms.Button btnExcluirImagem;
-        private System.Windows.Forms.Button btnInserirImagem;
-        private System.Windows.Forms.TextBox txtGarantia;
-        private System.Windows.Forms.Label lbTotalRegistros;
-        private System.Windows.Forms.ErrorProvider erpProvider;
-        private System.Windows.Forms.TabControl tabControlProdutos;
-        private System.Windows.Forms.TabPage tabDadosProduto;
-        private System.Windows.Forms.Label lbGarantia;
-        private System.Windows.Forms.TextBox txtPesquisaListView;
-        private System.Windows.Forms.Label lblPesquisaListView;
-        private System.Windows.Forms.Label lbImagemProduto;
-        private System.Windows.Forms.Label lbModeloProduto;
-        private System.Windows.Forms.ComboBox cmbModelo;
-        private System.Windows.Forms.ComboBox cmbFornecedor;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lbtxtEstoqueAtual;
-        private System.Windows.Forms.MaskedTextBox txtEstoqueMinimo;
-        private System.Windows.Forms.MaskedTextBox txtEstoqueAtual;
-        private System.Windows.Forms.ComboBox cmbUnidade;
-        private System.Windows.Forms.Label lbUnidade;
-        private System.Windows.Forms.Label lblValorVenda;
-        private System.Windows.Forms.Label lblValorCompra;
-        private System.Windows.Forms.MaskedTextBox txtPrecoVenda;
-        private System.Windows.Forms.MaskedTextBox txtPrecoCompra;
-        private System.Windows.Forms.ComboBox cmbMarca;
-        private System.Windows.Forms.Label lbMarcaProduto;
-        private System.Windows.Forms.Label lbFornecedor;
-        private System.Windows.Forms.TextBox txtDescricao;
-        private System.Windows.Forms.TextBox txtIDProdutoFabricante;
-        private System.Windows.Forms.Label lbDescricao;
-        private System.Windows.Forms.Label lbCodigoFabricante;
-        private System.Windows.Forms.Label lbCodigoIntProduto;
-        private System.Windows.Forms.TextBox txtIDProdutoInterno;
-        private System.Windows.Forms.ListView listViewProdutos;
-        private System.Windows.Forms.Panel pnlBotoes;
-        private System.Windows.Forms.Button btnCancelar;
-		private System.Windows.Forms.Button btnSalvar;
-		private System.Windows.Forms.Button btnAlterar;
-		private System.Windows.Forms.Button btnExcluir;
-		private System.Windows.Forms.Button btnNovo;
-		private System.Windows.Forms.Button btnFechar;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Panel pnlOpcaoConfiguracao;
+		private System.Windows.Forms.LinkLabel lnkConfiguracaoListView;
+		private System.Windows.Forms.LinkLabel lnkConfiguracaoTemas;
+		private System.Windows.Forms.LinkLabel lnkConfiguracaoBotões;
+		private System.Windows.Forms.LinkLabel lnkConfiguracaoFormulario;
+		private System.Windows.Forms.LinkLabel lnkConfiguracaoCampos;
+		private System.Windows.Forms.LinkLabel lnkConfiguracaoRotuloCampos;
+		private System.Windows.Forms.Panel pnlExemplosAlterado;
+		private System.Windows.Forms.Button btnExemploAlterada;
+		private System.Windows.Forms.TextBox txtExemploAlterada;
+		private System.Windows.Forms.Label lblDescricaoAlterada;
+		private System.Windows.Forms.MenuStrip mnsStripExemploAlterado;
+		private System.Windows.Forms.ToolStripMenuItem toolStriExemploAlterado1;
+		private System.Windows.Forms.ToolStripMenuItem toolStriExemploAlterado2;
+		private System.Windows.Forms.ToolStripMenuItem toolStriExemploAlterado3;
+		private System.Windows.Forms.ToolStripMenuItem toolStriExemploAlterado4;
+		private System.Windows.Forms.ListView listViewClientes;
+		private System.Windows.Forms.Panel pnlOpcaoTemas;
+		private System.Windows.Forms.LinkLabel lnkOpcaoTemaEscuro;
+		private System.Windows.Forms.LinkLabel lnkOpcaoTemaPadrao;
+		private System.Windows.Forms.LinkLabel lnkOpcaoTemaClaro;
+		private System.Windows.Forms.Panel pnlOpcaoFormulario;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFonteMenu;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFundoMenu;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFormulario;
+		private System.Windows.Forms.Panel pnlOpcaoCampos;
+		private System.Windows.Forms.LinkLabel lnkOpcaoFonteBotao;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFonteBotao;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFundoBotao;
+		private System.Windows.Forms.Panel pnlOpcaoListView;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFundoLinha2;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFundoLinha1;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFundoColunaSelecionada;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFundoCabecalho;
+		private System.Windows.Forms.Panel pnlOpcaoDescricao;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFundoDescricaoTransparente;
+		private System.Windows.Forms.LinkLabel lnkOpcaoFonteDescricao;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFonteDescricao;
+		private System.Windows.Forms.LinkLabel lnkOpcaoCorFundoDescricao;
+		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.LinkLabel linkLabel1;
+		private System.Windows.Forms.LinkLabel linkLabel2;
+		private System.Windows.Forms.LinkLabel linkLabel3;
 	}
 }
