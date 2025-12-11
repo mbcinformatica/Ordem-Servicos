@@ -246,13 +246,25 @@ namespace OrdemServicos.Forms
                 }
                 else if (control is Panel panel)
                 {
-                    panel.BackColor = panelBackgroundColor;
                     panel.BorderStyle = panelBorderStyle;
 
                     if (control.FindForm()?.Tag?.ToString() != "naoAplicar")
                     {
                         panel.Font = new Font(panelFontFamily, panelFontSize, panelFontStyle);
                     }
+
+                    // Aplica degradê no Paint
+                    panel.Paint += (s, pe) =>
+                    {
+                        using (var brush = new System.Drawing.Drawing2D.LinearGradientBrush(
+                            panel.ClientRectangle,
+                            gradientStartColor,
+                            gradientEndColor,
+                            System.Drawing.Drawing2D.LinearGradientMode.Vertical))
+                        {
+                            pe.Graphics.FillRectangle(brush, panel.ClientRectangle);
+                        }
+                    };
 
                     ApplyConfigToControls(panel.Controls, config);
                 }
@@ -275,13 +287,14 @@ namespace OrdemServicos.Forms
                 }
                 else if (control is MenuStrip menuStrip)
                 {
-                    // Aplica fonte e cor no MenuStrip
                     menuStrip.Font = new Font(menuStripFontFamily, menuStripFontSize, menuStripFontStyle);
-                    menuStrip.BackColor = menuStripBackgroundColor;
                     menuStrip.ForeColor = menuStripFontColor;
-                    menuStrip.Dock = DockStyle.Top; // garante que fique no topo
+                    menuStrip.Dock = DockStyle.Top;
 
-                    // Aplica estilo nos itens e subitens
+                    // aplica degradê usando o renderer customizado
+                    menuStrip.Renderer = new GradientMenuRenderer(this);
+
+                    // aplica estilo nos itens e subitens
                     foreach (ToolStripItem item in menuStrip.Items)
                     {
                         if (item is ToolStripMenuItem menuItem)
@@ -290,7 +303,12 @@ namespace OrdemServicos.Forms
                             menuItem.ForeColor = toolStripMenuItemForeColor;
                             menuItem.Font = new Font(toolStripMenuItemFontFamily, toolStripMenuItemFontSize, toolStripMenuItemFontStyle);
 
-                            // Subitens
+                            // aplica renderer também nos submenus
+                            if (menuItem.DropDown is ToolStripDropDownMenu dropDownMenu)
+                            {
+                                dropDownMenu.Renderer = new GradientMenuRenderer(this);
+                            }
+
                             foreach (ToolStripItem subItem in menuItem.DropDownItems)
                             {
                                 if (subItem is ToolStripMenuItem subMenuItem)
@@ -299,15 +317,9 @@ namespace OrdemServicos.Forms
                                     subMenuItem.ForeColor = toolStripMenuItemForeColor;
                                     subMenuItem.Font = new Font(toolStripMenuItemFontFamily, toolStripMenuItemFontSize, toolStripMenuItemFontStyle);
 
-                                    // Sub-subitens
-                                    foreach (ToolStripItem subSubItem in subMenuItem.DropDownItems)
+                                    if (subMenuItem.DropDown is ToolStripDropDownMenu subDropDownMenu)
                                     {
-                                        if (subSubItem is ToolStripMenuItem subSubMenuItem)
-                                        {
-                                            subSubMenuItem.BackColor = toolStripMenuItemBackColor;
-                                            subSubMenuItem.ForeColor = toolStripMenuItemForeColor;
-                                            subSubMenuItem.Font = new Font(toolStripMenuItemFontFamily, toolStripMenuItemFontSize, toolStripMenuItemFontStyle);
-                                        }
+                                        subDropDownMenu.Renderer = new GradientMenuRenderer(this);
                                     }
                                 }
                             }

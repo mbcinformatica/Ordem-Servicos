@@ -32,7 +32,7 @@ namespace OrdemServicos
             CentralizarControlesHorizontalmenteNoPanel(pnlExemplosConfiguracaoAlterada, lbConfiguracaoAlterada);
 
             // Definindo o tamanho e a posição dos Panels
-            Size panelSize = new Size(354, 169); // Exemplo de tamanho
+            Size panelSize = new Size(374, 188); // Exemplo de tamanho
             Point panelLocation = new Point(692, 31); // Exemplo de posição
 
             pnlOpcaoFormulario.Size = panelSize;
@@ -63,6 +63,8 @@ namespace OrdemServicos
             lblDescricaoAlterada.Visible = false;
             txtExemploAlterada.Visible = false;
             mnsStripExemploAlterado.Visible = false;
+            listViewExemploAlterada1.Visible = false;
+            listViewExemploAlterada2.Visible = false;
 
         }
         private void lnkConfiguracaoCampos_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -117,8 +119,8 @@ namespace OrdemServicos
             pnlOpcaoCampos.Visible = false;
             pnlOpcaoBotoes.Visible = false;
             pnlOpcaoDescricao.Visible = false;
-            pnlOpcaoTemas.Visible = true;
-            pnlOpcaoListView.Visible = false;
+            pnlOpcaoTemas.Visible = false;
+            pnlOpcaoListView.Visible = true;
         }
         private void lnkOpcaoCorFormulario_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -550,6 +552,60 @@ namespace OrdemServicos
             salvaConfigTemaPadrao = true;
             btnSalvarSair_Click(sender, e);
             salvaConfigTemaPadrao = false;
+        }
+		private void lnkOpcaoCorFundoCabecalho_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
+		{
+            cldCores.Color = listViewHeaderDefaultColor;
+            if (cldCores.ShowDialog() == DialogResult.OK)
+            {
+                listViewHeaderDefaultColor = cldCores.Color;
+                lblColuna1.BackColor = listViewHeaderDefaultColor;
+                lblColuna2.BackColor = listViewHeaderDefaultColor;
+                lblColuna3.BackColor = listViewHeaderDefaultColor;
+                lblColuna4.BackColor = listViewHeaderDefaultColor;
+                listViewExemploAlterada1.Visible = true;
+                listViewExemploAlterada2.Visible = true;
+            }
+		}
+
+		private void lnkOpcaoCorFundoColunaSelecionada_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
+		{
+            cldCores.Color = listViewHeaderSelectedColor;
+            if (cldCores.ShowDialog() == DialogResult.OK)
+            {
+                listViewHeaderSelectedColor = cldCores.Color;
+                lblColuna1.BackColor = listViewHeaderSelectedColor;
+                listViewExemploAlterada1.Visible = true;
+                listViewExemploAlterada2.Visible = true;
+
+            }
+        }
+
+		private void lnkOpcaoCorFundoLinha1_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
+		{
+            cldCores.Color = listViewItemBackColorEven;
+            if (cldCores.ShowDialog() == DialogResult.OK)
+            {
+                listViewItemBackColorEven = cldCores.Color;
+                lblLinha1.BackColor = listViewItemBackColorEven;
+                lblLinha3.BackColor = listViewItemBackColorEven;
+                lblLinha5.BackColor = listViewItemBackColorEven;
+                listViewExemploAlterada1.Visible = true;
+                listViewExemploAlterada2.Visible = true;
+            }
+        }
+
+		private void lnkOpcaoCorFundoLinha2_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
+		{
+            cldCores.Color = listViewItemBackColorOdd;
+            if (cldCores.ShowDialog() == DialogResult.OK)
+            {
+                listViewItemBackColorOdd = cldCores.Color;
+                lblLinha2.BackColor = listViewItemBackColorOdd;
+                lblLinha4.BackColor = listViewItemBackColorOdd;
+                listViewExemploAlterada1.Visible = true;
+                listViewExemploAlterada2.Visible = true;
+            }
         }
 	}
 }

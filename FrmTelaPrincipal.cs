@@ -498,19 +498,6 @@ namespace OrdemServicos
             LimparRelatoriosPDF();
             base.OnFormClosing(e);
         }
-		private void testeToolStripMenuItem_Click( object sender, EventArgs e )
-		{
-            AbrirCadaClientesFormulaio();
-
-        }
-        private void AbrirCadaClientesFormulaio()
-        {
-            frmCadaclientes FrmCadaclientes = new frmCadaclientes();
-            frmCadaclientes formularioFrmCadaclientes = FrmCadaclientes;
-
-            formularioFrmCadaclientes.StartPosition = FormStartPosition.CenterScreen;
-            formularioFrmCadaclientes.ShowDialog();
-        }
         private void conexãoDBToolStripMenuItem_Click( object sender, EventArgs e )
 		{
             AbrirFormularioConexaoDB();
@@ -523,6 +510,5 @@ namespace OrdemServicos
             formulariofrmConfigDB.StartPosition = FormStartPosition.CenterScreen;
             formulariofrmConfigDB.ShowDialog();
         }
-
     }
 }

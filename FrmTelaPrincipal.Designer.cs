@@ -42,7 +42,6 @@
             this.unidadesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lancamentosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serviçosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.testeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.relatoriosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastroDeClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastroDeFornecedoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -161,8 +160,7 @@
             // lancamentosToolStripMenuItem
             // 
             this.lancamentosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.serviçosToolStripMenuItem1,
-            this.testeToolStripMenuItem});
+            this.serviçosToolStripMenuItem1});
             this.lancamentosToolStripMenuItem.Name = "lancamentosToolStripMenuItem";
             this.lancamentosToolStripMenuItem.Size = new System.Drawing.Size(110, 23);
             this.lancamentosToolStripMenuItem.Text = "&Lançamentos";
@@ -170,16 +168,9 @@
             // serviçosToolStripMenuItem1
             // 
             this.serviçosToolStripMenuItem1.Name = "serviçosToolStripMenuItem1";
-            this.serviçosToolStripMenuItem1.Size = new System.Drawing.Size(135, 24);
+            this.serviçosToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
             this.serviçosToolStripMenuItem1.Text = "Serviços";
             this.serviçosToolStripMenuItem1.Click += new System.EventHandler(this.serviçosToolStripMenuItem1_Click);
-            // 
-            // testeToolStripMenuItem
-            // 
-            this.testeToolStripMenuItem.Name = "testeToolStripMenuItem";
-            this.testeToolStripMenuItem.Size = new System.Drawing.Size(135, 24);
-            this.testeToolStripMenuItem.Text = "Teste";
-            this.testeToolStripMenuItem.Click += new System.EventHandler(this.testeToolStripMenuItem_Click);
             // 
             // relatoriosToolStripMenuItem
             // 
@@ -224,14 +215,14 @@
             // formularioToolStripMenuItem
             // 
             this.formularioToolStripMenuItem.Name = "formularioToolStripMenuItem";
-            this.formularioToolStripMenuItem.Size = new System.Drawing.Size(164, 24);
+            this.formularioToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.formularioToolStripMenuItem.Text = "Formulario";
             this.formularioToolStripMenuItem.Click += new System.EventHandler(this.formularioToolStripMenuItem_Click);
             // 
             // conexãoDBToolStripMenuItem
             // 
             this.conexãoDBToolStripMenuItem.Name = "conexãoDBToolStripMenuItem";
-            this.conexãoDBToolStripMenuItem.Size = new System.Drawing.Size(164, 24);
+            this.conexãoDBToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
             this.conexãoDBToolStripMenuItem.Text = "Conexão DB";
             this.conexãoDBToolStripMenuItem.Click += new System.EventHandler(this.conexãoDBToolStripMenuItem_Click);
             // 
@@ -279,7 +270,6 @@
         private System.Windows.Forms.ToolStripMenuItem configuracoesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem formularioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem categoriaDeServiçosToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem testeToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem conexãoDBToolStripMenuItem;
 	}
 }

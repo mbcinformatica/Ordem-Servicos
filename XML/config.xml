@@ -82,16 +82,16 @@
 	<ListViewFontStyle>Bold</ListViewFontStyle>
 
 	<!-- Configurações do Cabeçalho da ListView -->
-	<ListViewHeaderDefaultColor>FF33FFCC</ListViewHeaderDefaultColor>
-	<ListViewHeaderSelectedColor>FF33FFFF</ListViewHeaderSelectedColor>
+	<ListViewHeaderDefaultColor>FFE0E0E0</ListViewHeaderDefaultColor>
+	<ListViewHeaderSelectedColor>FF4682B4</ListViewHeaderSelectedColor>
 	<ListViewHeaderFontFamily>Times New Roman</ListViewHeaderFontFamily>
 	<ListViewHeaderFontSize>12</ListViewHeaderFontSize>
 	<ListViewHeaderFontStyle>Bold</ListViewHeaderFontStyle>
 
 	<!-- Configurações dos Itens da ListView -->
-	<ListViewItemBackColorEven>FF99CC99</ListViewItemBackColorEven>
-	<ListViewItemBackColorOdd>FF99CC66</ListViewItemBackColorOdd>
-	<ListViewItemFontColor>FFCC3333</ListViewItemFontColor>	
+	<ListViewItemBackColorEven>FFFFFFFF</ListViewItemBackColorEven>
+	<ListViewItemBackColorOdd>FFF0F0F0</ListViewItemBackColorOdd>
+	<ListViewItemFontColor>FF000000</ListViewItemFontColor>
 
 	<!-- Configurações do ComboBox -->
 	<ComboBoxBackColor>FFFFFFFF</ComboBoxBackColor>
@@ -114,15 +114,15 @@
 	<TabControlFontStyle>Bold</TabControlFontStyle>
 
 	<!-- Configurações do TabPage -->
-	<TabPageBackColor>FFE0FFFF</TabPageBackColor>
-	<TabPageForeColor>FF0000FF</TabPageForeColor>
+	<TabPageBackColor>FFFFFFFF</TabPageBackColor>
+	<TabPageForeColor>FF000000</TabPageForeColor>
 	<TabPageBorderStyle>Fixed3D</TabPageBorderStyle>
 	<TabPageFontFamily>Times New Roman</TabPageFontFamily>
 	<TabPageFontSize>12</TabPageFontSize>
 	<TabPageFontStyle>Bold</TabPageFontStyle>
 
 	<!-- Configurações do ProgressBar -->
-	<ProgressBarBackColor>FFE0FFFF</ProgressBarBackColor>
-	<ProgressBarForeColor>FF0000FF</ProgressBarForeColor>
+	<ProgressBarBackColor>FFF0F0F0</ProgressBarBackColor>
+	<ProgressBarForeColor>FF4682B4</ProgressBarForeColor>
 	<ProgressBarStyle>Continuous</ProgressBarStyle>
 </Config>

@@ -90,9 +90,9 @@
 
 	<!-- Configurações dos Itens da ListView -->
 	<ListViewItemBackColorEven>FFFFFFFF</ListViewItemBackColorEven>
-	<ListViewItemBackColorOdd>FFADD8E6</ListViewItemBackColorOdd>
-	<ListViewItemFontColor>FF000000</ListViewItemFontColor>	
-	
+	<ListViewItemBackColorOdd>FFF0F0F0</ListViewItemBackColorOdd>
+	<ListViewItemFontColor>FF000000</ListViewItemFontColor>
+
 	<!-- Configurações do ComboBox -->
 	<ComboBoxBackColor>FFFFFFFF</ComboBoxBackColor>
 	<ComboBoxForeColor>FF000000</ComboBoxForeColor>
@@ -114,15 +114,15 @@
 	<TabControlFontStyle>Bold</TabControlFontStyle>
 
 	<!-- Configurações do TabPage -->
-	<TabPageBackColor>FFE0FFFF</TabPageBackColor>
-	<TabPageForeColor>FF0000FF</TabPageForeColor>
+	<TabPageBackColor>FFFFFFFF</TabPageBackColor>
+	<TabPageForeColor>FF000000</TabPageForeColor>
 	<TabPageBorderStyle>Fixed3D</TabPageBorderStyle>
 	<TabPageFontFamily>Times New Roman</TabPageFontFamily>
 	<TabPageFontSize>12</TabPageFontSize>
 	<TabPageFontStyle>Bold</TabPageFontStyle>
 
 	<!-- Configurações do ProgressBar -->
-	<ProgressBarBackColor>FFE0FFFF</ProgressBarBackColor>
-	<ProgressBarForeColor>FF0000FF</ProgressBarForeColor>
+	<ProgressBarBackColor>FFF0F0F0</ProgressBarBackColor>
+	<ProgressBarForeColor>FF4682B4</ProgressBarForeColor>
 	<ProgressBarStyle>Continuous</ProgressBarStyle>
 </Config>
