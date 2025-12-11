@@ -454,6 +454,7 @@
     <Compile Include="Relatorios\CabecalhoRelatorio.cs" />
     <Compile Include="Relatorios\RelatorioUsuarios.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Utils\DockerMySqlUtils.cs" />
     <Compile Include="Utils\EventosUtils.cs" />
     <Compile Include="Utils\ListViewUtils.cs" />
     <Compile Include="Utils\StringUtils.cs" />
@@ -535,10 +536,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Backup\" />
     <Folder Include="Consultas\" />
     <Folder Include="RelatorioPDF\" />
   </ItemGroup>

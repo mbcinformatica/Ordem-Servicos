@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static OrdemServicos.Utils.ListViewUtils;
 
 namespace OrdemServicos
 {
@@ -41,20 +42,22 @@ namespace OrdemServicos
             ConfigurarComboBox(cmbMarca);
             ConfigurarComboBox(cmbCliente);
             ConfigurarComboBox(cmbProduto);
-            CarregarRegistros();
             ConfigurarTextBox();
-            ConfigurarTabIndexControles();
             CarregaKey();
+            ConfigurarTabIndexControles();
+            InitializeListView(); // garante colunas
+            Task task = CarregarRegistros();
         }
         private void InitializeListView()
         {
-            // Configurar a ListView
-            listViewLancamentoServicos.View = View.Details;
-            listViewLancamentoServicos.FullRowSelect = true;
-            listViewLancamentoServicos.OwnerDraw = true; // Permitir desenho personalizado
-            listViewLancamentoServicos.DrawColumnHeader += new DrawListViewColumnHeaderEventHandler(listViewLancamentoServicos_DrawColumnHeader);
-            listViewLancamentoServicos.DrawItem += new DrawListViewItemEventHandler(listViewLancamentoServicos_DrawItem);
-            listViewLancamentoServicos.DrawSubItem += new DrawListViewSubItemEventHandler(listViewLancamentoServicos_DrawSubItem);
+            // Configuração inicial usando a classe utilitária
+            ListViewUtils.ConfigurarListView(
+                listViewLancamentoServicos,
+                listViewLancamentoServicos_ColumnClick,
+                listViewLancamentoServicos_DrawColumnHeader,
+                listViewLancamentoServicos_DrawItem
+            );
+
             // Adicionar colunas
             listViewLancamentoServicos.Columns.Add("ID", 50, HorizontalAlignment.Right);
             listViewLancamentoServicos.Columns.Add("DATA EMISSÃO", 200, HorizontalAlignment.Center);
@@ -67,185 +70,132 @@ namespace OrdemServicos
             listViewLancamentoServicos.Columns.Add("VALOR TOTAL SERVIÇO", 200, HorizontalAlignment.Right);
 
             var colValorTotalMaterial = listViewLancamentoServicos.Columns.Add(" VALOR TOTAL MATERIAIS", 200, HorizontalAlignment.Right);
+            colValorTotalMaterial.Width = 200;
 
-            colValorTotalMaterial.Width = -2; // auto-size
-
-            listViewLancamentoServicos.ColumnClick += ListViewLancamentoServico_ColumnClick;
             listViewLancamentoServicos.SelectedIndexChanged += ListViewLancamentoServicos_SelectedIndexChanged;
             cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
+            txtPesquisaListView.Enter += txtPesquisaListView_Enter;
         }
-        private void ListViewLancamentoServico_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
 
-            if (e.Column == 0) // && e.Column != 2 && e.Column != 3)
+        private async void ListViewLancamentoServicos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (txtPesquisaListView.Focused) return;
+            txtPesquisaListView.Clear();
+            txtPesquisaListView.Text = "";
+            escPressed = false;
+            if (listViewLancamentoServicos.SelectedItems.Count == 0) return;
+
+            var item = listViewLancamentoServicos.SelectedItems[0];
+
+            txtIDOrdenServico.Text = item.SubItems.Count > 0 ? item.SubItems[0].Text : "";
+            txtDataEmissao.Text = item.SubItems.Count > 1 ? item.SubItems[1].Text : "";
+            txtDataConclusao.Text = item.SubItems.Count > 2 ? item.SubItems[2].Text : "";
+
+            // Cliente
+            string clienteNome = item.SubItems.Count > 3 ? item.SubItems[3].Text : "";
+            var clienteBLL = new ClienteBLL();
+            var clientes = await clienteBLL.ListarAsync();
+            var cliente = clientes.FirstOrDefault(c => c.Nome_RazaoSocial == clienteNome);
+            if (cliente != null)
+                cmbCliente.SelectedValue = cliente.IDCliente;
+
+            // Marca
+            string marcaNome = item.SubItems.Count > 4 ? item.SubItems[4].Text : "";
+            var marcaBLL = new MarcaBLL();
+            var marcas = await marcaBLL.ListarAsync();
+            var marca = marcas.FirstOrDefault(m => m.Descricao == marcaNome);
+            if (marca != null)
+                cmbMarca.SelectedValue = marca.IDMarca;
+
+            // Produto
+            string produtoNome = item.SubItems.Count > 5 ? item.SubItems[5].Text : "";
+            var produtoBLL = new ProdutoBLL();
+            var produtos = await produtoBLL.ListarAsync();
+            var produto = produtos.FirstOrDefault(p => p.Descricao == produtoNome);
+            if (produto != null)
+                cmbProduto.SelectedValue = produto.IDProduto;
+
+            // Demais campos
+            txtNumeroSerie.Text = item.SubItems.Count > 6 ? item.SubItems[6].Text : "";
+            txtDescricaoDefeito.Text = item.SubItems.Count > 7 ? item.SubItems[7].Text : "";
+            txtValorTotalServico.Text = item.SubItems.Count > 8 ? item.SubItems[8].Text : "";
+            txtValorTotalMaterial.Text = item.SubItems.Count > 9 ? item.SubItems[9].Text : "";
+
+            // Exibir a imagem no PictureBox
+            var lancamentoServicoBLL = new LancamentoServicoBLL();
+            var lancamentoServico = await lancamentoServicoBLL.GetLancamentoServicoAsync(
+                                        Convert.ToInt32(item.SubItems[0].Text));
+
+            if (lancamentoServico?.Imagem != null && lancamentoServico.Imagem.Length > 0)
             {
-                return; // Ignorar cliques em outras colunas
-            }
-            // Atualizar a coluna anteriormente ordenada antes de mudar a coluna atual
-            int oldSortColumn = sortColumn;
-            if (e.Column == sortColumn)
-            {
-                // Alternar ordem se a mesma coluna for clicada
-                sortAscending = !sortAscending;
+                using (var ms = new MemoryStream(lancamentoServico.Imagem))
+                {
+                    imgImagemProduto.Image = Image.FromStream(ms);
+                }
             }
             else
             {
-                LimparCampos();
-                // Nova coluna clicada
-                sortColumn = e.Column;
-                sortAscending = true;
+                imgImagemProduto.Image = null;
             }
-            // Forçar redesenho da coluna anterior
-            if (oldSortColumn != -1)
-            {
-                listViewLancamentoServicos.Columns[oldSortColumn].Width = listViewLancamentoServicos.Columns[oldSortColumn].Width;
-            }
-            listViewLancamentoServicos.ListViewItemSorter = new ListViewItemComparer(e.Column, sortAscending);
-            listViewLancamentoServicos.Sort();
-            // Forçar redesenho da nova coluna
-            listViewLancamentoServicos.Columns[sortColumn].Width = listViewLancamentoServicos.Columns[sortColumn].Width;
-            listViewLancamentoServicos.Invalidate(); // Redesenhar ListView para atualizar a cor do cabeçalho
-            txtPesquisaListView.Focus();
+
+            EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
         }
-        private class ListViewItemComparer : IComparer
+
+        private void listViewLancamentoServicos_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            private readonly int col;
-            private readonly bool ascending;
-
-            // Colunas tratadas como numéricas
-            private readonly HashSet<string> numericColumns = new HashSet<string>
-            {
-                "ID", "VALOR TOTAL SERVIÇO", "VALOR TOTAL MATERIAIS"
-            };
-            // Colunas tratadas como datas
-            private readonly HashSet<string> dateColumns = new HashSet<string>
-            {
-                "DATA EMISSÃO", "DATA CONCLUSÃO"            };
-            public ListViewItemComparer(int column, bool ascending)
-            {
-                col = column;
-                this.ascending = ascending;
-            }
-            public int Compare(object x, object y)
-            {
-                var itemX = x as ListViewItem;
-                var itemY = y as ListViewItem;
-
-                if (itemX == null || itemY == null)
-                    return 0;
-
-                string valX = itemX.SubItems[col].Text ?? string.Empty;
-                string valY = itemY.SubItems[col].Text ?? string.Empty;
-
-                string colName = itemX.ListView.Columns[col].Text.Trim().ToUpper();
-                int result;
-
-                if (numericColumns.Contains(colName))
-                {
-                    // Remove formatação de moeda/unidade antes de comparar
-                    valX = StringUtils.SemFormatacao(valX);
-                    valY = StringUtils.SemFormatacao(valY);
-
-                    if (decimal.TryParse(valX, out decimal numX) && decimal.TryParse(valY, out decimal numY))
-                        result = numX.CompareTo(numY);
-                    else
-                        result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
-                }
-                else if (dateColumns.Contains(colName))
-                {
-                    if (DateTime.TryParse(valX, out DateTime dtX) && DateTime.TryParse(valY, out DateTime dtY))
-                        result = dtX.CompareTo(dtY);
-                    else
-                        result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
-                }
-                else
-                {
-                    result = string.Compare(valX, valY, StringComparison.OrdinalIgnoreCase);
-                }
-
-                return ascending ? result : -result;
-            }
+            ListViewUtils.HandleColumnClick(
+                listViewLancamentoServicos,
+                e,
+                ref sortColumn,
+                ref sortAscending,
+                new[] {
+                            "ID"
+                            },   // colunas numéricas
+                new[] {
+                            "DATA EMISSÃO",
+                            "DATA CONCLUSÃO"
+                            },                            // colunas de data
+                new string[] {
+                                        "VALOR TOTAL SERVIÇO",
+                                        "VALOR TOTAL MATERIAIS"
+                                        },                                     // colunas monetárias
+                new string[] { },                                     // colunas percentuais
+                txtPesquisaListView,                                  // campo de pesquisa
+                new[] { 0, 3 }                                        // colunas permitidas (CPF/CNPJ e Nome)
+            );
         }
         private void listViewLancamentoServicos_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
-            Color headerBackColor = e.ColumnIndex == sortColumn ? clickedHeaderBackColor : defaultHeaderBackColor;
-            using (SolidBrush backBrush = new SolidBrush(headerBackColor))
-            {
-                e.Graphics.FillRectangle(backBrush, e.Bounds);
-            }
-            using (StringFormat sf = new StringFormat())
-            {
-                sf.LineAlignment = StringAlignment.Center;
-                sf.FormatFlags = StringFormatFlags.NoWrap; // Adiciona esta linha para evitar quebra de linha
-                if (e.Header.Text == "  ID")
+            string[] colunasCentralizadas = {
+                "ID",
+                "DATA EMISSÃO",
+                "DATA CONCLUSÃO",
+                "VALOR TOTAL SERVIÇO",
+                "VALOR TOTAL MATERIAIS"
+            };
 
-                {
-                    sf.Alignment = StringAlignment.Center; // Alinhar cabeçalhos numéricos no centro
-                }
-                else
-                {
-                    sf.Alignment = StringAlignment.Near; // Alinhar cabeçalhos de texto à esquerda
-                }
-                // Definir a fonte em negrito
-                using (Font headerFont = new Font(e.Font, FontStyle.Bold))
-                {
-                    e.Graphics.DrawString(e.Header.Text, headerFont, Brushes.Black, e.Bounds, sf);
-                }
-                using (Pen gridLinePen = new Pen(Color.Black, 2)) // Define a cor e a espessura das linhas do cabeçalho
-                {
-                    e.Graphics.DrawRectangle(gridLinePen, e.Bounds);
-                }
-            }
+            ListViewUtils.DesenharCabecalho(
+                e,
+                sortColumn,
+                listViewHeaderDefaultColor,
+                listViewHeaderSelectedColor,
+                listViewHeaderFontFamily,
+                listViewHeaderFontSize,
+                listViewHeaderFontStyle,
+                colunasCentralizadas
+            );
         }
         private void listViewLancamentoServicos_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
-            // Alternar cores das linhas
-            if (e.ItemIndex % 2 == 0)
-            {
-                e.Item.BackColor = Color.White;
-            }
-            else
-            {
-                e.Item.BackColor = Color.LightBlue;
-            }
-            e.DrawDefault = true;
-        }
-        private void listViewLancamentoServicos_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
-        {
-            using (StringFormat sf = new StringFormat())
-            {
-                if (listViewLancamentoServicos.Columns[e.ColumnIndex].Text == "  ID")
-                {
-                    sf.Alignment = StringAlignment.Far; // Alinhar conteúdo numérico à direita
-                }
-                else
-                {
-                    sf.Alignment = StringAlignment.Near; // Alinhar conteúdo de texto à esquerda
-                }
-                sf.LineAlignment = StringAlignment.Center;
-                e.Graphics.DrawString(e.SubItem.Text, e.SubItem.Font, Brushes.Black, e.Bounds, sf);
-            }
+            ListViewUtils.DesenharItem(e, listViewItemBackColorEven, listViewItemBackColorOdd);
         }
         private void txtPesquisaListView_TextChanged(object sender, EventArgs e)
         {
-            PesquisarListView(txtPesquisaListView.Text, listViewLancamentoServicos, sortColumn);
+            ListViewUtils.PesquisarListView(txtPesquisaListView.Text, listViewLancamentoServicos, sortColumn, listaOriginalItens);
         }
-        private void PesquisarListView(string texto, ListView listView, int coluna)
+        private void txtPesquisaListView_Enter(object sender, EventArgs e)
         {
-            listView.BeginUpdate();
-            var itemsVisiveis = new List<ListViewItem>();
-
-            foreach (ListViewItem item in listaOriginalItens)
-            {
-                string valorCelula = item.SubItems[coluna].Text;
-
-                if (string.IsNullOrEmpty(texto) || valorCelula.StartsWith(texto, StringComparison.OrdinalIgnoreCase))
-                    itemsVisiveis.Add(item);
-            }
-
-            listView.Items.Clear();
-            listView.Items.AddRange(itemsVisiveis.ToArray());
-            listView.EndUpdate();
+            LimparCampos();
         }
         private void CarregaKey()
         {
@@ -326,15 +276,26 @@ namespace OrdemServicos
             var tabControl = Controls.Find("tabControlOrdenServico", true).FirstOrDefault() as TabControl;
             var tabPage = tabControl?.TabPages["tabDadosCliente"];
 
-            // Inicializar eventos para os controles
-            EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+            // Inicializa eventos
+            EventosUtils.InicializarEventos(
+                Controls,
+                controlesKeyPress,
+                controlesLeave,
+                controlesEnter,
+                controlesMouseDown,
+                controlesMouseMove,
+                controlesKeyDown,
+                controlesBotoes,
+                this,
+                tabControl,
+                tabPage
+            );
 
             // Associar eventos SelectedIndexChanged e Click
             listViewLancamentoServicos.Click += ListViewLancamentoServicos_SelectedIndexChanged;
             cmbMarca.SelectedIndexChanged += CmbMarca_SelectedIndexChanged;
+            txtPesquisaListView.Enter += txtPesquisaListView_Enter;
 
-            // Focar no btnNovo ao iniciar
-            txtPesquisaListView.Focus();
             AdicionarToolTipsAosControles();
         }
         private void AdicionarToolTipsAosControles()
@@ -395,18 +356,19 @@ namespace OrdemServicos
         }
         public override async Task CarregarRegistros()
         {
+            LimparCampos();
             DesabilitarCamposDoFormulario();
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
             listViewLancamentoServicos.Items.Clear();
-            listViewLancamentoServicos.Columns.Clear();
-            InitializeListView();
+
             try
             {
                 var lancamentoServicoBLL = new LancamentoServicoBLL();
-               var lancamentoServicos = (await lancamentoServicoBLL.ListarAsync());
+                var lancamentoServicos = (await lancamentoServicoBLL.ListarAsync());
                 foreach (LancamentoServicoInfo lancamentoServico in lancamentoServicos)
                 {
-                    ListViewItem item = new ListViewItem(lancamentoServico.IDOrdenServico.ToString());
+                    var item = new ListViewItem(lancamentoServico.IDOrdenServico.ToString());
+
                     item.SubItems.Add(lancamentoServico.DataEmissao.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(lancamentoServico.DataConclusao.ToString("dd/MM/yyyy"));
                     item.SubItems.Add(lancamentoServico.Cliente); // Usar o nome do cliente
@@ -416,6 +378,7 @@ namespace OrdemServicos
                     item.SubItems.Add(lancamentoServico.DescricaoDefeito);
                     item.SubItems.Add(StringUtils.FormatValorMoeda(lancamentoServico.ValorTotalServico.ToString()));
                     item.SubItems.Add(StringUtils.FormatValorMoeda(lancamentoServico.ValorTotalMaterial.ToString()));
+
                     // Carregar a imagem (sem exibir na ListView)
                     if (lancamentoServico.Imagem != null && lancamentoServico.Imagem.Length > 0)
                     {
@@ -429,12 +392,28 @@ namespace OrdemServicos
                 }
 
                 listaOriginalItens = listViewLancamentoServicos.Items.Cast<ListViewItem>().ToList();
-                lbTotalRegistros.Text = "Total de Registros: " + listViewLancamentoServicos.Items.Count;
+                lbTotalRegistros.Text = $"Total de Registros..: {listViewLancamentoServicos.Items.Count}";
+
                 sortColumn = 3;
                 sortAscending = true;
-                listViewLancamentoServicos.ListViewItemSorter = new ListViewItemComparer(sortColumn, sortAscending);
+                listViewLancamentoServicos.ListViewItemSorter = new ListViewItemComparer(
+                    sortColumn,
+                    sortAscending,
+                new[] {
+                            "ID"
+                            },   // colunas numéricas
+                new[] {
+                            "DATA EMISSÃO",
+                            "DATA CONCLUSÃO"
+                            },                            // colunas de data
+                new string[] {
+                                        "VALOR TOTAL SERVIÇO",
+                                        "VALOR TOTAL MATERIAIS"
+                                        },                                     // colunas monetárias
+                new string[] { }                                     // colunas percentuais  
+                );
                 listViewLancamentoServicos.Sort();
-                listViewLancamentoServicos.Columns[sortColumn].Width = listViewLancamentoServicos.Columns[sortColumn].Width;
+
                 ajustaLarguraCabecalho(listViewLancamentoServicos);
                 tabControlOrdenServico.SelectedTab = tabDadosOrdenServico;
 
@@ -458,76 +437,7 @@ namespace OrdemServicos
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            LimparCampos();
-        }
-        private async void ListViewLancamentoServicos_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            escPressed = false; // Reseta a variável de controle
-            if (listViewLancamentoServicos.SelectedItems.Count == 0) return;
-
-            try
-            {
-                var item = listViewLancamentoServicos.SelectedItems[0];
-
-                txtIDOrdenServico.Text = item.SubItems.Count > 0 ? item.SubItems[0].Text : "";
-                txtDataEmissao.Text = item.SubItems.Count > 1 ? item.SubItems[1].Text : "";
-                txtDataConclusao.Text = item.SubItems.Count > 2 ? item.SubItems[2].Text : "";
-
-                // Cliente
-                string clienteNome = item.SubItems.Count > 3 ? item.SubItems[3].Text : "";
-                var clienteBLL = new ClienteBLL();
-                var clientes = await clienteBLL.ListarAsync();
-                var cliente = clientes.FirstOrDefault(c => c.Nome_RazaoSocial == clienteNome);
-                if (cliente != null)
-                    cmbCliente.SelectedValue = cliente.IDCliente;
-
-                // Marca
-                string marcaNome = item.SubItems.Count > 4 ? item.SubItems[4].Text : "";
-                var marcaBLL = new MarcaBLL();
-                var marcas = await marcaBLL.ListarAsync();
-                var marca = marcas.FirstOrDefault(m => m.Descricao == marcaNome);
-                if (marca != null)
-                    cmbMarca.SelectedValue = marca.IDMarca;
-
-                // Produto
-                string produtoNome = item.SubItems.Count > 5 ? item.SubItems[5].Text : "";
-                var produtoBLL = new ProdutoBLL();
-                var produtos = await produtoBLL.ListarAsync();
-                var produto = produtos.FirstOrDefault(p => p.Descricao == produtoNome);
-                if (produto != null)
-                    cmbProduto.SelectedValue = produto.IDProduto;
-
-                // Demais campos
-                txtNumeroSerie.Text = item.SubItems.Count > 6 ? item.SubItems[6].Text : "";
-                txtDescricaoDefeito.Text = item.SubItems.Count > 7 ? item.SubItems[7].Text : "";
-                txtValorTotalServico.Text = item.SubItems.Count > 8 ? item.SubItems[8].Text : "";
-                txtValorTotalMaterial.Text = item.SubItems.Count > 9 ? item.SubItems[9].Text : "";
-
-                // Exibir a imagem no PictureBox
-                var lancamentoServicoBLL = new LancamentoServicoBLL();
-                var lancamentoServico = await lancamentoServicoBLL.GetLancamentoServicoAsync(
-                                            Convert.ToInt32(item.SubItems[0].Text));
-
-                if (lancamentoServico?.Imagem != null && lancamentoServico.Imagem.Length > 0)
-                {
-                    using (var ms = new MemoryStream(lancamentoServico.Imagem))
-                    {
-                        imgImagemProduto.Image = Image.FromStream(ms);
-                    }
-                }
-                else
-                {
-                    imgImagemProduto.Image = null;
-                }
-
-                EventosUtils.AcaoBotoes("HabilitarBotoesAlterarExcluir", this);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao carregar dados do lançamento: " + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Erro ao carregar registros: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         public override async void ExecutaFuncaoEventoAsync(Control control)
@@ -748,7 +658,7 @@ namespace OrdemServicos
 
                 if (result == DialogResult.Yes)
                 {
-                    InserirLancamentoServicoAsync(lancamentoServico); // ✅ chamada assíncrona
+                    await InserirLancamentoServicoAsync(lancamentoServico); // ✅ chamada assíncrona
                 }
             }
             else
@@ -764,7 +674,7 @@ namespace OrdemServicos
 
                 if (result == DialogResult.Yes)
                 {
-                    AtualizarLancamentoServicoAsync(lancamentoServico); // ✅ chamada assíncrona
+                    await AtualizarLancamentoServicoAsync(lancamentoServico); // ✅ chamada assíncrona
                 }
             }
 
@@ -775,30 +685,30 @@ namespace OrdemServicos
             EventosUtils.AcaoBotoes("HabilitarBotaoSalvar", this);
             HabilitarCamposDoFormulario("Alterar");
         }
-        private void btnExcluir_Click(object sender, EventArgs e)
+        private async void btnExcluir_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Tem Certeza que Deseja Excluir Esse Produto?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 if (int.TryParse(txtIDOrdenServico.Text, out int ordenServicoID))
                 {
-                    ExcluirLancamentoServicoAsync(ordenServicoID);
+                    await ExcluirLancamentoServicoAsync(ordenServicoID);
                 }
                 else
                 {
                     MessageBox.Show("ID inválido. Por favor, insira um número inteiro.", "Informaçâo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            CarregarRegistros();
+            await CarregarRegistros();
             EventosUtils.AcaoBotoes("DesabilitarBotoesAcoes", this);
         }
         private void btnFechar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-        private void btnCancelar_Click(object sender, EventArgs e)
+        private async void btnCancelar_Click(object sender, EventArgs e)
         {
-            CarregarRegistros();
+            await CarregarRegistros();
         }
         private void DesabilitarCamposDoFormulario()
         {
@@ -856,6 +766,7 @@ namespace OrdemServicos
         public override void LimparCampos()
         {
             txtIDOrdenServico.Clear();
+            txtIDOrdenServico.Text = "0";
             txtDataEmissao.Value = DateTime.Now;
             txtDataConclusao.Value = DateTime.Now;
             cmbCliente.SelectedIndex = -1;
@@ -866,8 +777,9 @@ namespace OrdemServicos
             txtValorTotalServico.Text = StringUtils.FormatValorMoeda("0"); ;
             txtValorTotalMaterial.Text = StringUtils.FormatValorMoeda("0");
             imgImagemProduto.Image = null;
-            txtPesquisaListView.Clear();
             bNovo = false;
+            escPressed = false;
+
         }
         private static async Task InserirLancamentoServicoAsync(LancamentoServicoInfo lancamentoServico)
         {
@@ -914,5 +826,5 @@ namespace OrdemServicos
                                 "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-	}
+    }
 }

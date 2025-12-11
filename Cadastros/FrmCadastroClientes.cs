@@ -39,7 +39,6 @@ namespace OrdemServicos
         private readonly EventArgs e = new EventArgs();
         private CancellationTokenSource ctsImportacao;
 
-
         public frmClientes()
         {
             InitializeComponent();
@@ -126,12 +125,22 @@ namespace OrdemServicos
                 new string[] { },                                     // colunas monetárias
                 new string[] { },                                     // colunas percentuais
                 txtPesquisaListView,                                  // campo de pesquisa
-                new[] { 2, 3 }                                        // colunas permitidas (CPF/CNPJ e Nome)
+                new[] { 0, 2, 3 }                                        // colunas permitidas (CPF/CNPJ e Nome)
             );
         }
         private void listViewClientes_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
         {
-            string[] colunasCentralizadas = { "ID", "CPF/CNPJ", "CEP", "NUMERO", "DATA CADASTRO" };
+            string[] colunasCentralizadas = {
+                "ID", 
+                "PESSOA",
+                "CPF/CNPJ", 
+                "NUMERO", 
+                "UF", 
+                "CEP", 
+                "CELULAR", 
+                "FIXO", 
+                "DATA CADASTRO" 
+            };
 
             ListViewUtils.DesenharCabecalho(
                 e,
@@ -168,12 +177,18 @@ namespace OrdemServicos
                 var clienteBLL = new ClienteBLL();
                 var clientes = await clienteBLL.ListarAsync(); // ✅ chamada assíncrona
 
+                // ✅ calcula a largura com base no maior ID
+                int largura = clientes.Any()
+                    ? clientes.Max(c => c.IDCliente).ToString().Length
+                    : 1;
+
                 foreach (var cliente in clientes)
                 {
-                    var item = new ListViewItem(cliente.IDCliente.ToString())
-                    {
-                        Tag = cliente // opcional: guardar objeto original
-                    };
+                    // Converte o ID para string e aplica PadLeft dinamicamente
+                    string idFormatado = cliente.IDCliente.ToString().PadLeft(6, ' ');
+
+                    // Cria o item da ListView
+                    ListViewItem item = new ListViewItem(idFormatado);
 
                     item.SubItems.Add(cliente.TipoPessoa);
                     item.SubItems.Add(cliente.TipoPessoa == "FÍSICA"
@@ -213,7 +228,6 @@ namespace OrdemServicos
                 listViewClientes.Sort();
 
                 // Ajustar largura das colunas automaticamente
-     //           listViewClientes.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
                 ajustaLarguraCabecalho(listViewClientes);
 
                 tabControlClientes.SelectedTab = tabDadosClientes;
@@ -310,7 +324,6 @@ namespace OrdemServicos
             txtFone_2.Tag = new BaseForm { TagFormato = "FormataFone", TagMaxDigito = 10 };
             txtCpf_Cnpj.Tag = new BaseForm { TagFormato = "FormataCpfCnpj", TagMaxDigito = 14 };
             txtEmail.Tag = new BaseForm { TagAction = "FocaBotaoSalvar" };
-//            txtPesquisaListView.Tag = new BaseForm { TagAction = "LimparCampos" };
 
             // Localiza TabControl e TabPage
             var tabControl = Controls.Find("tabControlClientes", true).FirstOrDefault() as TabControl;

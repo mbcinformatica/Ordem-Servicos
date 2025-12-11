@@ -66,29 +66,32 @@ namespace OrdemServicos
             // 
             // txtSenha
             // 
-            this.txtSenha.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSenha.Location = new System.Drawing.Point(351, 126);
+            this.txtSenha.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSenha.Location = new System.Drawing.Point(526, 184);
+            this.txtSenha.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
-            this.txtSenha.Size = new System.Drawing.Size(232, 22);
+            this.txtSenha.Size = new System.Drawing.Size(346, 26);
             this.txtSenha.TabIndex = 1;
             this.tlpDicas.SetToolTip(this.txtSenha, "Informe a Senha");
             // 
             // txtLogin
             // 
-            this.txtLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLogin.Location = new System.Drawing.Point(351, 86);
+            this.txtLogin.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtLogin.Location = new System.Drawing.Point(526, 126);
+            this.txtLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(232, 22);
+            this.txtLogin.Size = new System.Drawing.Size(346, 26);
             this.txtLogin.TabIndex = 0;
             this.tlpDicas.SetToolTip(this.txtLogin, "Informe o Login");
             // 
             // txtSenhaHash
             // 
             this.txtSenhaHash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSenhaHash.Location = new System.Drawing.Point(12, 228);
+            this.txtSenhaHash.Location = new System.Drawing.Point(18, 333);
+            this.txtSenhaHash.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtSenhaHash.Name = "txtSenhaHash";
-            this.txtSenhaHash.Size = new System.Drawing.Size(627, 20);
+            this.txtSenhaHash.Size = new System.Drawing.Size(938, 20);
             this.txtSenhaHash.TabIndex = 10;
             this.tlpDicas.SetToolTip(this.txtSenhaHash, "Informe o Login");
             this.txtSenhaHash.Visible = false;
@@ -98,13 +101,14 @@ namespace OrdemServicos
             this.btnSair.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnSair.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSair.Image = ((System.Drawing.Image)(resources.GetObject("btnSair.Image")));
-            this.btnSair.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSair.Location = new System.Drawing.Point(471, 166);
+            this.btnSair.Location = new System.Drawing.Point(706, 243);
+            this.btnSair.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSair.Name = "btnSair";
-            this.btnSair.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnSair.Size = new System.Drawing.Size(112, 40);
+            this.btnSair.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.btnSair.Size = new System.Drawing.Size(168, 58);
             this.btnSair.TabIndex = 3;
-            this.btnSair.Text = "    Sair";
+            this.btnSair.Text = "   Sair";
+            this.btnSair.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.tlpDicas.SetToolTip(this.btnSair, "Botão Sair do Sistema");
             this.btnSair.UseVisualStyleBackColor = false;
             this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
@@ -115,13 +119,14 @@ namespace OrdemServicos
             this.btnLogin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.erpProvider.SetIconAlignment(this.btnLogin, System.Windows.Forms.ErrorIconAlignment.MiddleLeft);
             this.btnLogin.Image = ((System.Drawing.Image)(resources.GetObject("btnLogin.Image")));
-            this.btnLogin.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLogin.Location = new System.Drawing.Point(351, 166);
+            this.btnLogin.Location = new System.Drawing.Point(526, 243);
+            this.btnLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnLogin.Size = new System.Drawing.Size(113, 40);
+            this.btnLogin.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.btnLogin.Size = new System.Drawing.Size(170, 58);
             this.btnLogin.TabIndex = 2;
-            this.btnLogin.Text = "       Login";
+            this.btnLogin.Text = "   Login";
+            this.btnLogin.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.tlpDicas.SetToolTip(this.btnLogin, "Botão para Entrar no Sistema");
             this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
@@ -138,9 +143,10 @@ namespace OrdemServicos
             this.imgImagemUsuario.BackColor = System.Drawing.Color.Transparent;
             this.imgImagemUsuario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.erpProvider.SetIconAlignment(this.imgImagemUsuario, System.Windows.Forms.ErrorIconAlignment.TopRight);
-            this.imgImagemUsuario.Location = new System.Drawing.Point(153, 86);
+            this.imgImagemUsuario.Location = new System.Drawing.Point(230, 126);
+            this.imgImagemUsuario.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.imgImagemUsuario.Name = "imgImagemUsuario";
-            this.imgImagemUsuario.Size = new System.Drawing.Size(120, 120);
+            this.imgImagemUsuario.Size = new System.Drawing.Size(180, 175);
             this.imgImagemUsuario.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imgImagemUsuario.TabIndex = 92;
             this.imgImagemUsuario.TabStop = false;
@@ -148,25 +154,27 @@ namespace OrdemServicos
             // lblUsuario
             // 
             this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsuario.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUsuario.ForeColor = System.Drawing.Color.Black;
-            this.lblUsuario.Location = new System.Drawing.Point(284, 85);
+            this.lblUsuario.Location = new System.Drawing.Point(437, 130);
+            this.lblUsuario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(64, 20);
+            this.lblUsuario.Size = new System.Drawing.Size(78, 19);
             this.lblUsuario.TabIndex = 0;
             this.lblUsuario.Tag = "";
-            this.lblUsuario.Text = "Usuário";
+            this.lblUsuario.Text = "Usuário...:";
             // 
             // lblSenha
             // 
             this.lblSenha.AutoSize = true;
-            this.lblSenha.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSenha.Location = new System.Drawing.Point(284, 125);
+            this.lblSenha.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSenha.Location = new System.Drawing.Point(437, 188);
+            this.lblSenha.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSenha.Name = "lblSenha";
-            this.lblSenha.Size = new System.Drawing.Size(56, 20);
+            this.lblSenha.Size = new System.Drawing.Size(67, 19);
             this.lblSenha.TabIndex = 2;
             this.lblSenha.Tag = "";
-            this.lblSenha.Text = "Senha";
+            this.lblSenha.Text = "Senha...:";
             // 
             // lblTitulo
             // 
@@ -175,10 +183,11 @@ namespace OrdemServicos
             this.lblTitulo.Font = new System.Drawing.Font("Times New Roman", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblTitulo.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.lblTitulo.Location = new System.Drawing.Point(0, 16);
+            this.lblTitulo.Location = new System.Drawing.Point(0, 23);
+            this.lblTitulo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lblTitulo.Size = new System.Drawing.Size(611, 43);
+            this.lblTitulo.Size = new System.Drawing.Size(916, 63);
             this.lblTitulo.TabIndex = 93;
             this.lblTitulo.Tag = "naoAplicarSize";
             this.lblTitulo.Text = "Login";
@@ -186,20 +195,24 @@ namespace OrdemServicos
             // 
             // imgCadeadoFechado
             // 
+            this.imgCadeadoFechado.BackColor = System.Drawing.Color.Transparent;
             this.imgCadeadoFechado.Image = ((System.Drawing.Image)(resources.GetObject("imgCadeadoFechado.Image")));
-            this.imgCadeadoFechado.Location = new System.Drawing.Point(17, 86);
+            this.imgCadeadoFechado.Location = new System.Drawing.Point(26, 126);
+            this.imgCadeadoFechado.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.imgCadeadoFechado.Name = "imgCadeadoFechado";
-            this.imgCadeadoFechado.Size = new System.Drawing.Size(120, 120);
+            this.imgCadeadoFechado.Size = new System.Drawing.Size(180, 175);
             this.imgCadeadoFechado.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imgCadeadoFechado.TabIndex = 95;
             this.imgCadeadoFechado.TabStop = false;
             // 
             // imgCadeadoAberto
             // 
+            this.imgCadeadoAberto.BackColor = System.Drawing.Color.Transparent;
             this.imgCadeadoAberto.Image = ((System.Drawing.Image)(resources.GetObject("imgCadeadoAberto.Image")));
-            this.imgCadeadoAberto.Location = new System.Drawing.Point(17, 86);
+            this.imgCadeadoAberto.Location = new System.Drawing.Point(26, 126);
+            this.imgCadeadoAberto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.imgCadeadoAberto.Name = "imgCadeadoAberto";
-            this.imgCadeadoAberto.Size = new System.Drawing.Size(120, 120);
+            this.imgCadeadoAberto.Size = new System.Drawing.Size(180, 175);
             this.imgCadeadoAberto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imgCadeadoAberto.TabIndex = 94;
             this.imgCadeadoAberto.TabStop = false;
@@ -207,10 +220,9 @@ namespace OrdemServicos
             // 
             // frmLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnSair;
-            this.ClientSize = new System.Drawing.Size(598, 219);
+            this.ClientSize = new System.Drawing.Size(891, 314);
             this.ControlBox = false;
             this.Controls.Add(this.imgCadeadoFechado);
             this.Controls.Add(this.imgCadeadoAberto);
@@ -223,8 +235,10 @@ namespace OrdemServicos
             this.Controls.Add(this.lblSenha);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.lblUsuario);
+            this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "frmLogin";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

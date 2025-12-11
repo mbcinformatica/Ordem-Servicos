@@ -51,6 +51,8 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.tabControlProdutos = new System.Windows.Forms.TabControl();
             this.tabDadosProduto = new System.Windows.Forms.TabPage();
+            this.cmbFornecedor = new System.Windows.Forms.ComboBox();
+            this.lbFornecedor = new System.Windows.Forms.Label();
             this.btnExcluirImagem = new System.Windows.Forms.Button();
             this.btnInserirImagem = new System.Windows.Forms.Button();
             this.txtGarantia = new System.Windows.Forms.TextBox();
@@ -77,8 +79,6 @@
             this.txtDataUltimaCompra = new System.Windows.Forms.TextBox();
             this.lbDataUltimaCompra = new System.Windows.Forms.Label();
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
-            this.cmbFornecedor = new System.Windows.Forms.ComboBox();
-            this.lbFornecedor = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.tabControlProdutos.SuspendLayout();
@@ -254,13 +254,13 @@
             this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSalvar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
-            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSalvar.Location = new System.Drawing.Point(1002, 3);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(4);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(126, 51);
             this.btnSalvar.TabIndex = 67;
-            this.btnSalvar.Text = "      Salvar";
+            this.btnSalvar.Text = "    Salvar";
+            this.btnSalvar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSalvar.UseVisualStyleBackColor = false;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
@@ -270,14 +270,14 @@
             this.btnAlterar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAlterar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAlterar.Image = ((System.Drawing.Image)(resources.GetObject("btnAlterar.Image")));
-            this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAlterar.Location = new System.Drawing.Point(868, 3);
             this.btnAlterar.Margin = new System.Windows.Forms.Padding(4);
             this.btnAlterar.Name = "btnAlterar";
             this.btnAlterar.Size = new System.Drawing.Size(126, 51);
             this.btnAlterar.TabIndex = 66;
             this.btnAlterar.Tag = "";
-            this.btnAlterar.Text = "       Alterar";
+            this.btnAlterar.Text = "   Alterar";
+            this.btnAlterar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAlterar.UseVisualStyleBackColor = false;
             this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
             // 
@@ -287,13 +287,13 @@
             this.btnExcluir.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExcluir.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExcluir.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluir.Image")));
-            this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnExcluir.Location = new System.Drawing.Point(1135, 3);
             this.btnExcluir.Margin = new System.Windows.Forms.Padding(4);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(126, 51);
             this.btnExcluir.TabIndex = 68;
-            this.btnExcluir.Text = "     Excluir";
+            this.btnExcluir.Text = "   Excluir";
+            this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExcluir.UseVisualStyleBackColor = false;
             this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
             // 
@@ -303,13 +303,13 @@
             this.btnNovo.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNovo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNovo.Image = ((System.Drawing.Image)(resources.GetObject("btnNovo.Image")));
-            this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnNovo.Location = new System.Drawing.Point(734, 3);
             this.btnNovo.Margin = new System.Windows.Forms.Padding(4);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(126, 51);
             this.btnNovo.TabIndex = 65;
-            this.btnNovo.Text = "     Novo";
+            this.btnNovo.Text = "   Novo";
+            this.btnNovo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnNovo.UseVisualStyleBackColor = false;
             this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
             // 
@@ -319,13 +319,13 @@
             this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
-            this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnFechar.Location = new System.Drawing.Point(1269, 3);
             this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Size = new System.Drawing.Size(126, 51);
             this.btnFechar.TabIndex = 69;
-            this.btnFechar.Text = "     Fechar";
+            this.btnFechar.Text = "   Fechar";
+            this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnFechar.UseVisualStyleBackColor = false;
             this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
             // 
@@ -335,13 +335,13 @@
             this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
-            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelar.Location = new System.Drawing.Point(1269, 3);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(127, 51);
             this.btnCancelar.TabIndex = 70;
-            this.btnCancelar.Text = "     Cancelar";
+            this.btnCancelar.Text = "   Cancelar";
+            this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
@@ -402,19 +402,41 @@
             this.tabDadosProduto.TabIndex = 0;
             this.tabDadosProduto.Text = "Dados do Produto";
             // 
+            // cmbFornecedor
+            // 
+            this.cmbFornecedor.BackColor = System.Drawing.Color.White;
+            this.cmbFornecedor.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbFornecedor.FormattingEnabled = true;
+            this.cmbFornecedor.Location = new System.Drawing.Point(462, 30);
+            this.cmbFornecedor.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbFornecedor.Name = "cmbFornecedor";
+            this.cmbFornecedor.Size = new System.Drawing.Size(574, 27);
+            this.cmbFornecedor.TabIndex = 160;
+            // 
+            // lbFornecedor
+            // 
+            this.lbFornecedor.AutoSize = true;
+            this.lbFornecedor.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbFornecedor.Location = new System.Drawing.Point(463, 10);
+            this.lbFornecedor.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.lbFornecedor.Name = "lbFornecedor";
+            this.lbFornecedor.Size = new System.Drawing.Size(97, 19);
+            this.lbFornecedor.TabIndex = 159;
+            this.lbFornecedor.Text = "Fornecedor..:";
+            // 
             // btnExcluirImagem
             // 
             this.btnExcluirImagem.AutoSize = true;
             this.btnExcluirImagem.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExcluirImagem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExcluirImagem.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluirImagem.Image")));
-            this.btnExcluirImagem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnExcluirImagem.Location = new System.Drawing.Point(1255, 101);
             this.btnExcluirImagem.Margin = new System.Windows.Forms.Padding(4);
             this.btnExcluirImagem.Name = "btnExcluirImagem";
             this.btnExcluirImagem.Size = new System.Drawing.Size(126, 51);
             this.btnExcluirImagem.TabIndex = 158;
-            this.btnExcluirImagem.Text = "     Excluir";
+            this.btnExcluirImagem.Text = "   Excluir";
+            this.btnExcluirImagem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExcluirImagem.UseVisualStyleBackColor = false;
             this.btnExcluirImagem.Click += new System.EventHandler(this.btnExcluirImagem_Click);
             // 
@@ -424,13 +446,13 @@
             this.btnInserirImagem.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnInserirImagem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInserirImagem.Image = ((System.Drawing.Image)(resources.GetObject("btnInserirImagem.Image")));
-            this.btnInserirImagem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnInserirImagem.Location = new System.Drawing.Point(1255, 41);
             this.btnInserirImagem.Margin = new System.Windows.Forms.Padding(4);
             this.btnInserirImagem.Name = "btnInserirImagem";
             this.btnInserirImagem.Size = new System.Drawing.Size(126, 51);
             this.btnInserirImagem.TabIndex = 157;
-            this.btnInserirImagem.Text = "     Inserir";
+            this.btnInserirImagem.Text = "   Inserir";
+            this.btnInserirImagem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnInserirImagem.UseVisualStyleBackColor = false;
             this.btnInserirImagem.Click += new System.EventHandler(this.btnInserirImagem_Click);
             // 
@@ -711,28 +733,6 @@
             this.lbDataUltimaCompra.Size = new System.Drawing.Size(98, 15);
             this.lbDataUltimaCompra.TabIndex = 68;
             this.lbDataUltimaCompra.Text = "Ultima Compra..:";
-            // 
-            // cmbFornecedor
-            // 
-            this.cmbFornecedor.BackColor = System.Drawing.Color.White;
-            this.cmbFornecedor.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbFornecedor.FormattingEnabled = true;
-            this.cmbFornecedor.Location = new System.Drawing.Point(462, 30);
-            this.cmbFornecedor.Margin = new System.Windows.Forms.Padding(4);
-            this.cmbFornecedor.Name = "cmbFornecedor";
-            this.cmbFornecedor.Size = new System.Drawing.Size(574, 27);
-            this.cmbFornecedor.TabIndex = 160;
-            // 
-            // lbFornecedor
-            // 
-            this.lbFornecedor.AutoSize = true;
-            this.lbFornecedor.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbFornecedor.Location = new System.Drawing.Point(463, 10);
-            this.lbFornecedor.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.lbFornecedor.Name = "lbFornecedor";
-            this.lbFornecedor.Size = new System.Drawing.Size(97, 19);
-            this.lbFornecedor.TabIndex = 159;
-            this.lbFornecedor.Text = "Fornecedor..:";
             // 
             // frmProdutos
             // 

@@ -58,7 +58,7 @@ namespace OrdemServicos.DAL
                     MessageBox.Show(mensagem, "Erro de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     // Abre o formulário de configuração
 
-                    frmConfigDB FrmConfigDB = new frmConfigDB();
+                    frmConfigDB FrmConfigDB = new frmConfigDB(false);
                     frmConfigDB formularioConfigDB = FrmConfigDB;
 
                     // Ajusta a localização para ficar abaixo do menu do formulário principal
@@ -258,7 +258,10 @@ namespace OrdemServicos.DAL
                             if (column.StartsWith("PRIMARY KEY") || column.StartsWith("UNIQUE KEY"))
                                 continue;
 
-                            var columnName = column.Split(' ')[0];
+                            var columnName = column.Contains(" ")
+                                ? column.Substring(0, column.IndexOf(" "))
+                                : column;
+
                             var checkColumnQuery = $"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'DBOrdemServicos' AND TABLE_NAME = '{tableName}' AND COLUMN_NAME = '{columnName}'";
                             using (var checkColumnCommand = new MySqlCommand(checkColumnQuery, connection))
                             {
@@ -270,6 +273,8 @@ namespace OrdemServicos.DAL
                                     {
                                         await addColumnCommand.ExecuteNonQueryAsync();
                                     }
+
+                                    Console.WriteLine($"[INFO] Coluna '{columnName}' adicionada à tabela '{tableName}'.");
                                 }
                             }
                         }
@@ -278,9 +283,10 @@ namespace OrdemServicos.DAL
             }
             catch (Exception ex)
             {
-                throw new Exception($"Erro ao verificar/criar tabela {tableName}: " + ex.Message, ex);
+                throw new InvalidOperationException($"Erro ao verificar/criar tabela {tableName}: {ex.Message}", ex);
             }
         }
+
         public async Task<bool> VerificarSeCadastradoAsync(object valor, string tabela, string coluna)
         {
             try

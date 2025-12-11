@@ -35,7 +35,7 @@
             this.btnTestarConexao = new System.Windows.Forms.Button();
             this.btnSalvar = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSair = new System.Windows.Forms.Button();
+            this.btnFechar = new System.Windows.Forms.Button();
             this.txtUsuario = new System.Windows.Forms.TextBox();
             this.lblUsuario = new System.Windows.Forms.Label();
             this.txtPorta = new System.Windows.Forms.TextBox();
@@ -58,39 +58,40 @@
             // 
             this.btnTestarConexao.AllowDrop = true;
             this.btnTestarConexao.AutoSize = true;
-            this.btnTestarConexao.BackColor = System.Drawing.Color.Blue;
+            this.btnTestarConexao.BackColor = System.Drawing.SystemColors.Control;
             this.btnTestarConexao.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnTestarConexao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTestarConexao.ForeColor = System.Drawing.Color.White;
+            this.btnTestarConexao.ForeColor = System.Drawing.SystemColors.ControlText;
             this.erpProvider.SetIconAlignment(this.btnTestarConexao, System.Windows.Forms.ErrorIconAlignment.TopRight);
             this.btnTestarConexao.Image = ((System.Drawing.Image)(resources.GetObject("btnTestarConexao.Image")));
-            this.btnTestarConexao.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTestarConexao.Location = new System.Drawing.Point(120, 294);
             this.btnTestarConexao.Margin = new System.Windows.Forms.Padding(6);
             this.btnTestarConexao.Name = "btnTestarConexao";
             this.btnTestarConexao.Size = new System.Drawing.Size(238, 75);
             this.btnTestarConexao.TabIndex = 97;
             this.btnTestarConexao.Tag = "";
-            this.btnTestarConexao.Text = "      Testar Conexão";
+            this.btnTestarConexao.Text = "   Testar Conexão";
+            this.btnTestarConexao.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTestarConexao.UseVisualStyleBackColor = false;
             this.btnTestarConexao.Click += new System.EventHandler(this.btnTestarConexao_Click);
             // 
             // btnSalvar
             // 
             this.btnSalvar.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnSalvar.BackColor = System.Drawing.Color.Blue;
+            this.btnSalvar.BackColor = System.Drawing.SystemColors.Control;
             this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSalvar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSalvar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSalvar.ForeColor = System.Drawing.Color.White;
+            this.btnSalvar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.erpProvider.SetIconAlignment(this.btnSalvar, System.Windows.Forms.ErrorIconAlignment.BottomLeft);
-            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
             this.btnSalvar.Location = new System.Drawing.Point(394, 294);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(6);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(238, 75);
             this.btnSalvar.TabIndex = 96;
-            this.btnSalvar.Text = "      Salvar Configuração";
+            this.btnSalvar.Text = "   Salvar Configuração";
+            this.btnSalvar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSalvar.UseVisualStyleBackColor = false;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_ClickAsync);
             // 
@@ -99,7 +100,7 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add(this.btnTestarConexao);
-            this.panel1.Controls.Add(this.btnSair);
+            this.panel1.Controls.Add(this.btnFechar);
             this.panel1.Controls.Add(this.btnSalvar);
             this.panel1.Controls.Add(this.txtUsuario);
             this.panel1.Controls.Add(this.lblUsuario);
@@ -111,79 +112,79 @@
             this.panel1.Controls.Add(this.lblBanco);
             this.panel1.Controls.Add(this.txtServidor);
             this.panel1.Controls.Add(this.lblServidor);
-            this.panel1.Location = new System.Drawing.Point(7, 8);
+            this.panel1.Location = new System.Drawing.Point(10, 18);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1039, 429);
+            this.panel1.Size = new System.Drawing.Size(1011, 429);
             this.panel1.TabIndex = 0;
             // 
-            // btnSair
+            // btnFechar
             // 
-            this.btnSair.BackColor = System.Drawing.Color.Blue;
-            this.btnSair.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnSair.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSair.ForeColor = System.Drawing.Color.White;
-            this.btnSair.Image = ((System.Drawing.Image)(resources.GetObject("btnSair.Image")));
-            this.btnSair.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSair.Location = new System.Drawing.Point(668, 294);
-            this.btnSair.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSair.Name = "btnSair";
-            this.btnSair.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
-            this.btnSair.Size = new System.Drawing.Size(238, 75);
-            this.btnSair.TabIndex = 95;
-            this.btnSair.Text = "    Sair";
-            this.btnSair.UseVisualStyleBackColor = false;
-            this.btnSair.Click += new System.EventHandler(this.btnSair_Click);
+            this.btnFechar.BackColor = System.Drawing.SystemColors.Control;
+            this.btnFechar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFechar.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
+            this.btnFechar.Location = new System.Drawing.Point(668, 294);
+            this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFechar.Name = "btnFechar";
+            this.btnFechar.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
+            this.btnFechar.Size = new System.Drawing.Size(238, 75);
+            this.btnFechar.TabIndex = 95;
+            this.btnFechar.Text = "   Sair";
+            this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnFechar.UseVisualStyleBackColor = false;
+            this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsuario.Location = new System.Drawing.Point(638, 100);
+            this.txtUsuario.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUsuario.Location = new System.Drawing.Point(621, 96);
             this.txtUsuario.Margin = new System.Windows.Forms.Padding(4);
             this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(346, 26);
+            this.txtUsuario.Size = new System.Drawing.Size(346, 29);
             this.txtUsuario.TabIndex = 93;
             // 
             // lblUsuario
             // 
             this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.Location = new System.Drawing.Point(538, 104);
+            this.lblUsuario.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsuario.Location = new System.Drawing.Point(521, 99);
             this.lblUsuario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(78, 19);
+            this.lblUsuario.Size = new System.Drawing.Size(94, 22);
             this.lblUsuario.TabIndex = 94;
             this.lblUsuario.Tag = "";
             this.lblUsuario.Text = "Usuario...:";
             // 
             // txtPorta
             // 
-            this.txtPorta.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPorta.Location = new System.Drawing.Point(850, 41);
+            this.txtPorta.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPorta.Location = new System.Drawing.Point(833, 41);
             this.txtPorta.Margin = new System.Windows.Forms.Padding(4);
             this.txtPorta.Name = "txtPorta";
-            this.txtPorta.Size = new System.Drawing.Size(134, 26);
+            this.txtPorta.Size = new System.Drawing.Size(134, 29);
             this.txtPorta.TabIndex = 91;
             // 
             // lblPorta
             // 
             this.lblPorta.AutoSize = true;
-            this.lblPorta.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPorta.Location = new System.Drawing.Point(770, 45);
+            this.lblPorta.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPorta.Location = new System.Drawing.Point(753, 44);
             this.lblPorta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPorta.Name = "lblPorta";
-            this.lblPorta.Size = new System.Drawing.Size(62, 19);
+            this.lblPorta.Size = new System.Drawing.Size(76, 22);
             this.lblPorta.TabIndex = 92;
             this.lblPorta.Tag = "";
             this.lblPorta.Text = "Porta...:";
             // 
             // txtSenha
             // 
-            this.txtSenha.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSenha.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtSenha.Location = new System.Drawing.Point(138, 156);
             this.txtSenha.Margin = new System.Windows.Forms.Padding(4);
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
-            this.txtSenha.Size = new System.Drawing.Size(346, 26);
+            this.txtSenha.Size = new System.Drawing.Size(346, 29);
             this.txtSenha.TabIndex = 89;
             // 
             // lblSenha
@@ -201,11 +202,11 @@
             // txtBanco
             // 
             this.txtBanco.Enabled = false;
-            this.txtBanco.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBanco.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBanco.Location = new System.Drawing.Point(138, 96);
             this.txtBanco.Margin = new System.Windows.Forms.Padding(4);
             this.txtBanco.Name = "txtBanco";
-            this.txtBanco.Size = new System.Drawing.Size(252, 26);
+            this.txtBanco.Size = new System.Drawing.Size(252, 29);
             this.txtBanco.TabIndex = 87;
             // 
             // lblBanco
@@ -213,7 +214,7 @@
             this.lblBanco.AutoSize = true;
             this.lblBanco.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBanco.ForeColor = System.Drawing.Color.Black;
-            this.lblBanco.Location = new System.Drawing.Point(37, 102);
+            this.lblBanco.Location = new System.Drawing.Point(37, 99);
             this.lblBanco.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBanco.Name = "lblBanco";
             this.lblBanco.Size = new System.Drawing.Size(82, 22);
@@ -223,11 +224,11 @@
             // 
             // txtServidor
             // 
-            this.txtServidor.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtServidor.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtServidor.Location = new System.Drawing.Point(138, 41);
             this.txtServidor.Margin = new System.Windows.Forms.Padding(4);
             this.txtServidor.Name = "txtServidor";
-            this.txtServidor.Size = new System.Drawing.Size(458, 26);
+            this.txtServidor.Size = new System.Drawing.Size(458, 29);
             this.txtServidor.TabIndex = 85;
             // 
             // lblServidor
@@ -235,7 +236,7 @@
             this.lblServidor.AutoSize = true;
             this.lblServidor.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblServidor.ForeColor = System.Drawing.Color.Black;
-            this.lblServidor.Location = new System.Drawing.Point(37, 45);
+            this.lblServidor.Location = new System.Drawing.Point(37, 44);
             this.lblServidor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblServidor.Name = "lblServidor";
             this.lblServidor.Size = new System.Drawing.Size(98, 22);
@@ -247,7 +248,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1038, 473);
+            this.ClientSize = new System.Drawing.Size(1030, 465);
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -281,7 +282,7 @@
 		private System.Windows.Forms.TextBox txtPorta;
 		private System.Windows.Forms.Label lblPorta;
 		private System.Windows.Forms.Button btnTestarConexao;
-		private System.Windows.Forms.Button btnSair;
+		private System.Windows.Forms.Button btnFechar;
 		private System.Windows.Forms.Button btnSalvar;
 	}
 }

@@ -39,8 +39,8 @@ namespace OrdemServicos
 			ConfigurarTextBox();
 			CarregaKey();
 			ConfigurarTabIndexControles();
-			ConfigurarComboBoxCategoriaServicos();
-			CarregarRegistros();
+            ConfigurarComboBox(cmbCategoriaServico);
+            CarregarRegistros();
 		}
 		private void InitializeListView()
 		{
@@ -305,11 +305,6 @@ namespace OrdemServicos
 			CategoriaServicoBLL categoriaServicoBLL = new CategoriaServicoBLL();
 			List<CategoriaServicoInfo> categoriaServicos = categoriaServicoBLL.Listar();
 			return categoriaServicos.Any(cs => cs.Descricao.Equals(descricao, StringComparison.OrdinalIgnoreCase));
-		}
-		private void ConfigurarComboBoxCategoriaServicos()
-		{
-			cmbCategoriaServico.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-			cmbCategoriaServico.AutoCompleteSource = AutoCompleteSource.ListItems;
 		}
 		private void ConfigurarTextBox()
 		{

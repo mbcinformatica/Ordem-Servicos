@@ -14,7 +14,7 @@ namespace OrdemServicos
     {
         private static readonly string connectionString = ConfigurationManager.AppSettings["ConnectionString"];
 
-		private (Control, string)[] camposObrigatorios;
+        private (Control, string)[] camposObrigatorios;
         private int nTentativasLogin = 0;
         private List<Control> controlesKeyPress = new List<Control>();
         private List<Control> controlesLeave = new List<Control>();
@@ -43,9 +43,13 @@ namespace OrdemServicos
         private void CarregaKey()
         {
             // Adicionar controles às listas específicas com base no tipo de evento
-            controlesKeyPress.AddRange(new Control[] {});
-            controlesEnter.AddRange(new Control[] { });
-            controlesMouseDown.AddRange(new Control[] {});
+            controlesKeyPress.AddRange(new Control[] { });
+            controlesEnter.AddRange(new Control[] {
+                txtLogin,
+                txtSenha
+            });
+            controlesMouseDown.AddRange(new Control[] { });
+            controlesMouseMove.AddRange(new Control[] { });
             controlesLeave.AddRange(new Control[] {
                 txtLogin,
                 txtSenha
@@ -97,12 +101,12 @@ namespace OrdemServicos
             AdicionarValidacao(
                 erpProvider,
                 camposObrigatorios
-			);
+            );
         }
         private new void LimparCampos()
         {
- //           txtLogin.Clear();
- //           txtSenha.Clear();
+            //           txtLogin.Clear();
+            //           txtSenha.Clear();
             txtLogin.Text = "mbc";
             txtSenha.Text = "12345678";
             txtSenhaHash.Clear();

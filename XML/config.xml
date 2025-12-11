@@ -41,8 +41,8 @@
 	<ButtonAutoSize>false</ButtonAutoSize>
 	<ButtonAppearance>
 		<BorderColor>FFB0C4DE</BorderColor>
-		<MouseDownBackColor>FF1E90FF</MouseDownBackColor>
-		<MouseOverBackColor>FF87CEFA</MouseOverBackColor>
+		<MouseDownBackColor>FFFFFFFF</MouseDownBackColor>
+		<MouseOverBackColor>FF4682B4</MouseOverBackColor>
 	</ButtonAppearance>
 	<ButtonFontFamily>Times New Roman</ButtonFontFamily>
 	<ButtonFontSize>12</ButtonFontSize>

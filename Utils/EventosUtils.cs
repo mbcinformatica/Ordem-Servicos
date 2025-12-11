@@ -1,6 +1,4 @@
-﻿using iTextSharp.text;
-using iTextSharp.text.pdf;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using OrdemServicos.Forms;
 using OrdemServicos.Model;
 using System;
@@ -48,8 +46,8 @@ namespace OrdemServicos.Utils
             List<Control> controlesKeyDown,
             List<Control> controlesBotoes,
             BaseForm form,
-            TabControl tabControl,
-            TabPage tabPage)
+            TabControl tabControl = null,
+            TabPage tabPage = null)
         {
             foreach (Control controle in controles)
             {
@@ -71,21 +69,17 @@ namespace OrdemServicos.Utils
                 }
                 if (controlesKeyDown.Contains(controle))
                 {
-                    controle.KeyDown += (sender, e) => Evento_KeyDown(sender, e, controle, form);
+                    controle.KeyDown += (sender, e) =>Evento_KeyDown(sender, e, controle, form);
                 }
                 if (controle is Button && controlesBotoes.Contains(controle))
                 {
                     controle.MouseEnter += (sender, e) => Button_MouseEnter(sender, e, form);
                     controle.MouseLeave += (sender, e) => Button_MouseLeave(sender, e, form);
                 }
-
-                // ✅ Adiciona suporte ao evento MouseMove para ListView
                 if (controlesMouseMove.Contains(controle))
                 {
                     controle.MouseMove += (sender, e) => Evento_MouseMove(sender, e, controle, form);
                 }
-
-                // Recursividade para painéis e abas
                 if (controle is Panel || controle is TabControl || controle is TabPage)
                 {
                     InicializarEventos(

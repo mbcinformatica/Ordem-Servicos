@@ -155,13 +155,13 @@
             this.btnFechar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
-            this.btnFechar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnFechar.Location = new System.Drawing.Point(1274, 5);
             this.btnFechar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Size = new System.Drawing.Size(126, 51);
             this.btnFechar.TabIndex = 63;
-            this.btnFechar.Text = "     Fechar";
+            this.btnFechar.Text = "   Fechar";
+            this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnFechar.UseVisualStyleBackColor = false;
             this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
             // 
@@ -171,13 +171,13 @@
             this.btnSalvar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnSalvar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
-            this.btnSalvar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSalvar.Location = new System.Drawing.Point(1005, 5);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(126, 51);
             this.btnSalvar.TabIndex = 61;
-            this.btnSalvar.Text = "      Salvar";
+            this.btnSalvar.Text = "    Salvar";
+            this.btnSalvar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSalvar.UseVisualStyleBackColor = false;
             this.btnSalvar.Click += new System.EventHandler(this.btnSalvar_Click);
             // 
@@ -187,14 +187,14 @@
             this.btnAlterar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAlterar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAlterar.Image = ((System.Drawing.Image)(resources.GetObject("btnAlterar.Image")));
-            this.btnAlterar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAlterar.Location = new System.Drawing.Point(872, 5);
             this.btnAlterar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAlterar.Name = "btnAlterar";
             this.btnAlterar.Size = new System.Drawing.Size(126, 51);
             this.btnAlterar.TabIndex = 60;
             this.btnAlterar.Tag = "";
-            this.btnAlterar.Text = "       Alterar";
+            this.btnAlterar.Text = "   Alterar";
+            this.btnAlterar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAlterar.UseVisualStyleBackColor = false;
             this.btnAlterar.Click += new System.EventHandler(this.btnAlterar_Click);
             // 
@@ -204,13 +204,13 @@
             this.btnExcluir.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExcluir.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExcluir.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluir.Image")));
-            this.btnExcluir.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnExcluir.Location = new System.Drawing.Point(1138, 5);
             this.btnExcluir.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(126, 51);
             this.btnExcluir.TabIndex = 62;
-            this.btnExcluir.Text = "     Excluir";
+            this.btnExcluir.Text = "   Excluir";
+            this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExcluir.UseVisualStyleBackColor = false;
             this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
             // 
@@ -224,13 +224,13 @@
             this.btnNovo.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNovo.ForeColor = System.Drawing.Color.White;
             this.btnNovo.Image = ((System.Drawing.Image)(resources.GetObject("btnNovo.Image")));
-            this.btnNovo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnNovo.Location = new System.Drawing.Point(739, 5);
             this.btnNovo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(126, 51);
             this.btnNovo.TabIndex = 59;
-            this.btnNovo.Text = "     Novo";
+            this.btnNovo.Text = "   Novo";
+            this.btnNovo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnNovo.UseVisualStyleBackColor = false;
             this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
             // 
@@ -240,13 +240,13 @@
             this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnCancelar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
-            this.btnCancelar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCancelar.Location = new System.Drawing.Point(1271, 5);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(126, 51);
             this.btnCancelar.TabIndex = 64;
-            this.btnCancelar.Text = "     Cancelar";
+            this.btnCancelar.Text = "   Cancelar";
+            this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
@@ -315,14 +315,15 @@
             this.btnExcluirImagem.AutoSize = true;
             this.btnExcluirImagem.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExcluirImagem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.erpProvider.SetIconAlignment(this.btnExcluirImagem, System.Windows.Forms.ErrorIconAlignment.TopRight);
             this.btnExcluirImagem.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluirImagem.Image")));
-            this.btnExcluirImagem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnExcluirImagem.Location = new System.Drawing.Point(1270, 110);
             this.btnExcluirImagem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnExcluirImagem.Name = "btnExcluirImagem";
             this.btnExcluirImagem.Size = new System.Drawing.Size(126, 51);
             this.btnExcluirImagem.TabIndex = 156;
-            this.btnExcluirImagem.Text = "     Excluir";
+            this.btnExcluirImagem.Text = "   Excluir";
+            this.btnExcluirImagem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnExcluirImagem.UseVisualStyleBackColor = false;
             this.btnExcluirImagem.Click += new System.EventHandler(this.btnExcluirImagem_Click);
             // 
@@ -332,13 +333,13 @@
             this.btnInserirImagem.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnInserirImagem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInserirImagem.Image = ((System.Drawing.Image)(resources.GetObject("btnInserirImagem.Image")));
-            this.btnInserirImagem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnInserirImagem.Location = new System.Drawing.Point(1270, 41);
             this.btnInserirImagem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnInserirImagem.Name = "btnInserirImagem";
             this.btnInserirImagem.Size = new System.Drawing.Size(126, 51);
             this.btnInserirImagem.TabIndex = 155;
-            this.btnInserirImagem.Text = "     Inserir";
+            this.btnInserirImagem.Text = "   Inserir";
+            this.btnInserirImagem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnInserirImagem.UseVisualStyleBackColor = false;
             this.btnInserirImagem.Click += new System.EventHandler(this.btnInserirImagem_Click);
             // 

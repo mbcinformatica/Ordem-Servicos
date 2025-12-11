@@ -1,4 +1,5 @@
 ﻿using OrdemServicos.Forms;
+using OrdemServicos.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -14,6 +15,13 @@ namespace OrdemServicos
         private bool salvaConfigTemaPadrao = false;
         private bool salvaConfigTemaClaro = false;
         private bool salvaConfigTemaEscuro = false;
+        private List<Control> controlesKeyPress = new List<Control>();
+        private List<Control> controlesLeave = new List<Control>();
+        private List<Control> controlesEnter = new List<Control>();
+        private List<Control> controlesMouseDown = new List<Control>();
+        private List<Control> controlesMouseMove = new List<Control>();
+        private List<Control> controlesBotoes = new List<Control>();
+        private List<Control> controlesKeyDown = new List<Control>();
 
         public frmConfigFormulario()
         {
@@ -24,6 +32,7 @@ namespace OrdemServicos
 
             Paint += new PaintEventHandler(BaseForm_Paint);
             erpProvider = new ErrorProvider();
+            CarregaKey();
             CarregaControlesFormulario();
         }
         private void CarregaControlesFormulario()
@@ -424,8 +433,8 @@ namespace OrdemServicos
                 child.Value = value ?? string.Empty;
             }
             SetButtonAppearance("BorderColor", HEX(buttonBorderColor));
-            SetButtonAppearance("MouseDownBackColor", HEX(buttonMouseDownBackColor));
-            SetButtonAppearance("MouseOverBackColor", HEX(buttonMouseOverBackColor));
+            SetButtonAppearance("MouseDownBackColor", HEX(buttonBackgroundColor));
+            SetButtonAppearance("MouseOverBackColor", HEX(buttonFontColor));
 
             // 🏷️ Label
             SetValue("LabelBackgroundColor", HEX(labelBackgroundColor));
@@ -567,7 +576,6 @@ namespace OrdemServicos
                 listViewExemploAlterada2.Visible = true;
             }
 		}
-
 		private void lnkOpcaoCorFundoColunaSelecionada_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
 		{
             cldCores.Color = listViewHeaderSelectedColor;
@@ -580,7 +588,6 @@ namespace OrdemServicos
 
             }
         }
-
 		private void lnkOpcaoCorFundoLinha1_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
 		{
             cldCores.Color = listViewItemBackColorEven;
@@ -594,7 +601,6 @@ namespace OrdemServicos
                 listViewExemploAlterada2.Visible = true;
             }
         }
-
 		private void lnkOpcaoCorFundoLinha2_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
 		{
             cldCores.Color = listViewItemBackColorOdd;
@@ -607,5 +613,52 @@ namespace OrdemServicos
                 listViewExemploAlterada2.Visible = true;
             }
         }
-	}
+        private void CarregaKey()
+        {
+            // Controles que disparam KeyPress
+            controlesKeyPress.AddRange(new Control[] {
+            });
+
+            // Controles que disparam Leave
+            controlesLeave.AddRange(new Control[] {
+            });
+
+            // Controles que disparam Enter
+            controlesEnter.AddRange(new Control[] {
+            });
+
+            // Controles que disparam MouseDown
+            controlesMouseDown.AddRange(new Control[] { });
+
+            // Controles que disparam MouseMove
+            controlesMouseMove.AddRange(new Control[] {
+            });
+
+            // Controles que disparam KeyDown
+            controlesKeyDown.AddRange(new Control[] {
+            });
+
+            // Botões
+            controlesBotoes.AddRange(new Control[] {
+                btnSalvar,
+                btnCancelar
+            });
+
+            EventosUtils.InicializarEventos(
+                Controls,
+                controlesKeyPress,
+                controlesLeave,
+                controlesEnter,
+                controlesMouseDown,
+                controlesMouseMove,
+                controlesKeyDown,
+                controlesBotoes,
+                this,
+                null,
+                null
+            );
+
+        }
+
+    }
 }

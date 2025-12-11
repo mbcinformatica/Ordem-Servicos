@@ -89,7 +89,7 @@
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(126, 51);
             this.btnSalvar.TabIndex = 67;
-            this.btnSalvar.Text = "      Salvar";
+            this.btnSalvar.Text = "    Salvar";
             this.btnSalvar.UseVisualStyleBackColor = false;
             // 
             // btnAlterar
@@ -105,7 +105,7 @@
             this.btnAlterar.Size = new System.Drawing.Size(126, 51);
             this.btnAlterar.TabIndex = 66;
             this.btnAlterar.Tag = "";
-            this.btnAlterar.Text = "       Alterar";
+            this.btnAlterar.Text = "   Alterar";
             this.btnAlterar.UseVisualStyleBackColor = false;
             // 
             // btnExcluir
@@ -120,7 +120,7 @@
             this.btnExcluir.Name = "btnExcluir";
             this.btnExcluir.Size = new System.Drawing.Size(126, 51);
             this.btnExcluir.TabIndex = 68;
-            this.btnExcluir.Text = "     Excluir";
+            this.btnExcluir.Text = "   Excluir";
             this.btnExcluir.UseVisualStyleBackColor = false;
             // 
             // btnNovo
@@ -135,7 +135,7 @@
             this.btnNovo.Name = "btnNovo";
             this.btnNovo.Size = new System.Drawing.Size(126, 51);
             this.btnNovo.TabIndex = 65;
-            this.btnNovo.Text = "     Novo";
+            this.btnNovo.Text = "   Novo";
             this.btnNovo.UseVisualStyleBackColor = false;
             // 
             // lbTotalRegistros
@@ -164,7 +164,7 @@
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Size = new System.Drawing.Size(126, 51);
             this.btnFechar.TabIndex = 69;
-            this.btnFechar.Text = "     Fechar";
+            this.btnFechar.Text = "   Fechar";
             this.btnFechar.UseVisualStyleBackColor = false;
             // 
             // btnCancelar
@@ -179,7 +179,7 @@
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(127, 51);
             this.btnCancelar.TabIndex = 70;
-            this.btnCancelar.Text = "     Cancelar";
+            this.btnCancelar.Text = "   Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
             // 
             // pnlOpcaoListView

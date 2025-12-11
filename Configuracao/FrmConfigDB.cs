@@ -23,17 +23,20 @@ namespace OrdemServicos
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
         public bool vCloseSistema;
+        private bool vQuitSistema;
 
-        public frmConfigDB()
+        public frmConfigDB(bool vEntrada)
         {
             InitializeComponent();
             LoadConfig();
             Paint += new PaintEventHandler(BaseForm_Paint);
             erpProvider = new ErrorProvider();
+            ConfigurarTabIndexControles();
             ConfigurarTextBox();
             CarregaKey();
             LimparCampos();
             vCloseSistema = false;
+            vQuitSistema = vEntrada;
         }
         private void CarregaKey()
         {
@@ -70,7 +73,7 @@ namespace OrdemServicos
             controlesBotoes.AddRange(new Control[] {
                 btnTestarConexao,
                 btnSalvar,
-                btnSair
+                btnFechar
             });
 
             this.Tag = "frmConfigDB";
@@ -80,6 +83,14 @@ namespace OrdemServicos
             txtPorta.Tag = new BaseForm { TagAction = "SomenteNumeros" }; // Permitir somente letras
 
             EventosUtils.InicializarEventos(Controls, controlesKeyPress, controlesLeave, controlesEnter, controlesMouseDown, controlesMouseMove, controlesKeyDown, controlesBotoes, this, tabControl, tabPage);
+        }
+        private void ConfigurarTabIndexControles()
+        {
+            txtServidor.TabIndex = 0;
+            txtPorta.TabIndex = 1;
+            txtBanco.TabIndex = 2;
+            txtUsuario.TabIndex = 4;
+            txtSenha.TabIndex = 5;
         }
         private void ConfigurarTextBox()
         {
@@ -176,7 +187,7 @@ namespace OrdemServicos
                     MessageBox.Show("Configuração salva e banco/tabelas criados com sucesso!", "Sucesso",
                                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                     vCloseSistema = true;
-                    btnSair.Focus();
+                    btnFechar.Focus();
                 }
             }
             catch (Exception ex)
@@ -188,9 +199,9 @@ namespace OrdemServicos
             }
             LimparCampos();
         }
-        private void btnSair_Click(object sender, EventArgs e)
+        private void btnFechar_Click(object sender, EventArgs e)
         {
-            if (!vCloseSistema)
+            if (!vCloseSistema && !vQuitSistema)
             {
                 Application.Exit();
             }

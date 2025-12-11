@@ -33,8 +33,8 @@
             this.cldCores = new System.Windows.Forms.ColorDialog();
             this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
-            this.btnCancelarSair = new System.Windows.Forms.Button();
-            this.btnSalvarSair = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
+            this.btnSalvar = new System.Windows.Forms.Button();
             this.ftdFontes = new System.Windows.Forms.FontDialog();
             this.lbConfiguracaoAlterada = new System.Windows.Forms.Label();
             this.pnlExemplosConfiguracaoAlterada = new System.Windows.Forms.Panel();
@@ -122,29 +122,32 @@
             // 
             this.erpProvider.ContainerControl = this;
             // 
-            // btnCancelarSair
+            // btnCancelar
             // 
-            this.btnCancelarSair.AutoSize = true;
-            this.btnCancelarSair.Location = new System.Drawing.Point(216, 545);
-            this.btnCancelarSair.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCancelarSair.Name = "btnCancelarSair";
-            this.btnCancelarSair.Size = new System.Drawing.Size(183, 48);
-            this.btnCancelarSair.TabIndex = 77;
-            this.btnCancelarSair.Text = "Cancelar e Sair";
-            this.btnCancelarSair.UseVisualStyleBackColor = false;
-            this.btnCancelarSair.Click += new System.EventHandler(this.btnCancelarSair_Click);
+            this.erpProvider.SetIconAlignment(this.btnCancelar, System.Windows.Forms.ErrorIconAlignment.MiddleLeft);
+            this.btnCancelar.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelar.Image")));
+            this.btnCancelar.Location = new System.Drawing.Point(249, 545);
+            this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(183, 48);
+            this.btnCancelar.TabIndex = 77;
+            this.btnCancelar.Text = "  Cancelar e Sair";
+            this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCancelar.UseVisualStyleBackColor = false;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelarSair_Click);
             // 
-            // btnSalvarSair
+            // btnSalvar
             // 
-            this.btnSalvarSair.AutoSize = true;
-            this.btnSalvarSair.Location = new System.Drawing.Point(38, 545);
-            this.btnSalvarSair.Margin = new System.Windows.Forms.Padding(4);
-            this.btnSalvarSair.Name = "btnSalvarSair";
-            this.btnSalvarSair.Size = new System.Drawing.Size(158, 48);
-            this.btnSalvarSair.TabIndex = 76;
-            this.btnSalvarSair.Text = "Salvar e Sair";
-            this.btnSalvarSair.UseVisualStyleBackColor = false;
-            this.btnSalvarSair.Click += new System.EventHandler(this.btnSalvarSair_Click);
+            this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
+            this.btnSalvar.Location = new System.Drawing.Point(38, 545);
+            this.btnSalvar.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSalvar.Name = "btnSalvar";
+            this.btnSalvar.Size = new System.Drawing.Size(183, 48);
+            this.btnSalvar.TabIndex = 76;
+            this.btnSalvar.Text = "  Salvar e Sair";
+            this.btnSalvar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSalvar.UseVisualStyleBackColor = false;
+            this.btnSalvar.Click += new System.EventHandler(this.btnSalvarSair_Click);
             // 
             // lbConfiguracaoAlterada
             // 
@@ -310,11 +313,11 @@
             this.listViewExemploAlterada1.Name = "listViewExemploAlterada1";
             this.listViewExemploAlterada1.RowCount = 1;
             this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
             this.listViewExemploAlterada1.Size = new System.Drawing.Size(709, 25);
             this.listViewExemploAlterada1.TabIndex = 110;
             // 
@@ -1057,8 +1060,8 @@
             this.Controls.Add(this.pnlExemplosAlterado);
             this.Controls.Add(this.pnlOpcaoConfiguracao);
             this.Controls.Add(this.pnlExemplosConfiguracaoAlterada);
-            this.Controls.Add(this.btnCancelarSair);
-            this.Controls.Add(this.btnSalvarSair);
+            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnSalvar);
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -1104,8 +1107,8 @@
         private System.Windows.Forms.ColorDialog cldCores;
         private System.Windows.Forms.ErrorProvider erpProvider;
         private System.Windows.Forms.ToolTip tlpDicas;
-        private System.Windows.Forms.Button btnCancelarSair;
-        private System.Windows.Forms.Button btnSalvarSair;
+        private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Button btnSalvar;
         private System.Windows.Forms.FontDialog ftdFontes;
         private System.Windows.Forms.Label lbConfiguracaoAlterada;
         private System.Windows.Forms.Panel pnlExemplosConfiguracaoAlterada;

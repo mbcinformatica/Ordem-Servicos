@@ -1,7 +1,9 @@
 ﻿using OrdemServicos.BLL;
 using OrdemServicos.DAL;
 using OrdemServicos.Forms;
+using OrdemServicos.Utils;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
@@ -15,17 +17,12 @@ namespace OrdemServicos
     {
         public bool vCloseSistema;
 
-    public frmTelaPrincipal()
+        public frmTelaPrincipal()
         {
             InitializeComponent();
             LoadConfig();
-            // ✅ aplica pintura base
             this.Paint += new PaintEventHandler(BaseForm_Paint);
-
-            // ✅ evento de carregamento
             this.Load += frmTelaPrincipal_Load;
-
-            // ✅ inicia oculto
             this.WindowState = FormWindowState.Minimized;
             this.ShowInTaskbar = false;
             this.Visible = false;
@@ -428,18 +425,6 @@ namespace OrdemServicos
         {
             frmConfigFormulario FrmConfigFormulario = new frmConfigFormulario();
             frmConfigFormulario formularioConfigFormulario = FrmConfigFormulario;
-            /*
-                        // Define o tamanho do formulário de ConfigFormulario para 90% da largura e 90% da altura da tela principal
-                        formularioConfigFormulario.Width = (int)(Width * 0.9);
-                        formularioConfigFormulario.Height = (int)(Height * 0.8);
-
-                        // Ajusta a localização para ficar abaixo do menu do formulário principal
-                        formularioConfigFormulario.StartPosition = FormStartPosition.Manual;
-                        formularioConfigFormulario.Location = new Point(
-                            Location.X + (Width - formularioConfigFormulario.Width) / 2,
-                            Location.Y + (Height - formularioConfigFormulario.Height) / 2);
-            */
-            // Ajusta a localização para ficar abaixo do menu do formulário principal
             formularioConfigFormulario.StartPosition = FormStartPosition.CenterScreen;
             formularioConfigFormulario.ShowDialog();
         }
@@ -480,16 +465,10 @@ namespace OrdemServicos
                     {
                         File.Delete(arquivo);
                     }
-
-                    // Opcional: remover a pasta se estiver vazia
-                    //if (Directory.GetFiles(diretorioRelatorio).Length == 0)
-                    //{
-                    //    Directory.Delete(diretorioRelatorio);
-                    //}
                 }
-                catch (Exception ex)
+                catch
                 {
-                  //  MessageBox.Show("Erro ao limpar relatórios PDF: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //  MessageBox.Show("Erro ao limpar relatórios PDF: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
@@ -498,17 +477,58 @@ namespace OrdemServicos
             LimparRelatoriosPDF();
             base.OnFormClosing(e);
         }
-        private void conexãoDBToolStripMenuItem_Click( object sender, EventArgs e )
-		{
+        private void conexãoDBToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             AbrirFormularioConexaoDB();
         }
         private void AbrirFormularioConexaoDB()
         {
-            frmConfigDB FrmConfigDB = new frmConfigDB();
+            frmConfigDB FrmConfigDB = new frmConfigDB(true);
             frmConfigDB formulariofrmConfigDB = FrmConfigDB;
-
             formulariofrmConfigDB.StartPosition = FormStartPosition.CenterScreen;
             formulariofrmConfigDB.ShowDialog();
+        }
+        private void backupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dbUtils = new DockerMySqlUtils();
+                dbUtils.BackupTables(new List<string> {
+                    "DBCategoriaServicos",
+                    "DBClientes",
+                    "DBFornecedores",
+                    "DBLancamentoServicos",
+                    "DBMarcas",
+                    "DBModelos",
+                    "DBProdutos",
+                    "DBServicos",
+                    "DBUnidades",
+                    "DBUsuarios"
+                });
+                MessageBox.Show("Backup concluído com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao realizar backup:\n\n" + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void restoureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dbUtils = new DockerMySqlUtils();
+                dbUtils.RestoreTable(); // restaura o último backup da pasta Backup
+
+                MessageBox.Show("Restore concluído com sucesso!",
+                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao restaurar backup:\n\n" + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

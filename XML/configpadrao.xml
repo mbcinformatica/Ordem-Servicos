@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
 	<!-- Configurações Efeitos Degrade -->
-	<GradientStartColor>FFE0E0E0</GradientStartColor>
-	<GradientEndColor>FFFFFFFF</GradientEndColor>
+	<GradientStartColor>FF00FFFF</GradientStartColor>
+	<GradientEndColor>FF8080FF</GradientEndColor>
 
 	<!-- Configurações dos Formulários -->
 	<FormBackgroundColor>FFFFFFFF</FormBackgroundColor>
@@ -18,7 +18,7 @@
 	<MenuStripFontFamily>Times New Roman</MenuStripFontFamily>
 	<MenuStripFontSize>12</MenuStripFontSize>
 	<MenuStripFontStyle>Bold</MenuStripFontStyle>
-
+	
 	<!-- Configurações dos TextBox -->
 	<TextBoxBackgroundColor>FFFFFFFF</TextBoxBackgroundColor>
 	<TextBoxFontColor>FF000000</TextBoxFontColor>
@@ -26,7 +26,7 @@
 	<TextBoxFontFamily>Times New Roman</TextBoxFontFamily>
 	<TextBoxFontSize>12</TextBoxFontSize>
 	<TextBoxFontStyle>Bold</TextBoxFontStyle>
-
+	
 	<!-- Configurações do MaskedTextBox -->
 	<MaskedTextBoxBackgroundColor>FFFFFFFF</MaskedTextBoxBackgroundColor>
 	<MaskedTextBoxFontColor>FF000000</MaskedTextBoxFontColor>
@@ -34,15 +34,15 @@
 	<MaskedTextBoxFontFamily>Times New Roman</MaskedTextBoxFontFamily>
 	<MaskedTextBoxFontSize>12</MaskedTextBoxFontSize>
 	<MaskedTextBoxFontStyle>Bold</MaskedTextBoxFontStyle>
-
+	
 	<!-- Configurações dos Botões -->
-	<ButtonBackgroundColor>FF4682B4</ButtonBackgroundColor>
-	<ButtonFontColor>FFFFFFFF</ButtonFontColor>
-	<ButtonAutoSize>false</ButtonAutoSize>
+	<ButtonBackgroundColor>FF8000FF</ButtonBackgroundColor>
+	<ButtonFontColor>FF00FF00</ButtonFontColor>
+	<ButtonAutoSize>False</ButtonAutoSize>
 	<ButtonAppearance>
 		<BorderColor>FFB0C4DE</BorderColor>
-		<MouseDownBackColor>FF1E90FF</MouseDownBackColor>
-		<MouseOverBackColor>FF87CEFA</MouseOverBackColor>
+		<MouseDownBackColor>FFFFFFFF</MouseDownBackColor>
+		<MouseOverBackColor>FF4682B4</MouseOverBackColor>
 	</ButtonAppearance>
 	<ButtonFontFamily>Times New Roman</ButtonFontFamily>
 	<ButtonFontSize>12</ButtonFontSize>
@@ -51,11 +51,11 @@
 	<!-- Configurações das Label -->
 	<LabelBackgroundColor>00FFFFFF</LabelBackgroundColor>
 	<LabelFontColor>FF000000</LabelFontColor>
-	<LabelAutoSize>true</LabelAutoSize>
+	<LabelAutoSize>True</LabelAutoSize>
 	<LabelFontFamily>Times New Roman</LabelFontFamily>
 	<LabelFontSize>12</LabelFontSize>
 	<LabelFontStyle>Bold</LabelFontStyle>
-
+	
 	<!-- Configurações do LinkLabel -->
 	<LinkLabelActiveLinkColor>FF1E90FF</LinkLabelActiveLinkColor>
 	<LinkLabelLinkColor>FF0000FF</LinkLabelLinkColor>
@@ -63,36 +63,36 @@
 	<LinkLabelFontFamily>Times New Roman</LinkLabelFontFamily>
 	<LinkLabelFontSize>12</LinkLabelFontSize>
 	<LinkLabelFontStyle>Underline</LinkLabelFontStyle>
-
+	
 	<!-- Configurações dos Panel -->
 	<PanelBackgroundColor>FFF5F5F5</PanelBackgroundColor>
 	<PanelBorderStyle>Fixed3D</PanelBorderStyle>
 	<PanelFontFamily>Times New Roman</PanelFontFamily>
 	<PanelFontSize>12</PanelFontSize>
 	<PanelFontStyle>Bold</PanelFontStyle>
-
+	
 	<!-- Configurações do ListView -->
 	<ListViewBackColor>FFF8F8F8</ListViewBackColor>
 	<ListViewForeColor>FF000000</ListViewForeColor>
-	<ListViewFullRowSelect>true</ListViewFullRowSelect>
-	<ListViewGridLines>true</ListViewGridLines>
-	<ListViewHideSelection>false</ListViewHideSelection>
+	<ListViewFullRowSelect>True</ListViewFullRowSelect>
+	<ListViewGridLines>True</ListViewGridLines>
+	<ListViewHideSelection>False</ListViewHideSelection>
 	<ListViewFontFamily>Times New Roman</ListViewFontFamily>
 	<ListViewFontSize>12</ListViewFontSize>
 	<ListViewFontStyle>Bold</ListViewFontStyle>
-
+	
 	<!-- Configurações do Cabeçalho da ListView -->
-	<ListViewHeaderDefaultColor>FFE0E0E0</ListViewHeaderDefaultColor>
-	<ListViewHeaderSelectedColor>FF4682B4</ListViewHeaderSelectedColor>
+	<ListViewHeaderDefaultColor>FF00FFFF</ListViewHeaderDefaultColor>
+	<ListViewHeaderSelectedColor>FF8080FF</ListViewHeaderSelectedColor>
 	<ListViewHeaderFontFamily>Times New Roman</ListViewHeaderFontFamily>
 	<ListViewHeaderFontSize>12</ListViewHeaderFontSize>
 	<ListViewHeaderFontStyle>Bold</ListViewHeaderFontStyle>
-
+	
 	<!-- Configurações dos Itens da ListView -->
-	<ListViewItemBackColorEven>FFFFFFFF</ListViewItemBackColorEven>
-	<ListViewItemBackColorOdd>FFF0F0F0</ListViewItemBackColorOdd>
+	<ListViewItemBackColorEven>FF80FF80</ListViewItemBackColorEven>
+	<ListViewItemBackColorOdd>FFA4AFC1</ListViewItemBackColorOdd>
 	<ListViewItemFontColor>FF000000</ListViewItemFontColor>
-
+	
 	<!-- Configurações do ComboBox -->
 	<ComboBoxBackColor>FFFFFFFF</ComboBoxBackColor>
 	<ComboBoxForeColor>FF000000</ComboBoxForeColor>
@@ -100,19 +100,19 @@
 	<ComboBoxFontFamily>Times New Roman</ComboBoxFontFamily>
 	<ComboBoxFontSize>12</ComboBoxFontSize>
 	<ComboBoxFontStyle>Bold</ComboBoxFontStyle>
-
+	
 	<!-- Configurações do ToolStripMenuItem -->
 	<ToolStripMenuItemBackColor>FFF0F0F0</ToolStripMenuItemBackColor>
 	<ToolStripMenuItemForeColor>FF000000</ToolStripMenuItemForeColor>
 	<ToolStripMenuItemFontFamily>Times New Roman</ToolStripMenuItemFontFamily>
 	<ToolStripMenuItemFontSize>12</ToolStripMenuItemFontSize>
 	<ToolStripMenuItemFontStyle>Bold</ToolStripMenuItemFontStyle>
-
+	
 	<!-- Configurações do TabControl -->
 	<TabControlFontFamily>Times New Roman</TabControlFontFamily>
 	<TabControlFontSize>12</TabControlFontSize>
 	<TabControlFontStyle>Bold</TabControlFontStyle>
-
+	
 	<!-- Configurações do TabPage -->
 	<TabPageBackColor>FFFFFFFF</TabPageBackColor>
 	<TabPageForeColor>FF000000</TabPageForeColor>
@@ -120,7 +120,7 @@
 	<TabPageFontFamily>Times New Roman</TabPageFontFamily>
 	<TabPageFontSize>12</TabPageFontSize>
 	<TabPageFontStyle>Bold</TabPageFontStyle>
-
+	
 	<!-- Configurações do ProgressBar -->
 	<ProgressBarBackColor>FFF0F0F0</ProgressBarBackColor>
 	<ProgressBarForeColor>FF4682B4</ProgressBarForeColor>

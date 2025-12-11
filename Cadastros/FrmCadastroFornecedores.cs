@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static OrdemServicos.DAL.PesquisaWebDAL;
@@ -36,6 +37,7 @@ namespace OrdemServicos
         private List<Control> controlesBotoes = new List<Control>();
         private List<Control> controlesKeyDown = new List<Control>();
         private readonly EventArgs e = new EventArgs();
+        private CancellationTokenSource ctsImportacao;
 
         public frmFornecedores()
         {
@@ -946,66 +948,71 @@ namespace OrdemServicos
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                string downloadsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-                openFileDialog.InitialDirectory = downloadsPath;
-                openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog.FilterIndex = 1;
-                openFileDialog.RestoreDirectory = true;
+                // ... configuração do dialog ...
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = openFileDialog.FileName;
-
                     try
                     {
+                        // **Desabilitar UI**
                         EventosUtils.AcaoBotoes("DesabilitarTodosBotoesAcoes", this);
-
+                        listViewFornecedores.Enabled = false;
+                        txtPesquisaListView.Enabled = false;
+                        btnCarregaArquivoCnpj.Enabled = false;
+                        btnCarregaArquivoCpf.Enabled = false;
+                        btnCancelaImportacao.Visible = true;
+                        // **Preparar progresso**
                         string[] linhas = File.ReadAllLines(filePath);
                         List<string> cnpjsRestantes = new List<string>();
-                        int total = linhas.Length;
-                        int atual = 0;
+                        int total = linhas.Length, atual = 0;
 
                         progressBarCNPJs.Minimum = 0;
                         progressBarCNPJs.Maximum = total;
                         progressBarCNPJs.Value = 0;
                         progressBarCNPJs.Visible = true;
                         lblProgressoCNPJs.Visible = true;
-                        lblProgressoCNPJs.Enabled = true;
+                        lblProgressoCNPJs.Text = "Iniciando importação...";
                         lblProgressoCNPJs.BackColor = Color.Azure;
                         lblProgressoCNPJs.ForeColor = Color.Red;
-                        lblProgressoCNPJs.Font = new Font("Times New Roman", 16F, FontStyle.Bold);
+                        lblProgressoCNPJs.Font = new Font("Times New Roman", 16F, FontStyle.Regular);
                         lblProgressoCNPJs.AutoSize = false;
-                        leituraAutomaticaAtiva = true;
+                        lblProgressoCNPJs.Text = "Iniciando importação...";
 
-                        DBSetupBLL dbSetupBLL = new DBSetupBLL();
+
+                        // **Token de cancelamento**
+                        ctsImportacao = new CancellationTokenSource();
+
+                        var dbSetupBLL = new DBSetupBLL();
 
                         foreach (string linha in linhas)
                         {
+                            // **Respeitar cancelamento**
+                            ctsImportacao.Token.ThrowIfCancellationRequested();
+
                             string cnpj = linha.Trim();
                             string txt_CNPJ = StringUtils.FormatCNPJ(cnpj);
+
                             int porcentagem = (int)(((double)atual / total) * 100);
                             lblProgressoCNPJs.Text = $"Processando CNPJ {txt_CNPJ}... ({porcentagem}%)";
-                            await Task.Delay(500);
+
+                            // Delay cancelável
+                            await Task.Delay(300, ctsImportacao.Token);
 
                             bool incluirNoArquivo = true;
 
                             if (ValidaCnpj(cnpj))
                             {
-                                if (await dbSetupBLL.VerificarSeCadastradoAsync(cnpj, "DBFornecedores", "Cpf_Cnpj"))
+                                if (await dbSetupBLL.VerificarSeCadastradoAsync(cnpj, "DBClientes", "Cpf_Cnpj"))
                                 {
                                     incluirNoArquivo = false;
                                 }
                                 else
                                 {
-                                    try
-                                    {
-                                        bool sucesso = await PesquisarCnpj(cnpj); // retorna true se inclusão no BD foi bem-sucedida
-                                        if (sucesso)
-                                        {
-                                            incluirNoArquivo = false;
-                                        }
-                                    }
-                                    catch { }
+                                    // Se possível, adapte PesquisarCnpj para aceitar token
+                                    leituraAutomaticaAtiva = true;
+                                    bool sucesso = await PesquisarCnpj(cnpj);
+                                    if (sucesso) incluirNoArquivo = false;
                                 }
                             }
                             else
@@ -1014,34 +1021,60 @@ namespace OrdemServicos
                             }
 
                             if (incluirNoArquivo)
-                            {
                                 cnpjsRestantes.Add(cnpj);
-                            }
 
                             atual++;
                             progressBarCNPJs.Value = atual;
                         }
 
-                        // Criar backup antes de sobrescrever
-                        string backupFile = filePath + ".bak";
-                        File.Copy(filePath, backupFile, true);
+                        // **Somente conclui se não cancelou**
+                        if (!ctsImportacao.IsCancellationRequested)
+                        {
+                            string backupFile = filePath + ".bak";
+                            File.Copy(filePath, backupFile, true);
+                            File.WriteAllLines(filePath, cnpjsRestantes);
 
-                        // Sobrescrever o arquivo original com os CNPJs restantes
-                        File.WriteAllLines(filePath, cnpjsRestantes);
+                            lblProgressoCNPJs.Text = "Processamento concluído!";
+                            MessageBox.Show(
+                                $"Todos os CNPJs foram processados.\nArquivo atualizado em:\n{filePath}\nBackup salvo em:\n{backupFile}",
+                                "Concluído", MessageBoxButtons.OK, MessageBoxIcon.Information
+                            );
 
-                        lblProgressoCNPJs.Text = "Processamento concluído!";
-                        MessageBox.Show($"Todos os CNPJs foram processados.\nArquivo atualizado em:\n{filePath}\nBackup salvo em:\n{backupFile}",
-                                        "Concluído", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        progressBarCNPJs.Visible = false;
-                        lblProgressoCNPJs.Visible = false;
-                        lblProgressoCNPJs.Enabled = false;
-                        CarregarRegistros();
+                        }
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        // **Cancelamento não é erro**
+                        lblProgressoCNPJs.Text = "Importação cancelada pelo usuário.";
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        // Cobertura extra (algumas APIs usam OperationCanceledException)
+                        lblProgressoCNPJs.Text = "Importação cancelada pelo usuário.";
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Erro ao processar o arquivo: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        // **Erros reais**
+                        MessageBox.Show("Erro ao processar o arquivo: " + ex.Message, "Erro",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    //           finally
+                    //             {
+                    // **Restaurar UI**
+                    await CarregarRegistros();
+                    progressBarCNPJs.Visible = false;
+                    lblProgressoCNPJs.Visible = false;
+                    btnCancelaImportacao.Visible = false;
+
+                    listViewFornecedores.Enabled = true;
+                    txtPesquisaListView.Enabled = true;
+                    btnCarregaArquivoCnpj.Enabled = true;
+                    btnCarregaArquivoCpf.Enabled = true;
+
+                    // Limpar token
+                    ctsImportacao?.Dispose();
+                    ctsImportacao = null;
+                    //             }
                 }
             }
         }
@@ -1184,6 +1217,14 @@ namespace OrdemServicos
 
             }
 
+        }
+        private void btnCancelaImportacao_Click(object sender, EventArgs e)
+        {
+            if (ctsImportacao != null && !ctsImportacao.IsCancellationRequested)
+            {
+                ctsImportacao.Cancel();
+                lblProgressoCNPJs.Text = "Cancelando importação...";
+            }
         }
     }
 }

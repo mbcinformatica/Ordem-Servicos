@@ -50,6 +50,8 @@
             this.formularioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conexãoDBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.backupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restoureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             mnSMenu = new System.Windows.Forms.MenuStrip();
             mnSMenu.SuspendLayout();
             this.SuspendLayout();
@@ -168,7 +170,7 @@
             // serviçosToolStripMenuItem1
             // 
             this.serviçosToolStripMenuItem1.Name = "serviçosToolStripMenuItem1";
-            this.serviçosToolStripMenuItem1.Size = new System.Drawing.Size(180, 24);
+            this.serviçosToolStripMenuItem1.Size = new System.Drawing.Size(135, 24);
             this.serviçosToolStripMenuItem1.Text = "Serviços";
             this.serviçosToolStripMenuItem1.Click += new System.EventHandler(this.serviçosToolStripMenuItem1_Click);
             // 
@@ -207,7 +209,9 @@
             // 
             this.configuracoesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.formularioToolStripMenuItem,
-            this.conexãoDBToolStripMenuItem});
+            this.conexãoDBToolStripMenuItem,
+            this.backupToolStripMenuItem,
+            this.restoureToolStripMenuItem});
             this.configuracoesToolStripMenuItem.Name = "configuracoesToolStripMenuItem";
             this.configuracoesToolStripMenuItem.Size = new System.Drawing.Size(117, 23);
             this.configuracoesToolStripMenuItem.Text = "Con&figurações";
@@ -232,6 +236,20 @@
             this.sairToolStripMenuItem.Size = new System.Drawing.Size(48, 23);
             this.sairToolStripMenuItem.Text = "&Sair";
             this.sairToolStripMenuItem.Click += new System.EventHandler(this.sairToolStripMenuItem_Click);
+            // 
+            // backupToolStripMenuItem
+            // 
+            this.backupToolStripMenuItem.Name = "backupToolStripMenuItem";
+            this.backupToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.backupToolStripMenuItem.Text = "Backup";
+            this.backupToolStripMenuItem.Click += new System.EventHandler(this.backupToolStripMenuItem_Click);
+            // 
+            // restoureToolStripMenuItem
+            // 
+            this.restoureToolStripMenuItem.Name = "restoureToolStripMenuItem";
+            this.restoureToolStripMenuItem.Size = new System.Drawing.Size(180, 24);
+            this.restoureToolStripMenuItem.Text = "Restoure ";
+            this.restoureToolStripMenuItem.Click += new System.EventHandler(this.restoureToolStripMenuItem_Click);
             // 
             // frmTelaPrincipal
             // 
@@ -271,6 +289,8 @@
         private System.Windows.Forms.ToolStripMenuItem formularioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem categoriaDeServiçosToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem conexãoDBToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem backupToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem restoureToolStripMenuItem;
 	}
 }
 
