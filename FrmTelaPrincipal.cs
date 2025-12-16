@@ -63,7 +63,7 @@ namespace OrdemServicos
                 // ✅ garante que controles internos se ajustem
                 this.AutoScaleMode = AutoScaleMode.Font;
                 this.Scale(new SizeF(escalaX, escalaY)); // escala proporcional
-
+                
             }
         }
         private async Task<bool> VerificaLoginAsync()
@@ -149,15 +149,15 @@ namespace OrdemServicos
         {
             frmUsuarios FrmUsuarios = new frmUsuarios();
             frmUsuarios formularioUsuarios = FrmUsuarios;
-
-            /* Define o tamanho do formulário de clientes para 90% da largura e 90% da altura da tela principal
-            formularioUsuarios.Width = (int)(Width * 0.9);
-            formularioUsuarios.Height = (int)(Height * 0.8);
+            /*
+            // Define o tamanho do formulário de clientes para 90% da largura e 90% da altura da tela principal
+            formularioUsuarios.Width = (int)(Width );
+            formularioUsuarios.Height = (int)(Height * 0.9);
 
             // Ajusta a localização para ficar abaixo do menu do formulário principal
             formularioUsuarios.StartPosition = FormStartPosition.Manual;
             formularioUsuarios.Location = new Point(
-                Location.X + (Width - formularioUsuarios.Width) / 2,
+                Location.X + (Width - formularioUsuarios.Width) /2 ,
                 Location.Y + (Height - formularioUsuarios.Height) / 2);
             */
             // Ajusta a localização para ficar abaixo do menu do formulário principal

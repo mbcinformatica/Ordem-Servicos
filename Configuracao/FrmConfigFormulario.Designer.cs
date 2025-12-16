@@ -32,8 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmConfigFormulario));
             this.cldCores = new System.Windows.Forms.ColorDialog();
             this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
             this.btnCancelar = new System.Windows.Forms.Button();
+            this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
             this.btnSalvar = new System.Windows.Forms.Button();
             this.ftdFontes = new System.Windows.Forms.FontDialog();
             this.lbConfiguracaoAlterada = new System.Windows.Forms.Label();
@@ -155,7 +155,7 @@
             this.lbConfiguracaoAlterada.Location = new System.Drawing.Point(279, 9);
             this.lbConfiguracaoAlterada.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbConfiguracaoAlterada.Name = "lbConfiguracaoAlterada";
-            this.lbConfiguracaoAlterada.Size = new System.Drawing.Size(228, 19);
+            this.lbConfiguracaoAlterada.Size = new System.Drawing.Size(346, 26);
             this.lbConfiguracaoAlterada.TabIndex = 83;
             this.lbConfiguracaoAlterada.Text = "CONFIGURAÇÃO ALTERADA";
             this.lbConfiguracaoAlterada.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -195,7 +195,7 @@
             this.lnkConfiguracaoListView.Location = new System.Drawing.Point(27, 118);
             this.lnkConfiguracaoListView.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkConfiguracaoListView.Name = "lnkConfiguracaoListView";
-            this.lnkConfiguracaoListView.Size = new System.Drawing.Size(365, 19);
+            this.lnkConfiguracaoListView.Size = new System.Drawing.Size(558, 26);
             this.lnkConfiguracaoListView.TabIndex = 9;
             this.lnkConfiguracaoListView.TabStop = true;
             this.lnkConfiguracaoListView.Text = "Configuração do Painel de Visualização dos Registros";
@@ -210,7 +210,7 @@
             this.lnkConfiguracaoTemas.Location = new System.Drawing.Point(27, 186);
             this.lnkConfiguracaoTemas.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkConfiguracaoTemas.Name = "lnkConfiguracaoTemas";
-            this.lnkConfiguracaoTemas.Size = new System.Drawing.Size(166, 19);
+            this.lnkConfiguracaoTemas.Size = new System.Drawing.Size(251, 26);
             this.lnkConfiguracaoTemas.TabIndex = 8;
             this.lnkConfiguracaoTemas.TabStop = true;
             this.lnkConfiguracaoTemas.Text = "Configuração de Temas";
@@ -225,7 +225,7 @@
             this.lnkConfiguracaoBotoes.Location = new System.Drawing.Point(27, 152);
             this.lnkConfiguracaoBotoes.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkConfiguracaoBotoes.Name = "lnkConfiguracaoBotoes";
-            this.lnkConfiguracaoBotoes.Size = new System.Drawing.Size(176, 19);
+            this.lnkConfiguracaoBotoes.Size = new System.Drawing.Size(265, 26);
             this.lnkConfiguracaoBotoes.TabIndex = 4;
             this.lnkConfiguracaoBotoes.TabStop = true;
             this.lnkConfiguracaoBotoes.Text = "Configuração dos Botões";
@@ -240,7 +240,7 @@
             this.lnkConfiguracaoFormulario.Location = new System.Drawing.Point(27, 16);
             this.lnkConfiguracaoFormulario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkConfiguracaoFormulario.Name = "lnkConfiguracaoFormulario";
-            this.lnkConfiguracaoFormulario.Size = new System.Drawing.Size(209, 19);
+            this.lnkConfiguracaoFormulario.Size = new System.Drawing.Size(325, 26);
             this.lnkConfiguracaoFormulario.TabIndex = 1;
             this.lnkConfiguracaoFormulario.TabStop = true;
             this.lnkConfiguracaoFormulario.Text = "Configuração dos Formulários";
@@ -255,7 +255,7 @@
             this.lnkConfiguracaoCampos.Location = new System.Drawing.Point(27, 84);
             this.lnkConfiguracaoCampos.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkConfiguracaoCampos.Name = "lnkConfiguracaoCampos";
-            this.lnkConfiguracaoCampos.Size = new System.Drawing.Size(183, 19);
+            this.lnkConfiguracaoCampos.Size = new System.Drawing.Size(279, 26);
             this.lnkConfiguracaoCampos.TabIndex = 3;
             this.lnkConfiguracaoCampos.TabStop = true;
             this.lnkConfiguracaoCampos.Text = "Configuração dos Campos";
@@ -270,7 +270,7 @@
             this.lnkConfiguracaoRotuloCampos.Location = new System.Drawing.Point(27, 50);
             this.lnkConfiguracaoRotuloCampos.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkConfiguracaoRotuloCampos.Name = "lnkConfiguracaoRotuloCampos";
-            this.lnkConfiguracaoRotuloCampos.Size = new System.Drawing.Size(296, 19);
+            this.lnkConfiguracaoRotuloCampos.Size = new System.Drawing.Size(446, 26);
             this.lnkConfiguracaoRotuloCampos.TabIndex = 2;
             this.lnkConfiguracaoRotuloCampos.TabStop = true;
             this.lnkConfiguracaoRotuloCampos.Text = "Configuração das Descriçãoes dos Campos";
@@ -290,7 +290,7 @@
             this.pnlExemplosAlterado.Location = new System.Drawing.Point(692, 295);
             this.pnlExemplosAlterado.Margin = new System.Windows.Forms.Padding(4);
             this.pnlExemplosAlterado.Name = "pnlExemplosAlterado";
-            this.pnlExemplosAlterado.Size = new System.Drawing.Size(711, 304);
+            this.pnlExemplosAlterado.Size = new System.Drawing.Size(726, 304);
             this.pnlExemplosAlterado.TabIndex = 88;
             // 
             // listViewExemploAlterada1
@@ -309,7 +309,7 @@
             this.listViewExemploAlterada1.Controls.Add(this.lblColuna1, 0, 0);
             this.listViewExemploAlterada1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listViewExemploAlterada1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.listViewExemploAlterada1.Location = new System.Drawing.Point(0, 164);
+            this.listViewExemploAlterada1.Location = new System.Drawing.Point(8, 164);
             this.listViewExemploAlterada1.Name = "listViewExemploAlterada1";
             this.listViewExemploAlterada1.RowCount = 1;
             this.listViewExemploAlterada1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -386,7 +386,7 @@
             this.listViewExemploAlterada2.Controls.Add(this.lblLinha1, 0, 0);
             this.listViewExemploAlterada2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listViewExemploAlterada2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.listViewExemploAlterada2.Location = new System.Drawing.Point(0, 187);
+            this.listViewExemploAlterada2.Location = new System.Drawing.Point(8, 187);
             this.listViewExemploAlterada2.Name = "listViewExemploAlterada2";
             this.listViewExemploAlterada2.RowCount = 5;
             this.listViewExemploAlterada2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -463,7 +463,7 @@
             this.btnExemploAlterada.Location = new System.Drawing.Point(512, 56);
             this.btnExemploAlterada.Margin = new System.Windows.Forms.Padding(4);
             this.btnExemploAlterada.Name = "btnExemploAlterada";
-            this.btnExemploAlterada.Size = new System.Drawing.Size(171, 49);
+            this.btnExemploAlterada.Size = new System.Drawing.Size(208, 49);
             this.btnExemploAlterada.TabIndex = 82;
             this.btnExemploAlterada.Text = "Exemplo de Botão";
             this.btnExemploAlterada.UseVisualStyleBackColor = false;
@@ -473,7 +473,7 @@
             this.txtExemploAlterada.Location = new System.Drawing.Point(224, 79);
             this.txtExemploAlterada.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.txtExemploAlterada.Name = "txtExemploAlterada";
-            this.txtExemploAlterada.Size = new System.Drawing.Size(262, 26);
+            this.txtExemploAlterada.Size = new System.Drawing.Size(262, 35);
             this.txtExemploAlterada.TabIndex = 59;
             this.txtExemploAlterada.Text = "EXEMPLO DE CAMPO";
             // 
@@ -483,19 +483,20 @@
             this.lblDescricaoAlterada.Location = new System.Drawing.Point(224, 59);
             this.lblDescricaoAlterada.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblDescricaoAlterada.Name = "lblDescricaoAlterada";
-            this.lblDescricaoAlterada.Size = new System.Drawing.Size(175, 19);
+            this.lblDescricaoAlterada.Size = new System.Drawing.Size(265, 26);
             this.lblDescricaoAlterada.TabIndex = 60;
             this.lblDescricaoAlterada.Text = "Exemplo de Descrição...:";
             this.lblDescricaoAlterada.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // mnsStripExemploAlterado
             // 
+            this.mnsStripExemploAlterado.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.mnsStripExemploAlterado.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.mnsStripExemploAlterado.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStriExemploAlterado1});
             this.mnsStripExemploAlterado.Location = new System.Drawing.Point(0, 0);
             this.mnsStripExemploAlterado.Name = "mnsStripExemploAlterado";
-            this.mnsStripExemploAlterado.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
-            this.mnsStripExemploAlterado.Size = new System.Drawing.Size(709, 29);
+            this.mnsStripExemploAlterado.Size = new System.Drawing.Size(724, 36);
             this.mnsStripExemploAlterado.TabIndex = 84;
             this.mnsStripExemploAlterado.Text = "menuStrip1";
             // 
@@ -507,25 +508,25 @@
             this.toolStriExemploAlterado4});
             this.toolStriExemploAlterado1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.toolStriExemploAlterado1.Name = "toolStriExemploAlterado1";
-            this.toolStriExemploAlterado1.Size = new System.Drawing.Size(123, 23);
+            this.toolStriExemploAlterado1.Size = new System.Drawing.Size(184, 30);
             this.toolStriExemploAlterado1.Text = "Menu Exemplo";
             // 
             // toolStriExemploAlterado2
             // 
             this.toolStriExemploAlterado2.Name = "toolStriExemploAlterado2";
-            this.toolStriExemploAlterado2.Size = new System.Drawing.Size(183, 24);
+            this.toolStriExemploAlterado2.Size = new System.Drawing.Size(277, 34);
             this.toolStriExemploAlterado2.Text = "Opção Exemplo";
             // 
             // toolStriExemploAlterado3
             // 
             this.toolStriExemploAlterado3.Name = "toolStriExemploAlterado3";
-            this.toolStriExemploAlterado3.Size = new System.Drawing.Size(183, 24);
+            this.toolStriExemploAlterado3.Size = new System.Drawing.Size(277, 34);
             this.toolStriExemploAlterado3.Text = "Opção Exemplo";
             // 
             // toolStriExemploAlterado4
             // 
             this.toolStriExemploAlterado4.Name = "toolStriExemploAlterado4";
-            this.toolStriExemploAlterado4.Size = new System.Drawing.Size(183, 24);
+            this.toolStriExemploAlterado4.Size = new System.Drawing.Size(277, 34);
             this.toolStriExemploAlterado4.Text = "Opção Exemplo";
             // 
             // pnlOpcaoListView
@@ -572,7 +573,7 @@
             this.lnkOpcaoCorFundoLinha2.Location = new System.Drawing.Point(24, 128);
             this.lnkOpcaoCorFundoLinha2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoLinha2.Name = "lnkOpcaoCorFundoLinha2";
-            this.lnkOpcaoCorFundoLinha2.Size = new System.Drawing.Size(247, 19);
+            this.lnkOpcaoCorFundoLinha2.Size = new System.Drawing.Size(320, 36);
             this.lnkOpcaoCorFundoLinha2.TabIndex = 6;
             this.lnkOpcaoCorFundoLinha2.TabStop = true;
             this.lnkOpcaoCorFundoLinha2.Text = "Alterar a Cor de Fundo do 2° Linha ";
@@ -588,7 +589,7 @@
             this.lnkOpcaoCorFundoCabecalho.Location = new System.Drawing.Point(24, 20);
             this.lnkOpcaoCorFundoCabecalho.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoCabecalho.Name = "lnkOpcaoCorFundoCabecalho";
-            this.lnkOpcaoCorFundoCabecalho.Size = new System.Drawing.Size(257, 19);
+            this.lnkOpcaoCorFundoCabecalho.Size = new System.Drawing.Size(292, 36);
             this.lnkOpcaoCorFundoCabecalho.TabIndex = 3;
             this.lnkOpcaoCorFundoCabecalho.TabStop = true;
             this.lnkOpcaoCorFundoCabecalho.Text = "Alterar a Cor de Fundo do Cabeçalho";
@@ -604,7 +605,7 @@
             this.lnkOpcaoCorFundoLinha1.Location = new System.Drawing.Point(24, 92);
             this.lnkOpcaoCorFundoLinha1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoLinha1.Name = "lnkOpcaoCorFundoLinha1";
-            this.lnkOpcaoCorFundoLinha1.Size = new System.Drawing.Size(247, 19);
+            this.lnkOpcaoCorFundoLinha1.Size = new System.Drawing.Size(320, 36);
             this.lnkOpcaoCorFundoLinha1.TabIndex = 5;
             this.lnkOpcaoCorFundoLinha1.TabStop = true;
             this.lnkOpcaoCorFundoLinha1.Text = "Alterar a Cor de Fundo do 1° Linha ";
@@ -620,7 +621,7 @@
             this.lnkOpcaoCorFundoColunaSelecionada.Location = new System.Drawing.Point(24, 56);
             this.lnkOpcaoCorFundoColunaSelecionada.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoColunaSelecionada.Name = "lnkOpcaoCorFundoColunaSelecionada";
-            this.lnkOpcaoCorFundoColunaSelecionada.Size = new System.Drawing.Size(318, 19);
+            this.lnkOpcaoCorFundoColunaSelecionada.Size = new System.Drawing.Size(292, 36);
             this.lnkOpcaoCorFundoColunaSelecionada.TabIndex = 4;
             this.lnkOpcaoCorFundoColunaSelecionada.TabStop = true;
             this.lnkOpcaoCorFundoColunaSelecionada.Text = "Alterar a Cor de Fundo da Coluna Selecionada";
@@ -670,7 +671,7 @@
             this.lnkOpcaoCorFundoDescricaoTransparente.Location = new System.Drawing.Point(24, 128);
             this.lnkOpcaoCorFundoDescricaoTransparente.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoDescricaoTransparente.Name = "lnkOpcaoCorFundoDescricaoTransparente";
-            this.lnkOpcaoCorFundoDescricaoTransparente.Size = new System.Drawing.Size(295, 19);
+            this.lnkOpcaoCorFundoDescricaoTransparente.Size = new System.Drawing.Size(321, 36);
             this.lnkOpcaoCorFundoDescricaoTransparente.TabIndex = 6;
             this.lnkOpcaoCorFundoDescricaoTransparente.TabStop = true;
             this.lnkOpcaoCorFundoDescricaoTransparente.Text = "Alterar a Cor de Fundo como Transparente";
@@ -686,7 +687,7 @@
             this.lnkOpcaoCorFundoDescricao.Location = new System.Drawing.Point(24, 20);
             this.lnkOpcaoCorFundoDescricao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoDescricao.Name = "lnkOpcaoCorFundoDescricao";
-            this.lnkOpcaoCorFundoDescricao.Size = new System.Drawing.Size(254, 19);
+            this.lnkOpcaoCorFundoDescricao.Size = new System.Drawing.Size(292, 36);
             this.lnkOpcaoCorFundoDescricao.TabIndex = 3;
             this.lnkOpcaoCorFundoDescricao.TabStop = true;
             this.lnkOpcaoCorFundoDescricao.Text = "Alterar a Cor de Fundo da Descrição";
@@ -702,7 +703,7 @@
             this.lnkOpcaoFonteDescricao.Location = new System.Drawing.Point(24, 92);
             this.lnkOpcaoFonteDescricao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoFonteDescricao.Name = "lnkOpcaoFonteDescricao";
-            this.lnkOpcaoFonteDescricao.Size = new System.Drawing.Size(206, 19);
+            this.lnkOpcaoFonteDescricao.Size = new System.Drawing.Size(316, 26);
             this.lnkOpcaoFonteDescricao.TabIndex = 5;
             this.lnkOpcaoFonteDescricao.TabStop = true;
             this.lnkOpcaoFonteDescricao.Text = "Alterar a  Fonte da Descrição";
@@ -718,7 +719,7 @@
             this.lnkOpcaoCorFonteDescricao.Location = new System.Drawing.Point(24, 56);
             this.lnkOpcaoCorFonteDescricao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFonteDescricao.Name = "lnkOpcaoCorFonteDescricao";
-            this.lnkOpcaoCorFonteDescricao.Size = new System.Drawing.Size(251, 19);
+            this.lnkOpcaoCorFonteDescricao.Size = new System.Drawing.Size(286, 36);
             this.lnkOpcaoCorFonteDescricao.TabIndex = 4;
             this.lnkOpcaoCorFonteDescricao.TabStop = true;
             this.lnkOpcaoCorFonteDescricao.Text = "Alterar a Cor da Fonte da Descrição";
@@ -766,7 +767,7 @@
             this.lnkOpcaoTemaPadrao.Location = new System.Drawing.Point(24, 92);
             this.lnkOpcaoTemaPadrao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoTemaPadrao.Name = "lnkOpcaoTemaPadrao";
-            this.lnkOpcaoTemaPadrao.Size = new System.Drawing.Size(245, 19);
+            this.lnkOpcaoTemaPadrao.Size = new System.Drawing.Size(278, 36);
             this.lnkOpcaoTemaPadrao.TabIndex = 9;
             this.lnkOpcaoTemaPadrao.TabStop = true;
             this.lnkOpcaoTemaPadrao.Text = "Configuração Padrão dos Controles";
@@ -781,7 +782,7 @@
             this.lnkOpcaoTemaEscuro.Location = new System.Drawing.Point(24, 56);
             this.lnkOpcaoTemaEscuro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoTemaEscuro.Name = "lnkOpcaoTemaEscuro";
-            this.lnkOpcaoTemaEscuro.Size = new System.Drawing.Size(189, 19);
+            this.lnkOpcaoTemaEscuro.Size = new System.Drawing.Size(290, 26);
             this.lnkOpcaoTemaEscuro.TabIndex = 10;
             this.lnkOpcaoTemaEscuro.TabStop = true;
             this.lnkOpcaoTemaEscuro.Text = "Configuração Tema Escuro";
@@ -796,7 +797,7 @@
             this.lnkOpcaoTemaClaro.Location = new System.Drawing.Point(24, 20);
             this.lnkOpcaoTemaClaro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoTemaClaro.Name = "lnkOpcaoTemaClaro";
-            this.lnkOpcaoTemaClaro.Size = new System.Drawing.Size(180, 19);
+            this.lnkOpcaoTemaClaro.Size = new System.Drawing.Size(277, 26);
             this.lnkOpcaoTemaClaro.TabIndex = 8;
             this.lnkOpcaoTemaClaro.TabStop = true;
             this.lnkOpcaoTemaClaro.Text = "Configuração Tema Claro";
@@ -845,7 +846,7 @@
             this.lnkOpcaoCorFonteMenu.Location = new System.Drawing.Point(24, 92);
             this.lnkOpcaoCorFonteMenu.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFonteMenu.Name = "lnkOpcaoCorFonteMenu";
-            this.lnkOpcaoCorFonteMenu.Size = new System.Drawing.Size(224, 19);
+            this.lnkOpcaoCorFonteMenu.Size = new System.Drawing.Size(286, 36);
             this.lnkOpcaoCorFonteMenu.TabIndex = 4;
             this.lnkOpcaoCorFonteMenu.TabStop = true;
             this.lnkOpcaoCorFonteMenu.Text = "Alterar a Cor da Fonte do Menu";
@@ -861,7 +862,7 @@
             this.lnkOpcaoCorFormulario.Location = new System.Drawing.Point(24, 20);
             this.lnkOpcaoCorFormulario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFormulario.Name = "lnkOpcaoCorFormulario";
-            this.lnkOpcaoCorFormulario.Size = new System.Drawing.Size(195, 19);
+            this.lnkOpcaoCorFormulario.Size = new System.Drawing.Size(309, 26);
             this.lnkOpcaoCorFormulario.TabIndex = 2;
             this.lnkOpcaoCorFormulario.TabStop = true;
             this.lnkOpcaoCorFormulario.Text = "Alterar a Cor do Formulário";
@@ -877,7 +878,7 @@
             this.lnkOpcaoCorFundoMenu.Location = new System.Drawing.Point(24, 56);
             this.lnkOpcaoCorFundoMenu.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoMenu.Name = "lnkOpcaoCorFundoMenu";
-            this.lnkOpcaoCorFundoMenu.Size = new System.Drawing.Size(227, 19);
+            this.lnkOpcaoCorFundoMenu.Size = new System.Drawing.Size(292, 36);
             this.lnkOpcaoCorFundoMenu.TabIndex = 3;
             this.lnkOpcaoCorFundoMenu.TabStop = true;
             this.lnkOpcaoCorFundoMenu.Text = "Alterar a Cor de Fundo do Menu";
@@ -926,7 +927,7 @@
             this.lnkOpcaoFonteBotao.Location = new System.Drawing.Point(24, 92);
             this.lnkOpcaoFonteBotao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoFonteBotao.Name = "lnkOpcaoFonteBotao";
-            this.lnkOpcaoFonteBotao.Size = new System.Drawing.Size(179, 19);
+            this.lnkOpcaoFonteBotao.Size = new System.Drawing.Size(275, 26);
             this.lnkOpcaoFonteBotao.TabIndex = 5;
             this.lnkOpcaoFonteBotao.TabStop = true;
             this.lnkOpcaoFonteBotao.Text = "Alterar a  Fonte do Botão";
@@ -942,7 +943,7 @@
             this.lnkOpcaoCorFundoBotao.Location = new System.Drawing.Point(24, 20);
             this.lnkOpcaoCorFundoBotao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoBotao.Name = "lnkOpcaoCorFundoBotao";
-            this.lnkOpcaoCorFundoBotao.Size = new System.Drawing.Size(227, 19);
+            this.lnkOpcaoCorFundoBotao.Size = new System.Drawing.Size(292, 36);
             this.lnkOpcaoCorFundoBotao.TabIndex = 3;
             this.lnkOpcaoCorFundoBotao.TabStop = true;
             this.lnkOpcaoCorFundoBotao.Text = "Alterar a Cor de Fundo do Botão";
@@ -958,7 +959,7 @@
             this.lnkOpcaoCorFonteBotao.Location = new System.Drawing.Point(24, 56);
             this.lnkOpcaoCorFonteBotao.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFonteBotao.Name = "lnkOpcaoCorFonteBotao";
-            this.lnkOpcaoCorFonteBotao.Size = new System.Drawing.Size(224, 19);
+            this.lnkOpcaoCorFonteBotao.Size = new System.Drawing.Size(286, 36);
             this.lnkOpcaoCorFonteBotao.TabIndex = 4;
             this.lnkOpcaoCorFonteBotao.TabStop = true;
             this.lnkOpcaoCorFonteBotao.Text = "Alterar a Cor da Fonte do Botão";
@@ -1007,7 +1008,7 @@
             this.lnkOpcaoFonteCampo.Location = new System.Drawing.Point(24, 92);
             this.lnkOpcaoFonteCampo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoFonteCampo.Name = "lnkOpcaoFonteCampo";
-            this.lnkOpcaoFonteCampo.Size = new System.Drawing.Size(186, 19);
+            this.lnkOpcaoFonteCampo.Size = new System.Drawing.Size(288, 26);
             this.lnkOpcaoFonteCampo.TabIndex = 5;
             this.lnkOpcaoFonteCampo.TabStop = true;
             this.lnkOpcaoFonteCampo.Text = "Alterar a  Fonte do Campo";
@@ -1023,7 +1024,7 @@
             this.lnkOpcaoCorFundoCampo.Location = new System.Drawing.Point(24, 20);
             this.lnkOpcaoCorFundoCampo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoCampo.Name = "lnkOpcaoCorFundoCampo";
-            this.lnkOpcaoCorFundoCampo.Size = new System.Drawing.Size(234, 19);
+            this.lnkOpcaoCorFundoCampo.Size = new System.Drawing.Size(292, 36);
             this.lnkOpcaoCorFundoCampo.TabIndex = 3;
             this.lnkOpcaoCorFundoCampo.TabStop = true;
             this.lnkOpcaoCorFundoCampo.Text = "Alterar a Cor de Fundo do Campo";
@@ -1039,7 +1040,7 @@
             this.lnkOpcaoCorFonteCampo.Location = new System.Drawing.Point(24, 56);
             this.lnkOpcaoCorFonteCampo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFonteCampo.Name = "lnkOpcaoCorFonteCampo";
-            this.lnkOpcaoCorFonteCampo.Size = new System.Drawing.Size(231, 19);
+            this.lnkOpcaoCorFonteCampo.Size = new System.Drawing.Size(286, 36);
             this.lnkOpcaoCorFonteCampo.TabIndex = 4;
             this.lnkOpcaoCorFonteCampo.TabStop = true;
             this.lnkOpcaoCorFonteCampo.Text = "Alterar a Cor da Fonte do Campo";
@@ -1047,7 +1048,7 @@
             // 
             // frmConfigFormulario
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1461, 640);
             this.ControlBox = false;
@@ -1066,6 +1067,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmConfigFormulario";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Configurações do Formulario";
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();
             this.pnlExemplosConfiguracaoAlterada.ResumeLayout(false);

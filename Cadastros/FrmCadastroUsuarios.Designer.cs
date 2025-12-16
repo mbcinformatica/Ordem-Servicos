@@ -30,6 +30,7 @@
             this.txtIDUsuario = new System.Windows.Forms.TextBox();
             this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.lbTotalRegistros = new System.Windows.Forms.Label();
+            this.btnExcluirImagem = new System.Windows.Forms.Button();
             this.listViewUsuario = new System.Windows.Forms.ListView();
             this.pnlBotoes = new System.Windows.Forms.Panel();
             this.btnFechar = new System.Windows.Forms.Button();
@@ -40,7 +41,6 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.tabControlUsuarios = new System.Windows.Forms.TabControl();
             this.tabDadosUsuario = new System.Windows.Forms.TabPage();
-            this.btnExcluirImagem = new System.Windows.Forms.Button();
             this.btnInserirImagem = new System.Windows.Forms.Button();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.lblEmail = new System.Windows.Forms.Label();
@@ -89,7 +89,7 @@
             this.txtIDUsuario.Location = new System.Drawing.Point(1602, 245);
             this.txtIDUsuario.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtIDUsuario.Name = "txtIDUsuario";
-            this.txtIDUsuario.Size = new System.Drawing.Size(28, 26);
+            this.txtIDUsuario.Size = new System.Drawing.Size(28, 35);
             this.txtIDUsuario.TabIndex = 69;
             this.txtIDUsuario.Text = " ";
             this.txtIDUsuario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -112,6 +112,23 @@
             this.lbTotalRegistros.TabIndex = 58;
             this.lbTotalRegistros.Tag = "naoAplicar";
             this.lbTotalRegistros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnExcluirImagem
+            // 
+            this.btnExcluirImagem.AutoSize = true;
+            this.btnExcluirImagem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExcluirImagem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.erpProvider.SetIconAlignment(this.btnExcluirImagem, System.Windows.Forms.ErrorIconAlignment.TopRight);
+            this.btnExcluirImagem.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluirImagem.Image")));
+            this.btnExcluirImagem.Location = new System.Drawing.Point(1270, 110);
+            this.btnExcluirImagem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btnExcluirImagem.Name = "btnExcluirImagem";
+            this.btnExcluirImagem.Size = new System.Drawing.Size(141, 51);
+            this.btnExcluirImagem.TabIndex = 156;
+            this.btnExcluirImagem.Text = "   Excluir";
+            this.btnExcluirImagem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnExcluirImagem.UseVisualStyleBackColor = false;
+            this.btnExcluirImagem.Click += new System.EventHandler(this.btnExcluirImagem_Click);
             // 
             // listViewUsuario
             // 
@@ -158,7 +175,7 @@
             this.btnFechar.Location = new System.Drawing.Point(1274, 5);
             this.btnFechar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(126, 51);
+            this.btnFechar.Size = new System.Drawing.Size(137, 51);
             this.btnFechar.TabIndex = 63;
             this.btnFechar.Text = "   Fechar";
             this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -174,7 +191,7 @@
             this.btnSalvar.Location = new System.Drawing.Point(1005, 5);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(126, 51);
+            this.btnSalvar.Size = new System.Drawing.Size(136, 51);
             this.btnSalvar.TabIndex = 61;
             this.btnSalvar.Text = "    Salvar";
             this.btnSalvar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -190,7 +207,7 @@
             this.btnAlterar.Location = new System.Drawing.Point(872, 5);
             this.btnAlterar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(126, 51);
+            this.btnAlterar.Size = new System.Drawing.Size(140, 51);
             this.btnAlterar.TabIndex = 60;
             this.btnAlterar.Tag = "";
             this.btnAlterar.Text = "   Alterar";
@@ -207,7 +224,7 @@
             this.btnExcluir.Location = new System.Drawing.Point(1138, 5);
             this.btnExcluir.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(126, 51);
+            this.btnExcluir.Size = new System.Drawing.Size(141, 51);
             this.btnExcluir.TabIndex = 62;
             this.btnExcluir.Text = "   Excluir";
             this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -243,7 +260,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(1271, 5);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(126, 51);
+            this.btnCancelar.Size = new System.Drawing.Size(158, 51);
             this.btnCancelar.TabIndex = 64;
             this.btnCancelar.Text = "   Cancelar";
             this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -302,30 +319,13 @@
             this.tabDadosUsuario.Controls.Add(this.imgImagemUsuario);
             this.tabDadosUsuario.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabDadosUsuario.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabDadosUsuario.Location = new System.Drawing.Point(4, 28);
+            this.tabDadosUsuario.Location = new System.Drawing.Point(4, 35);
             this.tabDadosUsuario.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabDadosUsuario.Name = "tabDadosUsuario";
             this.tabDadosUsuario.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabDadosUsuario.Size = new System.Drawing.Size(1415, 249);
+            this.tabDadosUsuario.Size = new System.Drawing.Size(1415, 242);
             this.tabDadosUsuario.TabIndex = 0;
             this.tabDadosUsuario.Text = "Dados do Usuário";
-            // 
-            // btnExcluirImagem
-            // 
-            this.btnExcluirImagem.AutoSize = true;
-            this.btnExcluirImagem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnExcluirImagem.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.erpProvider.SetIconAlignment(this.btnExcluirImagem, System.Windows.Forms.ErrorIconAlignment.TopRight);
-            this.btnExcluirImagem.Image = ((System.Drawing.Image)(resources.GetObject("btnExcluirImagem.Image")));
-            this.btnExcluirImagem.Location = new System.Drawing.Point(1270, 110);
-            this.btnExcluirImagem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.btnExcluirImagem.Name = "btnExcluirImagem";
-            this.btnExcluirImagem.Size = new System.Drawing.Size(126, 51);
-            this.btnExcluirImagem.TabIndex = 156;
-            this.btnExcluirImagem.Text = "   Excluir";
-            this.btnExcluirImagem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnExcluirImagem.UseVisualStyleBackColor = false;
-            this.btnExcluirImagem.Click += new System.EventHandler(this.btnExcluirImagem_Click);
             // 
             // btnInserirImagem
             // 
@@ -336,7 +336,7 @@
             this.btnInserirImagem.Location = new System.Drawing.Point(1270, 41);
             this.btnInserirImagem.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnInserirImagem.Name = "btnInserirImagem";
-            this.btnInserirImagem.Size = new System.Drawing.Size(126, 51);
+            this.btnInserirImagem.Size = new System.Drawing.Size(135, 51);
             this.btnInserirImagem.TabIndex = 155;
             this.btnInserirImagem.Text = "   Inserir";
             this.btnInserirImagem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -349,7 +349,7 @@
             this.txtEmail.Location = new System.Drawing.Point(745, 152);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(342, 26);
+            this.txtEmail.Size = new System.Drawing.Size(342, 35);
             this.txtEmail.TabIndex = 151;
             this.tlpDicas.SetToolTip(this.txtEmail, "Informe o E-Mail.");
             // 
@@ -360,7 +360,7 @@
             this.lblEmail.Location = new System.Drawing.Point(745, 132);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(69, 19);
+            this.lblEmail.Size = new System.Drawing.Size(105, 26);
             this.lblEmail.TabIndex = 154;
             this.lblEmail.Text = "E-Mail..:";
             // 
@@ -370,7 +370,7 @@
             this.txtFone_2.Location = new System.Drawing.Point(577, 152);
             this.txtFone_2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtFone_2.Name = "txtFone_2";
-            this.txtFone_2.Size = new System.Drawing.Size(138, 26);
+            this.txtFone_2.Size = new System.Drawing.Size(138, 35);
             this.txtFone_2.TabIndex = 150;
             this.txtFone_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtFone_2.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -383,7 +383,7 @@
             this.lbFone_2.Location = new System.Drawing.Point(577, 132);
             this.lbFone_2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFone_2.Name = "lbFone_2";
-            this.lbFone_2.Size = new System.Drawing.Size(51, 19);
+            this.lbFone_2.Size = new System.Drawing.Size(78, 26);
             this.lbFone_2.TabIndex = 153;
             this.lbFone_2.Text = "Fixo..:";
             // 
@@ -393,7 +393,7 @@
             this.txtFone_1.Location = new System.Drawing.Point(409, 152);
             this.txtFone_1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtFone_1.Name = "txtFone_1";
-            this.txtFone_1.Size = new System.Drawing.Size(138, 26);
+            this.txtFone_1.Size = new System.Drawing.Size(138, 35);
             this.txtFone_1.TabIndex = 149;
             this.txtFone_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtFone_1.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -406,7 +406,7 @@
             this.lbFone_1.Location = new System.Drawing.Point(409, 132);
             this.lbFone_1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFone_1.Name = "lbFone_1";
-            this.lbFone_1.Size = new System.Drawing.Size(70, 19);
+            this.lbFone_1.Size = new System.Drawing.Size(108, 26);
             this.lbFone_1.TabIndex = 152;
             this.lbFone_1.Text = "Celular..:";
             // 
@@ -418,7 +418,7 @@
             this.txtUF.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtUF.MaxLength = 2;
             this.txtUF.Name = "txtUF";
-            this.txtUF.Size = new System.Drawing.Size(52, 26);
+            this.txtUF.Size = new System.Drawing.Size(52, 35);
             this.txtUF.TabIndex = 146;
             this.txtUF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tlpDicas.SetToolTip(this.txtUF, "Informe o Estado.");
@@ -430,7 +430,7 @@
             this.lbUF.Location = new System.Drawing.Point(333, 132);
             this.lbUF.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbUF.Name = "lbUF";
-            this.lbUF.Size = new System.Drawing.Size(41, 19);
+            this.lbUF.Size = new System.Drawing.Size(62, 26);
             this.lbUF.TabIndex = 148;
             this.lbUF.Text = "UF..:";
             // 
@@ -441,7 +441,7 @@
             this.txtMunicipio.Location = new System.Drawing.Point(10, 152);
             this.txtMunicipio.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtMunicipio.Name = "txtMunicipio";
-            this.txtMunicipio.Size = new System.Drawing.Size(287, 26);
+            this.txtMunicipio.Size = new System.Drawing.Size(287, 35);
             this.txtMunicipio.TabIndex = 145;
             this.tlpDicas.SetToolTip(this.txtMunicipio, "Informe o Municipio.");
             // 
@@ -452,7 +452,7 @@
             this.lbMunicipio.Location = new System.Drawing.Point(10, 132);
             this.lbMunicipio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbMunicipio.Name = "lbMunicipio";
-            this.lbMunicipio.Size = new System.Drawing.Size(89, 19);
+            this.lbMunicipio.Size = new System.Drawing.Size(138, 26);
             this.lbMunicipio.TabIndex = 147;
             this.lbMunicipio.Text = "Municipio..:";
             // 
@@ -463,7 +463,7 @@
             this.txtBairro.Location = new System.Drawing.Point(776, 91);
             this.txtBairro.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtBairro.Name = "txtBairro";
-            this.txtBairro.Size = new System.Drawing.Size(307, 26);
+            this.txtBairro.Size = new System.Drawing.Size(307, 35);
             this.txtBairro.TabIndex = 141;
             this.tlpDicas.SetToolTip(this.txtBairro, "Informe o Bairro.");
             // 
@@ -474,7 +474,7 @@
             this.lbBairro.Location = new System.Drawing.Point(776, 71);
             this.lbBairro.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbBairro.Name = "lbBairro";
-            this.lbBairro.Size = new System.Drawing.Size(65, 19);
+            this.lbBairro.Size = new System.Drawing.Size(101, 26);
             this.lbBairro.TabIndex = 144;
             this.lbBairro.Text = "Bairro..:";
             // 
@@ -486,7 +486,7 @@
             this.txtNumero.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtNumero.MaxLength = 8;
             this.txtNumero.Name = "txtNumero";
-            this.txtNumero.Size = new System.Drawing.Size(86, 26);
+            this.txtNumero.Size = new System.Drawing.Size(86, 35);
             this.txtNumero.TabIndex = 140;
             this.txtNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tlpDicas.SetToolTip(this.txtNumero, "Informe o Numero.");
@@ -498,7 +498,7 @@
             this.lbNumero.Location = new System.Drawing.Point(646, 71);
             this.lbNumero.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbNumero.Name = "lbNumero";
-            this.lbNumero.Size = new System.Drawing.Size(76, 19);
+            this.lbNumero.Size = new System.Drawing.Size(115, 26);
             this.lbNumero.TabIndex = 143;
             this.lbNumero.Text = "Numero..:";
             // 
@@ -509,7 +509,7 @@
             this.txtEndereco.Location = new System.Drawing.Point(162, 91);
             this.txtEndereco.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtEndereco.Name = "txtEndereco";
-            this.txtEndereco.Size = new System.Drawing.Size(440, 26);
+            this.txtEndereco.Size = new System.Drawing.Size(440, 35);
             this.txtEndereco.TabIndex = 139;
             this.tlpDicas.SetToolTip(this.txtEndereco, "Informe o Endereço.");
             // 
@@ -520,7 +520,7 @@
             this.lbEndereco.Location = new System.Drawing.Point(162, 71);
             this.lbEndereco.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbEndereco.Name = "lbEndereco";
-            this.lbEndereco.Size = new System.Drawing.Size(85, 19);
+            this.lbEndereco.Size = new System.Drawing.Size(130, 26);
             this.lbEndereco.TabIndex = 142;
             this.lbEndereco.Text = "Endereço..:";
             // 
@@ -532,7 +532,7 @@
             this.txtCep.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtCep.Name = "txtCep";
             this.txtCep.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtCep.Size = new System.Drawing.Size(108, 26);
+            this.txtCep.Size = new System.Drawing.Size(108, 35);
             this.txtCep.TabIndex = 136;
             this.txtCep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtCep.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -545,7 +545,7 @@
             this.lbCep.Location = new System.Drawing.Point(10, 71);
             this.lbCep.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbCep.Name = "lbCep";
-            this.lbCep.Size = new System.Drawing.Size(49, 19);
+            this.lbCep.Size = new System.Drawing.Size(73, 26);
             this.lbCep.TabIndex = 137;
             this.lbCep.Text = "Cep..:";
             // 
@@ -555,7 +555,7 @@
             this.txtConfirmaSenha.Location = new System.Drawing.Point(948, 30);
             this.txtConfirmaSenha.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtConfirmaSenha.Name = "txtConfirmaSenha";
-            this.txtConfirmaSenha.Size = new System.Drawing.Size(136, 26);
+            this.txtConfirmaSenha.Size = new System.Drawing.Size(136, 35);
             this.txtConfirmaSenha.TabIndex = 134;
             this.tlpDicas.SetToolTip(this.txtConfirmaSenha, "Confirme a Senha.");
             this.txtConfirmaSenha.UseSystemPasswordChar = true;
@@ -567,7 +567,7 @@
             this.lblConfirme.Location = new System.Drawing.Point(948, 10);
             this.lblConfirme.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblConfirme.Name = "lblConfirme";
-            this.lblConfirme.Size = new System.Drawing.Size(129, 19);
+            this.lblConfirme.Size = new System.Drawing.Size(197, 26);
             this.lblConfirme.TabIndex = 135;
             this.lblConfirme.Text = "Confirme Senha..:";
             // 
@@ -577,7 +577,7 @@
             this.txtSenha.Location = new System.Drawing.Point(773, 30);
             this.txtSenha.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtSenha.Name = "txtSenha";
-            this.txtSenha.Size = new System.Drawing.Size(136, 26);
+            this.txtSenha.Size = new System.Drawing.Size(136, 35);
             this.txtSenha.TabIndex = 130;
             this.tlpDicas.SetToolTip(this.txtSenha, "Informe a Senha.");
             this.txtSenha.UseSystemPasswordChar = true;
@@ -589,7 +589,7 @@
             this.lblSenha.Location = new System.Drawing.Point(773, 10);
             this.lblSenha.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSenha.Name = "lblSenha";
-            this.lblSenha.Size = new System.Drawing.Size(63, 19);
+            this.lblSenha.Size = new System.Drawing.Size(94, 26);
             this.lblSenha.TabIndex = 133;
             this.lblSenha.Text = "Senha..:";
             // 
@@ -599,7 +599,7 @@
             this.txtLogin.Location = new System.Drawing.Point(519, 26);
             this.txtLogin.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(215, 26);
+            this.txtLogin.Size = new System.Drawing.Size(215, 35);
             this.txtLogin.TabIndex = 129;
             this.tlpDicas.SetToolTip(this.txtLogin, "Informe o Login.");
             // 
@@ -610,7 +610,7 @@
             this.lblLogin.Location = new System.Drawing.Point(519, 6);
             this.lblLogin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLogin.Name = "lblLogin";
-            this.lblLogin.Size = new System.Drawing.Size(60, 19);
+            this.lblLogin.Size = new System.Drawing.Size(92, 26);
             this.lblLogin.TabIndex = 132;
             this.lblLogin.Text = "Login..:";
             // 
@@ -623,7 +623,7 @@
             this.txtNome.Location = new System.Drawing.Point(10, 30);
             this.txtNome.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(470, 26);
+            this.txtNome.Size = new System.Drawing.Size(470, 35);
             this.txtNome.TabIndex = 128;
             this.tlpDicas.SetToolTip(this.txtNome, "Informe o Nome Completo.");
             // 
@@ -636,7 +636,7 @@
             this.lbNome.Location = new System.Drawing.Point(10, 10);
             this.lbNome.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbNome.Name = "lbNome";
-            this.lbNome.Size = new System.Drawing.Size(130, 19);
+            this.lbNome.Size = new System.Drawing.Size(196, 26);
             this.lbNome.TabIndex = 131;
             this.lbNome.Text = "Nome Completo..:";
             // 
@@ -648,7 +648,7 @@
             this.txtPesquisaListView.Location = new System.Drawing.Point(10, 210);
             this.txtPesquisaListView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtPesquisaListView.Name = "txtPesquisaListView";
-            this.txtPesquisaListView.Size = new System.Drawing.Size(490, 26);
+            this.txtPesquisaListView.Size = new System.Drawing.Size(490, 35);
             this.txtPesquisaListView.TabIndex = 56;
             this.tlpDicas.SetToolTip(this.txtPesquisaListView, "Informe o Usuário a Pesquisar.");
             this.txtPesquisaListView.TextChanged += new System.EventHandler(this.txtPesquisaListView_TextChanged);
@@ -660,7 +660,7 @@
             this.lblPesquisaListView.Location = new System.Drawing.Point(10, 190);
             this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPesquisaListView.Name = "lblPesquisaListView";
-            this.lblPesquisaListView.Size = new System.Drawing.Size(137, 19);
+            this.lblPesquisaListView.Size = new System.Drawing.Size(208, 26);
             this.lblPesquisaListView.TabIndex = 57;
             this.lblPesquisaListView.Text = "Pesquisa Usuário..:";
             // 
@@ -674,7 +674,7 @@
             this.lbImagemUsuario.Location = new System.Drawing.Point(1110, 6);
             this.lbImagemUsuario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbImagemUsuario.Name = "lbImagemUsuario";
-            this.lbImagemUsuario.Size = new System.Drawing.Size(132, 19);
+            this.lbImagemUsuario.Size = new System.Drawing.Size(201, 26);
             this.lbImagemUsuario.TabIndex = 90;
             this.lbImagemUsuario.Text = "Imagem Usuário..:";
             this.lbImagemUsuario.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -699,11 +699,11 @@
             this.tabInformacoesAdicionais.Controls.Add(this.txtDataCadastro);
             this.tabInformacoesAdicionais.Controls.Add(this.lbDataCadastro);
             this.tabInformacoesAdicionais.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tabInformacoesAdicionais.Location = new System.Drawing.Point(4, 28);
+            this.tabInformacoesAdicionais.Location = new System.Drawing.Point(4, 35);
             this.tabInformacoesAdicionais.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabInformacoesAdicionais.Name = "tabInformacoesAdicionais";
             this.tabInformacoesAdicionais.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabInformacoesAdicionais.Size = new System.Drawing.Size(1415, 249);
+            this.tabInformacoesAdicionais.Size = new System.Drawing.Size(1415, 242);
             this.tabInformacoesAdicionais.TabIndex = 1;
             this.tabInformacoesAdicionais.Text = "  Informações Adicionais";
             // 
@@ -714,7 +714,7 @@
             this.txtDataCadastro.Location = new System.Drawing.Point(12, 35);
             this.txtDataCadastro.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtDataCadastro.Name = "txtDataCadastro";
-            this.txtDataCadastro.Size = new System.Drawing.Size(174, 26);
+            this.txtDataCadastro.Size = new System.Drawing.Size(174, 35);
             this.txtDataCadastro.TabIndex = 114;
             this.txtDataCadastro.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tlpDicas.SetToolTip(this.txtDataCadastro, "Informe a Data do Cadastro.");
@@ -730,7 +730,7 @@
             // 
             // frmUsuarios
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1461, 640);
             this.ControlBox = false;
@@ -741,6 +741,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmUsuarios";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastro de Usuários";
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();
             this.pnlBotoes.ResumeLayout(false);

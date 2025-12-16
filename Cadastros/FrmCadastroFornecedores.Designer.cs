@@ -43,6 +43,7 @@
             this.lbTotalRegistros = new System.Windows.Forms.Label();
             this.tabControlFornecedores = new System.Windows.Forms.TabControl();
             this.tabDadosFornecedor = new System.Windows.Forms.TabPage();
+            this.btnCancelaImportacao = new System.Windows.Forms.Button();
             this.progressBarCNPJs = new System.Windows.Forms.ProgressBar();
             this.lblProgressoCNPJs = new System.Windows.Forms.Label();
             this.btnCarregaArquivoCnpj = new System.Windows.Forms.Button();
@@ -79,7 +80,6 @@
             this.btnCarregaArquivoCpf = new System.Windows.Forms.Button();
             this.tabInformacoesAdicionais = new System.Windows.Forms.TabPage();
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
-            this.btnCancelaImportacao = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.pnlBotoes.SuspendLayout();
             this.tabControlFornecedores.SuspendLayout();
@@ -112,7 +112,7 @@
             this.txtIDFornecedor.Location = new System.Drawing.Point(1363, 210);
             this.txtIDFornecedor.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtIDFornecedor.Name = "txtIDFornecedor";
-            this.txtIDFornecedor.Size = new System.Drawing.Size(29, 22);
+            this.txtIDFornecedor.Size = new System.Drawing.Size(29, 30);
             this.txtIDFornecedor.TabIndex = 13;
             this.txtIDFornecedor.Text = " ";
             this.txtIDFornecedor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -143,7 +143,7 @@
             this.btnFechar.Location = new System.Drawing.Point(1274, 3);
             this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
             this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(126, 51);
+            this.btnFechar.Size = new System.Drawing.Size(137, 51);
             this.btnFechar.TabIndex = 69;
             this.btnFechar.Text = "   Fechar";
             this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -159,7 +159,7 @@
             this.btnSalvar.Location = new System.Drawing.Point(1007, 3);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(4);
             this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(126, 51);
+            this.btnSalvar.Size = new System.Drawing.Size(136, 51);
             this.btnSalvar.TabIndex = 67;
             this.btnSalvar.Text = "    Salvar";
             this.btnSalvar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -175,7 +175,7 @@
             this.btnAlterar.Location = new System.Drawing.Point(873, 3);
             this.btnAlterar.Margin = new System.Windows.Forms.Padding(4);
             this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(126, 51);
+            this.btnAlterar.Size = new System.Drawing.Size(140, 51);
             this.btnAlterar.TabIndex = 66;
             this.btnAlterar.Tag = "";
             this.btnAlterar.Text = "   Alterar";
@@ -192,7 +192,7 @@
             this.btnExcluir.Location = new System.Drawing.Point(1140, 3);
             this.btnExcluir.Margin = new System.Windows.Forms.Padding(4);
             this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(126, 51);
+            this.btnExcluir.Size = new System.Drawing.Size(141, 51);
             this.btnExcluir.TabIndex = 68;
             this.btnExcluir.Text = "   Excluir";
             this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -224,7 +224,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(1274, 3);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(127, 51);
+            this.btnCancelar.Size = new System.Drawing.Size(158, 51);
             this.btnCancelar.TabIndex = 70;
             this.btnCancelar.Text = "   Cancelar";
             this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -309,6 +309,25 @@
             this.tabDadosFornecedor.TabIndex = 0;
             this.tabDadosFornecedor.Text = "Dados do Fornecedor";
             // 
+            // btnCancelaImportacao
+            // 
+            this.btnCancelaImportacao.AutoSize = true;
+            this.btnCancelaImportacao.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelaImportacao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelaImportacao.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelaImportacao.Image")));
+            this.btnCancelaImportacao.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCancelaImportacao.Location = new System.Drawing.Point(363, 188);
+            this.btnCancelaImportacao.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelaImportacao.Name = "btnCancelaImportacao";
+            this.btnCancelaImportacao.Size = new System.Drawing.Size(648, 53);
+            this.btnCancelaImportacao.TabIndex = 127;
+            this.btnCancelaImportacao.Text = "    Cancelar Importação";
+            this.btnCancelaImportacao.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancelaImportacao.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCancelaImportacao.UseVisualStyleBackColor = false;
+            this.btnCancelaImportacao.Visible = false;
+            this.btnCancelaImportacao.Click += new System.EventHandler(this.btnCancelaImportacao_Click);
+            // 
             // progressBarCNPJs
             // 
             this.progressBarCNPJs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -346,7 +365,7 @@
             this.btnCarregaArquivoCnpj.Location = new System.Drawing.Point(473, 198);
             this.btnCarregaArquivoCnpj.Margin = new System.Windows.Forms.Padding(4);
             this.btnCarregaArquivoCnpj.Name = "btnCarregaArquivoCnpj";
-            this.btnCarregaArquivoCnpj.Size = new System.Drawing.Size(252, 41);
+            this.btnCarregaArquivoCnpj.Size = new System.Drawing.Size(299, 41);
             this.btnCarregaArquivoCnpj.TabIndex = 122;
             this.btnCarregaArquivoCnpj.Text = "Carregar Arquivo CNPJ";
             this.btnCarregaArquivoCnpj.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -360,7 +379,7 @@
             this.lblEmail.Location = new System.Drawing.Point(782, 132);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(69, 19);
+            this.lblEmail.Size = new System.Drawing.Size(105, 26);
             this.lblEmail.TabIndex = 118;
             this.lblEmail.Text = "E-Mail..:";
             // 
@@ -373,7 +392,7 @@
             this.txtPesquisaListView.Location = new System.Drawing.Point(10, 210);
             this.txtPesquisaListView.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtPesquisaListView.Name = "txtPesquisaListView";
-            this.txtPesquisaListView.Size = new System.Drawing.Size(431, 26);
+            this.txtPesquisaListView.Size = new System.Drawing.Size(431, 35);
             this.txtPesquisaListView.TabIndex = 119;
             this.txtPesquisaListView.TextChanged += new System.EventHandler(this.txtPesquisaListView_TextChanged);
             // 
@@ -384,7 +403,7 @@
             this.lbContato.Location = new System.Drawing.Point(10, 132);
             this.lbContato.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbContato.Name = "lbContato";
-            this.lbContato.Size = new System.Drawing.Size(75, 19);
+            this.lbContato.Size = new System.Drawing.Size(114, 26);
             this.lbContato.TabIndex = 117;
             this.lbContato.Text = "Contato..:";
             // 
@@ -397,7 +416,7 @@
             this.txtUF.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtUF.MaxLength = 2;
             this.txtUF.Name = "txtUF";
-            this.txtUF.Size = new System.Drawing.Size(51, 26);
+            this.txtUF.Size = new System.Drawing.Size(51, 35);
             this.txtUF.TabIndex = 102;
             this.txtUF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -409,7 +428,7 @@
             this.txtContato.Location = new System.Drawing.Point(10, 152);
             this.txtContato.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtContato.Name = "txtContato";
-            this.txtContato.Size = new System.Drawing.Size(431, 26);
+            this.txtContato.Size = new System.Drawing.Size(431, 35);
             this.txtContato.TabIndex = 104;
             // 
             // lblPesquisaListView
@@ -419,7 +438,7 @@
             this.lblPesquisaListView.Location = new System.Drawing.Point(10, 190);
             this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblPesquisaListView.Name = "lblPesquisaListView";
-            this.lblPesquisaListView.Size = new System.Drawing.Size(160, 19);
+            this.lblPesquisaListView.Size = new System.Drawing.Size(245, 26);
             this.lblPesquisaListView.TabIndex = 120;
             this.lblPesquisaListView.Text = "Pesquisa Fornecedor..:";
             // 
@@ -430,7 +449,7 @@
             this.txtEmail.Location = new System.Drawing.Point(782, 152);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(606, 26);
+            this.txtEmail.Size = new System.Drawing.Size(606, 35);
             this.txtEmail.TabIndex = 107;
             // 
             // lbUF
@@ -440,7 +459,7 @@
             this.lbUF.Location = new System.Drawing.Point(1342, 71);
             this.lbUF.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbUF.Name = "lbUF";
-            this.lbUF.Size = new System.Drawing.Size(41, 19);
+            this.lbUF.Size = new System.Drawing.Size(62, 26);
             this.lbUF.TabIndex = 116;
             this.lbUF.Text = "UF..:";
             // 
@@ -452,7 +471,7 @@
             this.txtMunicipio.Location = new System.Drawing.Point(895, 91);
             this.txtMunicipio.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtMunicipio.Name = "txtMunicipio";
-            this.txtMunicipio.Size = new System.Drawing.Size(411, 26);
+            this.txtMunicipio.Size = new System.Drawing.Size(411, 35);
             this.txtMunicipio.TabIndex = 101;
             // 
             // lbMunicipio
@@ -462,7 +481,7 @@
             this.lbMunicipio.Location = new System.Drawing.Point(896, 71);
             this.lbMunicipio.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbMunicipio.Name = "lbMunicipio";
-            this.lbMunicipio.Size = new System.Drawing.Size(89, 19);
+            this.lbMunicipio.Size = new System.Drawing.Size(138, 26);
             this.lbMunicipio.TabIndex = 115;
             this.lbMunicipio.Text = "Municipio..:";
             // 
@@ -474,7 +493,7 @@
             this.txtBairro.Location = new System.Drawing.Point(597, 91);
             this.txtBairro.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtBairro.Name = "txtBairro";
-            this.txtBairro.Size = new System.Drawing.Size(267, 26);
+            this.txtBairro.Size = new System.Drawing.Size(267, 35);
             this.txtBairro.TabIndex = 99;
             // 
             // lbBairro
@@ -484,7 +503,7 @@
             this.lbBairro.Location = new System.Drawing.Point(597, 71);
             this.lbBairro.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbBairro.Name = "lbBairro";
-            this.lbBairro.Size = new System.Drawing.Size(65, 19);
+            this.lbBairro.Size = new System.Drawing.Size(101, 26);
             this.lbBairro.TabIndex = 114;
             this.lbBairro.Text = "Bairro..:";
             // 
@@ -497,7 +516,7 @@
             this.txtNumero.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtNumero.MaxLength = 8;
             this.txtNumero.Name = "txtNumero";
-            this.txtNumero.Size = new System.Drawing.Size(92, 26);
+            this.txtNumero.Size = new System.Drawing.Size(92, 35);
             this.txtNumero.TabIndex = 97;
             this.txtNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -508,7 +527,7 @@
             this.lbNumero.Location = new System.Drawing.Point(473, 71);
             this.lbNumero.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbNumero.Name = "lbNumero";
-            this.lbNumero.Size = new System.Drawing.Size(76, 19);
+            this.lbNumero.Size = new System.Drawing.Size(115, 26);
             this.lbNumero.TabIndex = 113;
             this.lbNumero.Text = "Numero..:";
             // 
@@ -520,7 +539,7 @@
             this.txtEndereco.Location = new System.Drawing.Point(10, 91);
             this.txtEndereco.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtEndereco.Name = "txtEndereco";
-            this.txtEndereco.Size = new System.Drawing.Size(431, 26);
+            this.txtEndereco.Size = new System.Drawing.Size(431, 35);
             this.txtEndereco.TabIndex = 96;
             // 
             // lbEndereco
@@ -530,7 +549,7 @@
             this.lbEndereco.Location = new System.Drawing.Point(10, 71);
             this.lbEndereco.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbEndereco.Name = "lbEndereco";
-            this.lbEndereco.Size = new System.Drawing.Size(85, 19);
+            this.lbEndereco.Size = new System.Drawing.Size(130, 26);
             this.lbEndereco.TabIndex = 112;
             this.lbEndereco.Text = "Endereço..:";
             // 
@@ -541,7 +560,7 @@
             this.rdbCnpj.Location = new System.Drawing.Point(10, 34);
             this.rdbCnpj.Margin = new System.Windows.Forms.Padding(4);
             this.rdbCnpj.Name = "rdbCnpj";
-            this.rdbCnpj.Size = new System.Drawing.Size(131, 23);
+            this.rdbCnpj.Size = new System.Drawing.Size(197, 30);
             this.rdbCnpj.TabIndex = 90;
             this.rdbCnpj.Text = "Pessoa Jurídica";
             this.rdbCnpj.UseVisualStyleBackColor = false;
@@ -554,7 +573,7 @@
             this.rdbCpf.Location = new System.Drawing.Point(10, 10);
             this.rdbCpf.Margin = new System.Windows.Forms.Padding(4);
             this.rdbCpf.Name = "rdbCpf";
-            this.rdbCpf.Size = new System.Drawing.Size(117, 23);
+            this.rdbCpf.Size = new System.Drawing.Size(172, 30);
             this.rdbCpf.TabIndex = 89;
             this.rdbCpf.TabStop = true;
             this.rdbCpf.Text = "Pessoa Física";
@@ -567,7 +586,7 @@
             this.txtFone_2.Location = new System.Drawing.Point(627, 152);
             this.txtFone_2.Margin = new System.Windows.Forms.Padding(4);
             this.txtFone_2.Name = "txtFone_2";
-            this.txtFone_2.Size = new System.Drawing.Size(123, 26);
+            this.txtFone_2.Size = new System.Drawing.Size(123, 35);
             this.txtFone_2.TabIndex = 106;
             this.txtFone_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtFone_2.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -579,7 +598,7 @@
             this.lbFone_2.Location = new System.Drawing.Point(627, 132);
             this.lbFone_2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFone_2.Name = "lbFone_2";
-            this.lbFone_2.Size = new System.Drawing.Size(51, 19);
+            this.lbFone_2.Size = new System.Drawing.Size(78, 26);
             this.lbFone_2.TabIndex = 109;
             this.lbFone_2.Text = "Fixo..:";
             // 
@@ -590,7 +609,7 @@
             this.txtFone_1.Location = new System.Drawing.Point(473, 152);
             this.txtFone_1.Margin = new System.Windows.Forms.Padding(4);
             this.txtFone_1.Name = "txtFone_1";
-            this.txtFone_1.Size = new System.Drawing.Size(123, 26);
+            this.txtFone_1.Size = new System.Drawing.Size(123, 35);
             this.txtFone_1.TabIndex = 105;
             this.txtFone_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtFone_1.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -602,7 +621,7 @@
             this.lbFone_1.Location = new System.Drawing.Point(473, 132);
             this.lbFone_1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFone_1.Name = "lbFone_1";
-            this.lbFone_1.Size = new System.Drawing.Size(70, 19);
+            this.lbFone_1.Size = new System.Drawing.Size(108, 26);
             this.lbFone_1.TabIndex = 108;
             this.lbFone_1.Text = "Celular..:";
             // 
@@ -615,7 +634,7 @@
             this.txtCep.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtCep.Name = "txtCep";
             this.txtCep.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtCep.Size = new System.Drawing.Size(93, 26);
+            this.txtCep.Size = new System.Drawing.Size(93, 35);
             this.txtCep.TabIndex = 94;
             this.txtCep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtCep.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -627,7 +646,7 @@
             this.lbCep.Location = new System.Drawing.Point(1295, 10);
             this.lbCep.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbCep.Name = "lbCep";
-            this.lbCep.Size = new System.Drawing.Size(49, 19);
+            this.lbCep.Size = new System.Drawing.Size(73, 26);
             this.lbCep.TabIndex = 103;
             this.lbCep.Text = "Cep..:";
             // 
@@ -639,7 +658,7 @@
             this.txtDataCadastro.Location = new System.Drawing.Point(1107, 33);
             this.txtDataCadastro.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtDataCadastro.Name = "txtDataCadastro";
-            this.txtDataCadastro.Size = new System.Drawing.Size(154, 26);
+            this.txtDataCadastro.Size = new System.Drawing.Size(154, 35);
             this.txtDataCadastro.TabIndex = 92;
             this.txtDataCadastro.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -650,7 +669,7 @@
             this.lbDataCadastro.Location = new System.Drawing.Point(1107, 10);
             this.lbDataCadastro.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbDataCadastro.Name = "lbDataCadastro";
-            this.lbDataCadastro.Size = new System.Drawing.Size(120, 19);
+            this.lbDataCadastro.Size = new System.Drawing.Size(181, 26);
             this.lbDataCadastro.TabIndex = 100;
             this.lbDataCadastro.Text = "Data Cadastro..:";
             // 
@@ -662,7 +681,7 @@
             this.txtNome_RazaoSocial.Location = new System.Drawing.Point(377, 30);
             this.txtNome_RazaoSocial.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtNome_RazaoSocial.Name = "txtNome_RazaoSocial";
-            this.txtNome_RazaoSocial.Size = new System.Drawing.Size(682, 26);
+            this.txtNome_RazaoSocial.Size = new System.Drawing.Size(682, 35);
             this.txtNome_RazaoSocial.TabIndex = 93;
             // 
             // lbNomeRazaoSocial
@@ -672,7 +691,7 @@
             this.lbNomeRazaoSocial.Location = new System.Drawing.Point(377, 10);
             this.lbNomeRazaoSocial.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbNomeRazaoSocial.Name = "lbNomeRazaoSocial";
-            this.lbNomeRazaoSocial.Size = new System.Drawing.Size(152, 19);
+            this.lbNomeRazaoSocial.Size = new System.Drawing.Size(228, 26);
             this.lbNomeRazaoSocial.TabIndex = 98;
             this.lbNomeRazaoSocial.Text = "Nome/Razão Social..:";
             // 
@@ -684,7 +703,7 @@
             this.txtCpf_Cnpj.Location = new System.Drawing.Point(175, 30);
             this.txtCpf_Cnpj.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtCpf_Cnpj.Name = "txtCpf_Cnpj";
-            this.txtCpf_Cnpj.Size = new System.Drawing.Size(156, 26);
+            this.txtCpf_Cnpj.Size = new System.Drawing.Size(156, 35);
             this.txtCpf_Cnpj.TabIndex = 91;
             this.txtCpf_Cnpj.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtCpf_Cnpj.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -696,7 +715,7 @@
             this.lbCpfCnpj.Location = new System.Drawing.Point(175, 10);
             this.lbCpfCnpj.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbCpfCnpj.Name = "lbCpfCnpj";
-            this.lbCpfCnpj.Size = new System.Drawing.Size(81, 19);
+            this.lbCpfCnpj.Size = new System.Drawing.Size(127, 26);
             this.lbCpfCnpj.TabIndex = 95;
             this.lbCpfCnpj.Text = "Cpf/Cnpj..:";
             // 
@@ -709,7 +728,7 @@
             this.btnCarregaArquivoCpf.Location = new System.Drawing.Point(753, 198);
             this.btnCarregaArquivoCpf.Margin = new System.Windows.Forms.Padding(4);
             this.btnCarregaArquivoCpf.Name = "btnCarregaArquivoCpf";
-            this.btnCarregaArquivoCpf.Size = new System.Drawing.Size(252, 41);
+            this.btnCarregaArquivoCpf.Size = new System.Drawing.Size(285, 41);
             this.btnCarregaArquivoCpf.TabIndex = 125;
             this.btnCarregaArquivoCpf.Text = "Carregar Arquivo CPF";
             this.btnCarregaArquivoCpf.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -729,28 +748,9 @@
             this.tabInformacoesAdicionais.TabIndex = 1;
             this.tabInformacoesAdicionais.Text = "  Informações Adicionais";
             // 
-            // btnCancelaImportacao
-            // 
-            this.btnCancelaImportacao.AutoSize = true;
-            this.btnCancelaImportacao.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelaImportacao.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancelaImportacao.Image = ((System.Drawing.Image)(resources.GetObject("btnCancelaImportacao.Image")));
-            this.btnCancelaImportacao.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCancelaImportacao.Location = new System.Drawing.Point(363, 188);
-            this.btnCancelaImportacao.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCancelaImportacao.Name = "btnCancelaImportacao";
-            this.btnCancelaImportacao.Size = new System.Drawing.Size(648, 53);
-            this.btnCancelaImportacao.TabIndex = 127;
-            this.btnCancelaImportacao.Text = "    Cancelar Importação";
-            this.btnCancelaImportacao.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancelaImportacao.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnCancelaImportacao.UseVisualStyleBackColor = false;
-            this.btnCancelaImportacao.Visible = false;
-            this.btnCancelaImportacao.Click += new System.EventHandler(this.btnCancelaImportacao_Click);
-            // 
             // frmFornecedores
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1461, 640);
             this.ControlBox = false;
@@ -761,7 +761,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "frmFornecedores";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Cadastro de Fornecedores";
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();
             this.pnlBotoes.ResumeLayout(false);

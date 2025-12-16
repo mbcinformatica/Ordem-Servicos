@@ -133,7 +133,7 @@ namespace OrdemServicos
             this.txtIDCliente.Location = new System.Drawing.Point(1363, 210);
             this.txtIDCliente.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtIDCliente.Name = "txtIDCliente";
-            this.txtIDCliente.Size = new System.Drawing.Size(29, 22);
+            this.txtIDCliente.Size = new System.Drawing.Size(29, 30);
             this.txtIDCliente.TabIndex = 13;
             this.txtIDCliente.Text = " ";
             this.txtIDCliente.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -164,7 +164,7 @@ namespace OrdemServicos
             this.btnSalvar.Location = new System.Drawing.Point(1007, 3);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(4);
             this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(126, 51);
+            this.btnSalvar.Size = new System.Drawing.Size(136, 51);
             this.btnSalvar.TabIndex = 67;
             this.btnSalvar.Text = "    Salvar";
             this.btnSalvar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -180,7 +180,7 @@ namespace OrdemServicos
             this.btnAlterar.Location = new System.Drawing.Point(873, 3);
             this.btnAlterar.Margin = new System.Windows.Forms.Padding(4);
             this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(126, 51);
+            this.btnAlterar.Size = new System.Drawing.Size(140, 51);
             this.btnAlterar.TabIndex = 66;
             this.btnAlterar.Tag = "";
             this.btnAlterar.Text = "   Alterar";
@@ -197,7 +197,7 @@ namespace OrdemServicos
             this.btnExcluir.Location = new System.Drawing.Point(1140, 3);
             this.btnExcluir.Margin = new System.Windows.Forms.Padding(4);
             this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(126, 51);
+            this.btnExcluir.Size = new System.Drawing.Size(141, 51);
             this.btnExcluir.TabIndex = 68;
             this.btnExcluir.Text = "   Excluir";
             this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -243,7 +243,7 @@ namespace OrdemServicos
             this.btnFechar.Location = new System.Drawing.Point(1274, 3);
             this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
             this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(126, 51);
+            this.btnFechar.Size = new System.Drawing.Size(137, 51);
             this.btnFechar.TabIndex = 69;
             this.btnFechar.Text = "   Fechar";
             this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -259,7 +259,7 @@ namespace OrdemServicos
             this.btnCancelar.Location = new System.Drawing.Point(1274, 3);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(127, 51);
+            this.btnCancelar.Size = new System.Drawing.Size(158, 51);
             this.btnCancelar.TabIndex = 70;
             this.btnCancelar.Text = "   Cancelar";
             this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -364,7 +364,7 @@ namespace OrdemServicos
             this.lblEmail.Location = new System.Drawing.Point(782, 132);
             this.lblEmail.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(69, 19);
+            this.lblEmail.Size = new System.Drawing.Size(105, 26);
             this.lblEmail.TabIndex = 118;
             this.lblEmail.Text = "E-Mail..:";
             // 
@@ -377,7 +377,7 @@ namespace OrdemServicos
             this.txtPesquisaListView.Location = new System.Drawing.Point(10, 210);
             this.txtPesquisaListView.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtPesquisaListView.Name = "txtPesquisaListView";
-            this.txtPesquisaListView.Size = new System.Drawing.Size(431, 26);
+            this.txtPesquisaListView.Size = new System.Drawing.Size(431, 35);
             this.txtPesquisaListView.TabIndex = 119;
             this.txtPesquisaListView.TextChanged += new System.EventHandler(this.txtPesquisaListView_TextChanged);
             // 
@@ -388,7 +388,7 @@ namespace OrdemServicos
             this.lbContato.Location = new System.Drawing.Point(10, 132);
             this.lbContato.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbContato.Name = "lbContato";
-            this.lbContato.Size = new System.Drawing.Size(75, 19);
+            this.lbContato.Size = new System.Drawing.Size(114, 26);
             this.lbContato.TabIndex = 117;
             this.lbContato.Text = "Contato..:";
             // 
@@ -401,7 +401,7 @@ namespace OrdemServicos
             this.txtUF.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtUF.MaxLength = 2;
             this.txtUF.Name = "txtUF";
-            this.txtUF.Size = new System.Drawing.Size(51, 26);
+            this.txtUF.Size = new System.Drawing.Size(51, 35);
             this.txtUF.TabIndex = 102;
             this.txtUF.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -413,7 +413,7 @@ namespace OrdemServicos
             this.txtContato.Location = new System.Drawing.Point(10, 152);
             this.txtContato.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtContato.Name = "txtContato";
-            this.txtContato.Size = new System.Drawing.Size(431, 26);
+            this.txtContato.Size = new System.Drawing.Size(431, 35);
             this.txtContato.TabIndex = 104;
             // 
             // lblPesquisaListView
@@ -423,7 +423,7 @@ namespace OrdemServicos
             this.lblPesquisaListView.Location = new System.Drawing.Point(10, 190);
             this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lblPesquisaListView.Name = "lblPesquisaListView";
-            this.lblPesquisaListView.Size = new System.Drawing.Size(133, 19);
+            this.lblPesquisaListView.Size = new System.Drawing.Size(201, 26);
             this.lblPesquisaListView.TabIndex = 120;
             this.lblPesquisaListView.Text = "Pesquisa Cliente..:";
             // 
@@ -434,7 +434,7 @@ namespace OrdemServicos
             this.txtEmail.Location = new System.Drawing.Point(782, 152);
             this.txtEmail.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(606, 26);
+            this.txtEmail.Size = new System.Drawing.Size(606, 35);
             this.txtEmail.TabIndex = 107;
             // 
             // lbUF
@@ -444,7 +444,7 @@ namespace OrdemServicos
             this.lbUF.Location = new System.Drawing.Point(1342, 71);
             this.lbUF.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbUF.Name = "lbUF";
-            this.lbUF.Size = new System.Drawing.Size(41, 19);
+            this.lbUF.Size = new System.Drawing.Size(62, 26);
             this.lbUF.TabIndex = 116;
             this.lbUF.Text = "UF..:";
             // 
@@ -456,7 +456,7 @@ namespace OrdemServicos
             this.txtMunicipio.Location = new System.Drawing.Point(895, 91);
             this.txtMunicipio.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtMunicipio.Name = "txtMunicipio";
-            this.txtMunicipio.Size = new System.Drawing.Size(411, 26);
+            this.txtMunicipio.Size = new System.Drawing.Size(411, 35);
             this.txtMunicipio.TabIndex = 101;
             // 
             // lbMunicipio
@@ -466,7 +466,7 @@ namespace OrdemServicos
             this.lbMunicipio.Location = new System.Drawing.Point(896, 71);
             this.lbMunicipio.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbMunicipio.Name = "lbMunicipio";
-            this.lbMunicipio.Size = new System.Drawing.Size(89, 19);
+            this.lbMunicipio.Size = new System.Drawing.Size(138, 26);
             this.lbMunicipio.TabIndex = 115;
             this.lbMunicipio.Text = "Municipio..:";
             // 
@@ -478,7 +478,7 @@ namespace OrdemServicos
             this.txtBairro.Location = new System.Drawing.Point(597, 91);
             this.txtBairro.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtBairro.Name = "txtBairro";
-            this.txtBairro.Size = new System.Drawing.Size(267, 26);
+            this.txtBairro.Size = new System.Drawing.Size(267, 35);
             this.txtBairro.TabIndex = 99;
             // 
             // lbBairro
@@ -488,7 +488,7 @@ namespace OrdemServicos
             this.lbBairro.Location = new System.Drawing.Point(597, 71);
             this.lbBairro.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbBairro.Name = "lbBairro";
-            this.lbBairro.Size = new System.Drawing.Size(65, 19);
+            this.lbBairro.Size = new System.Drawing.Size(101, 26);
             this.lbBairro.TabIndex = 114;
             this.lbBairro.Text = "Bairro..:";
             // 
@@ -501,7 +501,7 @@ namespace OrdemServicos
             this.txtNumero.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtNumero.MaxLength = 8;
             this.txtNumero.Name = "txtNumero";
-            this.txtNumero.Size = new System.Drawing.Size(92, 26);
+            this.txtNumero.Size = new System.Drawing.Size(92, 35);
             this.txtNumero.TabIndex = 97;
             this.txtNumero.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -512,7 +512,7 @@ namespace OrdemServicos
             this.lbNumero.Location = new System.Drawing.Point(473, 71);
             this.lbNumero.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbNumero.Name = "lbNumero";
-            this.lbNumero.Size = new System.Drawing.Size(76, 19);
+            this.lbNumero.Size = new System.Drawing.Size(115, 26);
             this.lbNumero.TabIndex = 113;
             this.lbNumero.Text = "Numero..:";
             // 
@@ -524,7 +524,7 @@ namespace OrdemServicos
             this.txtEndereco.Location = new System.Drawing.Point(10, 91);
             this.txtEndereco.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtEndereco.Name = "txtEndereco";
-            this.txtEndereco.Size = new System.Drawing.Size(431, 26);
+            this.txtEndereco.Size = new System.Drawing.Size(431, 35);
             this.txtEndereco.TabIndex = 96;
             // 
             // lbEndereco
@@ -534,7 +534,7 @@ namespace OrdemServicos
             this.lbEndereco.Location = new System.Drawing.Point(10, 71);
             this.lbEndereco.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbEndereco.Name = "lbEndereco";
-            this.lbEndereco.Size = new System.Drawing.Size(85, 19);
+            this.lbEndereco.Size = new System.Drawing.Size(130, 26);
             this.lbEndereco.TabIndex = 112;
             this.lbEndereco.Text = "Endereço..:";
             // 
@@ -545,7 +545,7 @@ namespace OrdemServicos
             this.rdbCnpj.Location = new System.Drawing.Point(10, 34);
             this.rdbCnpj.Margin = new System.Windows.Forms.Padding(4);
             this.rdbCnpj.Name = "rdbCnpj";
-            this.rdbCnpj.Size = new System.Drawing.Size(131, 23);
+            this.rdbCnpj.Size = new System.Drawing.Size(197, 30);
             this.rdbCnpj.TabIndex = 90;
             this.rdbCnpj.Text = "Pessoa Jurídica";
             this.rdbCnpj.UseVisualStyleBackColor = false;
@@ -558,7 +558,7 @@ namespace OrdemServicos
             this.rdbCpf.Location = new System.Drawing.Point(10, 10);
             this.rdbCpf.Margin = new System.Windows.Forms.Padding(4);
             this.rdbCpf.Name = "rdbCpf";
-            this.rdbCpf.Size = new System.Drawing.Size(117, 23);
+            this.rdbCpf.Size = new System.Drawing.Size(172, 30);
             this.rdbCpf.TabIndex = 89;
             this.rdbCpf.TabStop = true;
             this.rdbCpf.Text = "Pessoa Física";
@@ -571,7 +571,7 @@ namespace OrdemServicos
             this.txtFone_2.Location = new System.Drawing.Point(627, 152);
             this.txtFone_2.Margin = new System.Windows.Forms.Padding(4);
             this.txtFone_2.Name = "txtFone_2";
-            this.txtFone_2.Size = new System.Drawing.Size(123, 26);
+            this.txtFone_2.Size = new System.Drawing.Size(123, 35);
             this.txtFone_2.TabIndex = 106;
             this.txtFone_2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtFone_2.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -583,7 +583,7 @@ namespace OrdemServicos
             this.lbFone_2.Location = new System.Drawing.Point(627, 132);
             this.lbFone_2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFone_2.Name = "lbFone_2";
-            this.lbFone_2.Size = new System.Drawing.Size(51, 19);
+            this.lbFone_2.Size = new System.Drawing.Size(78, 26);
             this.lbFone_2.TabIndex = 109;
             this.lbFone_2.Text = "Fixo..:";
             // 
@@ -594,7 +594,7 @@ namespace OrdemServicos
             this.txtFone_1.Location = new System.Drawing.Point(473, 152);
             this.txtFone_1.Margin = new System.Windows.Forms.Padding(4);
             this.txtFone_1.Name = "txtFone_1";
-            this.txtFone_1.Size = new System.Drawing.Size(123, 26);
+            this.txtFone_1.Size = new System.Drawing.Size(123, 35);
             this.txtFone_1.TabIndex = 105;
             this.txtFone_1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtFone_1.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -606,7 +606,7 @@ namespace OrdemServicos
             this.lbFone_1.Location = new System.Drawing.Point(473, 132);
             this.lbFone_1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbFone_1.Name = "lbFone_1";
-            this.lbFone_1.Size = new System.Drawing.Size(70, 19);
+            this.lbFone_1.Size = new System.Drawing.Size(108, 26);
             this.lbFone_1.TabIndex = 108;
             this.lbFone_1.Text = "Celular..:";
             // 
@@ -619,7 +619,7 @@ namespace OrdemServicos
             this.txtCep.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtCep.Name = "txtCep";
             this.txtCep.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.txtCep.Size = new System.Drawing.Size(93, 26);
+            this.txtCep.Size = new System.Drawing.Size(93, 35);
             this.txtCep.TabIndex = 94;
             this.txtCep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtCep.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -631,7 +631,7 @@ namespace OrdemServicos
             this.lbCep.Location = new System.Drawing.Point(1295, 10);
             this.lbCep.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbCep.Name = "lbCep";
-            this.lbCep.Size = new System.Drawing.Size(49, 19);
+            this.lbCep.Size = new System.Drawing.Size(73, 26);
             this.lbCep.TabIndex = 103;
             this.lbCep.Text = "Cep..:";
             // 
@@ -643,7 +643,7 @@ namespace OrdemServicos
             this.txtDataCadastro.Location = new System.Drawing.Point(1107, 33);
             this.txtDataCadastro.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtDataCadastro.Name = "txtDataCadastro";
-            this.txtDataCadastro.Size = new System.Drawing.Size(154, 26);
+            this.txtDataCadastro.Size = new System.Drawing.Size(154, 35);
             this.txtDataCadastro.TabIndex = 92;
             this.txtDataCadastro.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -654,7 +654,7 @@ namespace OrdemServicos
             this.lbDataCadastro.Location = new System.Drawing.Point(1107, 10);
             this.lbDataCadastro.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbDataCadastro.Name = "lbDataCadastro";
-            this.lbDataCadastro.Size = new System.Drawing.Size(120, 19);
+            this.lbDataCadastro.Size = new System.Drawing.Size(181, 26);
             this.lbDataCadastro.TabIndex = 100;
             this.lbDataCadastro.Text = "Data Cadastro..:";
             // 
@@ -666,7 +666,7 @@ namespace OrdemServicos
             this.txtNome_RazaoSocial.Location = new System.Drawing.Point(377, 30);
             this.txtNome_RazaoSocial.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtNome_RazaoSocial.Name = "txtNome_RazaoSocial";
-            this.txtNome_RazaoSocial.Size = new System.Drawing.Size(682, 26);
+            this.txtNome_RazaoSocial.Size = new System.Drawing.Size(682, 35);
             this.txtNome_RazaoSocial.TabIndex = 93;
             this.tlpDicas.SetToolTip(this.txtNome_RazaoSocial, "Favor informar o Nome do Cliente");
             // 
@@ -677,7 +677,7 @@ namespace OrdemServicos
             this.lbNomeRazaoSocial.Location = new System.Drawing.Point(377, 10);
             this.lbNomeRazaoSocial.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbNomeRazaoSocial.Name = "lbNomeRazaoSocial";
-            this.lbNomeRazaoSocial.Size = new System.Drawing.Size(152, 19);
+            this.lbNomeRazaoSocial.Size = new System.Drawing.Size(228, 26);
             this.lbNomeRazaoSocial.TabIndex = 98;
             this.lbNomeRazaoSocial.Text = "Nome/Razão Social..:";
             // 
@@ -689,7 +689,7 @@ namespace OrdemServicos
             this.txtCpf_Cnpj.Location = new System.Drawing.Point(175, 30);
             this.txtCpf_Cnpj.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.txtCpf_Cnpj.Name = "txtCpf_Cnpj";
-            this.txtCpf_Cnpj.Size = new System.Drawing.Size(156, 26);
+            this.txtCpf_Cnpj.Size = new System.Drawing.Size(156, 35);
             this.txtCpf_Cnpj.TabIndex = 91;
             this.txtCpf_Cnpj.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtCpf_Cnpj.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -701,7 +701,7 @@ namespace OrdemServicos
             this.lbCpfCnpj.Location = new System.Drawing.Point(175, 10);
             this.lbCpfCnpj.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbCpfCnpj.Name = "lbCpfCnpj";
-            this.lbCpfCnpj.Size = new System.Drawing.Size(81, 19);
+            this.lbCpfCnpj.Size = new System.Drawing.Size(127, 26);
             this.lbCpfCnpj.TabIndex = 95;
             this.lbCpfCnpj.Text = "Cpf/Cnpj..:";
             // 
@@ -729,7 +729,7 @@ namespace OrdemServicos
             this.btnCarregaArquivoCpf.Location = new System.Drawing.Point(753, 198);
             this.btnCarregaArquivoCpf.Margin = new System.Windows.Forms.Padding(4);
             this.btnCarregaArquivoCpf.Name = "btnCarregaArquivoCpf";
-            this.btnCarregaArquivoCpf.Size = new System.Drawing.Size(252, 41);
+            this.btnCarregaArquivoCpf.Size = new System.Drawing.Size(285, 41);
             this.btnCarregaArquivoCpf.TabIndex = 122;
             this.btnCarregaArquivoCpf.Text = "Carregar Arquivo CPF";
             this.btnCarregaArquivoCpf.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -751,7 +751,7 @@ namespace OrdemServicos
             // 
             // frmClientes
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1461, 640);
             this.ControlBox = false;
@@ -762,7 +762,6 @@ namespace OrdemServicos
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "frmClientes";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Cadastro de Clientes";
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();

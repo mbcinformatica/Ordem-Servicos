@@ -101,7 +101,7 @@
             this.cmbCliente.Location = new System.Drawing.Point(645, 30);
             this.cmbCliente.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbCliente.Name = "cmbCliente";
-            this.cmbCliente.Size = new System.Drawing.Size(552, 27);
+            this.cmbCliente.Size = new System.Drawing.Size(552, 34);
             this.cmbCliente.TabIndex = 88;
             this.tlpDicas.SetToolTip(this.cmbCliente, "Favor Selecionar um Cliente");
             // 
@@ -110,11 +110,11 @@
             this.tabDadosCliente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabDadosCliente.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabDadosCliente.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabDadosCliente.Location = new System.Drawing.Point(4, 28);
+            this.tabDadosCliente.Location = new System.Drawing.Point(4, 35);
             this.tabDadosCliente.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabDadosCliente.Name = "tabDadosCliente";
             this.tabDadosCliente.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabDadosCliente.Size = new System.Drawing.Size(1415, 249);
+            this.tabDadosCliente.Size = new System.Drawing.Size(1415, 242);
             this.tabDadosCliente.TabIndex = 1;
             this.tabDadosCliente.Text = "   Dados do Cliente   ";
             // 
@@ -161,11 +161,11 @@
             this.tabDadosOrdenServico.Controls.Add(this.txtIDOrdenServico);
             this.tabDadosOrdenServico.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabDadosOrdenServico.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabDadosOrdenServico.Location = new System.Drawing.Point(4, 28);
+            this.tabDadosOrdenServico.Location = new System.Drawing.Point(4, 35);
             this.tabDadosOrdenServico.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabDadosOrdenServico.Name = "tabDadosOrdenServico";
             this.tabDadosOrdenServico.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabDadosOrdenServico.Size = new System.Drawing.Size(1415, 249);
+            this.tabDadosOrdenServico.Size = new System.Drawing.Size(1415, 242);
             this.tabDadosOrdenServico.TabIndex = 0;
             this.tabDadosOrdenServico.Text = "   Orden de Serviço   ";
             // 
@@ -176,7 +176,7 @@
             this.lbValorTotalMaterial.Location = new System.Drawing.Point(1032, 130);
             this.lbValorTotalMaterial.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbValorTotalMaterial.Name = "lbValorTotalMaterial";
-            this.lbValorTotalMaterial.Size = new System.Drawing.Size(159, 19);
+            this.lbValorTotalMaterial.Size = new System.Drawing.Size(244, 26);
             this.lbValorTotalMaterial.TabIndex = 183;
             this.lbValorTotalMaterial.Text = "Valor Total Material..:";
             // 
@@ -187,7 +187,7 @@
             this.txtValorTotalMaterial.Location = new System.Drawing.Point(1032, 150);
             this.txtValorTotalMaterial.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.txtValorTotalMaterial.Name = "txtValorTotalMaterial";
-            this.txtValorTotalMaterial.Size = new System.Drawing.Size(164, 26);
+            this.txtValorTotalMaterial.Size = new System.Drawing.Size(164, 35);
             this.txtValorTotalMaterial.TabIndex = 182;
             this.txtValorTotalMaterial.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtValorTotalMaterial.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -199,7 +199,7 @@
             this.lbValorServico.Location = new System.Drawing.Point(839, 130);
             this.lbValorServico.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbValorServico.Name = "lbValorServico";
-            this.lbValorServico.Size = new System.Drawing.Size(150, 19);
+            this.lbValorServico.Size = new System.Drawing.Size(229, 26);
             this.lbValorServico.TabIndex = 181;
             this.lbValorServico.Text = "Valor Total Serviço..:";
             // 
@@ -210,7 +210,7 @@
             this.txtValorTotalServico.Location = new System.Drawing.Point(839, 150);
             this.txtValorTotalServico.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.txtValorTotalServico.Name = "txtValorTotalServico";
-            this.txtValorTotalServico.Size = new System.Drawing.Size(164, 26);
+            this.txtValorTotalServico.Size = new System.Drawing.Size(164, 35);
             this.txtValorTotalServico.TabIndex = 180;
             this.txtValorTotalServico.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtValorTotalServico.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
@@ -223,7 +223,7 @@
             this.cmbProduto.Location = new System.Drawing.Point(331, 90);
             this.cmbProduto.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbProduto.Name = "cmbProduto";
-            this.cmbProduto.Size = new System.Drawing.Size(548, 27);
+            this.cmbProduto.Size = new System.Drawing.Size(548, 34);
             this.cmbProduto.TabIndex = 174;
             // 
             // txtDescricaoDefeito
@@ -247,7 +247,7 @@
             this.lbDescricaoDefeito.Location = new System.Drawing.Point(13, 130);
             this.lbDescricaoDefeito.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbDescricaoDefeito.Name = "lbDescricaoDefeito";
-            this.lbDescricaoDefeito.Size = new System.Drawing.Size(163, 19);
+            this.lbDescricaoDefeito.Size = new System.Drawing.Size(243, 26);
             this.lbDescricaoDefeito.TabIndex = 172;
             this.lbDescricaoDefeito.Text = "Descrição do Defeito..:";
             // 
@@ -260,7 +260,7 @@
             this.txtDataConclusao.Location = new System.Drawing.Point(406, 30);
             this.txtDataConclusao.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtDataConclusao.Name = "txtDataConclusao";
-            this.txtDataConclusao.Size = new System.Drawing.Size(205, 26);
+            this.txtDataConclusao.Size = new System.Drawing.Size(205, 35);
             this.txtDataConclusao.TabIndex = 169;
             this.txtDataConclusao.Value = new System.DateTime(2024, 11, 26, 0, 0, 0, 0);
             // 
@@ -271,7 +271,7 @@
             this.lbDataPrevistaConclusao.Location = new System.Drawing.Point(406, 10);
             this.lbDataPrevistaConclusao.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbDataPrevistaConclusao.Name = "lbDataPrevistaConclusao";
-            this.lbDataPrevistaConclusao.Size = new System.Drawing.Size(187, 19);
+            this.lbDataPrevistaConclusao.Size = new System.Drawing.Size(283, 26);
             this.lbDataPrevistaConclusao.TabIndex = 168;
             this.lbDataPrevistaConclusao.Text = "Data Prevista Conclusão..:";
             // 
@@ -284,7 +284,7 @@
             this.txtNumeroSerie.Location = new System.Drawing.Point(923, 90);
             this.txtNumeroSerie.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.txtNumeroSerie.Name = "txtNumeroSerie";
-            this.txtNumeroSerie.Size = new System.Drawing.Size(274, 26);
+            this.txtNumeroSerie.Size = new System.Drawing.Size(274, 35);
             this.txtNumeroSerie.TabIndex = 167;
             // 
             // lbNumeroSerie
@@ -294,7 +294,7 @@
             this.lbNumeroSerie.Location = new System.Drawing.Point(923, 70);
             this.lbNumeroSerie.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbNumeroSerie.Name = "lbNumeroSerie";
-            this.lbNumeroSerie.Size = new System.Drawing.Size(135, 19);
+            this.lbNumeroSerie.Size = new System.Drawing.Size(204, 26);
             this.lbNumeroSerie.TabIndex = 166;
             this.lbNumeroSerie.Text = "Numero de Série..:";
             // 
@@ -305,7 +305,7 @@
             this.lbProduto.Location = new System.Drawing.Point(331, 70);
             this.lbProduto.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbProduto.Name = "lbProduto";
-            this.lbProduto.Size = new System.Drawing.Size(165, 19);
+            this.lbProduto.Size = new System.Drawing.Size(254, 26);
             this.lbProduto.TabIndex = 164;
             this.lbProduto.Text = "Descrição do Produto..:";
             // 
@@ -317,7 +317,7 @@
             this.cmbMarca.Location = new System.Drawing.Point(10, 90);
             this.cmbMarca.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbMarca.Name = "cmbMarca";
-            this.cmbMarca.Size = new System.Drawing.Size(277, 27);
+            this.cmbMarca.Size = new System.Drawing.Size(277, 34);
             this.cmbMarca.TabIndex = 162;
             // 
             // lbMarcaProduto
@@ -327,7 +327,7 @@
             this.lbMarcaProduto.Location = new System.Drawing.Point(10, 70);
             this.lbMarcaProduto.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbMarcaProduto.Name = "lbMarcaProduto";
-            this.lbMarcaProduto.Size = new System.Drawing.Size(67, 19);
+            this.lbMarcaProduto.Size = new System.Drawing.Size(101, 26);
             this.lbMarcaProduto.TabIndex = 160;
             this.lbMarcaProduto.Text = "Marca..:";
             // 
@@ -339,7 +339,7 @@
             this.txtDataEmissao.Location = new System.Drawing.Point(167, 30);
             this.txtDataEmissao.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtDataEmissao.Name = "txtDataEmissao";
-            this.txtDataEmissao.Size = new System.Drawing.Size(205, 26);
+            this.txtDataEmissao.Size = new System.Drawing.Size(205, 35);
             this.txtDataEmissao.TabIndex = 159;
             this.txtDataEmissao.Value = new System.DateTime(2024, 11, 26, 0, 0, 0, 0);
             // 
@@ -350,7 +350,7 @@
             this.txtPesquisaListView.Location = new System.Drawing.Point(839, 211);
             this.txtPesquisaListView.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.txtPesquisaListView.Name = "txtPesquisaListView";
-            this.txtPesquisaListView.Size = new System.Drawing.Size(354, 26);
+            this.txtPesquisaListView.Size = new System.Drawing.Size(354, 35);
             this.txtPesquisaListView.TabIndex = 56;
             this.txtPesquisaListView.TextChanged += new System.EventHandler(this.txtPesquisaListView_TextChanged);
             // 
@@ -361,7 +361,7 @@
             this.lblPesquisaListView.Location = new System.Drawing.Point(839, 187);
             this.lblPesquisaListView.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblPesquisaListView.Name = "lblPesquisaListView";
-            this.lblPesquisaListView.Size = new System.Drawing.Size(135, 19);
+            this.lblPesquisaListView.Size = new System.Drawing.Size(203, 26);
             this.lblPesquisaListView.TabIndex = 57;
             this.lblPesquisaListView.Text = "Pesquisa Serviço..:";
             // 
@@ -372,7 +372,7 @@
             this.lbImagemProduto.Location = new System.Drawing.Point(1236, 10);
             this.lbImagemProduto.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbImagemProduto.Name = "lbImagemProduto";
-            this.lbImagemProduto.Size = new System.Drawing.Size(132, 19);
+            this.lbImagemProduto.Size = new System.Drawing.Size(204, 26);
             this.lbImagemProduto.TabIndex = 90;
             this.lbImagemProduto.Text = "Imagem Produto..:";
             // 
@@ -383,7 +383,7 @@
             this.lbCliente.Location = new System.Drawing.Point(645, 10);
             this.lbCliente.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbCliente.Name = "lbCliente";
-            this.lbCliente.Size = new System.Drawing.Size(70, 19);
+            this.lbCliente.Size = new System.Drawing.Size(106, 26);
             this.lbCliente.TabIndex = 63;
             this.lbCliente.Text = "Cliente..:";
             // 
@@ -394,7 +394,7 @@
             this.ibDataEmissao.Location = new System.Drawing.Point(167, 10);
             this.ibDataEmissao.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.ibDataEmissao.Name = "ibDataEmissao";
-            this.ibDataEmissao.Size = new System.Drawing.Size(115, 19);
+            this.ibDataEmissao.Size = new System.Drawing.Size(171, 26);
             this.ibDataEmissao.TabIndex = 66;
             this.ibDataEmissao.Text = "Data Emissão..:";
             // 
@@ -405,7 +405,7 @@
             this.lbIDOrdenServico.Location = new System.Drawing.Point(10, 10);
             this.lbIDOrdenServico.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbIDOrdenServico.Name = "lbIDOrdenServico";
-            this.lbIDOrdenServico.Size = new System.Drawing.Size(69, 19);
+            this.lbIDOrdenServico.Size = new System.Drawing.Size(102, 26);
             this.lbIDOrdenServico.TabIndex = 61;
             this.lbIDOrdenServico.Text = "ID O.S..:";
             // 
@@ -416,7 +416,7 @@
             this.txtIDOrdenServico.Location = new System.Drawing.Point(10, 30);
             this.txtIDOrdenServico.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.txtIDOrdenServico.Name = "txtIDOrdenServico";
-            this.txtIDOrdenServico.Size = new System.Drawing.Size(123, 26);
+            this.txtIDOrdenServico.Size = new System.Drawing.Size(123, 35);
             this.txtIDOrdenServico.TabIndex = 64;
             this.txtIDOrdenServico.TabStop = false;
             this.txtIDOrdenServico.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -427,11 +427,11 @@
             this.tabDadosMaterias.Controls.Add(this.lbGarantiaMaterial);
             this.tabDadosMaterias.Controls.Add(this.txtGarantiaServico);
             this.tabDadosMaterias.Controls.Add(this.lbGarantiaServico);
-            this.tabDadosMaterias.Location = new System.Drawing.Point(4, 28);
+            this.tabDadosMaterias.Location = new System.Drawing.Point(4, 35);
             this.tabDadosMaterias.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabDadosMaterias.Name = "tabDadosMaterias";
             this.tabDadosMaterias.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabDadosMaterias.Size = new System.Drawing.Size(1415, 249);
+            this.tabDadosMaterias.Size = new System.Drawing.Size(1415, 242);
             this.tabDadosMaterias.TabIndex = 2;
             this.tabDadosMaterias.Text = "   Dados de Matériais   ";
             this.tabDadosMaterias.UseVisualStyleBackColor = true;
@@ -445,7 +445,7 @@
             this.txtGarantiaMaterial.Location = new System.Drawing.Point(945, 166);
             this.txtGarantiaMaterial.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.txtGarantiaMaterial.Name = "txtGarantiaMaterial";
-            this.txtGarantiaMaterial.Size = new System.Drawing.Size(202, 22);
+            this.txtGarantiaMaterial.Size = new System.Drawing.Size(202, 30);
             this.txtGarantiaMaterial.TabIndex = 177;
             // 
             // lbGarantiaMaterial
@@ -455,7 +455,7 @@
             this.lbGarantiaMaterial.Location = new System.Drawing.Point(940, 143);
             this.lbGarantiaMaterial.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbGarantiaMaterial.Name = "lbGarantiaMaterial";
-            this.lbGarantiaMaterial.Size = new System.Drawing.Size(138, 15);
+            this.lbGarantiaMaterial.Size = new System.Drawing.Size(203, 20);
             this.lbGarantiaMaterial.TabIndex = 176;
             this.lbGarantiaMaterial.Text = "Garantia dos Matériais..:";
             // 
@@ -468,7 +468,7 @@
             this.txtGarantiaServico.Location = new System.Drawing.Point(717, 166);
             this.txtGarantiaServico.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.txtGarantiaServico.Name = "txtGarantiaServico";
-            this.txtGarantiaServico.Size = new System.Drawing.Size(202, 22);
+            this.txtGarantiaServico.Size = new System.Drawing.Size(202, 30);
             this.txtGarantiaServico.TabIndex = 175;
             // 
             // lbGarantiaServico
@@ -478,7 +478,7 @@
             this.lbGarantiaServico.Location = new System.Drawing.Point(712, 143);
             this.lbGarantiaServico.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lbGarantiaServico.Name = "lbGarantiaServico";
-            this.lbGarantiaServico.Size = new System.Drawing.Size(131, 15);
+            this.lbGarantiaServico.Size = new System.Drawing.Size(194, 20);
             this.lbGarantiaServico.TabIndex = 174;
             this.lbGarantiaServico.Text = "Garantia dos Serviços..:";
             // 
@@ -540,7 +540,7 @@
             this.btnSalvar.Location = new System.Drawing.Point(1002, 3);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(4);
             this.btnSalvar.Name = "btnSalvar";
-            this.btnSalvar.Size = new System.Drawing.Size(126, 51);
+            this.btnSalvar.Size = new System.Drawing.Size(136, 51);
             this.btnSalvar.TabIndex = 67;
             this.btnSalvar.Text = "    Salvar";
             this.btnSalvar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -556,7 +556,7 @@
             this.btnAlterar.Location = new System.Drawing.Point(868, 3);
             this.btnAlterar.Margin = new System.Windows.Forms.Padding(4);
             this.btnAlterar.Name = "btnAlterar";
-            this.btnAlterar.Size = new System.Drawing.Size(126, 51);
+            this.btnAlterar.Size = new System.Drawing.Size(140, 51);
             this.btnAlterar.TabIndex = 66;
             this.btnAlterar.Tag = "";
             this.btnAlterar.Text = "   Alterar";
@@ -573,7 +573,7 @@
             this.btnExcluir.Location = new System.Drawing.Point(1135, 3);
             this.btnExcluir.Margin = new System.Windows.Forms.Padding(4);
             this.btnExcluir.Name = "btnExcluir";
-            this.btnExcluir.Size = new System.Drawing.Size(126, 51);
+            this.btnExcluir.Size = new System.Drawing.Size(141, 51);
             this.btnExcluir.TabIndex = 68;
             this.btnExcluir.Text = "   Excluir";
             this.btnExcluir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -605,7 +605,7 @@
             this.btnFechar.Location = new System.Drawing.Point(1269, 3);
             this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
             this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(126, 51);
+            this.btnFechar.Size = new System.Drawing.Size(137, 51);
             this.btnFechar.TabIndex = 69;
             this.btnFechar.Text = "   Fechar";
             this.btnFechar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -621,7 +621,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(1269, 3);
             this.btnCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(127, 51);
+            this.btnCancelar.Size = new System.Drawing.Size(158, 51);
             this.btnCancelar.TabIndex = 70;
             this.btnCancelar.Text = "   Cancelar";
             this.btnCancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -630,7 +630,7 @@
             // 
             // frmLancamentoServicos
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1461, 640);
             this.ControlBox = false;
@@ -641,6 +641,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmLancamentoServicos";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Tag = "LancaServicos";
             this.Text = "Lançamento Orden Serviço";
             ((System.ComponentModel.ISupportInitialize)(this.imgImagemProduto)).EndInit();

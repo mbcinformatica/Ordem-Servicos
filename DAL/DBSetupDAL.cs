@@ -286,7 +286,6 @@ namespace OrdemServicos.DAL
                 throw new InvalidOperationException($"Erro ao verificar/criar tabela {tableName}: {ex.Message}", ex);
             }
         }
-
         public async Task<bool> VerificarSeCadastradoAsync(object valor, string tabela, string coluna)
         {
             try

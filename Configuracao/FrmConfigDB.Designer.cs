@@ -64,7 +64,7 @@
             this.btnTestarConexao.ForeColor = System.Drawing.SystemColors.ControlText;
             this.erpProvider.SetIconAlignment(this.btnTestarConexao, System.Windows.Forms.ErrorIconAlignment.TopRight);
             this.btnTestarConexao.Image = ((System.Drawing.Image)(resources.GetObject("btnTestarConexao.Image")));
-            this.btnTestarConexao.Location = new System.Drawing.Point(120, 294);
+            this.btnTestarConexao.Location = new System.Drawing.Point(166, 244);
             this.btnTestarConexao.Margin = new System.Windows.Forms.Padding(6);
             this.btnTestarConexao.Name = "btnTestarConexao";
             this.btnTestarConexao.Size = new System.Drawing.Size(238, 75);
@@ -85,7 +85,7 @@
             this.btnSalvar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.erpProvider.SetIconAlignment(this.btnSalvar, System.Windows.Forms.ErrorIconAlignment.BottomLeft);
             this.btnSalvar.Image = ((System.Drawing.Image)(resources.GetObject("btnSalvar.Image")));
-            this.btnSalvar.Location = new System.Drawing.Point(394, 294);
+            this.btnSalvar.Location = new System.Drawing.Point(440, 244);
             this.btnSalvar.Margin = new System.Windows.Forms.Padding(6);
             this.btnSalvar.Name = "btnSalvar";
             this.btnSalvar.Size = new System.Drawing.Size(238, 75);
@@ -114,7 +114,7 @@
             this.panel1.Controls.Add(this.lblServidor);
             this.panel1.Location = new System.Drawing.Point(10, 18);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1011, 429);
+            this.panel1.Size = new System.Drawing.Size(1188, 359);
             this.panel1.TabIndex = 0;
             // 
             // btnFechar
@@ -124,7 +124,7 @@
             this.btnFechar.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFechar.ForeColor = System.Drawing.SystemColors.ControlText;
             this.btnFechar.Image = ((System.Drawing.Image)(resources.GetObject("btnFechar.Image")));
-            this.btnFechar.Location = new System.Drawing.Point(668, 294);
+            this.btnFechar.Location = new System.Drawing.Point(714, 244);
             this.btnFechar.Margin = new System.Windows.Forms.Padding(4);
             this.btnFechar.Name = "btnFechar";
             this.btnFechar.Padding = new System.Windows.Forms.Padding(15, 0, 0, 0);
@@ -137,118 +137,123 @@
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsuario.Location = new System.Drawing.Point(621, 96);
+            this.txtUsuario.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUsuario.Location = new System.Drawing.Point(864, 96);
             this.txtUsuario.Margin = new System.Windows.Forms.Padding(4);
             this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(346, 29);
+            this.txtUsuario.Size = new System.Drawing.Size(285, 40);
             this.txtUsuario.TabIndex = 93;
+            this.txtUsuario.Tag = "naoAplicar";
             // 
             // lblUsuario
             // 
             this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsuario.Location = new System.Drawing.Point(521, 99);
+            this.lblUsuario.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUsuario.Location = new System.Drawing.Point(708, 96);
             this.lblUsuario.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(94, 22);
+            this.lblUsuario.Size = new System.Drawing.Size(139, 32);
             this.lblUsuario.TabIndex = 94;
-            this.lblUsuario.Tag = "";
+            this.lblUsuario.Tag = "naoAplicar";
             this.lblUsuario.Text = "Usuario...:";
             // 
             // txtPorta
             // 
-            this.txtPorta.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPorta.Location = new System.Drawing.Point(833, 41);
+            this.txtPorta.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPorta.Location = new System.Drawing.Point(864, 41);
             this.txtPorta.Margin = new System.Windows.Forms.Padding(4);
             this.txtPorta.Name = "txtPorta";
-            this.txtPorta.Size = new System.Drawing.Size(134, 29);
+            this.txtPorta.Size = new System.Drawing.Size(103, 40);
             this.txtPorta.TabIndex = 91;
+            this.txtPorta.Tag = "naoAplicar";
             // 
             // lblPorta
             // 
             this.lblPorta.AutoSize = true;
-            this.lblPorta.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPorta.Location = new System.Drawing.Point(753, 44);
+            this.lblPorta.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPorta.Location = new System.Drawing.Point(708, 49);
             this.lblPorta.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPorta.Name = "lblPorta";
-            this.lblPorta.Size = new System.Drawing.Size(76, 22);
+            this.lblPorta.Size = new System.Drawing.Size(111, 32);
             this.lblPorta.TabIndex = 92;
-            this.lblPorta.Tag = "";
+            this.lblPorta.Tag = "naoAplicar";
             this.lblPorta.Text = "Porta...:";
             // 
             // txtSenha
             // 
-            this.txtSenha.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSenha.Location = new System.Drawing.Point(138, 156);
+            this.txtSenha.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSenha.Location = new System.Drawing.Point(190, 151);
             this.txtSenha.Margin = new System.Windows.Forms.Padding(4);
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
-            this.txtSenha.Size = new System.Drawing.Size(346, 29);
+            this.txtSenha.Size = new System.Drawing.Size(479, 40);
             this.txtSenha.TabIndex = 89;
+            this.txtSenha.Tag = "naoAplicar";
             // 
             // lblSenha
             // 
             this.lblSenha.AutoSize = true;
-            this.lblSenha.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSenha.Location = new System.Drawing.Point(37, 159);
+            this.lblSenha.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSenha.Location = new System.Drawing.Point(28, 159);
             this.lblSenha.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSenha.Name = "lblSenha";
-            this.lblSenha.Size = new System.Drawing.Size(80, 22);
+            this.lblSenha.Size = new System.Drawing.Size(118, 32);
             this.lblSenha.TabIndex = 90;
-            this.lblSenha.Tag = "";
+            this.lblSenha.Tag = "naoAplicar";
             this.lblSenha.Text = "Senha...:";
             // 
             // txtBanco
             // 
             this.txtBanco.Enabled = false;
-            this.txtBanco.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBanco.Location = new System.Drawing.Point(138, 96);
+            this.txtBanco.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBanco.Location = new System.Drawing.Point(190, 96);
             this.txtBanco.Margin = new System.Windows.Forms.Padding(4);
             this.txtBanco.Name = "txtBanco";
-            this.txtBanco.Size = new System.Drawing.Size(252, 29);
+            this.txtBanco.Size = new System.Drawing.Size(479, 40);
             this.txtBanco.TabIndex = 87;
+            this.txtBanco.Tag = "naoAplicar";
             // 
             // lblBanco
             // 
             this.lblBanco.AutoSize = true;
-            this.lblBanco.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBanco.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBanco.ForeColor = System.Drawing.Color.Black;
-            this.lblBanco.Location = new System.Drawing.Point(37, 99);
+            this.lblBanco.Location = new System.Drawing.Point(28, 99);
             this.lblBanco.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBanco.Name = "lblBanco";
-            this.lblBanco.Size = new System.Drawing.Size(82, 22);
+            this.lblBanco.Size = new System.Drawing.Size(141, 32);
             this.lblBanco.TabIndex = 88;
-            this.lblBanco.Tag = "";
-            this.lblBanco.Text = "Banco...:";
+            this.lblBanco.Tag = "naoAplicar";
+            this.lblBanco.Text = "Banco......:";
             // 
             // txtServidor
             // 
-            this.txtServidor.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtServidor.Location = new System.Drawing.Point(138, 41);
+            this.txtServidor.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtServidor.Location = new System.Drawing.Point(190, 41);
             this.txtServidor.Margin = new System.Windows.Forms.Padding(4);
             this.txtServidor.Name = "txtServidor";
-            this.txtServidor.Size = new System.Drawing.Size(458, 29);
+            this.txtServidor.Size = new System.Drawing.Size(479, 40);
             this.txtServidor.TabIndex = 85;
+            this.txtServidor.Tag = "naoAplicar";
             // 
             // lblServidor
             // 
             this.lblServidor.AutoSize = true;
-            this.lblServidor.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblServidor.Font = new System.Drawing.Font("Times New Roman", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblServidor.ForeColor = System.Drawing.Color.Black;
-            this.lblServidor.Location = new System.Drawing.Point(37, 44);
+            this.lblServidor.Location = new System.Drawing.Point(28, 44);
             this.lblServidor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblServidor.Name = "lblServidor";
-            this.lblServidor.Size = new System.Drawing.Size(98, 22);
+            this.lblServidor.Size = new System.Drawing.Size(145, 32);
             this.lblServidor.TabIndex = 86;
-            this.lblServidor.Tag = "";
+            this.lblServidor.Tag = "naoAplicar";
             this.lblServidor.Text = "Servidor...:";
             // 
             // frmConfigDB
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1030, 465);
+            this.ClientSize = new System.Drawing.Size(1206, 390);
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -257,8 +262,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "frmConfigDB";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Configuração DB";
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();
             this.panel1.ResumeLayout(false);
