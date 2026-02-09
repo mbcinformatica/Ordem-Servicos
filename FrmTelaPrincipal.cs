@@ -493,6 +493,8 @@ namespace OrdemServicos
             try
             {
                 var dbUtils = new DockerMySqlUtils();
+
+
                 dbUtils.BackupTables(new List<string> {
                     "DBCategoriaServicos",
                     "DBClientes",
