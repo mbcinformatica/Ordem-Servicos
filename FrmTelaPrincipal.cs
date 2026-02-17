@@ -1,10 +1,7 @@
 ﻿using OrdemServicos.BLL;
-using OrdemServicos.DAL;
 using OrdemServicos.Forms;
 using OrdemServicos.Utils;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -16,13 +13,14 @@ namespace OrdemServicos
     public partial class frmTelaPrincipal : BaseForm
     {
         public bool vCloseSistema;
-
         public frmTelaPrincipal()
         {
             InitializeComponent();
             LoadConfig();
             this.Paint += new PaintEventHandler(BaseForm_Paint);
             this.Load += frmTelaPrincipal_Load;
+
+            // Inicialmente oculto
             this.WindowState = FormWindowState.Minimized;
             this.ShowInTaskbar = false;
             this.Visible = false;
@@ -38,7 +36,6 @@ namespace OrdemServicos
 
             AbrirFormularioLogin();
 
-            // ✅ se login foi concluído corretamente
             if (vCloseSistema)
             {
                 this.Text = $"Sistema - Usuário: {BaseForm.UsuarioLogado}";
@@ -46,7 +43,7 @@ namespace OrdemServicos
                 this.ShowInTaskbar = true;
                 this.WindowState = FormWindowState.Normal;
 
-                // ✅ define tamanho e posição centralizada
+                // Centraliza e ajusta tamanho
                 Width = (int)(Screen.PrimaryScreen.WorkingArea.Width * 0.8);
                 Height = (int)(Screen.PrimaryScreen.WorkingArea.Height * 0.8);
                 StartPosition = FormStartPosition.Manual;
@@ -55,15 +52,11 @@ namespace OrdemServicos
                     (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2
                 );
 
-                // ✅ aplica escala proporcional baseada em resolução 1920x1080
+                // Escala proporcional
                 float escalaX = (float)Screen.PrimaryScreen.WorkingArea.Width / 1920f;
                 float escalaY = (float)Screen.PrimaryScreen.WorkingArea.Height / 1080f;
-                this.Scale(new SizeF(escalaX, escalaY));
-
-                // ✅ garante que controles internos se ajustem
                 this.AutoScaleMode = AutoScaleMode.Font;
-                this.Scale(new SizeF(escalaX, escalaY)); // escala proporcional
-                
+                this.Scale(new SizeF(escalaX, escalaY));
             }
         }
         private async Task<bool> VerificaLoginAsync()
@@ -490,31 +483,13 @@ namespace OrdemServicos
         }
         private void backupToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var dbUtils = new DockerMySqlUtils();
-
-
-                dbUtils.BackupTables(new List<string> {
-                    "DBCategoriaServicos",
-                    "DBClientes",
-                    "DBFornecedores",
-                    "DBLancamentoServicos",
-                    "DBMarcas",
-                    "DBModelos",
-                    "DBProdutos",
-                    "DBServicos",
-                    "DBUnidades",
-                    "DBUsuarios"
-                });
-                MessageBox.Show("Backup concluído com sucesso!",
-                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao realizar backup:\n\n" + ex.Message,
-                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            AbrirFormularioBackup();   }
+        private void AbrirFormularioBackup()
+        {
+            frmBackup FrmBackup = new frmBackup();
+            frmBackup formulariofrmBackup = FrmBackup;
+            formulariofrmBackup.StartPosition = FormStartPosition.CenterScreen;
+            formulariofrmBackup.ShowDialog();
         }
         private void restoureToolStripMenuItem_Click(object sender, EventArgs e)
         {

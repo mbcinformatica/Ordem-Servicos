@@ -1,10 +1,12 @@
 ﻿using MySql.Data.MySqlClient;
+using OrdemServicos.Forms;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OrdemServicos.Utils
@@ -13,36 +15,37 @@ namespace OrdemServicos.Utils
     {
         private readonly string containerName;
         private readonly string connectionString;
-
         public DockerMySqlUtils()
         {
             containerName = ConfigurationManager.AppSettings["DockerContainerName"];
             connectionString = ConfigurationManager.AppSettings["ConnectionString"];
         }
-
-        /// <summary>
-        /// Faz backup somente dos dados (INSERTs) de uma lista de tabelas.
-        /// Cada tabela gera um arquivo separado: Backup_<Tabela>_<DataHora>.sql
-        /// </summary>
-        public void BackupTables(List<string> tableNames)
+        public async Task BackupTablesAsync(List<string> tableNames, CustomProgressBar progressBar)
         {
             try
             {
                 var builder = new MySqlConnectionStringBuilder(connectionString);
 
-                // Pasta Backup dentro do projeto
                 string backupDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Backup");
                 if (!Directory.Exists(backupDir))
                     Directory.CreateDirectory(backupDir);
 
+                progressBar.Minimum = 0;
+                progressBar.Maximum = tableNames.Count;
+                progressBar.Value = 0;
+                progressBar.Visible = true;
+
+                int currentTable = 0;
+
                 foreach (var tableName in tableNames)
                 {
-                    // Nome do arquivo: Backup_<Tabela>_ddMMyyyy_HHmm.sql
-                    string timestamp = DateTime.Now.ToString("ddMMyyyy_HHmm");
-                    string backupFilePath = Path.Combine(backupDir, $"Backup_{tableName}_{timestamp}.sql");
+                    currentTable++;
+                    string dayOfWeek = DateTime.Now.ToString("dddd", new System.Globalization.CultureInfo("pt-BR"));
+                    string backupFilePath = Path.Combine(backupDir, $"Backup_{tableName}_{dayOfWeek}.sql");
 
-                    // ✅ dump só dos dados da tabela e em UTF-8
-                    string arguments = $"exec {containerName} mysqldump --no-create-info --default-character-set=utf8mb4 -h {builder.Server} -P {builder.Port} -u {builder.UserID} -p{builder.Password} {builder.Database} {tableName}";
+                    string arguments =
+                        $"exec {containerName} mysqldump --no-create-info --default-character-set=utf8mb4 " +
+                        $"-h {builder.Server} -P {builder.Port} -u {builder.UserID} -p{builder.Password} {builder.Database} {tableName}";
 
                     ProcessStartInfo psi = new ProcessStartInfo
                     {
@@ -63,19 +66,21 @@ namespace OrdemServicos.Utils
                         process.WaitForExit();
                     }
 
-                    Console.WriteLine($"✅ Backup da tabela {tableName} concluído: {backupFilePath}");
+                    // Atualiza progresso
+                    progressBar.Value = currentTable;
+
+                    // Força redesenho para disparar o OnPaint do CustomProgressBar
+                    progressBar.Refresh();
+
+                    // Delay de 3 segundos (simulação de tempo de processamento)
+                    await Task.Delay(3000);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("❌ Erro ao realizar backup das tabelas: " + ex.Message);
+                MessageBox.Show("❌ Erro ao realizar backup das tabelas: " + ex.Message);
             }
         }
-
-        /// <summary>
-        /// Restaura o banco a partir de um arquivo .sql na pasta Backup.
-        /// Se não passar nome, restaura o último backup.
-        /// </summary>
         public void RestoreTable()
         {
             try
@@ -85,7 +90,6 @@ namespace OrdemServicos.Utils
                 string backupDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Backup");
                 string backupFilePath;
 
-                // ✅ Seleciona o arquivo de backup
                 using (OpenFileDialog dialog = new OpenFileDialog())
                 {
                     dialog.InitialDirectory = backupDir;
@@ -103,8 +107,6 @@ namespace OrdemServicos.Utils
                     }
                 }
 
-                // ✅ Extrai o nome da tabela do arquivo
-                // Exemplo: Backup_DBUsuarios_15122025_2100.sql → tabela = DBUsuarios
                 string fileName = Path.GetFileNameWithoutExtension(backupFilePath);
                 string[] parts = fileName.Split('_');
                 if (parts.Length < 2)
@@ -112,9 +114,7 @@ namespace OrdemServicos.Utils
                     Console.WriteLine("❌ Nome do arquivo não segue o padrão esperado: Backup_<Tabela>_ddMMyyyy_HHmm.sql");
                     return;
                 }
-                string tableName = parts[1]; // pega a parte <Tabela>
-
-                // ✅ Lê o arquivo e filtra apenas os INSERTs da tabela escolhida
+                string tableName = parts[1];
                 string[] allLines = File.ReadAllLines(backupFilePath, Encoding.UTF8);
                 StringBuilder sb = new StringBuilder();
 
@@ -145,13 +145,11 @@ namespace OrdemServicos.Utils
 
                 using (Process process = Process.Start(psi))
                 {
-                    // ✅ Limpa a tabela e zera o AUTO_INCREMENT antes de restaurar
                     process.StandardInput.WriteLine($"SET FOREIGN_KEY_CHECKS=0;");
                     process.StandardInput.WriteLine($"TRUNCATE TABLE `{tableName}`;");
                     process.StandardInput.WriteLine($"ALTER TABLE `{tableName}` AUTO_INCREMENT = 1;");
                     process.StandardInput.WriteLine($"SET FOREIGN_KEY_CHECKS=1;");
 
-                    // ✅ Restaura os dados filtrados
                     process.StandardInput.WriteLine(sb.ToString());
 
                     process.StandardInput.Close();
