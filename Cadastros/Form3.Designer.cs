@@ -207,7 +207,7 @@
             this.lnkOpcaoCorFundoLinha2.Location = new System.Drawing.Point(27, 121);
             this.lnkOpcaoCorFundoLinha2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoLinha2.Name = "lnkOpcaoCorFundoLinha2";
-            this.lnkOpcaoCorFundoLinha2.Size = new System.Drawing.Size(247, 19);
+            this.lnkOpcaoCorFundoLinha2.Size = new System.Drawing.Size(311, 23);
             this.lnkOpcaoCorFundoLinha2.TabIndex = 6;
             this.lnkOpcaoCorFundoLinha2.TabStop = true;
             this.lnkOpcaoCorFundoLinha2.Text = "Alterar a Cor de Fundo do 2° Linha ";
@@ -222,7 +222,7 @@
             this.lnkOpcaoCorFundoLinha1.Location = new System.Drawing.Point(4, 68);
             this.lnkOpcaoCorFundoLinha1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoLinha1.Name = "lnkOpcaoCorFundoLinha1";
-            this.lnkOpcaoCorFundoLinha1.Size = new System.Drawing.Size(247, 19);
+            this.lnkOpcaoCorFundoLinha1.Size = new System.Drawing.Size(311, 23);
             this.lnkOpcaoCorFundoLinha1.TabIndex = 5;
             this.lnkOpcaoCorFundoLinha1.TabStop = true;
             this.lnkOpcaoCorFundoLinha1.Text = "Alterar a Cor de Fundo do 1° Linha ";
@@ -237,7 +237,7 @@
             this.lnkOpcaoCorFundoColunaSelecionada.Location = new System.Drawing.Point(4, 33);
             this.lnkOpcaoCorFundoColunaSelecionada.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoColunaSelecionada.Name = "lnkOpcaoCorFundoColunaSelecionada";
-            this.lnkOpcaoCorFundoColunaSelecionada.Size = new System.Drawing.Size(318, 19);
+            this.lnkOpcaoCorFundoColunaSelecionada.Size = new System.Drawing.Size(399, 23);
             this.lnkOpcaoCorFundoColunaSelecionada.TabIndex = 4;
             this.lnkOpcaoCorFundoColunaSelecionada.TabStop = true;
             this.lnkOpcaoCorFundoColunaSelecionada.Text = "Alterar a Cor de Fundo da Coluna Selecionada";
@@ -252,14 +252,14 @@
             this.lnkOpcaoCorFundoCabecalho.Location = new System.Drawing.Point(4, -2);
             this.lnkOpcaoCorFundoCabecalho.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lnkOpcaoCorFundoCabecalho.Name = "lnkOpcaoCorFundoCabecalho";
-            this.lnkOpcaoCorFundoCabecalho.Size = new System.Drawing.Size(257, 19);
+            this.lnkOpcaoCorFundoCabecalho.Size = new System.Drawing.Size(323, 23);
             this.lnkOpcaoCorFundoCabecalho.TabIndex = 3;
             this.lnkOpcaoCorFundoCabecalho.TabStop = true;
             this.lnkOpcaoCorFundoCabecalho.Text = "Alterar a Cor de Fundo do Cabeçalho";
             // 
             // Form3
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1461, 640);
             this.Controls.Add(this.pnlOpcaoListView);

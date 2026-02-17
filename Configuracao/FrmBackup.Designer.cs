@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.tlpDicas = new System.Windows.Forms.ToolTip(this.components);
             this.erpProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.customProgressBar1 = new CustomProgressBar.CustomProgressBar();
+            this.pbcProgressoBar = new ProgressBarCustom.ProgressBarCustom();
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -39,22 +39,28 @@
             // 
             this.erpProvider.ContainerControl = this;
             // 
-            // customProgressBar1
+            // pbcProgressoBar
             // 
-            this.customProgressBar1.Location = new System.Drawing.Point(12, 23);
-            this.customProgressBar1.Name = "customProgressBar1";
-            this.customProgressBar1.Size = new System.Drawing.Size(511, 79);
-            this.customProgressBar1.TabIndex = 2;
+            this.pbcProgressoBar.AutoCenter = false;
+            this.pbcProgressoBar.DisplayText = "Aguarde Realizando Backup...";
+            this.pbcProgressoBar.Location = new System.Drawing.Point(1, 2);
+            this.pbcProgressoBar.Name = "pbcProgressoBar";
+            this.pbcProgressoBar.Size = new System.Drawing.Size(681, 91);
+            this.pbcProgressoBar.TabIndex = 0;
             // 
             // frmBackup
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(511, 79);
-            this.Controls.Add(this.customProgressBar1);
+            this.ClientSize = new System.Drawing.Size(681, 97);
+            this.ControlBox = false;
+            this.Controls.Add(this.pbcProgressoBar);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmBackup";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Backup";
             ((System.ComponentModel.ISupportInitialize)(this.erpProvider)).EndInit();
             this.ResumeLayout(false);
@@ -64,6 +70,6 @@
 		#endregion
 		private System.Windows.Forms.ToolTip tlpDicas;
 		private System.Windows.Forms.ErrorProvider erpProvider;
-		private CustomProgressBar.CustomProgressBar customProgressBar1;
+		private ProgressBarCustom.ProgressBarCustom pbcProgressoBar;
 	}
 }

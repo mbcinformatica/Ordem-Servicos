@@ -285,6 +285,9 @@
     <Reference Include="PdfSharp.WPFonts, Version=6.2.4.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>packages\PDFsharp.6.2.4\lib\netstandard2.0\PdfSharp.WPFonts.dll</HintPath>
     </Reference>
+    <Reference Include="ProgressBarCustom">
+      <HintPath>..\MinhasClasses\ProgressBarCustom\bin\Debug\ProgressBarCustom.dll</HintPath>
+    </Reference>
     <Reference Include="RBush, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c77e27b81f4d0187, processorArchitecture=MSIL">
       <HintPath>packages\RBush.Signed.4.0.0\lib\net47\RBush.dll</HintPath>
     </Reference>
@@ -477,6 +480,10 @@
     <Compile Include="Configuracao\FrmConfigFormulario.Designer.cs">
       <DependentUpon>FrmConfigFormulario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ProgressBarCustom.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ProgressBarCustom.Designer.cs" />
     <Compile Include="DAL\CategoriaServicoDAL.cs" />
     <Compile Include="DAL\DBSetupDAL.cs" />
     <Compile Include="DAL\LancamentoServicoDAL.cs" />

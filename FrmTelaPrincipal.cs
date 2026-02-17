@@ -2,6 +2,7 @@
 using OrdemServicos.Forms;
 using OrdemServicos.Utils;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -43,20 +44,25 @@ namespace OrdemServicos
                 this.ShowInTaskbar = true;
                 this.WindowState = FormWindowState.Normal;
 
-                // Centraliza e ajusta tamanho
-                Width = (int)(Screen.PrimaryScreen.WorkingArea.Width * 0.8);
-                Height = (int)(Screen.PrimaryScreen.WorkingArea.Height * 0.8);
+                // Pega a resolução atual do monitor onde o formulário está
+                Rectangle screenArea = Screen.FromControl(this).WorkingArea;
+
+                // Ajusta tamanho proporcional (80% da tela)
+                Width = (int)(screenArea.Width * 0.8);
+                Height = (int)(screenArea.Height * 0.8);
+
+                // Centraliza
                 StartPosition = FormStartPosition.Manual;
                 Location = new Point(
-                    (Screen.PrimaryScreen.WorkingArea.Width - Width) / 2,
-                    (Screen.PrimaryScreen.WorkingArea.Height - Height) / 2
+                    (screenArea.Width - Width) / 2,
+                    (screenArea.Height - Height) / 2
                 );
 
-                // Escala proporcional
-                float escalaX = (float)Screen.PrimaryScreen.WorkingArea.Width / 1920f;
-                float escalaY = (float)Screen.PrimaryScreen.WorkingArea.Height / 1080f;
+                // Escala proporcional à resolução atual (sem valores fixos)
+                float escalaX = (float)screenArea.Width / (float)Width;
+                float escalaY = (float)screenArea.Height / (float)Height;
                 this.AutoScaleMode = AutoScaleMode.Font;
-                this.Scale(new SizeF(escalaX, escalaY));
+  //              this.Scale(new SizeF(escalaX, escalaY));
             }
         }
         private async Task<bool> VerificaLoginAsync()
@@ -483,27 +489,40 @@ namespace OrdemServicos
         }
         private void backupToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbrirFormularioBackup();   }
-        private void AbrirFormularioBackup()
-        {
-            frmBackup FrmBackup = new frmBackup();
-            frmBackup formulariofrmBackup = FrmBackup;
-            formulariofrmBackup.StartPosition = FormStartPosition.CenterScreen;
-            formulariofrmBackup.ShowDialog();
+            try
+            {
+                var dbUtils = new DockerMySqlUtils();
+                dbUtils.BackupTablesAsync(new List<string>
+                {
+                    "DBCategoriaServicos",
+                    "DBClientes",
+                    "DBFornecedores",
+                    "DBLancamentoServicos",
+                    "DBMarcas",
+                    "DBModelos",
+                    "DBProdutos",
+                    "DBServicos",
+                    "DBUnidades",
+                    "DBUsuarios"
+                }, pbcRealizaBackup);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao Realizar Backup:\n\n" + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         private void restoureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
                 var dbUtils = new DockerMySqlUtils();
-                dbUtils.RestoreTable(); // restaura o último backup da pasta Backup
+                dbUtils.RestoreTableAsync(pbcRestauraBackup);
 
-                MessageBox.Show("Restore concluído com sucesso!",
-                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao restaurar backup:\n\n" + ex.Message,
+                MessageBox.Show("Erro ao Restaurar Backup:\n\n" + ex.Message,
                                 "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

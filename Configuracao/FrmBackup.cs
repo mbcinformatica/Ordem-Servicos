@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace OrdemServicos
 {
@@ -46,14 +45,14 @@ namespace OrdemServicos
                     "DBServicos",
                     "DBUnidades",
                     "DBUsuarios"
-                }, CustomProgressBar);
+                }, pbcProgressoBar);
 
-                MessageBox.Show("Backup concluído com sucesso!",
+                MessageBox.Show("Backup Concluído com Sucesso!",
                                 "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao realizar backup:\n\n" + ex.Message,
+                MessageBox.Show("Erro ao Realizar Backup:\n\n" + ex.Message,
                                 "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
