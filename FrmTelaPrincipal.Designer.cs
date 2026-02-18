@@ -256,21 +256,21 @@
             // 
             // pbcRestauraBackup
             // 
-            this.pbcRestauraBackup.AutoCenter = true;
+            this.pbcRestauraBackup.AutoCenter = false;
             this.pbcRestauraBackup.DisplayText = "BBBBBB";
-            this.pbcRestauraBackup.Location = new System.Drawing.Point(584, 332);
+            this.pbcRestauraBackup.Location = new System.Drawing.Point(593, 314);
             this.pbcRestauraBackup.Name = "pbcRestauraBackup";
-            this.pbcRestauraBackup.Size = new System.Drawing.Size(410, 79);
+            this.pbcRestauraBackup.Size = new System.Drawing.Size(419, 59);
             this.pbcRestauraBackup.TabIndex = 1;
             this.pbcRestauraBackup.Visible = false;
             // 
             // pbcRealizaBackup
             // 
-            this.pbcRealizaBackup.AutoCenter = true;
+            this.pbcRealizaBackup.AutoCenter = false;
             this.pbcRealizaBackup.DisplayText = "AAAAAAAAA";
-            this.pbcRealizaBackup.Location = new System.Drawing.Point(579, 332);
+            this.pbcRealizaBackup.Location = new System.Drawing.Point(593, 221);
             this.pbcRealizaBackup.Name = "pbcRealizaBackup";
-            this.pbcRealizaBackup.Size = new System.Drawing.Size(419, 79);
+            this.pbcRealizaBackup.Size = new System.Drawing.Size(419, 59);
             this.pbcRealizaBackup.TabIndex = 2;
             this.pbcRealizaBackup.Visible = false;
             // 

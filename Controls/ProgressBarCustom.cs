@@ -52,8 +52,8 @@ namespace OrdemServicos.Controls
         {
             if (this.Parent != null)
             {
-                int x = (this.Parent.ClientSize.Width - this.Width) / 8;
-                int y = (this.Parent.ClientSize.Height - this.Height) / 8;
+                int x = (this.Parent.ClientSize.Width - this.Width); // / 8;
+                int y = (this.Parent.ClientSize.Height - this.Height); // / 8;
                 this.Location = new Point(x, y);
             }
         }
