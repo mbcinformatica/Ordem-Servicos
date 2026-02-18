@@ -496,6 +496,13 @@
     <Compile Include="DAL\PesquisaWebDAL.cs" />
     <Compile Include="DAL\FornecedorDAL .cs" />
     <Compile Include="DAL\ClienteDAL.cs" />
+    <Compile Include="Ferramentas\ImportarCategoriasServicos.cs" />
+    <Compile Include="Ferramentas\ImportarClientes.cs" />
+    <Compile Include="Ferramentas\ImportarFornecedores.cs" />
+    <Compile Include="Ferramentas\ImportarMarcas.cs" />
+    <Compile Include="Ferramentas\ImportarModelos.cs" />
+    <Compile Include="Ferramentas\ImportarServicos.cs" />
+    <Compile Include="Ferramentas\ImportarUnidadesMedida.cs" />
     <Compile Include="Forms\BaseFormFuncoes.cs" />
     <Compile Include="Forms\BaseFormFuncoes.Designer.cs">
       <DependentUpon>BaseFormFuncoes.cs</DependentUpon>

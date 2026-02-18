@@ -1,4 +1,6 @@
-﻿namespace OrdemServicos
+﻿using System;
+
+namespace OrdemServicos
 {
     partial class frmTelaPrincipal
     {
@@ -51,9 +53,18 @@
             this.conexãoDBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.restoureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ferramentasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importarDadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clientesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fornecedoresToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.produtosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.serviçosToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.categoriaDeServiçosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.marcasToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.modelosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.unidadesDeMedidaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.sairToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pbcRestauraBackup = new ProgressBarCustom.ProgressBarCustom();
-            this.pbcRealizaBackup = new ProgressBarCustom.ProgressBarCustom();
+            this.pbcProgressoBar = new ProgressBarCustom.ProgressBarCustom();
             mnSMenu = new System.Windows.Forms.MenuStrip();
             mnSMenu.SuspendLayout();
             this.SuspendLayout();
@@ -70,6 +81,7 @@
             this.lancamentosToolStripMenuItem,
             this.relatoriosToolStripMenuItem,
             this.configuracoesToolStripMenuItem,
+            this.ferramentasToolStripMenuItem,
             this.sairToolStripMenuItem});
             mnSMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             mnSMenu.Location = new System.Drawing.Point(0, 0);
@@ -247,6 +259,84 @@
             this.restoureToolStripMenuItem.Text = "Restoure ";
             this.restoureToolStripMenuItem.Click += new System.EventHandler(this.restoureToolStripMenuItem_Click);
             // 
+            // ferramentasToolStripMenuItem
+            // 
+            this.ferramentasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importarDadosToolStripMenuItem});
+            this.ferramentasToolStripMenuItem.Name = "ferramentasToolStripMenuItem";
+            this.ferramentasToolStripMenuItem.Size = new System.Drawing.Size(131, 27);
+            this.ferramentasToolStripMenuItem.Text = "Ferramentas";
+            // 
+            // importarDadosToolStripMenuItem
+            // 
+            this.importarDadosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clientesToolStripMenuItem1,
+            this.fornecedoresToolStripMenuItem1,
+            this.produtosToolStripMenuItem1,
+            this.serviçosToolStripMenuItem2,
+            this.categoriaDeServiçosToolStripMenuItem1,
+            this.marcasToolStripMenuItem1,
+            this.modelosToolStripMenuItem1,
+            this.unidadesDeMedidaToolStripMenuItem1});
+            this.importarDadosToolStripMenuItem.Name = "importarDadosToolStripMenuItem";
+            this.importarDadosToolStripMenuItem.Size = new System.Drawing.Size(226, 28);
+            this.importarDadosToolStripMenuItem.Text = "Importar Dados";
+            // 
+            // clientesToolStripMenuItem1
+            // 
+            this.clientesToolStripMenuItem1.Name = "clientesToolStripMenuItem1";
+            this.clientesToolStripMenuItem1.Size = new System.Drawing.Size(279, 28);
+            this.clientesToolStripMenuItem1.Text = "Clientes";
+            this.clientesToolStripMenuItem1.Click += new System.EventHandler(this.clientesToolStripMenuItem1_Click);
+            // 
+            // fornecedoresToolStripMenuItem1
+            // 
+            this.fornecedoresToolStripMenuItem1.Name = "fornecedoresToolStripMenuItem1";
+            this.fornecedoresToolStripMenuItem1.Size = new System.Drawing.Size(279, 28);
+            this.fornecedoresToolStripMenuItem1.Text = "Fornecedores";
+            this.fornecedoresToolStripMenuItem1.Click += new System.EventHandler(this.fornecedoresToolStripMenuItem1_Click);
+            // 
+            // produtosToolStripMenuItem1
+            // 
+            this.produtosToolStripMenuItem1.Name = "produtosToolStripMenuItem1";
+            this.produtosToolStripMenuItem1.Size = new System.Drawing.Size(279, 28);
+            this.produtosToolStripMenuItem1.Text = "Produtos";
+            // 
+            // serviçosToolStripMenuItem2
+            // 
+            this.serviçosToolStripMenuItem2.Name = "serviçosToolStripMenuItem2";
+            this.serviçosToolStripMenuItem2.Size = new System.Drawing.Size(279, 28);
+            this.serviçosToolStripMenuItem2.Text = "Serviços";
+            this.serviçosToolStripMenuItem2.Click += new System.EventHandler(this.serviçosToolStripMenuItem2_Click);
+            // 
+            // categoriaDeServiçosToolStripMenuItem1
+            // 
+            this.categoriaDeServiçosToolStripMenuItem1.Name = "categoriaDeServiçosToolStripMenuItem1";
+            this.categoriaDeServiçosToolStripMenuItem1.Size = new System.Drawing.Size(279, 28);
+            this.categoriaDeServiçosToolStripMenuItem1.Text = "Categoria de Serviços";
+            this.categoriaDeServiçosToolStripMenuItem1.Click += new System.EventHandler(this.categoriaDeServiçosToolStripMenuItem1_ClickAsync);
+            // 
+            // marcasToolStripMenuItem1
+            // 
+            this.marcasToolStripMenuItem1.Name = "marcasToolStripMenuItem1";
+            this.marcasToolStripMenuItem1.Size = new System.Drawing.Size(279, 28);
+            this.marcasToolStripMenuItem1.Text = "Marcas";
+            this.marcasToolStripMenuItem1.Click += new System.EventHandler(this.marcasToolStripMenuItem1_ClickAsync);
+            // 
+            // modelosToolStripMenuItem1
+            // 
+            this.modelosToolStripMenuItem1.Name = "modelosToolStripMenuItem1";
+            this.modelosToolStripMenuItem1.Size = new System.Drawing.Size(279, 28);
+            this.modelosToolStripMenuItem1.Text = "Modelos";
+            this.modelosToolStripMenuItem1.Click += new System.EventHandler(this.modelosToolStripMenuItem1_ClickAsync);
+            // 
+            // unidadesDeMedidaToolStripMenuItem1
+            // 
+            this.unidadesDeMedidaToolStripMenuItem1.Name = "unidadesDeMedidaToolStripMenuItem1";
+            this.unidadesDeMedidaToolStripMenuItem1.Size = new System.Drawing.Size(279, 28);
+            this.unidadesDeMedidaToolStripMenuItem1.Text = "Unidades de Medidas";
+            this.unidadesDeMedidaToolStripMenuItem1.Click += new System.EventHandler(this.unidadesDeMedidaToolStripMenuItem1_Click);
+            // 
             // sairToolStripMenuItem
             // 
             this.sairToolStripMenuItem.Name = "sairToolStripMenuItem";
@@ -254,32 +344,21 @@
             this.sairToolStripMenuItem.Text = "&Sair";
             this.sairToolStripMenuItem.Click += new System.EventHandler(this.sairToolStripMenuItem_Click);
             // 
-            // pbcRestauraBackup
+            // pbcProgressoBar
             // 
-            this.pbcRestauraBackup.AutoCenter = false;
-            this.pbcRestauraBackup.DisplayText = "BBBBBB";
-            this.pbcRestauraBackup.Location = new System.Drawing.Point(593, 314);
-            this.pbcRestauraBackup.Name = "pbcRestauraBackup";
-            this.pbcRestauraBackup.Size = new System.Drawing.Size(419, 59);
-            this.pbcRestauraBackup.TabIndex = 1;
-            this.pbcRestauraBackup.Visible = false;
-            // 
-            // pbcRealizaBackup
-            // 
-            this.pbcRealizaBackup.AutoCenter = false;
-            this.pbcRealizaBackup.DisplayText = "AAAAAAAAA";
-            this.pbcRealizaBackup.Location = new System.Drawing.Point(593, 221);
-            this.pbcRealizaBackup.Name = "pbcRealizaBackup";
-            this.pbcRealizaBackup.Size = new System.Drawing.Size(419, 59);
-            this.pbcRealizaBackup.TabIndex = 2;
-            this.pbcRealizaBackup.Visible = false;
+            this.pbcProgressoBar.AutoCenter = false;
+            this.pbcProgressoBar.DisplayText = "AAAAAAAAA";
+            this.pbcProgressoBar.Location = new System.Drawing.Point(593, 221);
+            this.pbcProgressoBar.Name = "pbcProgressoBar";
+            this.pbcProgressoBar.Size = new System.Drawing.Size(419, 59);
+            this.pbcProgressoBar.TabIndex = 2;
+            this.pbcProgressoBar.Visible = false;
             // 
             // frmTelaPrincipal
             // 
             this.ClientSize = new System.Drawing.Size(1578, 744);
             this.ControlBox = false;
-            this.Controls.Add(this.pbcRealizaBackup);
-            this.Controls.Add(this.pbcRestauraBackup);
+            this.Controls.Add(this.pbcProgressoBar);
             this.Controls.Add(mnSMenu);
             this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -295,9 +374,8 @@
             this.PerformLayout();
 
         }
-
-        #endregion
-        private System.Windows.Forms.ToolStripMenuItem cadastrosToolStripMenuItem;
+		#endregion
+		private System.Windows.Forms.ToolStripMenuItem cadastrosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fornecedoresToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem produtosToolStripMenuItem;
@@ -319,8 +397,18 @@
 		private System.Windows.Forms.ToolStripMenuItem conexãoDBToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem backupToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem restoureToolStripMenuItem;
-		private ProgressBarCustom.ProgressBarCustom pbcRestauraBackup;
-		private ProgressBarCustom.ProgressBarCustom pbcRealizaBackup;
+		private ProgressBarCustom.ProgressBarCustom pbcProgressoBar;
+		private System.Windows.Forms.ToolStripMenuItem ferramentasToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem importarDadosToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem fornecedoresToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem produtosToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem serviçosToolStripMenuItem2;
+		private System.Windows.Forms.ToolStripMenuItem categoriaDeServiçosToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem marcasToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem unidadesDeMedidaToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem modelosToolStripMenuItem1;
 	}
 }
 

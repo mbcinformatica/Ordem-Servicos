@@ -504,7 +504,7 @@ namespace OrdemServicos
                     "DBServicos",
                     "DBUnidades",
                     "DBUsuarios"
-                }, pbcRealizaBackup);
+                }, pbcProgressoBar);
             }
             catch (Exception ex)
             {
@@ -517,7 +517,7 @@ namespace OrdemServicos
             try
             {
                 var dbUtils = new DockerMySqlUtils();
-                dbUtils.RestoreTableAsync(pbcRestauraBackup);
+                dbUtils.RestoreTableAsync(pbcProgressoBar);
 
             }
             catch (Exception ex)
@@ -526,5 +526,96 @@ namespace OrdemServicos
                                 "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-    }
+        private async void unidadesDeMedidaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var importador = new OrdemServicos.Ferramentas.ImportarUnidadesMedida();
+                await importador.ExecutarImportacaoAsync(pbcProgressoBar);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao importar Unidades de Medida:\n\n" + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+		private async void marcasToolStripMenuItem1_ClickAsync( object sender, EventArgs e )
+		{
+            try
+            {
+                var importador = new OrdemServicos.Ferramentas.ImportarMarcas();
+                await importador.ExecutarImportacaoAsync(pbcProgressoBar);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao Importar Marcas:\n\n" + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+		private async void modelosToolStripMenuItem1_ClickAsync( object sender, EventArgs e )
+		{
+            try
+            {
+                var importador = new OrdemServicos.Ferramentas.ImportarModelos();
+                await importador.ExecutarImportacaoAsync(pbcProgressoBar);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao Importar Marcas:\n\n" + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+		private async void categoriaDeServiçosToolStripMenuItem1_ClickAsync( object sender, EventArgs e )
+		{
+            try
+            {
+                var importador = new OrdemServicos.Ferramentas.ImportarCategoriasServicos();
+                await importador.ExecutarImportacaoAsync(pbcProgressoBar);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao Importar Categorias de Serviços:\n\n" + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+		private void serviçosToolStripMenuItem2_Click( object sender, EventArgs e )
+		{
+            try
+            {
+                var importador = new OrdemServicos.Ferramentas.ImportarServicos();
+                importador.ExecutarImportacaoAsync(pbcProgressoBar);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao Importar Serviços:\n\n" + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+		private void clientesToolStripMenuItem1_Click( object sender, EventArgs e )
+		{
+            try
+            {
+                var importador = new OrdemServicos.Ferramentas.ImportarClientes();
+                importador.ExecutarImportacaoAsync(pbcProgressoBar);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao Importar Clientes:\n\n" + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+		private void fornecedoresToolStripMenuItem1_Click( object sender, EventArgs e )
+		{
+            try
+            {
+                var importador = new OrdemServicos.Ferramentas.ImportarFornecedores();
+                importador.ExecutarImportacaoAsync(pbcProgressoBar);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao Importar Fornecedore:\n\n" + ex.Message,
+                                "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+	}
 }

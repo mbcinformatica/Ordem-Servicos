@@ -3,6 +3,7 @@ using OrdemServicos.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OrdemServicos.DAL
@@ -92,6 +93,32 @@ namespace OrdemServicos.DAL
             {
                 MessageBox.Show("Erro inesperado ao buscar categoria de serviço: " + ex.Message,
                                 "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return null;
+        }
+
+        public async Task<CategoriaServicoInfo> GetCategoriaByNomeAsync(string nome)
+        {
+            using (var conn = new MySqlConnection(connectionString))
+            {
+                await conn.OpenAsync();
+                string query = "SELECT * FROM DBCategoriaServicos WHERE UPPER(Descricao) = @Descricao";
+
+                using (var cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Descricao", nome.ToUpperInvariant());
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            return new CategoriaServicoInfo
+                            {
+                                IDCategoriaServico = Convert.ToInt32(reader["IDCategoriaServico"]),
+                                Descricao = reader["Descricao"].ToString()
+                            };
+                        }
+                    }
+                }
             }
             return null;
         }

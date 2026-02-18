@@ -84,7 +84,40 @@ namespace OrdemServicos.DAL
 
             return null;
         }
+        public async Task<MarcaInfo> GetMarcaByNomeAsync(string nome)
+        {
+            try
+            {
+                using (var conn = new MySqlConnection(connectionString))
+                {
+                    await conn.OpenAsync();
+                    string query = "SELECT * FROM DBMarcas WHERE UPPER(Descricao) = @Descricao";
 
+                    using (var cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Descricao", nome.ToUpperInvariant());
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            if (await reader.ReadAsync())
+                            {
+                                return new MarcaInfo
+                                {
+                                    IDMarca = Convert.ToInt32(reader["IDMarca"]),
+                                    Descricao = reader["Descricao"].ToString()
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao buscar marca por nome: " + ex.Message, ex);
+            }
+
+            return null;
+        }
         public async Task AtualizarMarcaAsync(MarcaInfo marca)
         {
             try
